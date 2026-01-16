@@ -1,0 +1,139 @@
+---
+title: "Compliance & Legal Validity"
+description: "International standards and legal compliance for DocsAutomator eSign"
+icon: "scale-balanced"
+---
+
+DocsAutomator's e-signature solution meets international standards for electronic signatures, ensuring documents are legally binding across jurisdictions.
+
+| Standard | Region | Status |
+|----------|--------|--------|
+| ESIGN Act | United States | ✅ Compliant |
+| UETA | United States | ✅ Compliant |
+| eIDAS (SES) | European Union | ✅ Compliant |
+| GDPR | European Union | ✅ Compliant |
+
+---
+
+## United States
+
+### ESIGN Act
+
+The Electronic Signatures in Global and National Commerce Act grants electronic signatures equivalent legal status as handwritten signatures in the U.S.
+
+**Key Requirements:**
+- Parties must demonstrate intent to sign
+- Consent to conduct business electronically
+- Association of the signature with the record
+- Record retention and reproducibility
+
+**DocsAutomator Compliance:**
+- Signers receive unique secure links via email and actively complete signature fields
+- Accessing the signing portal demonstrates electronic consent
+- Each signature embeds into the PDF with complete audit trails
+- All documents and logs are securely stored indefinitely
+
+### UETA
+
+The Uniform Electronic Transactions Act provides consistent rules across 49 U.S. states.
+
+**Key Requirements:**
+- Records must be attributable to a person
+- Records must be capable of retention
+- Parties must obtain copies
+
+**DocsAutomator Compliance:**
+- Every signature links to the signer via email, IP address, browser information, and timestamp
+- Documents store securely with no automatic deletion
+- Signers and owners receive completed PDFs via email and dashboard access
+
+---
+
+## European Union
+
+### eIDAS (Simple Electronic Signatures)
+
+eIDAS establishes legal frameworks for electronic signatures across EU member states. DocsAutomator provides Simple Electronic Signatures (SES).
+
+| Level | Description | DocsAutomator |
+|-------|-------------|---------------|
+| Simple (SES) | Electronic data attached to other data | ✅ Supported |
+| Advanced (AES) | Uniquely linked with cryptographic security | ❌ Not supported |
+| Qualified (QES) | Created by qualified device with certificate | ❌ Not supported |
+
+**SES Compliance:**
+- Signatures capture digitally and embed into PDFs
+- Each signer accesses unique signing sessions via secure, time-limited tokens
+- All actions record with server timestamps in audit trails
+- Original document hash (SHA-256) stores to detect tampering
+
+### GDPR
+
+The General Data Protection Regulation governs personal data collection, processing, and storage for EU residents.
+
+**DocsAutomator Compliance:**
+- Personal data processed based on contractual necessity
+- Only essential information collected: email, name, signature, audit data
+- Document owners can delete sessions and associated data upon request
+- Data encrypted in transit (TLS) and at rest via cloud infrastructure
+- Signer data is not sold or shared with third parties for marketing
+
+---
+
+## Security Measures
+
+### Audit Trail
+
+Every e-signature session maintains a tamper-evident audit trail recording:
+- Session creation and document generation
+- Email invitation delivery timestamps
+- Signer access to signing links
+- IP address and browser information per action
+- Individual field completion timestamps
+- Session completion and PDF finalization
+
+### Document Integrity
+
+- **SHA-256 Hashing**: Cryptographic hash of the original document stores for verification
+- **Certificate of Completion**: Automatically generated page showing all signers, signatures, and completion timestamps
+
+### Access Control
+
+- **Secure Tokens**: Each signer receives unique 256-bit cryptographically random access tokens
+- **Time-Limited Access**: Signing links expire after configurable periods (default: 30 days)
+- **Rate Limiting**: Protection against brute force attacks
+
+### Infrastructure Security
+
+- **Encryption in Transit**: All communications secured via TLS/HTTPS
+- **Cloud Storage**: Documents on Google Cloud infrastructure with enterprise-grade security
+- **Database Security**: MongoDB Atlas with encryption at rest and network isolation
+
+---
+
+## Certificate of Completion
+
+Every signed document automatically includes a Certificate of Completion page containing:
+- Document title and completion timestamp
+- List of all signers with names and email addresses
+- Visual reproduction of each signature
+- Unique session identifier for audit reference
+
+---
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Are electronic signatures legally binding?">
+    Yes. In the United States, the ESIGN Act and UETA grant electronic signatures equivalent legal validity as handwritten signatures for most documents. In the EU, the eIDAS regulation provides a similar legal framework.
+  </Accordion>
+  <Accordion title="What documents cannot be signed electronically with DocsAutomator?">
+    DocsAutomator provides Simple Electronic Signatures compliant with standard regulations. Some documents may require Advanced or Qualified Electronic Signatures, wet ink signatures, or notarization. Consult a legal professional regarding your specific use case.
+  </Accordion>
+  <Accordion title="How long are signed documents stored?">
+    Signed documents and audit trails retain indefinitely unless deleted from your workspace.
+  </Accordion>
+  <Accordion title="Can I verify a document's authenticity?">
+    Yes. Each signed document includes a Certificate of Completion, and the original document hash stores in the system for integrity verification.
+  </Accordion>
+</AccordionGroup>

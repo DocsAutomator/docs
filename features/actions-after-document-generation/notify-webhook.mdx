@@ -1,0 +1,89 @@
+---
+title: "Notify Webhook"
+description: "Send notifications to external services when documents are generated"
+icon: "webhook"
+---
+
+The Notify Webhook feature allows DocsAutomator to send notifications to external services when documents are successfully generated. This enables integration with other applications and workflows.
+
+## Purpose
+
+Notify other services about successful document creations through webhook callbacks, allowing you to trigger downstream processes or log document generation events in external systems.
+
+## Configuration
+
+### Webhook URL Registration
+
+Register a webhook address that will receive notifications once documents are created. DocsAutomator makes POST requests to your specified endpoint when generation completes.
+
+<Steps>
+  <Step title="Open Output Settings">
+    Navigate to your automation's output configuration
+  </Step>
+  <Step title="Enable Webhook">
+    Enable the "Notify Webhook" option
+  </Step>
+  <Step title="Enter URL">
+    Enter your webhook endpoint URL
+  </Step>
+  <Step title="Test">
+    Generate a preview document to test the webhook
+  </Step>
+</Steps>
+
+## Additional Parameters via API
+
+The system supports sending supplementary data alongside webhook notifications through the `webhookParams` object in API requests.
+
+```json
+{
+  "docId": "your-automation-id",
+  "data": {
+    "customer_name": "Acme Corp"
+  },
+  "webhookParams": {
+    "orderId": "ORD-12345",
+    "customerId": "CUST-789"
+  }
+}
+```
+
+These parameters appear as `additionalParams` in the webhook payload sent to your endpoint.
+
+## Webhook Payload Structure
+
+```json
+{
+  "pdfUrl": "https://...",
+  "googleDocUrl": "https://docs.google.com/document/d/...",
+  "documentName": "Invoice #123",
+  "status": "completed",
+  "additionalParams": {
+    "orderId": "ORD-12345",
+    "customerId": "CUST-789"
+  }
+}
+```
+
+## Special Parameters
+
+<Info>
+**Airtable Records**: When using Airtable as a data source, the record ID is automatically included as an additional parameter with every webhook notification.
+</Info>
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="CRM Updates" icon="users">
+    Update customer records when documents are generated
+  </Card>
+  <Card title="Workflow Triggers" icon="bolt">
+    Trigger downstream automation workflows
+  </Card>
+  <Card title="Logging" icon="clipboard-list">
+    Log document generation events to external systems
+  </Card>
+  <Card title="Notifications" icon="bell">
+    Send alerts to team collaboration tools
+  </Card>
+</CardGroup>

@@ -1,0 +1,62 @@
+---
+title: "Conditional Paragraph / Row Deletion"
+description: "Automatically remove entire lines or rows when placeholder values are empty"
+icon: "trash"
+---
+
+This feature allows you to automatically remove entire lines or rows from documents when placeholder values are empty or not provided.
+
+## Use Case
+
+In document scenarios like invoices, if no discount is provided, the entire discount line can be deleted rather than appearing blank in the final output.
+
+## How It Works
+
+| Context | Behavior |
+|---------|----------|
+| Placeholders outside tables | Entire lines are deleted |
+| Placeholders in tables | The complete row is deleted |
+| Line items | Entire line item rows can be removed if their placeholder values are empty |
+
+## Implementation
+
+Line and row deletion is enabled through the settings icon adjacent to each placeholder or variable in your template.
+
+<Steps>
+  <Step title="Open Placeholder Settings">
+    Click the gear/settings icon next to the placeholder you want to configure
+  </Step>
+  <Step title="Enable Deletion">
+    Enable the "Delete line/row when empty" option
+  </Step>
+  <Step title="Test">
+    Generate a preview document with empty values to verify the deletion works correctly
+  </Step>
+</Steps>
+
+## Advanced Combination
+
+This feature can be used together with [Conditional Show/Hide](/features/advanced-placeholder-options/conditional-show-hide). When a value is hidden based on specific conditions, enabling row deletion will remove the entire line or row from the document.
+
+## Example
+
+**Before (with empty discount):**
+```
+Subtotal: $100.00
+Discount:
+Tax: $10.00
+Total: $110.00
+```
+
+**After (with deletion enabled):**
+```
+Subtotal: $100.00
+Tax: $10.00
+Total: $110.00
+```
+
+## Key Benefit
+
+<Tip>
+Removes visual clutter and creates cleaner, more professional documents by eliminating empty fields entirely rather than leaving blank spaces.
+</Tip>

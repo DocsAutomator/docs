@@ -1,0 +1,60 @@
+---
+title: "Auto Row Numbers"
+description: "Automatically add sequential row numbers to line item tables"
+icon: "hashtag"
+---
+
+DocsAutomator enables you to automatically add row numbers to line item tables with minimal configuration.
+
+## Basic Setup
+
+Under line item settings, locate the option to enable auto row numbers for your line item table. Once activated, the system will automatically number each row sequentially.
+
+## Configuration Options
+
+### Style Settings
+
+Access styling controls via the settings/gear icon adjacent to the auto number toggle.
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| Column Width | Adjustable range from 10 to 100 | 25 |
+| Alignment | Left, Center, or Right | Left |
+
+## Example Output
+
+| # | Description | Quantity | Price |
+|---|-------------|----------|-------|
+| 1 | Widget A | 2 | $10.00 |
+| 2 | Widget B | 1 | $25.00 |
+| 3 | Widget C | 3 | $15.00 |
+
+## Hierarchical Numbering
+
+When using [Nested Line Items](/features/line-items/nested-line-items), auto row numbers generate hierarchical numbers:
+
+| # | Item |
+|---|------|
+| 1 | Parent Item A |
+| 1.1 | Child Item A1 |
+| 1.1.1 | Grandchild A1a |
+| 1.2 | Child Item A2 |
+| 2 | Parent Item B |
+| 2.1 | Child Item B1 |
+
+## Data Ordering
+
+<Info>
+When using Airtable as your data source, row sequence can be controlled through a specified view configuration. Reference the [Airtable integration documentation](/integrations-api/airtable) for ordering details.
+</Info>
+
+## Related Pages
+
+<CardGroup cols={2}>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Line items overview
+  </Card>
+  <Card title="Nested Line Items" icon="layer-group" href="/features/line-items/nested-line-items">
+    Hierarchical data structures
+  </Card>
+</CardGroup>

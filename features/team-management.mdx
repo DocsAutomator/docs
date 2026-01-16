@@ -1,0 +1,101 @@
+---
+title: "Team Management"
+description: "Invite collaborators and control access levels in your workspace"
+icon: "users"
+---
+
+Team Management in DocsAutomator enables you to invite collaborators to your workspace and control their access levels. The feature allows role assignment, pending invitation management, and security measures to protect automations.
+
+<Info>
+**DocsAutomator offers unlimited team seats on all plans, including the free plan.**
+</Info>
+
+## User Roles
+
+| Role | Capabilities | Google Drive Access |
+|------|--------------|-------------------|
+| **Owner** | Full access to all features including workspace deletion | Full |
+| **Admin** | Create/edit automations, invite members, manage settings | Limited to team folder (if set) |
+| **Member** | Create/edit automations | Limited to team folder (if set) |
+
+## Inviting Team Members
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to Workspace Settings → Team
+  </Step>
+  <Step title="Click Invite">
+    Click "Invite Member"
+  </Step>
+  <Step title="Enter Details">
+    Enter email address and select role (member or admin)
+  </Step>
+  <Step title="Send Invitation">
+    Send invitation (expires after 7 days if not accepted)
+  </Step>
+</Steps>
+
+## Managing Invitations
+
+- View pending invitations in the dedicated tab
+- Cancel invitations via trash icon
+- Resend invitations if needed
+
+## Managing Members
+
+- View member names, emails, and roles
+- Change member roles (owners only)
+- Remove members from workspace (owners/admins only)
+
+## Security Features
+
+### Team Folder Restriction
+
+Restricts Google Drive access to a designated folder for team members:
+
+- Workspace owners designate a specific Google Drive folder as "Team Folder"
+- Team members can only access templates within this folder
+- Workspace owners retain full Google Drive access
+
+<Warning>
+**Important:** Without a Team Folder restriction, all team members will have access to all folders and Google Docs in the authorized Google Drive.
+</Warning>
+
+### Permissions Summary
+
+| Action | Owner | Admin | Member |
+|--------|-------|-------|--------|
+| Invite members | ✅ | ✅ | ❌ |
+| Change roles | ✅ | ❌ | ❌ |
+| Remove members | ✅ | ✅ | ❌ |
+| Create automations | ✅ | ✅ | ✅ |
+| Edit automations | ✅ | ✅ | ✅ |
+| Delete workspace | ✅ | ❌ | ❌ |
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Review pending invitations regularly">
+    Keep track of who has been invited and follow up on pending invitations.
+  </Accordion>
+  <Accordion title="Assign roles based on responsibilities">
+    Give admin access only to those who need to manage team settings.
+  </Accordion>
+  <Accordion title="Remove members promptly">
+    Remove access when team members no longer need it.
+  </Accordion>
+  <Accordion title="Set up a team folder">
+    Create a designated folder for document templates to control access.
+  </Accordion>
+</AccordionGroup>
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card title="Workspaces" icon="building" href="/features/workspaces">
+    Manage multiple workspaces
+  </Card>
+  <Card title="Saving Google Docs" icon="file-lines" href="/features/actions-after-document-generation/saving-google-docs">
+    Configure document storage
+  </Card>
+</CardGroup>

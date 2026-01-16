@@ -1,0 +1,94 @@
+---
+title: "Nested Line Items"
+description: "Create hierarchical data structures with up to 3 levels of nesting"
+icon: "layer-group"
+---
+
+This feature enables hierarchical data presentation across up to 3 levels of nesting, ideal for invoices with services and tasks, bills of materials, or any parent-child-grandchild data structure.
+
+## Supported Levels
+
+| Level | Description | Example |
+|-------|-------------|---------|
+| Level 1 (Parent) | Main items from your line items table | Products |
+| Level 2 (Child) | Items from a linked table within Level 1 | Components |
+| Level 3 (Grandchild) | Items from a linked table within Level 2 | Specifications |
+
+<Note>
+Currently available for Airtable or DocsAutomator's API. Requires linked record fields connecting your tables.
+</Note>
+
+## Placeholder Format
+
+Each nesting tier uses a specific prefix structure:
+
+| Level | Prefix | Example |
+|-------|--------|---------|
+| Level 1 (Parent) | `{{line_items_N}}` | `{{line_items_1.product_name}}` |
+| Level 2 (Child) | `{{line_items_N_1}}` | `{{line_items_1_1.component}}` |
+| Level 3 (Grandchild) | `{{line_items_N_2}}` | `{{line_items_1_2.specification}}` |
+
+Where N represents the line item table number (1, 2, 3, etc.).
+
+## Setup Steps
+
+<Steps>
+  <Step title="Configure Data Source">
+    1. Navigate to automation settings
+    2. Under Line Items, select your primary linked field (Level 1)
+    3. Click "+ Add Level 2" to select a linked field from your Level 1 table
+    4. Click "+ Add Level 3" to select a linked field from your Level 2 table
+  </Step>
+  <Step title="Create Template">
+    Using the Template Editor:
+    1. Click "Add Line Items" in the sidebar
+    2. Configure Level 1 (Parent) columns
+    3. Click "+ Add Nested Level" for Level 2
+    4. Configure Level 2 (Child) columns
+    5. Click "+ Add Nested Level" for Level 3 (optional)
+    6. Click "Add Line Items" to insert the table
+  </Step>
+</Steps>
+
+## Key Features
+
+<AccordionGroup>
+  <Accordion title="Different Column Counts Per Level" icon="table-columns">
+    Each nesting level can have a different number of columns. DocsAutomator automatically handles this by merging cells when a nested row has fewer columns than its parent.
+  </Accordion>
+  <Accordion title="Auto-Numbering" icon="hashtag">
+    Enable "Add auto row numbers" in line item settings for hierarchical number generation (e.g., 1, 1.1, 1.1.1).
+  </Accordion>
+  <Accordion title="Sorting" icon="sort">
+    Configure sorting independently for each nesting level with "smart sort labels" indicating direction (ascending/descending for numbers, dates, and text).
+  </Accordion>
+</AccordionGroup>
+
+## Use Cases
+
+<CardGroup cols={3}>
+  <Card title="Invoice with Services" icon="file-invoice">
+    Services → Tasks → Subtasks
+  </Card>
+  <Card title="Bill of Materials" icon="boxes-stacked">
+    Products → Components → Parts
+  </Card>
+  <Card title="Project Report" icon="diagram-project">
+    Phases → Milestones → Deliverables
+  </Card>
+</CardGroup>
+
+## Best Practices
+
+- Use Airtable views for consistent sorting
+- Test with small datasets before large batches
+- Design columns so nested rows align logically with parents
+- Use clear, meaningful field names for easier maintenance
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Nested rows not appearing | Verify linked record fields contain data; check that Level 2/3 linked fields are selected in DocsAutomator; ensure placeholders use correct prefixes |
+| Wrong nesting order | Check Airtable view sorting; configure sorting in DocsAutomator's line item settings |
+| Merged cells misaligned | Ensure template table has correct column count; verify each level's placeholders are in separate rows |

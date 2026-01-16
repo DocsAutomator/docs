@@ -1,0 +1,69 @@
+---
+title: "PDF Expiration / Storage"
+description: "Configure how long generated PDFs are retained"
+icon: "clock"
+---
+
+DocsAutomator allows you to configure how long generated PDFs are retained in the platform's storage system.
+
+## Default Behavior
+
+<Note>
+For privacy reasons, DocsAutomator deletes PDFs soon after generation by default. The default setting is "immediate expiry," meaning PDFs are automatically removed shortly after they're created.
+</Note>
+
+## When Storage Matters
+
+For most integrations—such as Airtable and Glide—storing PDFs within DocsAutomator is typically unnecessary. The platform automatically places a copy of the generated PDF into your connected data source immediately after creation.
+
+## Adjusting Retention Settings
+
+If you need to extend PDF retention, you can modify the expiration setting on each automation in the automation settings interface.
+
+### Available Options
+
+| Option | Description |
+|--------|-------------|
+| Immediate | PDFs deleted shortly after generation (default) |
+| 1 Day | PDFs retained for 24 hours |
+| 7 Days | PDFs retained for one week |
+| 30 Days | PDFs retained for one month |
+| Never | PDFs retained indefinitely |
+
+## Use Cases for Extended Storage
+
+<CardGroup cols={2}>
+  <Card title="API Integration" icon="code">
+    API-based document generation requiring server-side storage
+  </Card>
+  <Card title="Temporary Hosting" icon="cloud">
+    Temporary PDF hosting before transferring to external systems
+  </Card>
+  <Card title="Compliance" icon="shield">
+    Compliance or audit requirements necessitating retention
+  </Card>
+  <Card title="eSign Documents" icon="signature">
+    eSign-enabled automations automatically set to "Never" expire
+  </Card>
+</CardGroup>
+
+## Configuration Steps
+
+<Steps>
+  <Step title="Open Automation Settings">
+    Navigate to your automation's settings
+  </Step>
+  <Step title="Find PDF Settings">
+    Locate the "PDF Expiration" option
+  </Step>
+  <Step title="Select Duration">
+    Choose your preferred retention period
+  </Step>
+  <Step title="Save">
+    Save your automation settings
+  </Step>
+</Steps>
+
+<Info>
+For [eSign-enabled automations](/features/docsautomator-esign), PDF expiration is automatically set to "Never" to ensure legal validity and compliance.
+</Info>

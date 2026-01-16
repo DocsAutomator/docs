@@ -1,0 +1,92 @@
+---
+title: "SmartSuite"
+description: "Create invoices, reports, contracts, and documents from your SmartSuite data"
+icon: "grid"
+---
+
+The DocsAutomator integration in SmartSuite is the most powerful and intuitive way to create invoices, reports, contracts, certificates, and just about any document from your SmartSuite data.
+
+The integration operates on a primary table and linked table basis, enabling documents generated from main records with data lists ("line items") sourced from connected fields/tables.
+
+## Step-by-Step Setup
+
+<Steps>
+  <Step title="Create Automation">
+    Begin by establishing a new automation within DocsAutomator's dashboard.
+  </Step>
+  <Step title="Connect SmartSuite as Data Source">
+    Authenticate with SmartSuite credentials to authorize DocsAutomator access to your account.
+  </Step>
+  <Step title="Select Google Doc Template">
+    Every automation in DocsAutomator needs a Google Doc template. You can start from scratch, use pre-designed templates, or browse the template gallery.
+  </Step>
+  <Step title="Configure Workspace and Table">
+    Select your workspace, solution, and primary data table. DocsAutomator's SmartSuite integration differentiates between a primary table and linked tables.
+  </Step>
+  <Step title="Set Document Name and Attachment Field">
+    Configure the following:
+    - **Document name field**: Controls generated document naming (formula fields recommended for unique naming)
+    - **Attachment field**: Specifies PDF storage location
+
+    <Note>
+    When using native SmartSuite actions, these settings are configured within automation steps.
+    </Note>
+  </Step>
+  <Step title="Map Fields and Line Items">
+    Map template placeholders to SmartSuite fields. Use AI mapping for automatic field matching. Line items appear when properly defined and linked fields exist.
+  </Step>
+  <Step title="Create Previews">
+    Generate document previews using up to 50 automatically loaded records, with search capability across all records.
+  </Step>
+  <Step title="Configure SmartSuite Automation">
+    Set up the automation in SmartSuite following the steps below.
+  </Step>
+</Steps>
+
+## Configuring SmartSuite Automation
+
+<Steps>
+  <Step title="Access Automations">
+    Navigate to Automations via the solution title menu in SmartSuite.
+  </Step>
+  <Step title="Define Trigger">
+    Set up trigger conditions (example: "Yes/No field = Yes").
+  </Step>
+  <Step title="Add DocsAutomator Action">
+    Select DocsAutomator native action.
+  </Step>
+  <Step title="Add API Key">
+    Get your API key from [workspace settings](https://app.docsautomator.co/settings/workspace/api).
+  </Step>
+  <Step title="Configure Document Naming">
+    Set up how documents will be named.
+  </Step>
+  <Step title="Add Update Action">
+    Add a subsequent "update records" action for PDF storage.
+  </Step>
+</Steps>
+
+## Key Configuration
+
+<Info>
+**API Key Location**: [https://app.docsautomator.co/settings/workspace/api](https://app.docsautomator.co/settings/workspace/api)
+</Info>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How can I sort line items?">
+    Sorting configuration occurs via the "Sort" option within linked field settings in SmartSuite.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Learn the template syntax
+  </Card>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Add tables and repeating rows
+  </Card>
+</CardGroup>

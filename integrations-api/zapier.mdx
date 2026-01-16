@@ -1,0 +1,87 @@
+---
+title: "Zapier"
+description: "Connect DocsAutomator to 7,000+ apps for automated document generation"
+icon: "bolt"
+---
+
+Zapier enables connection of DocsAutomator to over 7,000 applications for workflow automation. The integration allows document creation across various platforms using data from Zapier's extensive app ecosystem.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Full Feature Support" icon="check">
+    All DocsAutomator features work within Zapier
+  </Card>
+  <Card title="7,000+ Apps" icon="grid">
+    Trigger document generation from any Zapier-compatible app
+  </Card>
+  <Card title="No Coding Required" icon="wand-magic-sparkles">
+    Visual workflow builder for easy setup
+  </Card>
+  <Card title="Flexible Storage" icon="hard-drive">
+    Multiple PDF storage and distribution options
+  </Card>
+</CardGroup>
+
+## Step-by-Step Integration
+
+<Steps>
+  <Step title="Create Automation">
+    Establish a new automation in your DocsAutomator account.
+  </Step>
+  <Step title="Select Data Source">
+    Choose Zapier as your designated data source for the automation.
+  </Step>
+  <Step title="Configure Template">
+    Select your Google Doc template. Reference the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) for setup instructions. The Playground Template offers a quick testing option.
+  </Step>
+  <Step title="Add Zapier Action">
+    Within Zapier, add the DocsAutomator "Create Document" action to your workflow.
+  </Step>
+  <Step title="Authenticate">
+    Input your DocsAutomator API key (found in account settings) to authorize Zapier access and load existing automations.
+  </Step>
+  <Step title="Select Automation">
+    Choose which DocsAutomator automation to execute.
+  </Step>
+  <Step title="Map Data Fields">
+    - Assign document name
+    - Map template placeholders to Zapier data sources or static values
+  </Step>
+  <Step title="Test Generation">
+    Enable Document Previews during testing to generate watermarked PDFs without consuming credits.
+  </Step>
+</Steps>
+
+## Line Items Implementation
+
+For table-based data, use Zapier's **"Line Itemizer"** formatter feature to prepare comma-separated data. Map the resulting output to line item fields in DocsAutomator.
+
+<Tip>
+The Line Itemizer helps you transform multiple data rows into the format DocsAutomator expects for line items.
+</Tip>
+
+## Supported Automation Types
+
+| Type | Description |
+|------|-------------|
+| API automations | Manual data mapping within Zapier |
+| Airtable automations | Record ID passthrough |
+| ClickUp automations | Task ID passthrough |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Learn the template syntax
+  </Card>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Master tables and repeating rows
+  </Card>
+  <Card title="API Reference" icon="code" href="/integrations-api/docsautomator-api">
+    Advanced API integration
+  </Card>
+  <Card title="Run History" icon="clock-rotate-left" href="/features/run-history">
+    Monitor document generation
+  </Card>
+</CardGroup>

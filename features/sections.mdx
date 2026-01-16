@@ -1,0 +1,90 @@
+---
+title: "Sections"
+description: "Add dynamic sections to render larger areas of your document conditionally"
+icon: "square-dashed"
+---
+
+DocsAutomator enables rendering of entire document areas dynamically using Sections. These are defined by wrapping content with opening and closing tags that include a section name.
+
+## Syntax
+
+**Opening tag:**
+```
+{{section_SOME_NAME}}
+```
+
+**Closing tag:**
+```
+{{/section_SOME_NAME}}
+```
+
+<Note>
+The closing tag requires a forward slash before `section`.
+</Note>
+
+## Example
+
+```
+{{section_premium_content}}
+
+This entire area will only appear if the condition is met.
+
+You can include any content here:
+- Text
+- Images
+- Tables
+- Line items
+
+{{/section_premium_content}}
+```
+
+<Tip>
+Add color to section tags in your Google Doc for easier identification within templates.
+</Tip>
+
+## Configuration
+
+Once sections are defined in the template, they appear in automation settings where conditional rendering rules can be applied.
+
+## Available Conditions
+
+The system supports six conditional operators:
+
+| Condition | Description |
+|-----------|-------------|
+| equals | Value exactly matches |
+| does not equal | Value does not match |
+| contains | Value includes substring |
+| does not contain | Value excludes substring |
+| exists | Value is present (not empty) |
+| does not exist | Value is empty or missing |
+
+These conditions are evaluated against placeholder values passed to the document.
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Premium Content" icon="crown">
+    Show additional content for premium customers
+  </Card>
+  <Card title="Legal Clauses" icon="scale-balanced">
+    Include specific contract clauses based on agreement type
+  </Card>
+  <Card title="Regional Content" icon="globe">
+    Display region-specific information
+  </Card>
+  <Card title="Optional Details" icon="plus">
+    Show extended information when available
+  </Card>
+</CardGroup>
+
+## Related Pages
+
+<CardGroup cols={2}>
+  <Card title="Conditional Show/Hide" icon="eye" href="/features/advanced-placeholder-options/conditional-show-hide">
+    Show/hide individual placeholders
+  </Card>
+  <Card title="Conditional Paragraph Deletion" icon="trash" href="/features/advanced-placeholder-options/conditional-paragraph-row-deletion">
+    Delete lines when empty
+  </Card>
+</CardGroup>

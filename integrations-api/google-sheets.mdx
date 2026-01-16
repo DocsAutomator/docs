@@ -1,0 +1,127 @@
+---
+title: "Google Sheets"
+description: "Generate documents from spreadsheet data with automatic PDF storage"
+icon: "table"
+---
+
+DocsAutomator's Google Sheets integration enables rapid document generation from spreadsheet data. The system operates on a primary sheet and linked sheets basis, converting rows into professional PDFs or Google Docs.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Primary Sheet Processing" icon="file-spreadsheet">
+    Documents are generated from rows in your primary sheet
+  </Card>
+  <Card title="Linked Sheets" icon="link">
+    Line items can be added from related sheets
+  </Card>
+  <Card title="Automatic PDF Storage" icon="hard-drive">
+    Generated PDFs save to specified columns automatically
+  </Card>
+  <Card title="Flexible Triggers" icon="bolt">
+    Choose between auto-creation, webhooks, or Apps Script buttons
+  </Card>
+</CardGroup>
+
+## Step-by-Step Setup
+
+<Steps>
+  <Step title="Create an Automation">
+    Initialize a new automation in your DocsAutomator account.
+  </Step>
+  <Step title="Select Data Source">
+    Choose Google Sheets as your data integration source.
+  </Step>
+  <Step title="Choose Template">
+    Select or create a Google Doc template to use as your document foundation.
+  </Step>
+  <Step title="Prepare Your Spreadsheet">
+    Structure your sheet with:
+    - Header row with column titles (required)
+    - Primary sheet containing main document data
+    - Linked sheets for related line items (optional)
+  </Step>
+  <Step title="Select Your Google Sheet">
+    Connect your specific spreadsheet to the automation.
+  </Step>
+  <Step title="Define Primary Sheet">
+    Identify which sheet contains your primary records.
+  </Step>
+  <Step title="Configure Key Columns">
+    Set up the following columns:
+    - **Primary Column**: Identifies rows (e.g., Invoice Number)
+    - **Document Name Column**: Unique identifier for generated documents
+    - **PDF Link Column**: Where generated PDF links are stored
+  </Step>
+  <Step title="Map Placeholders">
+    Connect template placeholders to spreadsheet columns. AI-assisted mapping is available.
+  </Step>
+  <Step title="Configure Line Items (Optional)">
+    Select the line item sheet, set the primary column for matching, and map line item placeholders to columns.
+  </Step>
+  <Step title="Create Previews">
+    Test document generation using sample rows before full deployment.
+  </Step>
+  <Step title="Setup Document Creation Trigger">
+    Choose your preferred triggering method.
+  </Step>
+</Steps>
+
+## Triggering Methods
+
+<Tabs>
+  <Tab title="Auto-Create">
+    System checks every 5 minutes for new rows and automatically generates documents.
+
+    <Info>
+    Perfect for hands-off automation where documents should be created as soon as data is added.
+    </Info>
+  </Tab>
+  <Tab title="Webhook Formula">
+    Simple sheet formula creates on-demand generation links.
+
+    <Tip>
+    Add a formula to create clickable links that trigger document generation when clicked.
+    </Tip>
+  </Tab>
+  <Tab title="Apps Script">
+    Custom menu button for batch generation. Ideal for generating multiple documents at once.
+  </Tab>
+</Tabs>
+
+## Additional Features
+
+<AccordionGroup>
+  <Accordion title="Dynamic Images" icon="image">
+    Add images via column links. Separate multiple images with commas.
+  </Accordion>
+  <Accordion title="PDF Settings" icon="file-pdf">
+    Configure expiration periods for generated PDFs under template options.
+  </Accordion>
+  <Accordion title="Google Docs Saving" icon="file-lines">
+    Enable Google Doc generation and specify storage location and Drive folder.
+  </Accordion>
+  <Accordion title="PDF Storage" icon="folder">
+    Save generated PDFs to Google Drive with optional custom folder paths.
+  </Accordion>
+  <Accordion title="Email Distribution" icon="envelope">
+    Send documents automatically with dynamic parameters and conditional logic.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Learn how to add tables and repeating rows
+  </Card>
+  <Card title="Send Email" icon="envelope" href="/features/actions-after-document-generation/send-email">
+    Configure automatic email delivery
+  </Card>
+  <Card title="Save PDFs to Drive" icon="hard-drive" href="/features/actions-after-document-generation/save-pdfs-in-google-drive">
+    Store PDFs in Google Drive folders
+  </Card>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Master the template syntax
+  </Card>
+</CardGroup>

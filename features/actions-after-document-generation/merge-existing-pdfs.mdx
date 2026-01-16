@@ -1,0 +1,73 @@
+---
+title: "Merge Existing PDFs"
+description: "Combine generated documents with existing PDF files"
+icon: "object-group"
+---
+
+This feature enables you to incorporate pre-existing PDF files into your generated documents.
+
+<Note>
+**Availability**: Only available for Airtable, Google Sheets, ClickUp, SmartSuite, and API.
+</Note>
+
+## Implementation Methods
+
+<Tabs>
+  <Tab title="Airtable / Google Sheets / ClickUp / SmartSuite">
+    Designate a specific field or column within DocsAutomator's interface that contains one or multiple PDFs intended for merging with the generated documents.
+
+    1. In your automation settings, find the "Merge Existing PDFs" option
+    2. Select the field/column containing your PDF files
+    3. Configure the insert position (before or after)
+  </Tab>
+  <Tab title="API">
+    Pass the top-level key `existingPdfs` containing an array of one or more publicly accessible PDF URLs.
+
+    ```json
+    {
+      "docId": "your-automation-id",
+      "data": {
+        "customer_name": "Acme Corp"
+      },
+      "existingPdfs": [
+        "https://example.com/terms-and-conditions.pdf",
+        "https://example.com/appendix-a.pdf"
+      ]
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Configuration Options
+
+### Insert Position
+
+| Option | Behavior |
+|--------|----------|
+| Insert After (Default) | Appends additional PDFs following the generated document |
+| Insert Before | Positions existing documents ahead of newly generated content |
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Terms & Conditions" icon="file-contract">
+    Append standard legal documents to contracts
+  </Card>
+  <Card title="Cover Pages" icon="file-image">
+    Insert branded cover pages before generated content
+  </Card>
+  <Card title="Appendices" icon="files">
+    Add reference documents after reports
+  </Card>
+  <Card title="Certificates" icon="certificate">
+    Include supporting certifications with proposals
+  </Card>
+</CardGroup>
+
+## Requirements
+
+<Warning>
+- PDFs must be publicly accessible via URL (for API)
+- PDF fields must contain valid PDF files (for data source integrations)
+- Maximum file size limits may apply
+</Warning>

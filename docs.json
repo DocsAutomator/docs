@@ -1,0 +1,130 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "DocsAutomator",
+  "colors": {
+    "primary": "#4f46e5",
+    "light": "#818cf8",
+    "dark": "#3730a3"
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "languages": [
+      {
+        "language": "en",
+        "tabs": [
+          {
+            "tab": "Documentation",
+            "groups": [
+              {
+                "group": "DocsAutomator Basics",
+                "pages": [
+                  "index",
+                  "docsautomator-basics/quickstart-guide",
+                  "docsautomator-basics/google-doc-template-guide"
+                ]
+              },
+              {
+                "group": "Integrations / API",
+                "pages": [
+                  "integrations-api/airtable",
+                  "integrations-api/google-sheets",
+                  "integrations-api/smartsuite",
+                  "integrations-api/glide",
+                  "integrations-api/noloco",
+                  "integrations-api/clickup",
+                  "integrations-api/zapier",
+                  "integrations-api/n8n",
+                  "integrations-api/docsautomator-api"
+                ]
+              },
+              {
+                "group": "DocsAutomator eSign",
+                "pages": [
+                  "features/docsautomator-esign",
+                  "features/docsautomator-esign/compliance-and-legal-validity",
+                  "features/docsautomator-esign/docsautomator-esign-api-reference"
+                ]
+              },
+              {
+                "group": "Line Items",
+                "pages": [
+                  "features/line-items",
+                  "features/line-items/nested-line-items",
+                  "features/line-items/line-items-grouping-+-calculations",
+                  "features/line-items/auto-row-numbers"
+                ]
+              },
+              {
+                "group": "Advanced Placeholder Options",
+                "pages": [
+                  "features/advanced-placeholder-options",
+                  "features/advanced-placeholder-options/conditional-paragraph-row-deletion",
+                  "features/advanced-placeholder-options/enable-markdown-formatting",
+                  "features/advanced-placeholder-options/hidden-values",
+                  "features/advanced-placeholder-options/conditional-show-hide",
+                  "features/advanced-placeholder-options/conditional-styling"
+                ]
+              },
+              {
+                "group": "Actions After Document Generation",
+                "pages": [
+                  "features/actions-after-document-generation",
+                  "features/actions-after-document-generation/saving-google-docs",
+                  "features/actions-after-document-generation/save-pdfs-in-google-drive",
+                  "features/actions-after-document-generation/send-email",
+                  "features/actions-after-document-generation/merge-existing-pdfs",
+                  "features/actions-after-document-generation/notify-webhook"
+                ]
+              },
+              {
+                "group": "More Features",
+                "pages": [
+                  "features/dynamic-images",
+                  "features/sections",
+                  "features/document-previews",
+                  "features/run-history",
+                  "features/pdf-expiration-storage",
+                  "features/team-management",
+                  "features/workspaces",
+                  "features/transfer-automations"
+                ]
+              },
+              {
+                "group": "Resources",
+                "pages": [
+                  "more/docsautomator-reviews",
+                  "more/docsautomator-unlimited-fair-use-policy"
+                ]
+              },
+              {
+                "group": "Troubleshooting Guide",
+                "pages": [
+                  "more/troubleshooting-guide",
+                  "more/troubleshooting-guide/airtable-120-seconds-limit-on-automation-scripts",
+                  "more/troubleshooting-guide/airtable-attachment-url-issue-when-sending-emails",
+                  "more/troubleshooting-guide/data-source-is-set-as-airtable-and-no-record-id-is-given",
+                  "more/troubleshooting-guide/google-shared-drive-template-permissions"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footerSocials": {
+    "twitter": "https://x.com/docsautomator",
+    "youtube": "https://youtube.com/@docsautomator"
+  },
+  "feedback": {
+    "thumbsRating": true
+  },
+  "search": {
+    "prompt": "Search DocsAutomator docs..."
+  }
+}

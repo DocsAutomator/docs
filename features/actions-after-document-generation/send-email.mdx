@@ -1,0 +1,126 @@
+---
+title: "Send Email"
+description: "Automatically send generated documents via email"
+icon: "envelope"
+---
+
+DocsAutomator provides flexible email automation with two service options: DocsAutomator Mail for reliable delivery and Gmail integration for sending from your own domain.
+
+## Email Service Options
+
+<Tabs>
+  <Tab title="DocsAutomator Mail (Default)">
+    - **Sender**: DocsAutomator `<noreply@docsautomator.com>`
+    - **Benefits**: High deliverability, no setup required, reliable infrastructure
+    - **Best for**: Business communications and automated notifications
+    - **Setup**: Enabled by default with no additional configuration
+  </Tab>
+  <Tab title="Gmail Integration">
+    - **Sender**: Your connected Gmail account
+    - **Benefits**: Personal sender reputation, custom sender names, your domain
+    - **Best for**: Personal communications and branded emails
+    - **Requirements**: Gmail account connection via OAuth
+  </Tab>
+</Tabs>
+
+## Connecting Gmail
+
+<Steps>
+  <Step title="Select Gmail">
+    Select Gmail as the email service in automation settings
+  </Step>
+  <Step title="Authorize">
+    Click "Connect Gmail Account" to authorize DocsAutomator
+  </Step>
+  <Step title="Choose Account">
+    Choose which Gmail account to use
+  </Step>
+  <Step title="Custom Name (Optional)">
+    Set a custom sender name to replace the default "DocsAutomator" display
+  </Step>
+</Steps>
+
+<Info>
+Multiple Gmail accounts can be connected for use across different automations.
+</Info>
+
+## Email Configuration
+
+### Recipients
+
+- Static emails entered directly
+- Dynamic emails using placeholders like `{{email}}` or `{{contact_email}}`
+- Multiple recipients separated by commas
+
+### Subject Line
+
+- Static text entered directly
+- Dynamic content using placeholders
+- Example: `Invoice #{{invoice_number}} for {{client_name}}`
+
+### Email Content
+
+- Rich text editor for formatting
+- Dynamic placeholders throughout email body
+- Access to document data dynamically
+
+### PDF Attachments
+
+- Included by default
+- Optional: Deselect "Attach Generated PDF to Email" to send notification emails with download links instead
+
+## Conditional Email Sending
+
+Send emails only when specific conditions are met based on document data.
+
+### Setting Up Conditions
+
+<Steps>
+  <Step title="Open Conditions">
+    Click the conditions icon in email settings
+  </Step>
+  <Step title="Add Condition">
+    Add conditions using format: `if {{placeholder}} [condition] value`
+  </Step>
+  <Step title="Configure Logic">
+    Multiple conditions use OR logic (email sends if ANY condition is met)
+  </Step>
+</Steps>
+
+### Available Conditions
+
+| Condition | Description |
+|-----------|-------------|
+| equals | Exact match |
+| does not equal | Not equal to value |
+| contains | Contains substring |
+| does not contain | Does not contain substring |
+
+## Test Email Feature
+
+<Tip>
+Before going live, test your email configuration:
+1. Click "Send Test Email" in email settings
+2. Enter a recipient email address
+3. Review the sample with your configured subject, content, and attachment
+</Tip>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Gmail Issues">
+    - **"Gmail account inactive"**: Reconnect your Gmail account in settings
+    - **"No Gmail account selected"**: Choose a Gmail account in email service settings
+    - **Authentication errors**: Re-authorize Gmail access in workspace settings > integrations
+  </Accordion>
+  <Accordion title="Delivery Issues">
+    - Check spam folders and verify recipient addresses
+    - Contact support for DocsAutomator Mail delivery investigation
+    - Personal Gmail accounts have daily sending limits
+  </Accordion>
+  <Accordion title="Common Errors">
+    - **Invalid email format**: Ensure placeholder values contain valid email addresses
+    - **Missing placeholders**: Verify all placeholders exist in your document template
+    - **Condition errors**: Check that condition placeholders have values in your data
+  </Accordion>
+</AccordionGroup>

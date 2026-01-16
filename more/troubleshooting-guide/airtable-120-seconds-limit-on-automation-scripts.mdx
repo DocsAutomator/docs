@@ -1,0 +1,48 @@
+---
+title: "Airtable: 120 Seconds Limit on Automation Scripts"
+description: "Resolve timeout errors when generating documents via Airtable automations"
+icon: "clock"
+---
+
+## Problem
+
+When generating documents via an Airtable automation script, requests that exceed 120 seconds fail with an error. This is an Airtable platform limitation on automation script execution time.
+
+<Warning>
+Airtable enforces a 120-second (2 minute) execution limit on all automation scripts. Complex documents may exceed this limit.
+</Warning>
+
+## Solution
+
+Add `async: true` to your automation script. This allows the script to execute asynchronously without blocking on the DocsAutomator request.
+
+### Implementation Steps
+
+<Steps>
+  <Step title="Open Automation Settings">
+    Navigate to the bottom of your DocsAutomator automation configuration page
+  </Step>
+  <Step title="Enable Async Mode">
+    Locate the toggle to enable async mode and turn it on
+  </Step>
+  <Step title="Copy the Script">
+    When enabled, a code snippet with `async: true` becomes available. Copy this adjusted script from the code area.
+  </Step>
+  <Step title="Update Airtable">
+    Paste the updated script into your Airtable automation
+  </Step>
+</Steps>
+
+## How It Works
+
+The asynchronous approach prevents the 120-second timeout by allowing Airtable to process the script without waiting for the complete response from DocsAutomator. This enables longer document generation processes to complete successfully.
+
+<Info>
+With async mode enabled, the script returns immediately and DocsAutomator continues processing in the background. The generated PDF will still be saved to your specified attachment field.
+</Info>
+
+## Related
+
+<Card title="Airtable Integration" icon="database" href="/integrations-api/airtable">
+  Learn more about setting up Airtable with DocsAutomator
+</Card>

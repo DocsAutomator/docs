@@ -1,0 +1,245 @@
+---
+title: "n8n"
+description: "Powerful workflow automation with the DocsAutomator community node"
+icon: "sitemap"
+---
+
+n8n is one of the most powerful workflow automation platforms available today, with extensive AI capabilities and agent-building features. The DocsAutomator community node enables document creation, automation management, and feature access directly within n8n workflows.
+
+## Key Benefits
+
+<CardGroup cols={2}>
+  <Card title="Self-Hosted Option" icon="server">
+    Run n8n on your own infrastructure for complete data control
+  </Card>
+  <Card title="Generous Free Tier" icon="gift">
+    n8n cloud offers a complimentary plan for getting started
+  </Card>
+  <Card title="Full Automation Management" icon="gears">
+    Programmatically create, update, duplicate, and delete automations
+  </Card>
+  <Card title="Flexible Data Transformation" icon="shuffle">
+    Use n8n's powerful expression system to transform data
+  </Card>
+</CardGroup>
+
+## Installation
+
+<Tabs>
+  <Tab title="From Nodes Panel (Recommended)">
+    <Steps>
+      <Step title="Add New Node">
+        Click the **+** button to add a new node
+      </Step>
+      <Step title="Search">
+        Search for "DocsAutomator"
+      </Step>
+      <Step title="Install">
+        Click on the DocsAutomator node, then click **Install** when prompted
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="From Settings">
+    <Steps>
+      <Step title="Navigate to Settings">
+        Go to **Settings** > **Community Nodes**
+      </Step>
+      <Step title="Install Node">
+        Click **Install a community node**
+      </Step>
+      <Step title="Enter Package Name">
+        Enter `n8n-nodes-docsautomator`
+      </Step>
+      <Step title="Confirm">
+        Click **Install**
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Self-Hosted">
+    Follow the [n8n community nodes installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) for your specific setup.
+  </Tab>
+</Tabs>
+
+## Setting Up Credentials
+
+<Steps>
+  <Step title="Get Your API Key">
+    1. Log in to your [DocsAutomator account](https://app.docsautomator.co)
+    2. Navigate to **Settings** > **API Key**
+    3. Copy your API key
+  </Step>
+  <Step title="Add Credentials in n8n">
+    1. Go to **Credentials** > **Add Credential**
+    2. Search for "DocsAutomator API"
+    3. Paste your API key into the **API Key** field
+    4. Click **Save**
+  </Step>
+</Steps>
+
+<Tip>
+You can also add credentials directly when configuring a DocsAutomator node by clicking on the credential dropdown and selecting "Create New".
+</Tip>
+
+## Creating Documents
+
+<Steps>
+  <Step title="Add the DocsAutomator Node">
+    Click the **+** button and search for "DocsAutomator"
+  </Step>
+  <Step title="Select Your Credentials">
+    Choose your configured DocsAutomator API credentials from the dropdown
+  </Step>
+  <Step title="Configure the Operation">
+    - **Resource**: Select `Document`
+    - **Operation**: Select `Create`
+  </Step>
+  <Step title="Select an Automation">
+    Choose the automation you want to use from the **Automation** dropdown
+
+    <Note>
+    Only automations with **API** or **n8n** as the data source will appear in this list.
+    </Note>
+  </Step>
+  <Step title="Map Placeholder Values">
+    For each placeholder in your template, provide a value. You can enter static text or use n8n expressions to map data from previous nodes.
+  </Step>
+  <Step title="Configure Line Items (Optional)">
+    If your template includes line items, expand the **Line Items** section.
+  </Step>
+  <Step title="Set Processing Options">
+    - **Preview Mode**: Enable to generate a preview document (doesn't count against credits)
+    - **Async Processing**: Enable to return immediately with a job ID
+  </Step>
+  <Step title="Test the Workflow">
+    Click **Test Step** to generate a document and verify your configuration.
+  </Step>
+</Steps>
+
+## Working with Line Items
+
+Line items must be provided as a JSON array of objects. Each object represents one row, with keys matching your placeholder names.
+
+```json
+[
+  {
+    "item_name": "Widget A",
+    "quantity": 2,
+    "unit_price": 10.00,
+    "total": 20.00
+  },
+  {
+    "item_name": "Widget B",
+    "quantity": 1,
+    "unit_price": 25.50,
+    "total": 25.50
+  }
+]
+```
+
+### Multiple Line Item Sets
+
+If your template has multiple line item sections:
+1. Click **Add Line Item**
+2. Select the line item type (e.g., "Line Items 1", "Line Items 2")
+3. Provide the JSON array for that section
+
+### Transforming Data
+
+Use n8n's built-in nodes to transform data:
+- **Code node**: Write JavaScript to transform complex data structures
+- **Split Out node**: Convert arrays into individual items
+- **Aggregate node**: Combine multiple items into an array
+
+```javascript
+const items = $input.all();
+
+const lineItems = items.map(item => ({
+  item_name: item.json.product.name,
+  quantity: item.json.qty,
+  unit_price: item.json.price,
+  total: item.json.qty * item.json.price
+}));
+
+return { json: { lineItems: JSON.stringify(lineItems) } };
+```
+
+## Managing Automations
+
+The n8n node provides full CRUD operations for automations:
+
+| Operation | Description |
+|-----------|-------------|
+| **Get Many** | List all automations in your workspace |
+| **Get** | Retrieve a single automation by ID |
+| **Create** | Create a new automation |
+| **Update** | Modify an existing automation's settings |
+| **Duplicate** | Create a copy of an automation |
+| **Delete** | Remove an automation |
+
+## Expression Tips
+
+Common n8n expressions for DocsAutomator:
+
+```javascript
+// Format dates
+{{ $now.toFormat('MMMM d, yyyy') }}
+
+// Access nested data
+{{ $json.customer.address.city }}
+
+// Conditional values
+{{ $json.discount > 0 ? $json.discount + '%' : 'None' }}
+
+// Format currency
+{{ '$' + $json.amount.toFixed(2) }}
+
+// Join array values
+{{ $json.tags.join(', ') }}
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Use Preview Mode for Testing" icon="eye">
+    Enable **Preview Mode** to verify placeholder mapping and document formatting without using credits.
+  </Accordion>
+  <Accordion title="Error Handling" icon="triangle-exclamation">
+    - Enable **Continue On Fail** to prevent workflow failure
+    - Use an **Error Trigger** workflow to handle failures gracefully
+    - Check error output for detailed messages
+  </Accordion>
+  <Accordion title="Async Processing for Large Documents" icon="clock">
+    For documents that take longer to generate:
+    1. Enable **Async Processing** to receive a job ID immediately
+    2. Use a **Wait** node to pause for processing
+    3. Check the job status using the DocsAutomator API
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Which automations appear in n8n?">
+    Only automations with **API** or **n8n** as the data source will appear. To use an automation with n8n, go to DocsAutomator, open your automation settings, and change the **Data Source** to "API" or "n8n".
+  </Accordion>
+  <Accordion title="How do I handle errors in my workflow?">
+    Use **Continue On Fail** on the DocsAutomator node, create an **Error Trigger** workflow, or use an **IF node** to check for error conditions.
+  </Accordion>
+</AccordionGroup>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="n8n Documentation" icon="book" href="https://docs.n8n.io/">
+    Official n8n documentation
+  </Card>
+  <Card title="Community Nodes Guide" icon="puzzle-piece" href="https://docs.n8n.io/integrations/community-nodes/">
+    Learn about n8n community nodes
+  </Card>
+  <Card title="DocsAutomator API" icon="code" href="/integrations-api/docsautomator-api">
+    API reference documentation
+  </Card>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Learn the template syntax
+  </Card>
+</CardGroup>

@@ -1,0 +1,56 @@
+---
+title: "Airtable: No Record ID Given"
+description: "Resolve errors when no valid record ID is passed to DocsAutomator"
+icon: "database"
+---
+
+## Problem
+
+When generating documents from Airtable, DocsAutomator requires a valid Record ID to know which record to use for document generation. Without this, the process fails.
+
+## Error Location
+
+The error typically appears:
+- In Airtable automation scripts on the right side of the script window
+- Often accompanied by a red squiggly line under the variable name in the code editor
+
+## Solution
+
+### Check Input Variables
+
+<Steps>
+  <Step title="Open Input Variables">
+    Navigate to the **Input variables** section on the left side of your Airtable automation script
+  </Step>
+  <Step title="Verify Record ID">
+    Verify that a record ID has been properly defined
+  </Step>
+  <Step title="Check Variable Name">
+    Ensure the variable name is spelled exactly as `recId` (case-sensitive)
+  </Step>
+</Steps>
+
+### Configure Correctly
+
+To fix the issue:
+
+1. Select the **record id field** from your input variables dropdown
+2. Name this variable `recId` with the correct capitalization
+3. Confirm the variable appears without error indicators in your script
+
+<Warning>
+The variable must be named exactly `recId` (case-sensitive). Common mistakes include:
+- `RecId` (wrong capitalization)
+- `record_id` (wrong format)
+- `recordId` (wrong format)
+</Warning>
+
+## Why This Matters
+
+DocsAutomator needs a valid Record ID to be passed so that it knows for which record you're trying to generate a document. Without this identifier, the system cannot retrieve the correct data for your template.
+
+## Related
+
+<Card title="Airtable Integration" icon="database" href="/integrations-api/airtable">
+  Complete guide to Airtable setup and configuration
+</Card>

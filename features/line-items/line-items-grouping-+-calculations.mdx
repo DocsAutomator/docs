@@ -1,0 +1,77 @@
+---
+title: "Line Items Grouping + Calculations"
+description: "Group line items and add calculations like sum, average, and count"
+icon: "calculator"
+---
+
+DocsAutomator enables grouping of line items by specified variables to create structured tables. Groups can be customized with styling options and calculations.
+
+## General Setup
+
+Configure grouping in automation settings by selecting a placeholder/variable as the grouping key. The system then organizes line items according to values for that variable.
+
+**Example:** Grouping by "Status" variable creates separate sections for each status value.
+
+<Warning>
+Merged cells will be unmerged when grouping is active.
+</Warning>
+
+## Styling Options
+
+Group headers support customization via a gear icon menu:
+
+| Option | Description |
+|--------|-------------|
+| Background Color | Customize header background |
+| Text Color | Adjust text appearance |
+| Headline Format | Choose "Placeholder — Value" or "Value only" |
+| Text Alignment | Left, center, or right positioning |
+| Bold | Enable/disable bold formatting |
+| Hide Grouping Key Column | Remove the grouping variable column |
+| Sort Order | Ascending, descending, or manual ordering |
+
+### Manual Sorting
+
+When selecting manual sort order, you can specify group values and their sequence. Unmentioned values appear afterward in alphabetical order.
+
+## Group Calculations
+
+Calculations generate summary rows below each group for numeric/currency columns.
+
+### Supported Operations
+
+| Operation | Description |
+|-----------|-------------|
+| Sum | Total of all values |
+| Average | Mean of all values |
+| Min | Smallest value |
+| Max | Largest value |
+| Median | Middle value |
+| Count | Number of items |
+
+### Configuration Options
+
+| Option | Description |
+|--------|-------------|
+| Column Calculations | Select columns and calculation types by line item key |
+| Background Color | Styling for calculation row |
+| Text Color | Text appearance |
+| Row Text | Label preceding calculations |
+| Text Alignment | Position of row text |
+| Bold | Apply bold formatting |
+| Merge Cells | Consolidate preceding cells |
+
+<Note>
+Group calculations only work for number or currency number columns. Number format is automatically detected and maintained.
+</Note>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What determines sort order?">
+    Groups sort alphabetically, reverse alphabetically, or manually per configuration.
+  </Accordion>
+  <Accordion title="Can I have multiple calculation rows?">
+    Yes, you can configure multiple calculations (e.g., both Sum and Average) for each column.
+  </Accordion>
+</AccordionGroup>

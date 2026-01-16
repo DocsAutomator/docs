@@ -1,0 +1,133 @@
+---
+title: "Line Items"
+description: "Add variable-length lists and tables to your documents"
+icon: "list"
+---
+
+DocsAutomator provides powerful capabilities for incorporating groups of variable-length data into documents. Line items represent lists of things where the quantity isn't predetermined—such as invoice line items, conference attendees, or recipe ingredients.
+
+<Info>
+**Line Items = Groups of data / lists of things**
+</Info>
+
+## Syntax
+
+Line items are declared using the syntax `{{line_items_$num}}` at the beginning of a table row, with associated variables placed in subsequent cells.
+
+```
+{{#line_items_1}}
+{{line_items_1.description}}  {{line_items_1.quantity}}  {{line_items_1.price}}
+{{/line_items_1}}
+```
+
+## Data Source Mapping
+
+| Data Source | Mapping Method |
+|-------------|----------------|
+| Airtable | Automation interface |
+| Google Sheets | Linked sheet selection |
+| SmartSuite | Linked field mapping |
+| Glide | Within Glide interface |
+| Noloco | Within Noloco interface |
+| Zapier | Zapier configuration |
+| API | Array of objects |
+
+## Multiple Line Item Sets
+
+Multiple line item sets can be included by incrementing the number:
+
+```
+{{#line_items_1}}
+...
+{{/line_items_1}}
+
+{{#line_items_2}}
+...
+{{/line_items_2}}
+```
+
+<Note>
+Line item sets must be numbered in correct order (1, 2, 3, etc.).
+</Note>
+
+## Features
+
+### Adding Images in Line Items
+
+Image placeholders use the `{{image_name}}` prefix and can map single or multiple images:
+
+```
+{{#line_items_1}}
+{{image_line_items_1.product_photo}}  {{line_items_1.name}}  {{line_items_1.price}}
+{{/line_items_1}}
+```
+
+### Grouping
+
+Line items can be grouped by any variable except images. See [Line Items Grouping + Calculations](/features/line-items/line-items-grouping-+-calculations).
+
+### Conditional Display
+
+Rows can be conditionally shown/hidden based on placeholder values through options/gear icons. See [Conditional Show/Hide](/features/advanced-placeholder-options/conditional-show-hide).
+
+### Conditional Styling
+
+Text and rows support dynamic styling based on conditions:
+- Even/odd row alternating colors
+- Custom text formatting
+- Row background colors
+
+See [Conditional Styling](/features/advanced-placeholder-options/conditional-styling).
+
+## Constraints
+
+<Warning>
+- Variables must be unique per line item row
+- Line items must occupy entire rows, not partial rows
+- No limit on items passed (users report hundreds to thousands)
+</Warning>
+
+## API Example
+
+When using the API, pass line items as an array of objects:
+
+```json
+{
+  "docId": "your-automation-id",
+  "data": {
+    "customer_name": "Acme Corp",
+    "invoice_date": "2024-01-15"
+  },
+  "line_items_1": [
+    {
+      "description": "Widget A",
+      "quantity": 2,
+      "unit_price": 10.00,
+      "total": 20.00
+    },
+    {
+      "description": "Widget B",
+      "quantity": 1,
+      "unit_price": 25.00,
+      "total": 25.00
+    }
+  ]
+}
+```
+
+## Related Pages
+
+<CardGroup cols={2}>
+  <Card title="Nested Line Items" icon="layer-group" href="/features/line-items/nested-line-items">
+    Create hierarchical data structures
+  </Card>
+  <Card title="Grouping + Calculations" icon="calculator" href="/features/line-items/line-items-grouping-+-calculations">
+    Group and calculate totals
+  </Card>
+  <Card title="Auto Row Numbers" icon="hashtag" href="/features/line-items/auto-row-numbers">
+    Automatic row numbering
+  </Card>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Complete template syntax
+  </Card>
+</CardGroup>

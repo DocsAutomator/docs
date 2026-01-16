@@ -1,0 +1,50 @@
+---
+title: "Airtable: Attachment URL Issue When Sending Emails"
+description: "Resolve 'attachment URL is disallowed' errors in Airtable automations"
+icon: "paperclip"
+---
+
+## Problem
+
+When sending generated files as attachments via Airtable automation, you receive an attachment URL error message: "an attachment url is disallowed"
+
+## Root Cause
+
+The automation fires before the attachment is fully uploaded to Airtable's storage system, causing the URL to become invalid.
+
+## Solution
+
+Implement a waiting mechanism using a formula field that matches Airtable's file storage URL pattern. This ensures the file upload completes before the automation triggers.
+
+### Implementation Steps
+
+<Steps>
+  <Step title="Create a Formula Field">
+    Add a formula field in your Airtable table that checks for valid attachment URLs
+  </Step>
+  <Step title="Add Condition to Automation">
+    Configure your automation to only trigger when the formula field indicates the attachment is ready
+  </Step>
+  <Step title="Test the Workflow">
+    Run a test to ensure the automation waits for the attachment to fully upload
+  </Step>
+</Steps>
+
+## Additional Resources
+
+For detailed instructions, refer to Airtable's official troubleshooting documentation:
+
+<Card title="Airtable Support Article" icon="external-link" href="https://support.airtable.com/docs/troubleshooting-airtable-automations">
+  Troubleshooting Airtable Automations - specifically the section on "An attachment URL is disallowed"
+</Card>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Airtable Integration" icon="database" href="/integrations-api/airtable">
+    Complete Airtable setup guide
+  </Card>
+  <Card title="Send Email" icon="envelope" href="/features/actions-after-document-generation/send-email">
+    Email configuration options
+  </Card>
+</CardGroup>

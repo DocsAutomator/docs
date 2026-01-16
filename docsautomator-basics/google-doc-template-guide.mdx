@@ -1,0 +1,125 @@
+---
+title: "Google Doc Template Guide"
+description: "Learn how to create templates in Google Docs for DocsAutomator"
+icon: "file-lines"
+---
+
+This guide explains how to create templates in Google Docs for DocsAutomator, covering the platform's template syntax and best practices.
+
+## Template Syntax
+
+DocsAutomator uses three types of variables declared with double curly brackets `{{...}}`:
+
+### Text Variables/Placeholders
+
+Basic text placeholders replace content in your document with data from your source.
+
+```
+{{variableName}}
+```
+
+<CodeGroup>
+```text Examples
+{{name}}
+{{email}}
+{{company}}
+{{invoiceNumber}}
+{{someUniquePlaceholderText}}
+```
+</CodeGroup>
+
+<Note>
+Variable names must be unique within a document. However, the same placeholder can appear multiple times—you only need to map the data once.
+</Note>
+
+### Image Variables/Placeholders
+
+Dynamic image insertion uses the `image_` prefix:
+
+```
+{{image_variableName}}
+```
+
+<CodeGroup>
+```text Examples
+{{image_headshot}}
+{{image_product}}
+{{image_companyLogo}}
+{{image_signature}}
+```
+</CodeGroup>
+
+When declared, the system expects single or multiple images to be passed for replacement. See [Dynamic Images](/features/dynamic-images) for more details.
+
+### Line Item Variables/Placeholders
+
+Line items enable adding lists of data such as invoice positions, timesheet entries, or product lists. They're declared as table rows in your template:
+
+```
+{{#line_items_1}}
+{{line_items_1.description}}  {{line_items_1.quantity}}  {{line_items_1.price}}
+{{/line_items_1}}
+```
+
+<Info>
+Line items support:
+- Static text alongside variables
+- Multiple variables per table cell
+- Nested line items (up to 3 levels deep)
+- Calculations and grouping
+</Info>
+
+See [Line Items](/features/line-items) for comprehensive documentation.
+
+---
+
+## Tips & Best Practices
+
+<AccordionGroup>
+  <Accordion title="Start with a Template" icon="book">
+    Browse the [Template Gallery](https://docsautomator.co/templates/) for pre-built solutions rather than creating from scratch. It's faster and helps you understand the syntax.
+  </Accordion>
+
+  <Accordion title="Use Tables for Positioning" icon="table">
+    Use tables with hidden borders to position elements precisely during design. Set border width to 0pt when finished for a clean look.
+  </Accordion>
+
+  <Accordion title="Fixed Positioning for Images" icon="image">
+    Apply fixed positioning to images in headers, footers, or at the top of pages to prevent text flow interference.
+  </Accordion>
+
+  <Accordion title="Understand Sharing Settings" icon="share">
+    Generated Google Docs inherit sharing permissions from either the selected Google Drive folder or the template folder.
+  </Accordion>
+
+  <Accordion title="Test with Preview Mode" icon="eye">
+    Always use preview mode when setting up a new automation to verify your template renders correctly before going live.
+  </Accordion>
+</AccordionGroup>
+
+## Common Placeholder Patterns
+
+| Pattern | Description | Example |
+|---------|-------------|---------|
+| `{{field}}` | Simple text replacement | `{{name}}` |
+| `{{image_field}}` | Image insertion | `{{image_logo}}` |
+| `{{#items}}...{{/items}}` | Line item loop | Invoice rows |
+| `{{field\|format}}` | Formatted output | `{{date\|date}}` |
+| `{{#if condition}}` | Conditional content | Show/hide sections |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Dynamic Images" icon="image" href="/features/dynamic-images">
+    Learn how to insert images dynamically
+  </Card>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Master tables and repeating rows
+  </Card>
+  <Card title="Conditional Content" icon="code-branch" href="/features/advanced-placeholder-options/conditional-show-hide">
+    Show or hide content based on conditions
+  </Card>
+  <Card title="Template Gallery" icon="grid-2" href="https://docsautomator.co/templates/">
+    Browse pre-built templates
+  </Card>
+</CardGroup>

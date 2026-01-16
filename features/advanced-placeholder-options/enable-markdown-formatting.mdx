@@ -1,0 +1,68 @@
+---
+title: "Enable Markdown Formatting"
+description: "Interpret passed values as Markdown for rich text formatting"
+icon: "markdown"
+---
+
+Enabling markdown formatting tells DocsAutomator to interpret passed values as markdown, allowing you to use Markdown syntax in your data values which will be rendered appropriately in generated documents.
+
+## What is Markdown?
+
+Markdown provides a simple, readable way to format text. It's a convenient and easy-to-learn language for basic text formatting (headings, bold, italic, links, etc.).
+
+<Info>
+For comprehensive learning resources, visit [markdownguide.org](https://www.markdownguide.org/)
+</Info>
+
+## Markdown Syntax Reference
+
+| Element | Markdown Syntax |
+|---------|-----------------|
+| Heading 1 | `# H1` |
+| Heading 2 | `## H2` |
+| Heading 3 | `### H3` |
+| Bold | `**bold text**` |
+| Italic | `*italicized text*` |
+| Blockquote | `> blockquote` |
+| Ordered List | `1. First item` |
+| Unordered List | `- First item` |
+| Code | `` `code` `` |
+| Horizontal Rule | `---` |
+| Link | `[title](https://www.example.com)` |
+| Image | `![alt text](image.jpg)` |
+
+## Example
+
+**Input value:**
+```markdown
+## Project Summary
+
+This project includes:
+- **Phase 1**: Discovery
+- **Phase 2**: Development
+- *Phase 3*: Testing
+
+Learn more at [our website](https://example.com)
+```
+
+**Output:** The document will render with proper headings, bold text, italic text, bullet points, and clickable links.
+
+## Airtable Integration
+
+<Tip>
+Long text fields in Airtable with rich text formatting enabled are automatically interpreted as Markdown when connected to DocsAutomator.
+</Tip>
+
+## Enabling Markdown
+
+<Steps>
+  <Step title="Open Placeholder Settings">
+    Click the gear/settings icon next to the placeholder
+  </Step>
+  <Step title="Enable Markdown">
+    Toggle on "Enable Markdown Formatting"
+  </Step>
+  <Step title="Test with Preview">
+    Generate a preview to verify formatting renders correctly
+  </Step>
+</Steps>

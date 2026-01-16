@@ -1,0 +1,261 @@
+---
+title: "eSign API Reference"
+description: "Programmatic management of signing sessions, links, and audit trails"
+icon: "code"
+---
+
+The DocsAutomator eSign API enables programmatic management of signing sessions, retrieval of signing links, progress tracking, and audit trail access.
+
+## Authentication
+
+All API endpoints require bearer token authentication:
+
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Base URL
+
+```
+https://api.docsautomator.co/esign
+```
+
+---
+
+## Session Management
+
+### List Signing Sessions
+
+<ParamField path="GET" type="/esign/sessions">
+  Retrieve all signing sessions with optional filtering.
+</ParamField>
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `status` | string | No | Filter by status |
+| `page` | number | No | Page number (default: 1) |
+| `limit` | number | No | Results per page (default: 20, max: 100) |
+| `email` | string | No | Search by signer email |
+
+**Valid Status Values:** `pending`, `in_progress`, `completed`, `expired`, `cancelled`, `declined`
+
+```bash
+curl -X GET "https://api.docsautomator.co/esign/sessions?status=pending&page=1&limit=20" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+---
+
+### Get Session Details
+
+<ParamField path="GET" type="/esign/sessions/:sessionId">
+  Returns comprehensive session information including signer statuses, document hashes, e-sign fields with positions, and completion timestamps.
+</ParamField>
+
+---
+
+### Get Signing Links
+
+<ParamField path="GET" type="/esign/sessions/:sessionId/links">
+  Retrieves signing links for all signers when using manual delivery mode.
+</ParamField>
+
+Returns expiration dates and signer status for each link.
+
+---
+
+### Get Audit Trail
+
+<ParamField path="GET" type="/esign/sessions/:sessionId/audit">
+  Returns chronological event log for the signing session.
+</ParamField>
+
+**Event Types:**
+
+| Event | Description |
+|-------|-------------|
+| `session_created` | Signing session initiated |
+| `invitation_sent` | Email invitation dispatched |
+| `link_opened` | Signer accessed signing link |
+| `document_viewed` | Signer viewed PDF |
+| `consent_given` | E-consent provided |
+| `field_submitted` | Field value entered |
+| `signer_completed` | All fields finished |
+| `session_completed` | All signers done, PDF generated |
+| `reminder_sent` | Reminder email sent |
+| `session_cancelled` | Session cancelled |
+| `session_declined` | Signer declined |
+| `session_expired` | Session expired |
+
+---
+
+### Cancel Session
+
+<ParamField path="POST" type="/esign/sessions/:sessionId/cancel">
+  Cancel an active signing session.
+</ParamField>
+
+```json
+{
+  "reason": "Optional cancellation reason"
+}
+```
+
+<Warning>
+Cannot cancel completed sessions.
+</Warning>
+
+---
+
+### Resend Invitation
+
+<ParamField path="POST" type="/esign/sessions/:sessionId/resend/:signerIndex">
+  Resends invitation email to a specific signer (indexed 1, 2, 3, etc.).
+</ParamField>
+
+---
+
+## Webhook Events
+
+### Session Created (Manual Delivery)
+
+Triggered when signing session created with `deliveryMethod: "manual"`. Use to retrieve and distribute signing links manually.
+
+### Signing Completed
+
+Triggered when all signers complete signing and final PDF is generated.
+
+### Passing Additional Parameters
+
+Include `webhookParams` in document creation requests to receive custom data in webhook notifications:
+
+```json
+{
+  "docId": "your-automation-id",
+  "data": { ... },
+  "webhookParams": {
+    "orderId": "ORD-12345",
+    "customerId": "CUST-789"
+  }
+}
+```
+
+Parameters are returned in all webhook notifications as `additionalParams`.
+
+---
+
+## Status Reference
+
+### Session Statuses
+
+| Status | Description |
+|--------|-------------|
+| `pending` | Awaiting signer action |
+| `in_progress` | At least one signer started |
+| `completed` | All signers finished |
+| `expired` | Expired before completion |
+| `cancelled` | Cancelled by admin |
+| `declined` | Signer declined |
+
+### Signer Statuses
+
+| Status | Description |
+|--------|-------------|
+| `pending` | Invitation not sent |
+| `invited` | Email sent |
+| `opened` | Link opened |
+| `signed` | All fields completed |
+| `declined` | Declined to sign |
+
+---
+
+## Error Responses
+
+```json
+{
+  "error": true,
+  "message": "Description"
+}
+```
+
+| Code | Description |
+|------|-------------|
+| 400 | Bad request — invalid parameters |
+| 401 | Unauthorized — invalid/missing API key |
+| 404 | Not found — session doesn't exist |
+| 429 | Rate limited |
+| 500 | Server error |
+
+---
+
+## Rate Limits
+
+| Endpoint Type | Limit |
+|---------------|-------|
+| Admin endpoints | 500 requests per 15 minutes |
+| Session list | 100 requests per minute |
+
+---
+
+## Code Examples
+
+### Node.js — List and Monitor Sessions
+
+```javascript
+const axios = require('axios');
+
+const API_KEY = 'your_api_key';
+const BASE_URL = 'https://api.docsautomator.co/esign';
+
+async function listPendingSessions() {
+  const response = await axios.get(`${BASE_URL}/sessions`, {
+    headers: { Authorization: `Bearer ${API_KEY}` },
+    params: { status: 'pending', limit: 50 }
+  });
+  return response.data.sessions;
+}
+
+async function getSessionWithAudit(sessionId) {
+  const [session, audit] = await Promise.all([
+    axios.get(`${BASE_URL}/sessions/${sessionId}`, {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    }),
+    axios.get(`${BASE_URL}/sessions/${sessionId}/audit`, {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    })
+  ]);
+
+  return {
+    ...session.data,
+    auditTrail: audit.data.events
+  };
+}
+```
+
+### Python — Webhook Handler
+
+```python
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/webhook/esign', methods=['POST'])
+def handle_esign_webhook():
+    payload = request.json
+
+    if payload.get('event') == 'esign.session_created':
+        for signer in payload.get('signingLinks', []):
+            send_custom_email(
+                to=signer['email'],
+                signing_link=signer['signingLink']
+            )
+
+    elif payload.get('status') == 'completed':
+        signed_pdf_url = payload['signedPdfUrl']
+        order_id = payload.get('additionalParams', {}).get('orderId')
+        process_signed_document(signed_pdf_url, order_id)
+
+    return jsonify({'received': True})
+```

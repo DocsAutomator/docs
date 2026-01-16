@@ -1,0 +1,264 @@
+---
+title: "DocsAutomator eSign"
+description: "Collect legally binding electronic signatures on generated documents"
+icon: "signature"
+---
+
+DocsAutomator eSign enables collection of legally binding electronic signatures on generated documents with support for unlimited signers, multiple field types, and comprehensive compliance tracking.
+
+## Feature Overview
+
+| Feature | Description |
+|---------|-------------|
+| Multiple Signers | Unlimited signers per document |
+| Signing Order | Parallel or sequential workflows |
+| Field Types | Signatures, dates, text, checkboxes |
+| Email Customization | Custom invitation, reminder, completion emails |
+| Branding | Custom logo support |
+| Reminders | Automated follow-up emails |
+| Audit Trail | Complete signing activity record |
+| Data Integration | Save PDFs and field values to data sources |
+| Webhooks | POST notifications on completion |
+
+## Adding eSign Fields to Templates
+
+Fields use the format: `{{esign.TYPE_SIGNER}}`
+
+- **TYPE**: Field type (signature, date, text, checkbox)
+- **SIGNER**: Signer number (1, 2, 3, etc.)
+
+### Field Types
+
+| Type | Example | Purpose |
+|------|---------|---------|
+| Signature | `{{esign.signature_1}}` | Full signature capture |
+| Date | `{{esign.date_1}}` | Date picker with auto-fill |
+| Text | `{{esign.text_1}}` | Text input field |
+| Checkbox | `{{esign.checkbox_1}}` | Agreement checkbox |
+
+## Configuring Signers
+
+### Required Information
+
+- **Email**: Signing invitation recipient
+- **Name**: Optional, displayed in signing portal
+
+### Dynamic Signer Information
+
+<Tabs>
+  <Tab title="Airtable / Google Sheets / SmartSuite">
+    Select fields from the dropdown menu to dynamically populate signer information.
+  </Tab>
+  <Tab title="ClickUp / Other Sources">
+    Use placeholders like `{{buyer_email}}`, `{{client_name}}` in your configuration.
+  </Tab>
+</Tabs>
+
+### Signing Order Options
+
+<CardGroup cols={2}>
+  <Card title="Parallel Signing (Default)" icon="users">
+    All signers receive invitations simultaneously and can complete in any order. Faster for multi-party documents.
+  </Card>
+  <Card title="Sequential Signing" icon="list-ol">
+    Signers receive invitations one at a time. Ensures specific signing sequence with "Signs first" and "Signs after" labels.
+  </Card>
+</CardGroup>
+
+## Email Configuration
+
+### Email Sender Options
+
+| Option | Details |
+|--------|---------|
+| DocsAutomator | Sent from `support@docsautomator.co` |
+| Your Gmail | Sent from connected Gmail account |
+
+### Customizable Email Types
+
+1. **Invitation Email** - Initial signature request
+2. **Reminder Email** - Follow-up for unsigned documents
+3. **Completion Email** - All parties have signed
+
+### Template Variables
+
+**All Emails:**
+- `{{documentName}}` - Document name
+- `{{signerName}}` - Signer's name
+- `{{signerEmail}}` - Signer's email
+
+**Invitation & Reminder:**
+- `{{expirationDate}}` - Link expiration date
+- `{{signButton:text}}` - Sign button
+- `{{signLink:text}}` - Sign link
+
+**Completion:**
+- `{{downloadButton:text}}` - Download button
+- `{{downloadLink:text}}` - Download link
+
+## Reminder Settings
+
+| Setting | Default | Range |
+|---------|---------|-------|
+| Enable Reminders | Off | — |
+| Reminder Interval | 3 days | 1-30 days |
+| Maximum Reminders | 3 | 1-10 |
+
+<Note>
+Only unsigned documents receive reminders; they stop upon completion.
+</Note>
+
+## Branding
+
+### Custom Logo
+
+- **Formats**: PNG, JPG, WEBP, SVG
+- **Maximum size**: 2MB
+- **Location**: Top of signing page
+- **Default**: DocsAutomator logo if not provided
+
+## Expiration Settings
+
+| Setting | Default | Range |
+|---------|---------|-------|
+| Link Expiration | 30 days | 1-365 days |
+
+After expiration, links become invalid and sessions change to "Expired" status.
+
+## The Signing Experience
+
+### Signer Interface
+
+1. **Document View** - Full PDF with interactive field zones
+2. **Field Navigator** - Progress indicator through fields
+3. **Signers Panel** - Status of all signers
+
+### Field Completion
+
+- **Signature**: Draw via mouse, trackpad, or touch
+- **Date**: Calendar picker or manual selection
+- **Text**: Type required information
+- **Checkbox**: Toggle to select
+
+### Completion Flow
+
+1. Complete all required fields
+2. Click "Complete" button
+3. Receive confirmation and download link
+
+<Info>
+Signers can decline with optional reason. The session is marked as declined and administrator is notified.
+</Info>
+
+## Data Source Integration
+
+### Saving Signed PDFs
+
+| Source | Save Method |
+|--------|------------|
+| Airtable | Attachment field |
+| Google Sheets | HYPERLINK in cell |
+| SmartSuite | File field |
+| ClickUp | Task attachment |
+
+### Saving Field Values
+
+1. Open field mapping configuration
+2. Select eSign fields to save
+3. Choose destination data source fields
+4. Values save automatically on completion
+
+**Mappable types:**
+- Text fields → Text columns
+- Checkbox fields → Yes/No columns
+- Date fields → Date columns
+
+<Note>
+Signature images are not mapped to data sources.
+</Note>
+
+## Webhook Integration
+
+Webhooks fire **once** when all signers complete and final PDF is generated.
+
+```json
+{
+  "signedPdfUrl": "https://...",
+  "sessionId": "unique-identifier",
+  "documentName": "Document name",
+  "status": "completed",
+  "completedAt": "ISO date string",
+  "signers": [
+    {
+      "email": "signer@example.com",
+      "name": "Signer Name",
+      "signedAt": "ISO date string"
+    }
+  ],
+  "fieldValues": {
+    "text_1_field": {
+      "type": "text",
+      "value": "entered value"
+    }
+  }
+}
+```
+
+## Session Statuses
+
+| Status | Meaning |
+|--------|---------|
+| Pending | Created, awaiting signers |
+| In Progress | At least one signer started |
+| Completed | All signers finished |
+| Expired | Link expired before completion |
+| Cancelled | Admin cancelled |
+| Declined | Signer declined |
+
+## Security Features
+
+DocsAutomator eSign includes:
+- Secure access tokens
+- Time-limited signing links
+- Rate limiting
+- SHA-256 document integrity hashing
+- TLS encryption
+
+## Availability
+
+| Plan | eSign Access |
+|------|--------------|
+| Free | Not available |
+| Paid (no add-on) | Preview/Test mode only |
+| Paid (with add-on) | Full production access |
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How many signers can I add?">
+    Unlimited signers using incrementing field tags (`{{esign.signature_1}}`, `{{esign.signature_2}}`, etc.).
+  </Accordion>
+  <Accordion title="Can signers use mobile devices?">
+    Yes. The portal is fully responsive with touch-based signature capture.
+  </Accordion>
+  <Accordion title="What happens if a signer doesn't complete?">
+    Sessions remain pending/in progress until expiration. Enable reminders to prompt completion.
+  </Accordion>
+  <Accordion title="Can I cancel a signing request?">
+    Yes, any uncompleted session. Cancelled links become invalid.
+  </Accordion>
+  <Accordion title="How long are signed documents stored?">
+    Indefinitely. eSign-enabled automations automatically set PDF expiration to "never" for legal validity.
+  </Accordion>
+</AccordionGroup>
+
+## Related Pages
+
+<CardGroup cols={2}>
+  <Card title="Compliance & Legal Validity" icon="scale-balanced" href="/features/docsautomator-esign/compliance-and-legal-validity">
+    Learn about legal standards and compliance
+  </Card>
+  <Card title="eSign API Reference" icon="code" href="/features/docsautomator-esign/docsautomator-esign-api-reference">
+    Programmatic control of signing sessions
+  </Card>
+</CardGroup>

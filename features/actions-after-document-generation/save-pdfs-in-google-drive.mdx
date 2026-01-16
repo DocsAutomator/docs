@@ -1,0 +1,79 @@
+---
+title: "Save PDFs in Google Drive"
+description: "Automatically store generated PDFs in Google Drive folders"
+icon: "hard-drive"
+---
+
+This feature enables automatic storage of generated PDFs in specified Google Drive folders, with optional dynamic subfolder organization.
+
+## Basic Setup
+
+1. Navigate to step 5 in automation settings
+2. Enable "Save PDFs in Google Drive"
+3. Select your target Google Drive folder
+4. (Optional) Configure dynamic subfolders
+
+<Note>
+Default behavior: PDFs save to root MyDrive folder if no folder is specified.
+</Note>
+
+## Dynamic Subfolders
+
+Automatically organize PDFs by creating dynamic subfolders using static text and placeholders.
+
+### Setup Instructions
+
+<Steps>
+  <Step title="Enable the Feature">
+    Enable "Save PDFs in Google Drive" in automation settings
+  </Step>
+  <Step title="Select Folder">
+    Select your Google Drive destination folder
+  </Step>
+  <Step title="Configure Subfolder">
+    Enter "Subfolder Name (Optional)" using text and/or placeholders
+  </Step>
+  <Step title="Create Hierarchy">
+    Use forward slashes (`/`) to create nested folder structures
+  </Step>
+</Steps>
+
+### Subfolder Examples
+
+**Static Organization:**
+```
+Reports
+Invoices/2024
+Contracts/Pending
+```
+
+**Dynamic with Placeholders:**
+```
+{{client_name}}
+{{date}}_Documents
+Clients/{{client_name}}/{{year}}
+{{department}}/{{project_name}}/Finals
+```
+
+## Adding Placeholders
+
+- Type `/` in the subfolder field to browse available placeholders
+- Manual entry: Use `{{placeholder_name}}` format
+
+<Info>
+Line item placeholders are automatically excluded from the placeholder list.
+</Info>
+
+## How It Works
+
+1. DocsAutomator replaces placeholders with actual document values
+2. Creates folder structure if it doesn't exist (prevents duplicates)
+3. Saves PDF to the final subfolder location
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Subfolder option not visible | Ensure you've selected a Google Drive folder first |
+| Folders not created | Verify placeholder values exist in your data |
+| Empty placeholders | PDFs save to main selected folder if values are blank |

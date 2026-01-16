@@ -1,0 +1,74 @@
+---
+title: "Saving Google Docs"
+description: "Preserve Google Docs after generation for continued editing"
+icon: "file-lines"
+---
+
+DocsAutomator allows you to preserve Google Docs after generation for continued editing, complementing PDF exports. Generated Google Docs become editable files stored in your Google Drive, enabling post-generation modifications.
+
+## Configuration
+
+You can optionally set a "Google Doc Destination Folder" to specify where documents are stored in Google Drive.
+
+## Sharing & Visibility Settings
+
+<Note>
+Generated Google Docs inherit sharing permissions from their parent folder. For example, if a folder has view-only public sharing enabled, the saved Google Doc will have the same access restrictions.
+</Note>
+
+## Airtable Integration
+
+When enabling "Save Google Doc?" with Airtable as your data source, an additional field appears in the Airtable mapping section. This allows you to select a field where the Google Doc link will be stored automatically.
+
+## API Integration
+
+Using DocsAutomator's API, the response includes a `googleDocUrl` key containing the link to the generated Google Doc.
+
+```json
+{
+  "pdfUrl": "https://...",
+  "googleDocUrl": "https://docs.google.com/document/d/..."
+}
+```
+
+## Dynamic Subfolder Creation
+
+DocsAutomator supports automatic nested folder generation using static text and dynamic placeholders for organized storage.
+
+### Static Text Examples
+
+```
+Reports
+Invoices
+2024/Q1
+Contracts/Signed
+```
+
+### Placeholder Examples
+
+```
+{{client_name}}                           # Creates folder by client
+{{date}}_Documents                        # Date-based naming
+{{year}}/{{month}}                        # Nested date structure
+Clients/{{client_name}}/{{year}}          # Multi-level organization
+{{department}}/{{project_name}}           # Department structure
+```
+
+### Placeholder Entry Methods
+
+- **Quick Method**: Type `/` to browse available placeholders
+- **Manual Method**: Enter placeholders using `{{placeholder_name}}` format
+
+### Folder Hierarchy Behavior
+
+- Forward slashes (`/`) create nested structures
+- Non-existent folders are created automatically
+- Existing folders are reused (no duplicates)
+- Multiple nesting levels are supported
+
+### Limitations
+
+<Warning>
+- **Line Item Placeholders**: Line item fields (multiple data rows) cannot be used in subfolder names—only single-value fields are supported.
+- **Empty Placeholder Values**: When placeholders lack values, they're removed from the path, and documents save to the closest valid parent folder or main destination.
+</Warning>

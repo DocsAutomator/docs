@@ -1,0 +1,153 @@
+---
+title: "Quickstart Guide"
+description: "Your fast track guide to get started automating documents"
+icon: "bolt"
+---
+
+This guide helps you begin using DocsAutomator in minutes. It assumes you've already created an account at [app.docsautomator.co](https://app.docsautomator.co).
+
+<Info>
+Need personal assistance? [Schedule a call](https://cal.com/docsautomator/20min) with our team.
+</Info>
+
+## 1. Create New Automation
+
+After logging in, you'll see the initial dashboard. Click the **"+ New Automation"** button to begin setting up document generation.
+
+<Note>
+An automation combines your data source (Airtable, Google Sheets, etc.) with a Google Doc template.
+</Note>
+
+## 2. Set Title & Choose Data Source
+
+Select your data source from the available integrations:
+
+<CardGroup cols={3}>
+  <Card title="Airtable" icon="database" href="/integrations-api/airtable" />
+  <Card title="Google Sheets" icon="table" href="/integrations-api/google-sheets" />
+  <Card title="SmartSuite" icon="grid" href="/integrations-api/smartsuite" />
+  <Card title="Glide" icon="mobile" href="/integrations-api/glide" />
+  <Card title="Noloco" icon="laptop" href="/integrations-api/noloco" />
+  <Card title="ClickUp" icon="check" href="/integrations-api/clickup" />
+  <Card title="Zapier" icon="bolt" href="/integrations-api/zapier" />
+  <Card title="n8n" icon="sitemap" href="/integrations-api/n8n" />
+  <Card title="API" icon="code" href="/integrations-api/docsautomator-api" />
+</CardGroup>
+
+Depending on your selection, you may need to connect your account.
+
+## 3. Choose Document Template
+
+DocsAutomator uses Google Docs as templates. You have several options:
+
+<AccordionGroup>
+  <Accordion title="Add the Playground Template" icon="play">
+    Use the built-in playground template to learn interactively and test the placeholder syntax before building your own.
+  </Accordion>
+  <Accordion title="Select from Template Library" icon="book">
+    Browse pre-built templates at [docsautomator.co/templates](https://docsautomator.co/templates/) for common use cases like invoices, contracts, and reports.
+  </Accordion>
+  <Accordion title="Create from Scratch" icon="file-plus">
+    Follow the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) to create a custom template.
+  </Accordion>
+  <Accordion title="Request Professional Template" icon="wand-magic-sparkles">
+    Need help? Request professional template creation through our [service form](https://docsautomator.co/templates/).
+  </Accordion>
+</AccordionGroup>
+
+## 4. Map Data, Create Previews & Start Automating
+
+The configuration process differs by integration:
+
+<Tabs>
+  <Tab title="Airtable">
+    <Steps>
+      <Step title="Select Base and Table">
+        Choose your Airtable Base and the Primary Table containing your data
+      </Step>
+      <Step title="Configure Output">
+        Set the document name field and attachment field where PDFs will be saved
+      </Step>
+      <Step title="Map Placeholders">
+        Map template placeholders to your Airtable fields
+      </Step>
+      <Step title="Generate Preview">
+        Create a preview to verify the output looks correct
+      </Step>
+      <Step title="Set Up Automation">
+        Configure document creation using webhooks or automation scripts within Airtable
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Glide">
+    <Warning>
+      Set your automation to "preview mode" while testing.
+    </Warning>
+    <Steps>
+      <Step title="Add Integration">
+        Add the DocsAutomator integration in your Glide app settings
+      </Step>
+      <Step title="Configure Credentials">
+        Provide your API key and account email
+      </Step>
+      <Step title="Add Action">
+        Configure the DocsAutomator action and add your automation/template ID
+      </Step>
+      <Step title="Map Values">
+        Map values from your Glide data to template variables
+      </Step>
+      <Step title="Define Output">
+        Set the PDF output field in your Glide data
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Noloco">
+    <Warning>
+      Set your automation to "preview mode" while testing.
+    </Warning>
+    <Steps>
+      <Step title="Connect Account">
+        Connect your DocsAutomator account in Noloco settings
+      </Step>
+      <Step title="Create Workflow">
+        Create a workflow and select "Generate a document with DocsAutomator"
+      </Step>
+      <Step title="Choose Automation">
+        Select your DocsAutomator automation
+      </Step>
+      <Step title="Map Fields">
+        Map template fields to your Noloco data
+      </Step>
+      <Step title="Add Follow-up">
+        Add a follow-up action to save the generated PDF
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="ClickUp">
+    <Steps>
+      <Step title="Select Workspace">
+        Choose your ClickUp Space and List
+      </Step>
+      <Step title="Map Placeholders">
+        Map template placeholders to ClickUp fields
+      </Step>
+      <Step title="Generate Preview">
+        Create previews to verify the output
+      </Step>
+      <Step title="Configure Webhook">
+        Copy the webhook URL and configure it in ClickUp Automations
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Need Help?
+
+<CardGroup cols={2}>
+  <Card title="Email Support" icon="envelope" href="mailto:hello@docsautomator.co">
+    Reach out at hello@docsautomator.co
+  </Card>
+  <Card title="In-App Chat" icon="comments">
+    Use the chat feature in your dashboard for quick assistance
+  </Card>
+</CardGroup>

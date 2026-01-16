@@ -1,0 +1,141 @@
+---
+title: "Dynamic Images"
+description: "Insert images dynamically into your documents from URLs or attachments"
+icon: "image"
+---
+
+DocsAutomator enables image insertion throughout documents. Images are automatically preprocessed, converted, and can be resized to optimize document quality and file size.
+
+<Warning>
+Passed images need to be publicly available on the web.
+</Warning>
+
+## Syntax
+
+Images are declared using the `image_` prefix:
+
+```
+{{image_variableName}}
+```
+
+<CodeGroup>
+```text Examples
+{{image_headshot}}
+{{image_product}}
+{{image_companyLogo}}
+{{image_signature}}
+```
+</CodeGroup>
+
+This tells DocsAutomator where to insert images. You can pass single or multiple images, which are added inline within the document.
+
+## Pre-processing & Converting
+
+The system optimizes images before insertion:
+
+- **Format conversion**: Images are automatically converted to .jpg format
+- **Quality optimization**: Reduces file size while maintaining quality
+- **PNG exception**: PNG files retain their format to preserve transparency
+
+### Supported Formats
+
+JPG, PNG, GIF, BMP, TIFF, ICO, PDF, EPS, PSD, SVG, WebP, JXR, WDP
+
+### Image Quality Settings
+
+Configure image handling in **Template / Document Generation Options**:
+
+| Setting | Description |
+|---------|-------------|
+| Low | Smallest file size, lower quality |
+| Eco | Balanced quality and file size (recommended) |
+| Good | Higher quality, larger file size |
+| Best | Maximum quality, largest file size |
+
+### Maximum Width
+
+- Range: 200-2000 pixels
+- Standard: 600px
+- Example: An 8000×6000px image resizes to 600×450px
+
+<Tip>
+The "Eco" setting is recommended for balanced quality and file size in most use cases.
+</Tip>
+
+## Resizing Images
+
+Resize individual placeholder images through DocsAutomator's interface:
+
+- **Aspect ratio**: Always preserved during resizing
+- **Single dimension**: Other dimension calculates automatically to maintain proportions
+- **Both dimensions**: Image scales to fit while preserving aspect ratio
+
+<Warning>
+If the resizing parameter exceeds the maximum width in automation settings, the image will be expanded and lose quality.
+</Warning>
+
+## Passing Images via API
+
+When using the DocsAutomator API, pass an array of image URLs for processing:
+
+```json
+{
+  "docId": "your-automation-id",
+  "data": {
+    "image_product": "https://example.com/product.jpg",
+    "image_signature": "https://example.com/signature.png"
+  }
+}
+```
+
+## Multiple Images
+
+To insert multiple images for a single placeholder, pass them as an array or comma-separated URLs depending on your data source:
+
+<Tabs>
+  <Tab title="API">
+    ```json
+    {
+      "image_gallery": [
+        "https://example.com/image1.jpg",
+        "https://example.com/image2.jpg",
+        "https://example.com/image3.jpg"
+      ]
+    }
+    ```
+  </Tab>
+  <Tab title="Google Sheets">
+    Separate multiple image URLs with commas in your spreadsheet cell.
+  </Tab>
+  <Tab title="Airtable">
+    Use an Attachment field with multiple images.
+  </Tab>
+</Tabs>
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Use publicly accessible URLs" icon="globe">
+    Images must be accessible via public URL. Private or authenticated URLs will fail.
+  </Accordion>
+  <Accordion title="Optimize source images" icon="compress">
+    While DocsAutomator compresses images, starting with reasonably sized images improves processing speed.
+  </Accordion>
+  <Accordion title="Use PNG for transparency" icon="square">
+    If your image requires transparency (logos, overlays), use PNG format.
+  </Accordion>
+  <Accordion title="Test with preview mode" icon="eye">
+    Always test image rendering in preview mode before production.
+  </Accordion>
+</AccordionGroup>
+
+## Related Pages
+
+<CardGroup cols={2}>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Learn all template syntax
+  </Card>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Add images in repeating rows
+  </Card>
+</CardGroup>

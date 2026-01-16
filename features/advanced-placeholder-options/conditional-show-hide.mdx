@@ -1,0 +1,73 @@
+---
+title: "Conditional Show / Hide"
+description: "Show or hide values depending on conditions"
+icon: "eye"
+---
+
+This feature allows you to show or hide values depending on conditions, enabling conditional display of document content based on specific criteria.
+
+## How It Works
+
+Configure conditions to control when a placeholder value is displayed or hidden in the generated document.
+
+## Available Conditions
+
+| Condition | Description |
+|-----------|-------------|
+| equals | Value exactly matches specified text |
+| does not equal | Value does not match specified text |
+| contains | Value includes specified substring |
+| does not contain | Value excludes specified substring |
+| exists | Value is present (not empty/null) |
+| does not exist | Value is empty or missing |
+
+## Configuration
+
+<Steps>
+  <Step title="Open Placeholder Settings">
+    Click the gear/settings icon next to the placeholder you want to configure
+  </Step>
+  <Step title="Enable Conditional Show/Hide">
+    Select "Show/Hide Conditionally" option
+  </Step>
+  <Step title="Set Condition">
+    Choose the condition type (equals, contains, etc.)
+  </Step>
+  <Step title="Enter Value">
+    Specify the value to compare against
+  </Step>
+  <Step title="Choose Behavior">
+    Select whether to show or hide when condition is met
+  </Step>
+</Steps>
+
+## Example
+
+**Scenario:** Show a discount message only when discount is greater than 0
+
+1. Set placeholder `{{discount_message}}`
+2. Configure condition: Show when `{{discount}}` does not equal "0"
+3. Result: Discount message only appears when there's an actual discount
+
+## Combining with Row Deletion
+
+<Tip>
+Combine with [Conditional Paragraph/Row Deletion](/features/advanced-placeholder-options/conditional-paragraph-row-deletion) to completely remove lines or rows when values are hidden, rather than leaving blank spaces.
+</Tip>
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card title="Hidden Values" icon="eye-slash" href="/features/advanced-placeholder-options/hidden-values">
+    Always hide values while using them elsewhere
+  </Card>
+  <Card title="Conditional Styling" icon="palette" href="/features/advanced-placeholder-options/conditional-styling">
+    Apply styles based on conditions
+  </Card>
+  <Card title="Sections" icon="square-dashed" href="/features/sections">
+    Control entire section visibility
+  </Card>
+  <Card title="Row Deletion" icon="trash" href="/features/advanced-placeholder-options/conditional-paragraph-row-deletion">
+    Remove empty lines/rows
+  </Card>
+</CardGroup>

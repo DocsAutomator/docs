@@ -1,0 +1,89 @@
+---
+title: "Conditional Styling"
+description: "Apply text styles conditionally based on specific values"
+icon: "palette"
+---
+
+DocsAutomator enables you to apply text styles conditionally based on specific values within documents.
+
+## How It Works
+
+The feature operates in two steps:
+
+<Steps>
+  <Step title="Define the Condition">
+    Set up a comparison type (equals, contains, does not equal, does not contain, etc.) and specify a value
+  </Step>
+  <Step title="Apply Styling">
+    Select the desired text formatting to apply when the condition is met
+  </Step>
+</Steps>
+
+## Available Styling Options
+
+| Style | Description |
+|-------|-------------|
+| Background Color | Highlight color behind text |
+| Foreground Color | Text color |
+| Font Size | Size of the text |
+| Link | Make text a clickable link |
+| Bold | **Bold** formatting |
+| Italic | *Italic* formatting |
+| Underline | Underlined text |
+| Strikethrough | ~~Strikethrough~~ text |
+| Small Caps | Small capital letters |
+| Baseline Offset | Superscript or subscript positioning |
+
+## Example: Status-Based Coloring
+
+**Scenario:** Color the status field based on its value
+
+| Status Value | Applied Style |
+|--------------|---------------|
+| "Completed" | Green text |
+| "Pending" | Orange text |
+| "Overdue" | Red text, Bold |
+
+## Row Background Colors for Line Items
+
+For tabular data presentation, DocsAutomator provides a specialized feature allowing background colors to be applied to alternating rows in line items—either on even or odd rows, creating a striped table appearance commonly used in professional documents.
+
+<Tabs>
+  <Tab title="Even Rows">
+    Apply background color to rows 2, 4, 6, 8, etc.
+  </Tab>
+  <Tab title="Odd Rows">
+    Apply background color to rows 1, 3, 5, 7, etc.
+  </Tab>
+</Tabs>
+
+## Configuration
+
+<Steps>
+  <Step title="Open Placeholder Settings">
+    Click the gear/settings icon next to the placeholder
+  </Step>
+  <Step title="Enable Conditional Styling">
+    Select "Style Conditionally" option
+  </Step>
+  <Step title="Add Condition">
+    Click "Add Condition" and configure the comparison
+  </Step>
+  <Step title="Select Styles">
+    Choose which styles to apply when condition is met
+  </Step>
+  <Step title="Add More Conditions (Optional)">
+    Add additional conditions for different style variations
+  </Step>
+</Steps>
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card title="Conditional Show/Hide" icon="eye" href="/features/advanced-placeholder-options/conditional-show-hide">
+    Show or hide values based on conditions
+  </Card>
+  <Card title="Sections" icon="square-dashed" href="/features/sections">
+    Control entire section visibility
+  </Card>
+</CardGroup>

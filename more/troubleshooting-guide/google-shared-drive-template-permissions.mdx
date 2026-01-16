@@ -1,0 +1,85 @@
+---
+title: "Google Shared Drive Template Permissions"
+description: "Resolve permission errors when using templates from Google Shared Drives"
+icon: "folder"
+---
+
+## Problem
+
+When selecting a Google Docs template from a Shared Drive, DocsAutomator checks if your authorized Google account has the necessary permissions. If permissions are insufficient, a red Template Check badge appears.
+
+## Why This Happens
+
+<Warning>
+Google Shared Drive files require **Manager** (Organizer) level permissions for API operations, even if you can view and edit the template manually.
+</Warning>
+
+DocsAutomator uses the Google Drive API to read templates and create documents, which necessitates elevated permissions.
+
+## Identifying the Issue
+
+- 🔴 Red Template Check Badge indicates a permission problem
+- Hovering shows your Google account email and current role
+- Errors appear in both minimized and expanded template sections
+
+## Permission Requirements
+
+| Your Role | Can Use Template? |
+|-----------|-------------------|
+| Manager (Organizer) | ✅ Yes |
+| Content Manager | ❌ No |
+| Contributor | ❌ No |
+| Commenter | ❌ No |
+| Viewer | ❌ No |
+
+## Solutions
+
+<Tabs>
+  <Tab title="Option 1: Upgrade Role">
+    Contact your Shared Drive Manager to upgrade the authorized Google account to **Manager** status.
+
+    This is the recommended solution if you need ongoing access to templates in the Shared Drive.
+  </Tab>
+  <Tab title="Option 2: Switch Accounts">
+    1. Disconnect your current Google account in DocsAutomator settings
+    2. Reconnect with an account that has Manager permissions
+
+    <Info>
+    Verify which account has Manager access before switching.
+    </Info>
+  </Tab>
+  <Tab title="Option 3: Copy Template">
+    1. Open the template in Google Docs
+    2. Select **File → Make a copy**
+    3. Save to "My Drive"
+    4. Select the copied template in DocsAutomator
+
+    <Tip>
+    This creates a personal copy you fully control, but you'll need to update it manually if the original changes.
+    </Tip>
+  </Tab>
+</Tabs>
+
+## Prevention Tips
+
+- Assign Manager roles to authorized Google accounts for team use
+- Store frequently-used templates in personal drives
+- Ensure proper Shared Drive permissions before setting up automations
+
+## Troubleshooting
+
+If issues persist after permission changes:
+1. Refresh the DocsAutomator page to re-check permissions
+2. Verify you selected the correct template
+3. Confirm your Google account reconnection completed successfully
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Saving Google Docs" icon="file-lines" href="/features/actions-after-document-generation/saving-google-docs">
+    Configure document storage settings
+  </Card>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Learn template creation best practices
+  </Card>
+</CardGroup>

@@ -1,0 +1,109 @@
+---
+title: "Glide"
+description: "Generate PDFs directly from Glide applications without custom code"
+icon: "mobile"
+---
+
+DocsAutomator integrates seamlessly with Glide through a native integration, enabling PDF generation directly from Glide applications without requiring custom code.
+
+## Key Capabilities
+
+<CardGroup cols={2}>
+  <Card title="Button Triggers" icon="hand-pointer">
+    Generate PDFs from buttons or action sequences
+  </Card>
+  <Card title="Line Items" icon="list">
+    Support for dynamic line items and data mapping
+  </Card>
+  <Card title="File Storage" icon="hard-drive">
+    Store generated files within Glide tables
+  </Card>
+  <Card title="Web Embed" icon="window">
+    Display generated documents using web embed components
+  </Card>
+</CardGroup>
+
+## Step-by-Step Setup
+
+<Steps>
+  <Step title="Create Automation">
+    Establish a new automation within your DocsAutomator account.
+  </Step>
+  <Step title="Select Data Source">
+    Choose Glide as the data source for your automation.
+  </Step>
+  <Step title="Select Google Doc Template">
+    Every automation requires a Google Doc template. Reference the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) for comprehensive setup options, or use the Playground Template for testing.
+  </Step>
+  <Step title="Configure Glide Integration">
+    Add the "Generate document" action with DocsAutomator. For first-time setup, provide your DocsAutomator API key (located in account settings).
+  </Step>
+  <Step title="Set Template ID and Filename">
+    - Locate your template/automation ID in the URL bar
+    - Specify the output filename (tip: use template columns to make filenames unique per row)
+  </Step>
+  <Step title="Map Data Fields">
+    Create placeholder-to-value pairs where placeholders match your template exactly (without curly brackets). Values can reference Glide data sources or custom text.
+  </Step>
+  <Step title="Configure File Output">
+    Designate a field to store the generated PDF.
+  </Step>
+  <Step title="Generate Documents">
+    Execute the workflow. Use a Web Embed component on your PDF field to display generated documents immediately.
+  </Step>
+</Steps>
+
+## Line Items Implementation
+
+For documents containing lists (invoices, staff rosters, etc.), configure line items using a three-level structure:
+
+### Row Level (2nd Level)
+
+Construct individual rows using JSON Object columns that format line item data with placeholders matching your template variables.
+
+### Joined List (1st Level)
+
+Create a Joined List column at the parent level (e.g., Invoices table) that references the row data via a Relation column.
+
+### Array Conversion (1st Level)
+
+Use a Template column to convert the joined list into array format for passing to DocsAutomator.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How do I format numbers and dates?">
+    - Use **Format Date** columns for date formatting
+    - Use **Template columns** for number formatting (converts fields to text)
+  </Accordion>
+  <Accordion title="How do I add images?">
+    Declare image variables as `{{image_uniqueName}}` in templates. Map image columns from your table.
+
+    <Warning>
+    Multiple Images columns are not currently supported.
+    </Warning>
+  </Accordion>
+  <Accordion title="Can I get Google Doc links?">
+    The native integration doesn't currently support storing links to generated Google Docs. Use the [DocsAutomator API](/integrations-api/docsautomator-api) as an alternative.
+  </Accordion>
+  <Accordion title="How do I troubleshoot issues?">
+    Check your run history at [app.docsautomator.co/runhistory](https://app.docsautomator.co/runhistory) for detailed error information. Contact support for unresolved issues.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Learn the template syntax
+  </Card>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Master tables and repeating rows
+  </Card>
+  <Card title="Run History" icon="clock-rotate-left" href="/features/run-history">
+    Monitor document generation
+  </Card>
+  <Card title="API Reference" icon="code" href="/integrations-api/docsautomator-api">
+    Advanced API integration
+  </Card>
+</CardGroup>

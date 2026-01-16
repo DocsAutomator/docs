@@ -1,0 +1,75 @@
+---
+title: "Document Previews"
+description: "Generate unlimited previews without using credits"
+icon: "eye"
+---
+
+Generate an unlimited amount of previews without wasting credits. Document preview generation is a critical testing feature in DocsAutomator, allowing you to verify templates and integration functionality before deploying to production.
+
+## Preview Methods
+
+<Tabs>
+  <Tab title="From Automation Interface">
+    After selecting a data source and template, a preview area appears on the right side of the interface.
+
+    **For Airtable and ClickUp integrations:**
+    - Map specific records or tasks from your selected bases, tables, spaces, or lists
+
+    **For other integrations:**
+    - Use the mapping interface to associate data with placeholders in your template
+  </Tab>
+  <Tab title="Preview Mode for Entire Automation">
+    Enable preview mode for the complete automation workflow:
+    - Applies a watermark to generated documents
+    - Consumes zero document credits
+    - Beneficial for testing document generation workflows directly from data sources
+
+    <Tip>
+    Use this mode to test your automation end-to-end before going live.
+    </Tip>
+  </Tab>
+</Tabs>
+
+## Key Benefits
+
+<CardGroup cols={2}>
+  <Card title="Unlimited Testing" icon="infinity">
+    Test as many times as needed without using credits
+  </Card>
+  <Card title="Template Validation" icon="check-circle">
+    Verify placeholder mapping and formatting
+  </Card>
+  <Card title="Integration Testing" icon="plug">
+    Test data source connections before production
+  </Card>
+  <Card title="Risk-Free Development" icon="shield">
+    Iterate on designs without cost concerns
+  </Card>
+</CardGroup>
+
+## Preview vs Production
+
+| Feature | Preview Mode | Production Mode |
+|---------|--------------|-----------------|
+| Watermark | Yes | No |
+| Credit Usage | None | 1 per document |
+| PDF Quality | Full | Full |
+| All Features | Available | Available |
+| Emails Sent | No | Yes (if configured) |
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Test all placeholder variations">
+    Try different data values to ensure your template handles various scenarios correctly.
+  </Accordion>
+  <Accordion title="Check conditional sections">
+    Verify that conditional show/hide and sections work with different data combinations.
+  </Accordion>
+  <Accordion title="Review line items">
+    Test with different numbers of line items to ensure tables expand correctly.
+  </Accordion>
+  <Accordion title="Validate formatting">
+    Check dates, numbers, and currency formatting match your expectations.
+  </Accordion>
+</AccordionGroup>

@@ -1,0 +1,50 @@
+---
+title: "Troubleshooting Guide"
+description: "Solutions for common problems encountered with DocsAutomator"
+icon: "wrench"
+---
+
+The Troubleshooting Guide provides solutions for common problems encountered when setting up or using DocsAutomator.
+
+<Tip>
+Use your browser's search (Ctrl+F or Cmd+F) to find issues quickly.
+</Tip>
+
+## Common Issues
+
+<CardGroup cols={1}>
+  <Card title="Airtable: 120 Seconds Limit" icon="clock" href="/more/troubleshooting-guide/airtable-120-seconds-limit-on-automation-scripts">
+    Airtable automation script requests exceeding 120 seconds trigger execution time limit errors
+  </Card>
+  <Card title="Airtable: Attachment URL Issue" icon="paperclip" href="/more/troubleshooting-guide/airtable-attachment-url-issue-when-sending-emails">
+    Error "an attachment url is disallowed" when sending generated files as attachments
+  </Card>
+  <Card title="Airtable: No Record ID Given" icon="database" href="/more/troubleshooting-guide/data-source-is-set-as-airtable-and-no-record-id-is-given">
+    Error when no valid record ID is passed while using Airtable as data source
+  </Card>
+  <Card title="Google Shared Drive Permissions" icon="folder" href="/more/troubleshooting-guide/google-shared-drive-template-permissions">
+    Template Check displays permission errors for Shared Drive templates
+  </Card>
+</CardGroup>
+
+## Quick Reference
+
+| Issue | Data Source | Solution |
+|-------|-------------|----------|
+| 120 seconds limit | Airtable | Enable async mode |
+| Attachment URL disallowed | Airtable | Add wait mechanism |
+| No record ID given | Airtable | Configure recId variable |
+| Shared Drive permissions | All | Upgrade to Manager role |
+| Can't see all bases | Airtable | Reconnect account |
+| Webhook formula #Error | Google Sheets | Enable English formulas |
+
+## Need More Help?
+
+<CardGroup cols={2}>
+  <Card title="In-App Chat" icon="comments">
+    Use the chat feature in your dashboard for quick support
+  </Card>
+  <Card title="Email Support" icon="envelope" href="mailto:hello@docsautomator.co">
+    Contact hello@docsautomator.co (response within 24 hours)
+  </Card>
+</CardGroup>

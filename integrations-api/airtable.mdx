@@ -1,0 +1,115 @@
+---
+title: "Airtable"
+description: "Convert Airtable records into PDF documents and Google Docs"
+icon: "database"
+---
+
+The DocsAutomator-Airtable integration enables you to convert Airtable records into PDF documents and Google Docs. The system operates on a "primary table and linked tables" model, where documents are generated from records in your main table while data lists ("line items") can be pulled from related tables.
+
+<Note>
+Generated files automatically save to specified Airtable fields.
+</Note>
+
+## Step-by-Step Setup
+
+<Steps>
+  <Step title="Create Automation">
+    Begin by establishing a new automation within your DocsAutomator account.
+  </Step>
+  <Step title="Select Data Source">
+    Choose Airtable as your data integration source.
+  </Step>
+  <Step title="Configure Template">
+    Every automation requires a Google Doc template. Consult the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) for setup details, or use the Playground Template for testing.
+  </Step>
+  <Step title="Choose Base and Table">
+    Select your primary Airtable base and table. DocsAutomator distinguishes between primary tables (containing main record data) and linked tables (containing related line items).
+  </Step>
+  <Step title="Set Output Configuration">
+    Specify three key settings:
+    - **Document name field**: Determines generated file naming (use formula fields for unique names)
+    - **Attachment field**: Designates where PDFs store; select "Overwrite attachment" to replace existing files
+    - **Google Doc URL field**: Stores URLs for generated Google Docs (optional)
+  </Step>
+  <Step title="Map Fields and Line Items">
+    Connect all applicable fields from your Airtable table. For line items, select the linked field and corresponding view to determine sort order.
+  </Step>
+  <Step title="Create Previews">
+    Generate document previews. The system loads 50 records automatically; search functionality enables previewing specific records.
+  </Step>
+  <Step title="Trigger Document Generation">
+    Choose from three triggering methods: Automation Script, Scripting Extension, or Webhook.
+  </Step>
+</Steps>
+
+## Triggering Methods
+
+<Tabs>
+  <Tab title="Automation Script">
+    Copy the provided script into Airtable's automation action. Define the Record ID parameter to pass the triggering record's identifier.
+
+    <Info>
+    Automation scripts require a paid Airtable account.
+    </Info>
+  </Tab>
+  <Tab title="Scripting Extension">
+    Copy the script into Airtable's extension editor. Trigger via the "Run" button or add a button field set to "Run Script" (automatically passes the active record ID).
+  </Tab>
+  <Tab title="Webhook">
+    Copy the webhook URL and add it to a formula or button field. Clicking triggers the webhook, opening a browser window; the PDF appears within seconds and stores in Airtable.
+
+    <Tip>
+    Webhook triggering works on free Airtable plans.
+    </Tip>
+  </Tab>
+</Tabs>
+
+## Field Type Reference
+
+| Field Type | Output Format | Notes |
+|------------|---------------|-------|
+| Single line text | Unmodified | Text displays as-is |
+| Long text | Unmodified | Rich text formatting may vary |
+| Attachment | Image(s) | Supports dynamic image placeholders |
+| Checkbox | ✅ or ❌ | Icon reflects checked/unchecked state |
+| Multiple select | Comma-separated | Includes space before each item |
+| Single select | Unmodified | Text displays as-is |
+| Date | 21/05/2024 | Format respects automation settings |
+| Number | 299.99 | Precision follows automation settings |
+| Currency | $299.99 | Symbol and precision preserved |
+| Formula/Rollup | Varies | Respects formatting options |
+| User | Name format | Comma-separated for multiple |
+
+## Configuration Options
+
+<AccordionGroup>
+  <Accordion title="Locale Settings" icon="globe">
+    Control number/currency notation (comma vs. dot) in automation template settings under Document Generation Options.
+  </Accordion>
+  <Accordion title="View Sorting" icon="sort">
+    Line item sort order follows the selected view's configuration.
+  </Accordion>
+  <Accordion title="Professional Integration Service" icon="wrench">
+    Professional assistance available for integrating DocsAutomator into existing workflows (service fee applies).
+  </Accordion>
+</AccordionGroup>
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="Can I use DocsAutomator on a free Airtable account?">
+    Yes! Webhook triggering functions on free Airtable plans. Automation scripts require paid accounts.
+  </Accordion>
+  <Accordion title="Why don't my bases appear after granting access?">
+    Disconnect and reconnect in settings while selecting all desired bases.
+  </Accordion>
+  <Accordion title="Where can I find a record's ID?">
+    Find record IDs in the URL bar (format: "rec...") when expanding records, or create a formula field using `RECORD_ID()`.
+  </Accordion>
+  <Accordion title="How do I sort line items?">
+    The specified view determines sort order for printed line items.
+  </Accordion>
+  <Accordion title="I'm on an Enterprise workspace and can't connect">
+    Connected apps may require whitelisting on Enterprise plans; contact workspace administrators with the DocsAutomator client ID.
+  </Accordion>
+</AccordionGroup>

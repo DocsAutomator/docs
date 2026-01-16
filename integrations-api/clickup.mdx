@@ -1,0 +1,81 @@
+---
+title: "ClickUp"
+description: "Create documents from ClickUp tasks with native integration"
+icon: "check"
+---
+
+ClickUp is a cloud-based productivity platform offering task management, time tracking, and collaboration capabilities. DocsAutomator integrates natively with ClickUp to enable seamless document creation from tasks.
+
+<Info>
+New to DocsAutomator? The fastest way to get started with ClickUp is our [Quickstart Guide](/docsautomator-basics/quickstart-guide).
+</Info>
+
+## Important Limitations
+
+<Warning>
+**PDF Attachments**: Printed PDFs will be added as attachments to your tasks. Currently, new PDFs are added and there is no option to overwrite previous attachments (a ClickUp limitation).
+
+**Workspace Restriction**: Only one team/workspace is allowed currently. If multiple workspaces are selected when connecting ClickUp, only the first one is available for data mapping.
+</Warning>
+
+## Native Fields Reference
+
+| Field | Example | Format |
+|-------|---------|--------|
+| Name | "Task Name" | Unmodified |
+| Description | "Some Description" | Unmodified |
+| Task ID | "861mtbuq3" | Unmodified |
+| Custom Task ID | "#12345#" | Unmodified |
+| Status | "To-Do" | Unmodified |
+| Priority | "High" | Unmodified |
+| Start date | "05/05/2023" | Per DocsAutomator settings |
+| Due date | "05/05/2023" | Per DocsAutomator settings |
+| Date created | "05/05/2023" | Per DocsAutomator settings |
+| Date updated | "05/05/2023" | Per DocsAutomator settings |
+| Date done | "05/05/2023" | Per DocsAutomator settings |
+| Date closed | "05/05/2023" | Per DocsAutomator settings |
+| Assignees | "Ford Prefect" | Unmodified |
+| Created by | "Ford Prefect" | Unmodified |
+
+## Custom Fields Reference
+
+| Field Type | Example | Notes |
+|------------|---------|-------|
+| Checkbox | ✅ or ❌ | Icon reflects state |
+| Date | "05/05/2023" | Per DocsAutomator settings |
+| Dropdown | "Option C" | Unmodified |
+| Email | "email@example.com" | Unmodified |
+| Files | Image | Follows DocsAutomator image conventions |
+| Formula | "3.33333" | Value only; currency not preserved |
+| Labels | "One, two, three" | Comma-separated, ordered as in ClickUp |
+| Location | "155 Country Lane..." | Unmodified |
+| Money | "$500.00" | Per locale settings |
+| Number | "500" | Unmodified |
+| People | "Ford Prefect, Arthur Dent" | Comma-separated |
+| Phone | "+1 234 567 8" | Unmodified |
+| Progress (Auto) | "75%" | Percent value |
+| Progress (Manual) | "75%" | Percent value |
+| Rating | "😍😍😍😍😍" | Emoji from ClickUp |
+| Text | "ABC" | Unmodified |
+| Text Area | Long text content | Unmodified |
+| Website | "https://docsautomator.co/" | Unmodified |
+
+## Unsupported Fields
+
+<Note>
+The following custom field types are **not currently supported** (coming soon):
+- Relationship
+- Rollup
+- Tasks
+</Note>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Learn the template syntax
+  </Card>
+  <Card title="Dynamic Images" icon="image" href="/features/dynamic-images">
+    Add images to your documents
+  </Card>
+</CardGroup>

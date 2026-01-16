@@ -1,0 +1,64 @@
+---
+title: "Hidden Values"
+description: "Use values as conditions or triggers without displaying them in documents"
+icon: "eye-slash"
+---
+
+Hidden values enable you to set placeholders to "Always hide" for use as conditions in sections or as recipient email addresses without rendering the value in the document.
+
+## Key Features
+
+- **Conditional Usage**: Apply hidden values as conditions for sections
+- **Email Recipients**: Use hidden values as recipient addresses without displaying them
+- **Document Clean**: Values remain invisible in final output while still functional
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Section Visibility Logic" icon="code-branch">
+    Control which document sections appear based on hidden field values
+  </Card>
+  <Card title="Dynamic Email Routing" icon="envelope">
+    Route generated documents to different recipients based on hidden data fields
+  </Card>
+  <Card title="Backend Processing" icon="gears">
+    Store metadata or calculation results needed for automation but not for document display
+  </Card>
+  <Card title="Conditional Logic" icon="filter">
+    Use values to trigger other features without showing them
+  </Card>
+</CardGroup>
+
+## Example
+
+You have a field `{{account_manager_email}}` that you want to use for sending the document but don't want it visible in the document itself:
+
+1. Map the `account_manager_email` placeholder to your data source
+2. Enable "Always hide" in the placeholder settings
+3. Use the placeholder value in your email configuration
+4. The email will be sent to that address, but it won't appear in the document
+
+## Enabling Hidden Values
+
+<Steps>
+  <Step title="Open Placeholder Settings">
+    Click the gear/settings icon next to the placeholder
+  </Step>
+  <Step title="Enable Always Hide">
+    Toggle on "Always hide" option
+  </Step>
+  <Step title="Configure Usage">
+    Use the placeholder in sections, email settings, or other features
+  </Step>
+</Steps>
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card title="Conditional Show/Hide" icon="eye" href="/features/advanced-placeholder-options/conditional-show-hide">
+    Conditionally show/hide based on values
+  </Card>
+  <Card title="Sections" icon="square-dashed" href="/features/sections">
+    Control section visibility with conditions
+  </Card>
+</CardGroup>

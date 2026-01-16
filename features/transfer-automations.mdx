@@ -1,0 +1,98 @@
+---
+title: "Transfer Automations"
+description: "Duplicate automations across workspaces while preserving the original"
+icon: "share"
+---
+
+The Transfer Automation feature enables you to duplicate automations across workspaces while preserving the original. This is useful for consultants, agencies, and teams who need to share automation setups.
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Client Setup" icon="handshake">
+    Consultants and agencies setting up automations for clients
+  </Card>
+  <Card title="Template Sharing" icon="copy">
+    Teams sharing automation templates across workspaces
+  </Card>
+  <Card title="Migration" icon="truck">
+    Moving setups to new accounts
+  </Card>
+  <Card title="Distribution" icon="share-nodes">
+    Template distribution for recurring client projects
+  </Card>
+</CardGroup>
+
+## How to Transfer an Automation
+
+<Steps>
+  <Step title="Access the Transfer Option">
+    1. Navigate to your automations list or open an automation
+    2. Click the three-dot menu (⋮) next to the automation
+    3. Select "Copy to Another Workspace" from the dropdown menu
+  </Step>
+  <Step title="Find the Target Workspace ID">
+    1. Have the target workspace owner navigate to Settings > Workspace
+    2. The Workspace ID displays at the top of the page
+    3. Copy the entire ID (format: `507f1f77bcf86cd799439011`)
+  </Step>
+  <Step title="Complete the Transfer">
+    1. Paste the target workspace ID into the modal
+    2. Review the automation name (copied as: "[Original Name] (Transferred YYYY-MM-DD)")
+    3. Click Transfer to complete the process
+  </Step>
+</Steps>
+
+## Access Requirements
+
+### Always Required
+
+- Google resources (Google Doc template, potentially Google Drive folders and Gmail accounts)
+
+### Conditionally Required
+
+Based on your data source, the target workspace may need:
+
+| Data Source | Requires Target to Have |
+|-------------|------------------------|
+| Airtable | Airtable account authentication |
+| ClickUp | ClickUp account authentication |
+| SmartSuite | SmartSuite account authentication |
+| Google Sheets | Google Sheets account authentication |
+| API / Zapier / Glide / Noloco | Only Google access |
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Test before transferring">
+    Ensure the automation works correctly in the source workspace before transfer.
+  </Accordion>
+  <Accordion title="Document requirements">
+    Communicate what integrations and access the target workspace needs.
+  </Accordion>
+  <Accordion title="Verify access">
+    Confirm the target workspace has authenticated with all required services.
+  </Accordion>
+  <Accordion title="Use descriptive names">
+    Keep original automations for reuse with clear naming.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Target workspace not found">
+    - Verify workspace ID is correct and complete
+    - Ensure target workspace exists and is active
+  </Accordion>
+  <Accordion title="Automation transferred but not working">
+    - Confirm target workspace has authenticated with Google
+    - Verify access to required data sources
+    - Confirm Google Doc template is shared with target workspace
+  </Accordion>
+  <Accordion title="Can't find workspace ID">
+    - Navigate to Settings > Workspace in the target workspace
+    - ID displays at the top of the page
+    - Verify you're logged into the correct workspace
+  </Accordion>
+</AccordionGroup>

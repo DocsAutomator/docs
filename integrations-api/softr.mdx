@@ -1,0 +1,321 @@
+---
+title: "Softr"
+description: "Generate PDF documents from your Softr applications using DocsAutomator"
+---
+
+Softr is a powerful no-code platform that lets you build web apps, client portals, internal tools, and websites.
+
+## Prerequisites
+
+Before setting up the integration, ensure you have:
+
+- A [DocsAutomator account](https://app.docsautomator.co) (free trial available)
+- A [Softr account](https://softr.io)
+
+## Setting Up the Integration
+
+Follow these steps to connect DocsAutomator with your Softr application.
+
+### Step 1: Create a DocsAutomator Automation
+
+First, set up your automation in DocsAutomator:
+
+1. Log in to your [DocsAutomator account](https://app.docsautomator.co)
+2. Click **New Automation** from the dashboard
+3. Select **Softr** as your data source
+4. Choose or create your Google Doc template
+5. Configure your output settings (PDF, email, Google Drive folder, etc.)
+6. Save the automation
+
+### Step 2: Get Your API Key
+
+1. In DocsAutomator, go to **Settings** → **API Key**
+2. Copy your API key—you'll need this for Softr
+
+### Step 3: Connect DocsAutomator in Softr
+
+1. Log in to [Softr Studio](https://studio.softr.io)
+2. Open your application
+3. Go to **Settings** → **Integrations**
+4. Find **DocsAutomator** in the third-party integrations list
+5. Paste your API key and save
+
+Once connected, DocsAutomator will be available as an action type in Softr workflows.
+
+## Creating a Workflow with DocsAutomator
+
+Now you can add document generation to any workflow.
+
+### Step 1: Create a New Workflow
+
+1. In Softr Studio, go to **Workflows**
+2. Click **Create Workflow**
+3. Choose a trigger for your workflow:
+
+**Softr triggers:**
+- **Softr Databases** – Trigger when records are created or updated in Softr's native databases
+- **Softr Apps** – Trigger from events in your Softr app (form submissions, button clicks, etc.)
+
+**Built-in triggers:**
+- **Webhook** – Trigger from external services (Pro plan)
+- **One-time schedule** – Run once at a specific date/time
+- **Recurring schedule** – Run on a recurring basis (daily, weekly, monthly)
+
+**Integration triggers:**
+- **Airtable** – Trigger when Airtable records are created or updated
+- **Google Sheets** – Trigger from Google Sheets changes
+- **Gmail** – Trigger from incoming emails
+- **Notion** – Trigger from Notion database changes
+
+### Step 2: Add the DocsAutomator Action
+
+1. After your trigger, click the **+** button to add an action
+2. Select **DocsAutomator** from the integrations list
+3. Choose **Create document**
+
+### Step 3: Configure the Action
+
+The Create document action has the following settings:
+
+- **Account** – Select your connected DocsAutomator account
+- **Automation ID** – Choose which DocsAutomator automation to use
+- **Document Name** – Set a dynamic name for the generated document (optional)
+- **JSON body for placeholders** – Map your data to template placeholders
+
+<Note>
+Only automations with Softr as the data source will appear in the Automation ID dropdown.
+</Note>
+
+### Step 4: Map Your Data
+
+In the JSON body, map your workflow data to the placeholders in your Google Doc template. Use the **@** button to insert dynamic values from your workflow.
+
+```json
+{
+  "Start_Date": "{{trigger.fields['FIELD_ID']}}",
+  "Project_Name": "{{trigger.fields['FIELD_ID']}}",
+  "Project_Manager": "{{trigger.fields['FIELD_ID']}}"
+}
+```
+
+You can reference data from:
+- **Trigger data** – Fields from the record or event that triggered the workflow
+- **Previous steps** – Output from earlier workflow actions (Find records, Run code, etc.)
+- **Static values** – Fixed text or numbers
+
+### Step 5: Test Your Workflow
+
+1. Click **Test Workflow** in Softr
+2. Select a sample record or provide test data
+3. Verify the document was generated correctly in DocsAutomator's Run History
+
+## Working with Line Items
+
+If your documents include repeating data (like invoice line items or task lists), you can pass them from your workflow.
+
+### Passing Line Items
+
+Include line items in your JSON body using the `line_items_1` key (or `line_items_2`, `line_items_3` for multiple sets):
+
+```json
+{
+  "customer_name": "Acme Corp",
+  "invoice_number": "INV-001",
+  "line_items_1": [
+    {
+      "item_name": "Consulting",
+      "quantity": "10",
+      "unit_price": "150",
+      "line_total": "1500"
+    },
+    {
+      "item_name": "Development",
+      "quantity": "20",
+      "unit_price": "200",
+      "line_total": "4000"
+    }
+  ]
+}
+```
+
+### Line Items from Related Records
+
+To include line items from related records (e.g., tasks linked to a project), use a multi-step workflow:
+
+1. **Find multiple records** – Fetch the related records
+2. **Run custom code** – Format the records into a line items array
+3. **Create document** – Pass the formatted array to DocsAutomator
+
+**Example: Fetching tasks for a project**
+
+After finding related records, add a **Run custom code** step to format them:
+
+```javascript
+const input = inputData['tasks']
+const arr = input.map(task => {
+  return {
+    task: task.fields['fBKYw'],        // Field ID for Task Name
+    description: task.fields['75Q7j']  // Field ID for Description
+  }
+})
+return arr
+```
+
+<Note>
+Softr fields are referenced by their field ID, not their display name. You can find field IDs in your Softr database settings or by inspecting the data in the workflow's Testing tab.
+</Note>
+
+Then in the DocsAutomator action, reference the code step's output:
+
+```json
+{
+  "Project_Name": "{{trigger.fields.Project name}}",
+  "line_items_1": "{{code_step.body}}"
+}
+```
+
+<Card title="Line Items Documentation" icon="table" href="/features/line-items">
+  See the Line Items documentation for detailed formatting options.
+</Card>
+
+## Including Images
+
+To include images in your documents, use the `image_` prefix for your placeholder names in your Google Doc template:
+
+```
+{{image_logo}}
+{{image_product}}
+{{image_signature}}
+```
+
+Then pass the image URLs in your JSON body:
+
+```json
+{
+  "image_logo": "{{trigger.fields['FIELD_ID']}}",
+  "image_product": "{{trigger.fields['FIELD_ID']}}"
+}
+```
+
+<Note>
+Images must be publicly accessible URLs. The `image_` prefix tells DocsAutomator to insert an image at that location rather than text.
+</Note>
+
+<Card title="Dynamic Images Documentation" icon="image" href="/features/dynamic-images">
+  See the Dynamic Images documentation for more details.
+</Card>
+
+## Common Use Cases
+
+### Invoice with Line Items
+
+Generate invoices with line items from related records:
+
+1. **Trigger:** Softr Databases – Record meets conditions (Status = "Ready to Invoice")
+2. **Find multiple records** – Fetch invoice line items linked to the order
+3. **Run custom code** – Format line items into an array
+4. **Create document** – Generate invoice with line items
+5. **Update record** – Save the PDF URL back to the order record
+
+### Project Summary Report
+
+Generate project summaries with task lists:
+
+1. **Trigger:** Softr Databases – Record meets conditions
+2. **Find multiple records** – Fetch tasks linked to the project
+3. **Run custom code** – Format tasks into line items
+4. **Create document** – Generate project summary
+5. **Update record** – Save document URL to project record
+
+### Contract on Status Change
+
+Create contracts when deals reach a specific stage:
+
+1. **Trigger:** Softr Databases – Record meets conditions (Stage = "Contract")
+2. **Create document** – Generate contract from deal data
+3. **Update record** – Save contract URL to deal record
+
+### Scheduled Reports
+
+Automatically generate reports on a recurring basis:
+
+1. **Trigger:** Recurring schedule – Weekly or monthly
+2. **Find multiple records** – Fetch records for the report period
+3. **Run custom code** – Aggregate and format data
+4. **Create document** – Generate the report
+5. **Send email or notification** – Deliver to stakeholders
+
+## Troubleshooting
+
+### Automation Not Appearing in Dropdown
+
+- Verify your automation uses **Softr** as the data source in DocsAutomator
+- Check that your DocsAutomator account is connected in Softr's integration settings
+- Try disconnecting and reconnecting the DocsAutomator integration
+
+### Document Not Generating
+
+- **Check Run History:** Go to DocsAutomator → Run History to see error details
+- **Verify JSON Body:** Ensure your JSON is valid and all placeholder names match your template exactly
+- **Test the Create document step:** Use Softr's Testing tab to run the action with sample data
+
+### Data Not Appearing in Document
+
+- **Check JSON Mapping:** Verify the correct fields are referenced in the JSON body
+- **Test with Static Values:** Replace dynamic references with static text to isolate the issue
+- **Check Data Types:** Dates and numbers may need specific formatting
+- **Verify Previous Steps:** If using data from Find records or Code steps, test those steps first
+
+### Line Items Not Working
+
+- **Use correct key:** Line items must use `line_items_1` (with underscores), not `lineItems1`
+- **Check array format:** Line items must be a JSON array of objects
+- **Use field IDs:** In code steps, reference fields by their ID (e.g., `task.fields['fBKYw']`), not display name
+- **Verify code step output:** Test the code step to ensure it returns the expected array
+
+### Workflow Not Triggering
+
+- **Check Trigger Conditions:** Verify your trigger conditions match the expected events
+- **Review Workflow Logs:** Check Softr's workflow logs for errors
+- **Test Manually:** Use Softr's Testing tab to run the workflow with sample data
+
+## Tips & Best Practices
+
+- **Use Descriptive Placeholder Names:** In your Google Doc template, name placeholders clearly (e.g., `Project_Name` instead of `name`) to make JSON mapping easier
+- **Test Each Step:** Use Softr's Testing tab to test each workflow step individually before running the full workflow
+- **Test with Preview Mode:** Enable preview mode in DocsAutomator to test without using document credits
+- **Organize Your Automations:** Name automations descriptively so they're easy to identify in the Automation ID dropdown
+- **Store Document URLs:** Add an Update record step after Create document to save the PDF URL back to your records
+- **Use Code Steps for Complex Data:** When you need to transform or combine data from multiple records, use a Run custom code step before the Create document action
+- **Find Field IDs:** Softr fields are referenced by ID (e.g., `fBKYw`), not display name. Find field IDs in your database settings or by testing a workflow step and inspecting the output data
+
+## FAQs
+
+### Which Softr plans include Workflows?
+
+Check [Softr's pricing page](https://softr.io/pricing) for current plan features and Workflows availability.
+
+### Can I trigger multiple document generations in one workflow?
+
+Yes, you can add multiple Create document actions to a single workflow. Each action can use a different automation and generate different documents. For example, you might generate an invoice and a receipt from the same trigger.
+
+### Can I send the document via email?
+
+Yes! Configure email delivery in your DocsAutomator automation settings. When the workflow runs, the document will automatically be emailed to the specified recipients. Alternatively, send emails from Softr Workflows.
+
+### Can I use the generated document URL in subsequent workflow steps?
+
+Yes, the Create document action returns the document URL, which you can use in later workflow steps. A common pattern is to add an Update record step after document generation to save the PDF URL back to your database:
+
+1. Add an **Update record** action after the Create document step
+2. Select the record to update (usually the trigger record)
+3. Map the document URL from the Create document step to a File field in your record
+
+This lets users access their generated documents directly from your Softr app.
+
+## Resources
+
+- [Softr Workflows Documentation](https://docs.softr.io/workflows)
+- [DocsAutomator API Documentation](/integrations-api/docsautomator-api)
+- [Line Items Documentation](/features/line-items)
+- [Template Placeholders Guide](/docsautomator-basics/google-doc-template-guide)

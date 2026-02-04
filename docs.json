@@ -39,7 +39,10 @@
                   "integrations-api/clickup",
                   "integrations-api/zapier",
                   "integrations-api/n8n",
-                  "integrations-api/docsautomator-api"
+                  "integrations-api/softr",
+                  "integrations-api/make",
+                  "integrations-api/docsautomator-api",
+                  "integrations-api/docsautomator-mcp"
                 ]
               },
               {
@@ -47,7 +50,8 @@
                 "pages": [
                   "features/docsautomator-esign",
                   "features/docsautomator-esign/compliance-and-legal-validity",
-                  "features/docsautomator-esign/docsautomator-esign-api-reference"
+                  "features/docsautomator-esign/docsautomator-esign-api-reference",
+                  "features/docsautomator-esign/e-signing-tutorials-from-data-sources"
                 ]
               },
               {

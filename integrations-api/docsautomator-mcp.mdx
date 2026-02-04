@@ -1,0 +1,314 @@
+---
+title: "DocsAutomator MCP"
+description: "Connect DocsAutomator to AI assistants like Claude, Cursor, and other MCP-compatible clients"
+---
+
+Connect DocsAutomator to AI assistants like Claude, Cursor, and other MCP-compatible clients. Generate documents, manage automations, and handle e-signatures directly from your AI conversations.
+
+## What is MCP?
+
+The Model Context Protocol (MCP) is an open standard that allows AI assistants to securely connect to external tools and data sources. With the DocsAutomator MCP server, you can:
+
+- Generate documents from your automations
+- List and manage automations
+- Check document generation status
+- View and manage e-signature sessions
+- Extract placeholders from templates
+
+## Quick Start
+
+**MCP Server URL:** `https://mcp.docsautomator.co/mcp`
+
+**API Key:** Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api)
+
+---
+
+## Setup by Client
+
+### Claude Desktop
+
+1. Open Claude Desktop
+2. Click the **+** button in the conversation
+3. Select **Connectors** → **Add custom connector**
+4. Enter the MCP server URL:
+   ```
+   https://mcp.docsautomator.co/mcp
+   ```
+5. Click **Connect**
+6. Sign in to DocsAutomator and authorize access
+
+Once connected, you can ask Claude things like:
+- "List my DocsAutomator automations"
+- "Generate a document using automation [ID] with this data..."
+- "Check the status of my e-signature sessions"
+
+---
+
+### Claude Code (CLI)
+
+Add DocsAutomator to Claude Code with a single command:
+
+```bash
+claude mcp add docsautomator -t streamable-http -e API_KEY=YOUR_API_KEY -- https://mcp.docsautomator.co/mcp
+```
+
+Replace `YOUR_API_KEY` with your [DocsAutomator API key](https://app.docsautomator.co/settings/workspace/api).
+
+#### Alternative: Manual Configuration
+
+Add to your `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "docsautomator": {
+      "url": "https://mcp.docsautomator.co/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+---
+
+### ChatGPT
+
+<Warning>
+A ChatGPT Business or Enterprise subscription is required to use MCP connections with ChatGPT. Additionally, Developer Mode must be enabled in your ChatGPT settings.
+</Warning>
+
+1. Open ChatGPT and go to **Settings**
+2. Navigate to **Apps**
+3. Enable **Developer Mode** if not already enabled
+4. Click **Create App**
+5. Select **MCP Server** as the connection type
+6. Enter the following configuration:
+   - **Name:** DocsAutomator
+   - **Server URL:** `https://mcp.docsautomator.co/mcp`
+   - **Authentication:** OAuth
+   - Leave Client ID and Secret blank
+7. Click **Create**
+
+Once connected, you can ask ChatGPT to generate documents, manage automations, handle e-signatures, and more using natural language.
+
+---
+
+### Cursor
+
+1. Open Cursor Settings (`Cmd/Ctrl + ,`)
+2. Navigate to **Features** → **MCP Servers**
+3. Click **Add Server**
+4. Configure:
+   - **Name:** DocsAutomator
+   - **URL:** `https://mcp.docsautomator.co/mcp`
+   - **Authentication:** Bearer Token
+   - **Token:** Your DocsAutomator API key
+
+Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
+
+---
+
+### Other MCP Clients
+
+For any MCP-compatible client, use these connection details:
+
+| Setting | Value |
+|---------|-------|
+| **Server URL** | `https://mcp.docsautomator.co/mcp` |
+| **Transport** | Streamable HTTP |
+| **Auth Header** | `Authorization: Bearer YOUR_API_KEY` |
+
+Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
+
+---
+
+## Available Tools
+
+### Document Generation
+
+#### `create_document`
+Generate a document from an automation.
+
+**Parameters:**
+- `automationId` (required) - The automation ID
+- `data` - Placeholder values for API/Zapier data sources
+- `recId` - Record ID for Airtable data source
+- `rowNumber` - Row number for Google Sheets data source
+- `documentName` - Custom name for the generated document
+- `async` - If true, returns immediately with a job ID
+
+**E-Signatures:** If the automation has e-signing enabled, creating a document automatically starts the signing workflow. The response includes signing session details and signing links.
+
+**Example prompt:**
+> "Create a document using automation abc123 with the following data: company name is 'Acme Corp', date is 'January 27, 2026'"
+
+---
+
+### Automation Management
+
+#### `list_automations`
+List all automations in your workspace.
+
+**Example prompt:**
+> "Show me all my DocsAutomator automations"
+
+#### `get_automation`
+Get detailed information about a specific automation, including e-signature configuration.
+
+**Example prompt:**
+> "Get details for automation abc123"
+
+#### `create_automation`
+Create a new automation.
+
+**Parameters:**
+- `title` (required) - Name for the automation
+- `dataSourceName` (required) - One of: Airtable, Google Sheets, API, Zapier, SmartSuite, ClickUp, Glide, Noloco, n8n, Make
+- `docTemplateLink` - Google Doc template URL
+
+#### `update_automation`
+Update an automation's settings.
+
+#### `delete_automation`
+Permanently delete an automation.
+
+#### `duplicate_automation`
+Create a copy of an existing automation.
+
+---
+
+### Template Tools
+
+#### `list_placeholders`
+Extract all placeholders from an automation's template.
+
+**Example prompt:**
+> "What placeholders are in automation abc123?"
+
+#### `duplicate_template`
+Create a copy of the Google Doc template.
+
+---
+
+### Queue & Job Status
+
+#### `get_job_status`
+Check the status of an async document generation job.
+
+**Example prompt:**
+> "Check the status of job xyz789"
+
+#### `get_queue_stats`
+Get queue statistics for your workspace.
+
+#### `poll_job_until_complete`
+Wait for a job to complete and return the result.
+
+---
+
+### E-Signature Tools
+
+#### `list_esign_sessions`
+List e-signature sessions with optional filters.
+
+**Parameters:**
+- `status` - Filter by status: pending, in_progress, completed, expired, cancelled
+- `email` - Filter by signer email
+- `page`, `limit` - Pagination
+
+**Example prompt:**
+> "Show me all pending e-signature sessions"
+
+#### `get_esign_session`
+Get detailed information about a signing session.
+
+#### `get_signing_links`
+Get signing URLs for all signers in a session.
+
+**Example prompt:**
+> "Get the signing links for session abc123"
+
+#### `get_esign_audit`
+Get the audit trail for a signing session.
+
+#### `cancel_esign_session`
+Cancel an active signing session.
+
+#### `resend_esign_invite`
+Resend the signing invitation email to a signer.
+
+---
+
+### Email Tools
+
+#### `send_test_email`
+Send a test email for an automation (rate limited to 5/hour).
+
+---
+
+## Example Conversations
+
+### Generate a Contract
+
+**You:** "I need to generate a consulting agreement for Acme Corp. Use the consulting agreement automation."
+
+**Claude:** "I'll create that document for you. Let me first check what placeholders are needed..."
+
+*[Uses list_placeholders, then create_document]*
+
+**Claude:** "Done! Here's your consulting agreement:
+- PDF: [link]
+- Google Doc: [link]
+
+The e-signature request has been sent to the signers automatically."
+
+---
+
+### Check Signing Status
+
+**You:** "What's the status of the contract I sent to john@acme.com?"
+
+**Claude:** *[Uses list_esign_sessions with email filter]*
+
+"I found one pending session for john@acme.com:
+- Document: Consulting Agreement - Acme Corp
+- Status: Waiting for signature
+- Sent: 2 hours ago
+
+Would you like me to resend the invitation?"
+
+---
+
+### Batch Document Generation
+
+**You:** "Generate invoices for all the rows in my Google Sheet automation"
+
+**Claude:** "I'll generate those invoices. Since there are multiple documents, I'll use async mode..."
+
+*[Uses create_document with async=true for each row, then polls for completion]*
+
+---
+
+## Troubleshooting
+
+### "Authentication required" error
+- Ensure your API key is valid and active
+- Check that the Authorization header is formatted correctly: `Bearer YOUR_API_KEY`
+- Verify your API key at [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api)
+
+### "Automation not found" error
+- Verify the automation ID is correct
+- Ensure the automation belongs to your workspace
+- Check that the automation is not deleted
+
+### E-signature not starting
+- Verify the automation has e-signing enabled in its output settings
+- Check that signer emails are configured in the automation
+- Ensure the e-signature placeholders exist in the template
+
+### Rate limiting
+- Document generation: 500 requests per 15 minutes
+- Test emails: 5 per hour
+- If you hit limits, wait for the reset period

@@ -1,0 +1,164 @@
+---
+title: "Make"
+description: "Generate PDF documents from Make (formerly Integromat) scenarios using DocsAutomator"
+---
+
+## Overview
+
+Make (formerly Integromat) is a powerful visual automation platform that lets you connect apps and automate workflows without coding. With Make, you can create complex multi-step automations called "scenarios" that trigger actions across thousands of apps.
+
+The DocsAutomator app in Make lets you automatically generate PDF documents and Google Docs from your templates whenever your scenarios run. Whether you're creating invoices from new orders, generating contracts from form submissions, or producing reports from database records, DocsAutomator handles the document creation seamlessly.
+
+<Check>
+The DocsAutomator app in Make supports dynamic placeholders and line items, automatically loading the fields from your template.
+</Check>
+
+## Key Benefits
+
+- **Visual workflow builder** - Design complex automations with Make's intuitive drag-and-drop interface
+- **Dynamic field mapping** - Placeholders and line items load automatically based on your template
+- **1,000+ app integrations** - Connect DocsAutomator with virtually any app in Make's ecosystem
+- **Powerful data transformation** - Use Make's built-in functions to format and manipulate data before document generation
+
+## Step-by-Step Guide
+
+### Step 1: Create an Automation in DocsAutomator
+
+1. Log in to [DocsAutomator](https://app.docsautomator.co)
+2. Click **New Automation**
+3. Select **Make** as your data source
+4. Choose or create a Google Docs template with placeholders (e.g., `{{customer_name}}`, `{{invoice_date}}`)
+5. Complete the setup wizard and save your automation
+
+### Step 2: Get Your API Key
+
+1. In DocsAutomator, go to **Settings** → **API**
+2. Copy your API key - you'll need this to connect Make to your account
+
+### Step 3: Add DocsAutomator to Your Make Scenario
+
+1. In Make, create a new scenario or open an existing one
+2. Click the **+** button to add a new module
+3. Search for **DocsAutomator**
+4. Select **Create Document**
+
+### Step 4: Connect Your Account
+
+1. Click **Create a connection**
+2. Enter a connection name (e.g., "DocsAutomator")
+3. Paste your API key
+4. Click **Save**
+
+<Info>
+Your API key is stored securely and only needs to be entered once. All future DocsAutomator modules will use this connection.
+</Info>
+
+### Step 5: Configure the Module
+
+- **Automation:** Select your automation from the dropdown. Only automations with "Make" or "API" data source will appear.
+- **Document Name (optional):** Enter a custom name for the generated document. You can use data from previous modules (e.g., `Invoice-{{1.order_id}}`).
+- **Placeholder Values:** Map your data to each placeholder field. Click on a field and select values from previous modules in your scenario.
+- **Line Items (if applicable):** If your template has line items, you'll see array fields like "Line Items 1". Map arrays from previous modules or use Make's array aggregator.
+
+### Step 6: Test Your Scenario
+
+1. Click **Run once** at the bottom of the screen
+2. Check the DocsAutomator module output for:
+   - **PDF URL:** Direct link to download the PDF
+   - **Google Doc URL:** Link to the generated Google Doc
+   - **File ID:** Google Drive file ID
+
+<Check>
+Your document was generated successfully! You can now use the output URLs in subsequent modules (e.g., send via email, upload to cloud storage).
+</Check>
+
+## Working with Line Items
+
+Line items allow you to generate tables with multiple rows - perfect for invoices, quotes, and reports.
+
+### Template Setup
+
+In your Google Docs template, create a table row with line item placeholders:
+
+| Description | Quantity | Price |
+|-------------|----------|-------|
+| `{{line_items_1_description}}` | `{{line_items_1_quantity}}` | `{{line_items_1_price}}` |
+
+### Mapping Line Items in Make
+
+Line items should be an array of objects. In Make, you can:
+
+- Map directly from a previous module that outputs an array (e.g., "List Order Items")
+- Use an **Array Aggregator** to combine multiple items into an array
+- Create manually using Make's array syntax
+
+Example structure:
+
+```json
+[
+  {
+    "description": "Consulting Services",
+    "quantity": "10",
+    "price": "$150"
+  },
+  {
+    "description": "Development",
+    "quantity": "20",
+    "price": "$200"
+  }
+]
+```
+
+<Info>
+The field names in your array must match your template placeholders exactly (without the `line_items_1_` prefix).
+</Info>
+
+## Tips & Best Practices
+
+### Use Preview Mode for Testing
+
+When building your scenario, test with DocsAutomator's preview feature first to ensure your template and placeholders are configured correctly.
+
+### Handle Errors Gracefully
+
+Add error handling to your scenario using Make's error handler routes. Common errors include:
+
+- Invalid API key
+- Automation not found
+- Missing required placeholders
+
+### Format Data Before Sending
+
+Use Make's built-in functions to format your data:
+
+- `formatDate()` - Format dates consistently
+- `formatNumber()` - Format currency and numbers
+- `replace()` - Clean up text data
+
+### Working with Large Documents
+
+For documents that take longer to generate, DocsAutomator processes them asynchronously. The module will wait for completion and return the URLs when ready.
+
+## FAQs
+
+### Why don't I see my automation in the dropdown?
+
+Only automations with "Make" or "API" as the data source appear in the dropdown. Edit your automation in DocsAutomator and change the data source if needed.
+
+### Can I generate multiple documents in one scenario?
+
+Yes! Add multiple DocsAutomator modules to your scenario, or use Make's iterator to loop through records and generate a document for each.
+
+### How do I send the generated PDF via email?
+
+Use the PDF URL output from the DocsAutomator module. In your email module (Gmail, Outlook, etc.), you can either:
+
+- Include the PDF URL as a link in the email body
+- Use an HTTP module to download the PDF, then attach it to the email
+- Or you can also send emails with DocsAutomator, setup in your automation settings
+
+## Resources
+
+- [Template Placeholders Guide](/docsautomator-basics/google-doc-template-guide)
+- [Line Items Documentation](/features/line-items)
+- [Make Help Center](https://www.make.com/en/help)

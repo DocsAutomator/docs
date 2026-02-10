@@ -15,9 +15,7 @@ DocsAutomator provides powerful capabilities for incorporating groups of variabl
 Line items are declared using the syntax `{{line_items_$num}}` at the beginning of a table row, with associated variables placed in subsequent cells.
 
 ```
-{{#line_items_1}}
-{{line_items_1.description}}  {{line_items_1.quantity}}  {{line_items_1.price}}
-{{/line_items_1}}
+{{line_items_1}}{{description}}  {{quantity}}  {{price}}
 ```
 
 ## Data Source Mapping
@@ -37,13 +35,9 @@ Line items are declared using the syntax `{{line_items_$num}}` at the beginning 
 Multiple line item sets can be included by incrementing the number:
 
 ```
-{{#line_items_1}}
-...
-{{/line_items_1}}
+{{line_items_1}}{{description}}  {{quantity}}  {{price}}
 
-{{#line_items_2}}
-...
-{{/line_items_2}}
+{{line_items_2}}{{name}}  {{amount}}
 ```
 
 <Note>
@@ -57,9 +51,7 @@ Line item sets must be numbered in correct order (1, 2, 3, etc.).
 Image placeholders use the `{{image_name}}` prefix and can map single or multiple images:
 
 ```
-{{#line_items_1}}
-{{image_line_items_1.product_photo}}  {{line_items_1.name}}  {{line_items_1.price}}
-{{/line_items_1}}
+{{line_items_1}}{{image_product_photo}}  {{name}}  {{price}}
 ```
 
 ### Grouping

@@ -1,0 +1,136 @@
+---
+title: "How It Works"
+description: "Understand the DocsAutomator workflow from template to finished document"
+icon: "gears"
+keywords: ["document generation workflow", "template placeholders", "data source integration", "PDF automation"]
+---
+
+DocsAutomator turns your data into professionally formatted PDFs through a straightforward five-step process. This page explains each step at a high level so you understand how the pieces fit together.
+
+## The Document Generation Workflow
+
+<Steps>
+  <Step title="Create Your Template">
+    DocsAutomator supports two template types. Choose the one that fits your workflow:
+
+    **Google Doc Templates** — Create a Google Doc and add **placeholders** using double curly brackets wherever you want dynamic data inserted:
+
+    ```
+    Dear {{client_name}},
+
+    Your invoice total is {{total_amount}}.
+    ```
+
+    Placeholders work for text, images, tables, and entire sections of your document. You can also start from a pre-built template in the [Template Gallery](https://docsautomator.co/templates/).
+
+    **PDF Templates** — Upload an existing PDF and position data fields on top of it using the visual editor. The PDF itself is not modified — DocsAutomator overlays your data onto the original layout at generation time. Ideal for pre-designed forms, certificates, or branded documents.
+
+    <CardGroup cols={2}>
+      <Card title="Google Doc Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+        Learn the full placeholder syntax
+      </Card>
+      <Card title="PDF Template Guide" icon="file-pdf" href="/docsautomator-basics/pdf-template-guide">
+        Overlay data fields on existing PDFs
+      </Card>
+    </CardGroup>
+  </Step>
+
+  <Step title="Connect Your Data Source">
+    Link DocsAutomator to the platform where your data lives. Supported data sources include:
+
+    <CardGroup cols={3}>
+      <Card title="Airtable" icon="/icons/airtable.png" href="/integrations-api/airtable" />
+      <Card title="Google Sheets" icon="/icons/google-sheets.png" href="/integrations-api/google-sheets" />
+      <Card title="SmartSuite" icon="/icons/smartsuite.png" href="/integrations-api/smartsuite" />
+      <Card title="ClickUp" icon="/icons/clickup.png" href="/integrations-api/clickup" />
+      <Card title="Glide" icon="/icons/glide.png" href="/integrations-api/glide" />
+      <Card title="Noloco" icon="/icons/noloco.png" href="/integrations-api/noloco" />
+      <Card title="Zapier" icon="/icons/zapier.svg" href="/integrations-api/zapier" />
+      <Card title="n8n" icon="/icons/n8n.svg" href="/integrations-api/n8n" />
+      <Card title="Make" icon="/icons/make.svg" href="/integrations-api/make" />
+      <Card title="Softr" icon="/icons/softr.png" href="/integrations-api/softr" />
+      <Card title="API" icon="/icons/api.png" href="/integrations-api/docsautomator-api" />
+      <Card title="MCP" icon="/icons/mcp.svg" href="/integrations-api/docsautomator-mcp" />
+    </CardGroup>
+  </Step>
+
+  <Step title="Map Data Fields to Placeholders">
+    Tell DocsAutomator which data fields correspond to which template placeholders. The mapping interface shows all placeholders detected in your template and lets you assign data source fields to each one.
+
+    For example:
+    | Template Placeholder | Data Source Field |
+    |---------------------|-------------------|
+    | `{{client_name}}` | Customer Name column |
+    | `{{total_amount}}` | Invoice Total column |
+    | `{{image_logo}}` | Logo attachment field |
+
+    DocsAutomator also supports AI-powered field mapping that automatically suggests matches based on field names.
+  </Step>
+
+  <Step title="Preview Your Document">
+    Generate unlimited previews without using any document credits. Previews let you verify that:
+
+    - Placeholders are replaced correctly
+    - Line item tables expand as expected
+    - Images render at the right size
+    - Conditional sections show or hide properly
+
+    <Card title="Document Previews" icon="eye" href="/features/document-previews">
+      Learn more about preview options
+    </Card>
+  </Step>
+
+  <Step title="Trigger Document Generation">
+    Choose how documents get created. DocsAutomator supports three trigger methods:
+
+    | Method | How It Works | Best For |
+    |--------|-------------|----------|
+    | **Automatic** | Documents generate when records are created or updated in your data source | Hands-off workflows |
+    | **Manual** | Trigger generation via a button, menu, or formula in your data source | On-demand documents |
+    | **API** | Send a POST request to the `/createDocument` endpoint | Custom applications |
+
+    Each generated document produces a PDF (and optionally a Google Doc) that can be saved, emailed, merged with other PDFs, sent to a webhook, or routed through an **e-signature workflow** for legally binding signatures.
+  </Step>
+</Steps>
+
+## What Happens After Generation
+
+Once a document is generated, DocsAutomator can perform several actions automatically:
+
+<CardGroup cols={2}>
+  <Card title="Save Google Doc" icon="google" href="/features/actions-after-document-generation/saving-google-docs">
+    Save an editable copy to Google Drive
+  </Card>
+  <Card title="Save PDF to Drive" icon="hard-drive" href="/features/actions-after-document-generation/save-pdfs-in-google-drive">
+    Store the PDF in a designated folder
+  </Card>
+  <Card title="Send Email" icon="envelope" href="/features/actions-after-document-generation/send-email">
+    Email documents to recipients automatically
+  </Card>
+  <Card title="Merge PDFs" icon="copy" href="/features/actions-after-document-generation/merge-existing-pdfs">
+    Combine with existing PDF documents
+  </Card>
+  <Card title="Notify Webhook" icon="bell" href="/features/actions-after-document-generation/notify-webhook">
+    Send data to external services
+  </Card>
+  <Card title="Collect Signatures" icon="signature" href="/features/docsautomator-esign">
+    Add e-signature workflows to documents
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart Guide" icon="bolt" href="/docsautomator-basics/quickstart-guide">
+    Set up your first automation step by step
+  </Card>
+  <Card title="Google Doc Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Learn the complete placeholder syntax
+  </Card>
+  <Card title="PDF Template Guide" icon="file-pdf" href="/docsautomator-basics/pdf-template-guide">
+    Overlay data fields on existing PDFs
+  </Card>
+  <Card title="E-Signatures" icon="signature" href="/features/docsautomator-esign">
+    Collect legally binding signatures
+  </Card>
+</CardGroup>

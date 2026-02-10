@@ -1,0 +1,189 @@
+---
+title: "API Error Troubleshooting"
+description: "Diagnose and resolve common API errors when using the DocsAutomator API"
+icon: "code"
+---
+
+## 400 Bad Request
+
+### Problem
+
+The API returns `400 Bad Request` when the request is missing required parameters or has invalid values.
+
+### Common Error Messages
+
+**Missing automation ID:**
+```json
+{ "message": "Please add a valid automation id with key 'docId' to the request." }
+```
+Include the `docId` field in your request body with your automation ID.
+
+**Invalid template override:**
+```json
+{ "message": "Invalid docTemplateLink format. Please provide either a valid Google Docs URL or a document ID directly." }
+```
+Use a full Google Docs URL (e.g., `https://docs.google.com/document/d/DOC_ID/edit`) or just the document ID.
+
+---
+
+## 401 Unauthorized
+
+### Problem
+
+API requests return `401 Unauthorized` with a message indicating authentication failure.
+
+### Common Error Messages & Causes
+
+<Tabs>
+  <Tab title="Missing or wrong API key">
+    **Error message:**
+    ```json
+    { "message": "Incorrect / missing API key" }
+    ```
+
+    Ensure you include the `Authorization` header with the correct format:
+
+    ```bash
+    Authorization: Bearer YOUR_API_KEY
+    ```
+
+    Find your API key at **Settings > Workspace > API** in the DocsAutomator app.
+
+    <Warning>
+    API keys are scoped to a workspace. If you have multiple workspaces, make sure you're using the key from the correct one.
+    </Warning>
+  </Tab>
+  <Tab title="Expired Google refresh token">
+    **Error message:**
+    ```json
+    { "message": "No Google access permissions. Please add your Google account under settings in your DocsAutomator account" }
+    ```
+
+    DocsAutomator needs an active Google connection to generate documents. If the Google refresh token has expired or been revoked, you get this error.
+
+    **Solution:** Log into the DocsAutomator app and reconnect your Google account at **Settings > Integrations**.
+  </Tab>
+  <Tab title="Copied key has extra whitespace">
+    When copying the API key, extra spaces or newlines may be included. Trim any whitespace from the key value.
+  </Tab>
+</Tabs>
+
+## 402 Payment Required
+
+### Problem
+
+The API returns `402 Payment Required`, indicating your document generation quota has been exceeded.
+
+**Error message:**
+```json
+{ "message": "You have reached your documents limit. Please upgrade your plan: https://app.docsautomator.co/subscribe" }
+```
+
+### Solution
+
+1. Check your current usage at **Settings > Billing** in the DocsAutomator app
+2. Enable overage documents in billing settings to continue beyond your plan limit
+3. Upgrade your plan or wait for the billing cycle to reset
+4. If overage billing is already enabled, this error means the overage cap was also reached
+
+<Info>
+Preview mode documents do not count against your quota. Set `"isPreview": true` in your request for testing.
+</Info>
+
+## 404 Not Found
+
+### Problem
+
+The API returns `404 Not Found` when trying to create a document or access an automation.
+
+### Common Error Messages
+
+| Error Message | Cause | Solution |
+|-------|-------------|----------|
+| `"Automation / template id does not exist or is not part of the account with the given API key."` | Wrong `docId` or wrong workspace | Verify the automation ID and API key match the same workspace |
+| `"No Google Docs template set for the given document id."` | No template linked | Open the automation in the app and configure a Google Doc template |
+| `"Automation is not active."` | Automation is disabled | Activate the automation in the app or set `isActive: true` via the API |
+
+### How to Find Your Automation ID
+
+1. Open the automation in the DocsAutomator app
+2. The automation ID is displayed on the settings page
+3. Or call `GET /automations` to list all automations with their IDs
+
+## 429 Too Many Requests
+
+### Problem
+
+The API returns `429 Too Many Requests`, indicating you've exceeded the rate limit.
+
+### Rate Limits
+
+| Scope | Limit |
+|-------|-------|
+| Global | 500 requests per 15 minutes per API key |
+| Queue | Max 50 queued jobs per workspace |
+| Queue concurrency | Max 5 active jobs per workspace |
+| Test email | 5 per hour per workspace |
+
+### Solution
+
+- **Implement backoff**: Wait and retry with exponential backoff (start at 2 seconds, double each attempt, max 60 seconds)
+- **Spread requests**: If generating many documents, space out requests or use async mode with the queue system
+- **Check the `Retry-After` header**: When present, wait the indicated number of seconds before retrying
+
+```javascript
+// Example: exponential backoff
+async function createDocumentWithRetry(payload, maxRetries = 3) {
+  let delay = 2000;
+  for (let i = 0; i < maxRetries; i++) {
+    const response = await fetch("https://api.docsautomator.co/createDocument", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer YOUR_API_KEY",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.status !== 429) return response.json();
+
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    delay *= 2;
+  }
+  throw new Error("Rate limit exceeded after retries");
+}
+```
+
+## 500 Internal Server Error
+
+### Problem
+
+The API returns `500 Internal Server Error`, indicating something went wrong on the server side.
+
+### What to Do
+
+1. **Retry the request** after a short delay. Transient errors (Google API timeouts, etc.) are often resolved by retrying.
+2. **Check your template** for issues such as very large images, complex formatting, or corrupted elements.
+3. **Verify your data** does not contain unexpected characters or excessively long values.
+4. **Contact support** if the error persists. Include the request payload (without your API key) and the approximate timestamp.
+
+## Debugging Tips
+
+<Tip>
+When troubleshooting API issues, always check the response body for a detailed error message. DocsAutomator returns structured error responses with specific details about what went wrong.
+</Tip>
+
+- **Use the API playground**: Each endpoint page in the API Reference tab includes an interactive playground where you can test requests directly.
+- **Check Run History**: Document generation attempts are logged in the Run History tab in the app, even for API-triggered generations.
+- **Validate your JSON**: Malformed JSON payloads return `400 Bad Request`. Use a JSON validator before sending requests.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="API Introduction" icon="code" href="/api-reference/introduction">
+    API setup, authentication, and code examples
+  </Card>
+  <Card title="Run History" icon="clock-rotate-left" href="/features/run-history">
+    Monitor all document generation attempts
+  </Card>
+</CardGroup>

@@ -1,0 +1,91 @@
+---
+title: "E-Sign Date Format Options"
+description: "Customize date formatting in e-signature fields using flexible tokens and separators."
+icon: "calendar"
+---
+
+DocsAutomator's e-signature date fields support flexible formatting using tokens. You can combine any of the tokens below with any separator to create the exact date format your documents require.
+
+## Available Tokens
+
+| Token  | Description        | Example Output |
+| ------ | ------------------ | -------------- |
+| `YYYY` | 4-digit year       | 2025           |
+| `YY`   | 2-digit year       | 25             |
+| `MMMM` | Full month name    | January        |
+| `MMM`  | Short month name   | Jan            |
+| `MM`   | 2-digit month      | 01             |
+| `M`    | 1-digit month      | 1              |
+| `DD`   | 2-digit day        | 07             |
+| `D`    | 1-digit day        | 7              |
+
+You can use any separator between tokens — slashes, dashes, dots, spaces, commas, or any other character.
+
+## Format Examples
+
+All examples below use the date **January 7, 2025** as reference.
+
+### Numeric Formats
+
+| Format         | Output       | Common Usage      |
+| -------------- | ------------ | ----------------- |
+| `MM/DD/YYYY`   | 01/07/2025   | US standard       |
+| `DD/MM/YYYY`   | 07/01/2025   | EU/UK standard    |
+| `YYYY-MM-DD`   | 2025-01-07   | ISO 8601          |
+| `DD.MM.YYYY`   | 07.01.2025   | German/Swiss      |
+| `M/D/YYYY`     | 1/7/2025     | US short          |
+| `MM-DD-YYYY`   | 01-07-2025   | US with dashes    |
+| `YYYY/MM/DD`   | 2025/01/07   | East Asian        |
+| `DD-MM-YY`     | 07-01-25     | Short EU          |
+
+### Named Month Formats
+
+| Format              | Output              | Common Usage            |
+| ------------------- | ------------------- | ----------------------- |
+| `MMMM DD, YYYY`     | January 07, 2025    | US formal               |
+| `MMMM D, YYYY`      | January 7, 2025     | US formal (no leading zero) |
+| `DD MMMM YYYY`      | 07 January 2025     | UK/International formal |
+| `D MMMM YYYY`       | 7 January 2025      | UK formal (no leading zero) |
+| `DD-MMM-YYYY`       | 07-Jan-2025         | Compliance / legal      |
+| `D-MMM-YYYY`        | 7-Jan-2025          | Compliance short        |
+| `MMM DD, YYYY`      | Jan 07, 2025        | US abbreviated          |
+| `MMM D, YYYY`       | Jan 7, 2025         | US abbreviated short    |
+| `DD MMM YYYY`       | 07 Jan 2025         | Military / international|
+| `D MMM YYYY`        | 7 Jan 2025          | International short     |
+| `MMMM YYYY`         | January 2025        | Month and year only     |
+
+### Other Combinations
+
+| Format              | Output              | Notes                   |
+| ------------------- | ------------------- | ----------------------- |
+| `DD/MMM/YYYY`       | 07/Jan/2025         | Slashes with short name |
+| `YYYY.MM.DD`        | 2025.01.07          | Dots with ISO order     |
+| `MMMM DD YYYY`      | January 07 2025     | No comma                |
+| `DD-MMMM-YYYY`      | 07-January-2025     | Dashes with full name   |
+
+## Localization
+
+Month names (`MMMM` and `MMM`) are automatically localized based on the **Signer Language** setting on your automation. For example, if the signer language is set to German:
+
+| Token  | English  | German   |
+| ------ | -------- | -------- |
+| `MMMM` | January  | Januar   |
+| `MMM`  | Jan      | Jan.     |
+
+## How to Set the Date Format
+
+1. Open your automation
+2. Go to **Output Settings**
+3. Under **E-Signature**, find the **Date Format** field
+4. Enter your desired format using the tokens above
+5. The format saves automatically
+
+<Info>
+The default format is `MM/DD/YYYY`. You can change it to any combination of the tokens listed above.
+</Info>
+
+## Tips
+
+- **For legal/compliance documents**: Use named month formats like `DD-MMM-YYYY` (07-Jan-2025) or `MMMM DD, YYYY` (January 07, 2025) to avoid ambiguity between US and European date conventions.
+- **For international documents**: `YYYY-MM-DD` (ISO 8601) is universally unambiguous.
+- **Leading zeros**: Use `DD` and `MM` for consistent widths with leading zeros, or `D` and `M` for compact dates without them.

@@ -1,233 +1,59 @@
 ---
 title: "DocsAutomator API"
 description: "REST API for programmatic document creation and automation management"
-icon: "/icons/api.svg"
+icon: "/icons/api.png"
+keywords: ["REST API", "document generation API", "API integration", "createDocument endpoint"]
 ---
 
-DocsAutomator offers a powerful REST API to create documents programmatically and manage automations through CRUD operations. The API can be utilized to add a performant document creation solution into any software.
+DocsAutomator offers a REST API to create documents programmatically, manage automations, and control e-signature workflows. Use it to add document generation into any software.
 
-## Base URL
+## Getting Started
 
-```
-https://api.docsautomator.co
-```
+<Steps>
+  <Step title="Get your API key">
+    Find your API key at [Settings > Workspace > API](https://app.docsautomator.co/settings/workspace/api).
+  </Step>
+  <Step title="Authenticate">
+    Pass your API key as a bearer token in the `Authorization` header:
+    ```bash
+    Authorization: Bearer YOUR_API_KEY
+    ```
+  </Step>
+  <Step title="Create a document">
+    ```bash
+    curl -X POST https://api.docsautomator.co/createDocument \
+      -H "Authorization: Bearer YOUR_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "docId": "YOUR_AUTOMATION_ID",
+        "data": {
+          "customer_name": "Acme Corp",
+          "invoice_date": "2025-01-15",
+          "total": "$1,500.00"
+        }
+      }'
+    ```
+  </Step>
+</Steps>
 
-## Authorization
+## Full API Reference
 
-API authentication uses bearer tokens in the authorization header:
+For complete endpoint documentation with an interactive playground, see the **[API Reference](/api-reference/introduction)** tab.
 
-```bash
-Authorization: Bearer YOUR_API_KEY
-```
-
-<Info>
-Find your API key at [app.docsautomator.co/settings/workspace/api](https://app.docsautomator.co/settings/workspace/api)
-</Info>
-
-## Common Error Responses
-
-| Code | Issue |
-|------|-------|
-| 401 | Incorrect or missing API key |
-| 401 | Expired Google refresh token (valid for 60 days) |
-| 400 | Missing automation ID |
-| 404 | Automation ID not found |
-| 404 | No template configured |
-| 402 | Document limit exceeded |
-| 404 | Automation inactive |
-
----
-
-## Endpoints
-
-### Create Document
-
-<ParamField path="POST" type="/createDocument">
-  Triggers document generation and returns PDF/Google Doc URLs.
-</ParamField>
-
-**Parameters:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `docId` | string | Yes | Automation identifier |
-| `documentName` | string | No | Custom document name |
-| `data` | object | No | Placeholder values object |
-| `line_items_1` | array | No | First line items array |
-| `line_items_2` | array | No | Second line items array |
-
-**Line Items with Nesting:**
-
-Pass line items as arrays. Nested items use the reserved `children` property (supports up to 3 levels).
-
-<CodeGroup>
-```json Request Body
-{
-  "docId": "abc123",
-  "documentName": "Invoice #001",
-  "data": {
-    "customer_name": "Acme Corp",
-    "invoice_date": "2024-01-15",
-    "total": "$1,500.00"
-  },
-  "line_items_1": [
-    {
-      "description": "Consulting Services",
-      "quantity": 10,
-      "rate": 150,
-      "amount": 1500
-    }
-  ]
-}
-```
-
-```json Response
-{
-  "pdfUrl": "https://firebasestorage.googleapis.com/...",
-  "googleDocUrl": "https://docs.google.com/document/d/...",
-  "savePdfGoogleDriveFolderId": "..."
-}
-```
-</CodeGroup>
-
----
-
-### Get Automations
-
-<ParamField path="GET" type="/automations">
-  Retrieves all workspace automations with configuration details.
-</ParamField>
-
-<CodeGroup>
-```bash cURL
-curl -X GET "https://api.docsautomator.co/automations" \
-  -H "Authorization: Bearer YOUR_API_KEY"
-```
-
-```json Response
-{
-  "automations": [
-    {
-      "id": "abc123",
-      "title": "Invoice Generator",
-      "dataSource": "API",
-      "status": "active"
-    }
-  ]
-}
-```
-</CodeGroup>
-
----
-
-### List Placeholders
-
-<ParamField path="GET" type="/listPlaceholdersV2">
-  Lists available placeholders for main document and line items.
-</ParamField>
-
-**Parameters:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `automationId` | string | Yes | The automation ID |
-
-<CodeGroup>
-```bash cURL
-curl -X GET "https://api.docsautomator.co/listPlaceholdersV2?automationId=abc123" \
-  -H "Authorization: Bearer YOUR_API_KEY"
-```
-</CodeGroup>
-
----
-
-### Update Automation
-
-<ParamField path="PUT" type="/updateAutomation">
-  Updates automation settings.
-</ParamField>
-
-**Parameters:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `docId` | string | Yes | The automation ID |
-
----
-
-### Delete Automation
-
-<ParamField path="DELETE" type="/deleteAutomation">
-  Removes an automation.
-</ParamField>
-
-**Parameters:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `docId` | string | Yes | The automation ID |
-
-<Warning>
-This action cannot be undone. The automation and all its settings will be permanently deleted.
-</Warning>
-
----
-
-### Duplicate Automation
-
-<ParamField path="POST" type="/duplicateAutomation">
-  Clones an existing automation.
-</ParamField>
-
-**Parameters:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `automationId` | string | Yes | The automation ID to clone |
-
----
-
-### Duplicate Google Doc Template
-
-<ParamField path="POST" type="/duplicateGoogleDocTemplate">
-  Copies a Google Doc template.
-</ParamField>
-
-**Parameters:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `automationId` | string | Yes | The automation ID |
-| `newTemplateName` | string | No | Name for the new template |
-
----
-
-### Create Automation
-
-<ParamField path="POST" type="/createAutomation">
-  Creates new automation with data source.
-</ParamField>
-
-**Required Fields:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `title` | string | Yes | Automation name |
-| `dataSourceName` | string | Yes | Data source type |
-| `docTemplateLink` | string | No | Google Doc URL |
-
-**Valid Data Source Names:**
-- `Airtable`
-- `API`
-- `ClickUp`
-- `Glide`
-- `Google Sheets`
-- `n8n`
-- `Noloco`
-- `SmartSuite`
-- `Zapier`
-
----
+<CardGroup cols={2}>
+  <Card title="Documents" icon="file-pdf" href="/api-reference/introduction">
+    Create documents, check job status, view queue stats
+  </Card>
+  <Card title="Automations" icon="gear" href="/api-reference/introduction">
+    List, create, update, delete, and duplicate automations
+  </Card>
+  <Card title="Templates" icon="file-code" href="/api-reference/introduction">
+    List placeholders, duplicate templates
+  </Card>
+  <Card title="E-Signatures" icon="signature" href="/api-reference/introduction">
+    Manage signing sessions, links, and audit trails
+  </Card>
+</CardGroup>
 
 ## Need Help?
 
@@ -235,7 +61,7 @@ This action cannot be undone. The automation and all its settings will be perman
   <Card title="In-App Chat" icon="comments">
     Contact support via the in-app chat feature
   </Card>
-  <Card title="Email Support" icon="envelope" href="mailto:hello@docsautomator.co">
-    Reach out at hello@docsautomator.co
+  <Card title="Email Support" icon="envelope" href="mailto:support@docsautomator.co">
+    Reach out at support@docsautomator.co
   </Card>
 </CardGroup>

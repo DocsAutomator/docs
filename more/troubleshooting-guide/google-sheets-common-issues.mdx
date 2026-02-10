@@ -1,0 +1,115 @@
+---
+title: "Google Sheets: Common Issues"
+description: "Resolve common problems with Google Sheets automations in DocsAutomator"
+icon: "table"
+---
+
+## Polling Not Triggering
+
+### Problem
+
+Your Google Sheets automation is set to auto-polling, but new or updated rows are not triggering document generation.
+
+### Causes & Solutions
+
+<Tabs>
+  <Tab title="Automation is inactive">
+    Verify your automation is active. Go to your automation settings and check the status toggle is turned on.
+  </Tab>
+  <Tab title="Polling interval">
+    Auto-polling checks for new rows periodically. Allow a few minutes for the next poll cycle to detect your changes.
+  </Tab>
+  <Tab title="Google account disconnected">
+    If your Google account token has expired, DocsAutomator cannot access the sheet. Go to **Settings > Integrations** and reconnect your Google account.
+  </Tab>
+  <Tab title="Row already processed">
+    DocsAutomator tracks which rows have been processed. If a row was already generated, it won't be processed again unless you clear the tracking column.
+  </Tab>
+</Tabs>
+
+## Manual Trigger Queue Issues
+
+### Problem
+
+When using manual trigger mode with Google Sheets, documents are queued but not completing, or the queue appears stuck.
+
+### Solution
+
+<Steps>
+  <Step title="Check queue status">
+    Open your automation and check the queue panel. Each workspace is limited to 50 queued jobs and 5 active jobs at a time.
+  </Step>
+  <Step title="Verify Google connection">
+    Go to **Settings > Integrations** and confirm your Google account is connected. An expired token will cause all queued jobs to fail.
+  </Step>
+  <Step title="Check run history">
+    Open the Run History tab to see if jobs are failing with specific error messages. Common causes include missing template permissions or quota limits.
+  </Step>
+</Steps>
+
+<Info>
+If many jobs fail at once, it's usually a connection issue. Fix the root cause, then re-trigger the failed rows.
+</Info>
+
+## Row Number Problems
+
+### Problem
+
+Documents are generated with data from the wrong row, or the row number reference doesn't match what you expect.
+
+### Causes
+
+- **Header row**: DocsAutomator treats the first row as headers. Row 2 in your sheet is row number 1 in the data.
+- **Empty rows**: Blank rows in the middle of your sheet can cause row numbering to shift unexpectedly.
+- **Filtered views**: If your sheet has active filters, the visible row numbers differ from the actual row positions.
+
+### Solution
+
+1. Ensure your sheet has no empty rows between data rows
+2. Remove any active filters before triggering document generation
+3. Remember that row numbering starts at 2 (row 1 is the header row)
+
+## Formula Fields Not Resolving
+
+### Problem
+
+Placeholder values show formula expressions instead of the computed results, or appear blank.
+
+### Causes & Solutions
+
+- **Volatile formulas**: Some formulas (like `NOW()`, `RAND()`) may not resolve in time. Add a small delay or use static values where possible.
+- **Cross-sheet references**: Formulas referencing other sheets may take longer to calculate. Ensure all referenced sheets are accessible.
+- **Error values**: If a formula returns `#ERROR!`, `#REF!`, or `#N/A`, DocsAutomator will pass the error string as the value. Fix the formula in your sheet first.
+
+<Warning>
+Make sure all formula cells have finished calculating before triggering document generation. Google Sheets may show a "Loading..." indicator while formulas are still computing.
+</Warning>
+
+## Webhook Formula Showing #ERROR
+
+### Problem
+
+The webhook formula you pasted into Google Sheets shows a `#ERROR!` result.
+
+### Solution
+
+This typically happens when your Google Sheets language is not set to English. The formula syntax uses English function names and comma separators.
+
+1. Go to **File > Settings** in your Google Sheet
+2. Change the **Locale** to an English-speaking region (e.g., United States)
+3. Re-paste the webhook formula from DocsAutomator
+
+<Info>
+Alternatively, you can manually translate the function names and replace commas with semicolons for your locale.
+</Info>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Google Sheets Integration" icon="table" href="/integrations-api/google-sheets">
+    Complete Google Sheets setup guide
+  </Card>
+  <Card title="Run History" icon="clock-rotate-left" href="/features/run-history">
+    Monitor document generation history
+  </Card>
+</CardGroup>

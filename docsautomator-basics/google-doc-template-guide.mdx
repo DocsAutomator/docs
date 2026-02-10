@@ -2,9 +2,14 @@
 title: "Google Doc Template Guide"
 description: "Learn how to create templates in Google Docs for DocsAutomator"
 icon: "file-lines"
+keywords: ["Google Doc template", "placeholder syntax", "curly brackets", "dynamic fields", "template design"]
 ---
 
 This guide explains how to create templates in Google Docs for DocsAutomator, covering the platform's template syntax and best practices.
+
+<Info>
+This guide covers Google Doc templates. For PDF templates with visual placeholder positioning, see the [PDF Template Guide](/docsautomator-basics/pdf-template-guide).
+</Info>
 
 ## Template Syntax
 
@@ -56,9 +61,7 @@ When declared, the system expects single or multiple images to be passed for rep
 Line items enable adding lists of data such as invoice positions, timesheet entries, or product lists. They're declared as table rows in your template:
 
 ```
-{{#line_items_1}}
-{{line_items_1.description}}  {{line_items_1.quantity}}  {{line_items_1.price}}
-{{/line_items_1}}
+{{line_items_1}}{{description}}  {{quantity}}  {{price}}
 ```
 
 <Info>
@@ -70,6 +73,45 @@ Line items support:
 </Info>
 
 See [Line Items](/features/line-items) for comprehensive documentation.
+
+---
+
+## E-Signature Placeholders
+
+Add e-signature fields to your Google Doc template to collect legally binding signatures through [DocsAutomator eSign](/features/docsautomator-esign). E-signature placeholders use the `esign.` prefix followed by the field type and signer number.
+
+### Field Types
+
+| Syntax | Purpose |
+|--------|---------|
+| `{{esign.signature_N}}` | Signature capture (draw or touch) for signer N |
+| `{{esign.date_N}}` | Auto-filled date when signer N signs |
+| `{{esign.text_N}}` | Text input field for signer N |
+| `{{esign.checkbox_N}}` | Agreement checkbox for signer N |
+
+Where `N` is the signer number (1, 2, 3, etc.). Use different numbers to assign fields to different signers in a multi-party signing workflow.
+
+### Example: Two-Party Signature Block
+
+```
+SELLER:
+
+Signature: {{esign.signature_1}}
+Printed Name: {{esign.text_1_printedname}}
+Date: {{esign.date_1}}
+I agree to the terms and conditions: {{esign.checkbox_1_agreeterms}}
+
+BUYER:
+
+Signature: {{esign.signature_2}}
+Printed Name: {{esign.text_2_printedname}}
+Date: {{esign.date_2}}
+I agree to the terms and conditions: {{esign.checkbox_2_agreeterms}}
+```
+
+<Info>
+E-signature signer details (name, email, signing order) are configured in the automation's output settings, not in the template itself. See [DocsAutomator eSign](/features/docsautomator-esign) for setup instructions.
+</Info>
 
 ---
 
@@ -103,13 +145,16 @@ See [Line Items](/features/line-items) for comprehensive documentation.
 |---------|-------------|---------|
 | `{{field}}` | Simple text replacement | `{{name}}` |
 | `{{image_field}}` | Image insertion | `{{image_logo}}` |
-| `{{#items}}...{{/items}}` | Line item loop | Invoice rows |
+| `{{line_items_1}}{{field}}` | Line item row | Invoice rows |
 | `{{field\|format}}` | Formatted output | `{{date\|date}}` |
 | `{{#if condition}}` | Conditional content | Show/hide sections |
 
 ## Next Steps
 
 <CardGroup cols={2}>
+  <Card title="PDF Template Guide" icon="file-pdf" href="/docsautomator-basics/pdf-template-guide">
+    Upload existing PDFs and overlay data fields
+  </Card>
   <Card title="Dynamic Images" icon="image" href="/features/dynamic-images">
     Learn how to insert images dynamically
   </Card>
@@ -118,6 +163,9 @@ See [Line Items](/features/line-items) for comprehensive documentation.
   </Card>
   <Card title="Conditional Content" icon="code-branch" href="/features/advanced-placeholder-options/conditional-show-hide">
     Show or hide content based on conditions
+  </Card>
+  <Card title="DocsAutomator eSign" icon="signature" href="/features/docsautomator-esign">
+    Collect legally binding e-signatures
   </Card>
   <Card title="Template Gallery" icon="grid-2" href="https://docsautomator.co/templates/">
     Browse pre-built templates

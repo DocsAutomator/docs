@@ -1,0 +1,245 @@
+---
+title: "PDF Template Guide"
+description: "Upload existing PDFs and overlay data fields for pixel-perfect document generation"
+icon: "file-pdf"
+keywords: ["PDF template", "PDF overlay", "visual editor", "PDF form filling", "existing PDF"]
+---
+
+PDF templates let you use an existing PDF as the base for document generation. Upload any PDF and use the visual editor to define where data fields should be overlaid. At generation time, DocsAutomator fills in those fields on top of your original PDF — the underlying PDF is never modified.
+
+<Info>
+The visual editor positions data fields **on top of** your PDF. It does not edit the PDF itself. If you need to change the underlying layout, update the source PDF in your design tool and re-upload it.
+</Info>
+
+<Info>
+Looking for Google Doc templates instead? See the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide).
+</Info>
+
+## When to Use PDF Templates
+
+<CardGroup cols={2}>
+  <Card title="PDF Templates" icon="file-pdf">
+    - You already have a PDF (tax forms, government docs, branded designs)
+    - Exact layout must stay unchanged
+    - Filling in specific fields on an existing document
+    - Working with PDFs from a designer or external tool
+  </Card>
+  <Card title="Google Doc Templates" icon="file-lines">
+    - Dynamic content with variable-length sections
+    - Line items and repeating rows
+    - Easier editing and iteration
+    - Rich text formatting and conditional content
+  </Card>
+</CardGroup>
+
+---
+
+## Uploading a PDF Template
+
+<Steps>
+  <Step title="Open your automation">
+    Navigate to the automation where you want to use a PDF template.
+  </Step>
+  <Step title="Select PDF template">
+    In the Template section, choose the PDF template option.
+  </Step>
+  <Step title="Upload your PDF">
+    Click the upload area or drag and drop your PDF file. The file must be under 10MB.
+  </Step>
+  <Step title="Review detected fields">
+    If your PDF contains AcroForm fields (interactive form fields), DocsAutomator automatically detects them and creates placeholders at the correct positions. You will see a notification showing how many fields were detected.
+  </Step>
+</Steps>
+
+<Warning>
+The maximum file size for PDF templates is **10MB**. Ensure your PDF does not exceed this limit before uploading.
+</Warning>
+
+### AcroForm Field Detection
+
+When you upload a PDF that contains interactive form fields (created in tools like Adobe Acrobat), DocsAutomator automatically converts them into placeholders:
+
+| PDF Field Type | Placeholder Type |
+|---------------|-----------------|
+| Text field / Dropdown | Text |
+| Checkbox | Checkbox |
+| Signature | E-Signature |
+
+Button and radio group fields are not supported and will be skipped.
+
+---
+
+## The Visual Placeholder Editor
+
+After uploading a PDF, click the edit button to open the full-screen placeholder editor. This editor lets you define **where** data fields appear on top of your PDF — it does not modify the PDF content itself. The editor has three panels:
+
+- **Left sidebar** -- Add new fields and manage existing placeholders
+- **Center** -- The PDF viewer with draggable placeholder overlays
+- **Right sidebar** -- Properties panel for the selected placeholder
+
+### Adding Placeholders
+
+You can add placeholders in two ways:
+
+1. **Click** a field type in the left sidebar to add it to the center of the current page
+2. **Drag** a field type from the sidebar and drop it at a specific position on any page
+
+Available field types:
+
+| Type | Description |
+|------|-------------|
+| Text | Replaced with text data from your data source |
+| Image | Replaced with an image (auto-scaled to fit bounds) |
+| Checkbox | Shows a checkmark when the value is truthy |
+
+### Positioning and Resizing
+
+- **Drag** a placeholder to move it to the desired position on the page
+- **Resize** by dragging the handle in the bottom-right corner of a selected placeholder
+- **Nudge** with arrow keys for fine adjustments (1 point per press, hold Shift for 10 points)
+- **Set exact values** in the Properties panel on the right (X, Y, Width, Height)
+
+### Multi-Page Support
+
+The editor displays all pages of your PDF in a scrollable view. Each placeholder is assigned to a specific page. When you drag a field from the sidebar onto a page, it is placed on that page.
+
+### Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| Arrow keys | Nudge selected placeholder by 1pt |
+| Shift + Arrow keys | Nudge by 10pt |
+| Backspace / Delete | Delete selected placeholder |
+| Ctrl/Cmd + Z | Undo |
+| Ctrl/Cmd + Shift + Z | Redo |
+| Ctrl/Cmd + C | Copy selected placeholder |
+| Ctrl/Cmd + V | Paste copied placeholder |
+| Escape | Deselect (or close editor if nothing selected) |
+
+### Preview Mode
+
+Toggle the **Preview** button in the toolbar to see a live rendering of your template with sample data filled in. The preview uses the same rendering engine as the final document generation, so what you see is what you get.
+
+You can configure sample data for each placeholder in the Properties panel.
+
+### Zoom Controls
+
+Use the **+** and **-** buttons in the toolbar to zoom in and out (50% to 200%). Click **Fit to width** to automatically scale the PDF to fit the available space.
+
+---
+
+## Placeholder Properties
+
+Select a placeholder to configure its properties in the right panel.
+
+### Common Properties (All Types)
+
+| Property | Description |
+|----------|-------------|
+| Name | The data field name that maps to your data source |
+| Position (X, Y) | Coordinates on the page (in PDF points) |
+| Size (Width, Height) | Dimensions of the placeholder area |
+
+### Text Properties
+
+| Property | Options | Default |
+|----------|---------|---------|
+| Font Size | 6--72 | 11 |
+| Font Family | Helvetica, Times Roman, Courier, Roboto, Open Sans, Lato, Montserrat, Playfair Display | Helvetica |
+| Font Color | Any hex color | #000000 |
+| Horizontal Align | Left, Center, Right | Left |
+| Vertical Align | Top, Middle, Bottom | Middle |
+| Text Overflow | Expand horizontally, Expand vertically, Shrink to fit, Truncate | Expand horizontally |
+| Sample Data | Text used in preview mode | -- |
+
+### Text Overflow Modes
+
+| Mode | Behavior |
+|------|----------|
+| **Expand horizontally** | Single line, text extends past the box boundary if needed (default) |
+| **Expand vertically** | Text wraps at box width and grows downward for multiple lines |
+| **Shrink to fit** | Automatically reduces font size until text fits within the box |
+| **Truncate** | Clips text at box width and adds an ellipsis (...) |
+
+### Image Properties
+
+Image placeholders automatically scale the source image to fit within the placeholder bounds while maintaining the original aspect ratio. Supports JPG, PNG, and base64-encoded images.
+
+### Checkbox Properties
+
+| Property | Options | Default |
+|----------|---------|---------|
+| Unchecked Style | Show empty square, Show nothing | Show nothing |
+| Sample State | Checked / Unchecked (for preview) | Checked |
+
+The checkbox accepts various truthy/falsy values from any data source: booleans, strings like "true"/"false", "yes"/"no", and Airtable/SmartSuite emoji values.
+
+---
+
+## E-Signature Fields on PDFs
+
+PDF templates support e-signature fields that integrate with [DocsAutomator eSign](/features/docsautomator-esign). Unlike Google Doc templates which use text-based syntax (`{{esign.signature_1}}`), PDF templates use visually positioned e-sign fields.
+
+### E-Sign Field Types
+
+| Type | Description | Default Size |
+|------|-------------|-------------|
+| Signature | Signature capture area (draw or touch) | 150 x 50 |
+| Date | Auto-filled date when signed | 100 x 20 |
+| Text | Text input for the signer | 150 x 20 |
+| Checkbox | Agreement checkbox | 100 x 20 |
+
+Add e-sign fields from the **Add E-Sign Field** section in the left sidebar, then position them on the PDF just like regular placeholders.
+
+### Signer Assignment
+
+Each e-sign field is assigned to a signer by number. The field name includes the signer number (e.g., `esign_signature_1`, `esign_date_2`). Configure signer details (name, email) in the [e-signature output settings](/features/docsautomator-esign).
+
+<Warning>
+At least one **Signature** field is required for e-signing to work. The editor displays a warning if you have other e-sign fields but no signature field.
+</Warning>
+
+---
+
+## Data Source Compatibility
+
+PDF templates work with all DocsAutomator data sources:
+
+<CardGroup cols={3}>
+  <Card title="Airtable" icon="table" href="/data-sources/airtable" />
+  <Card title="Google Sheets" icon="table" href="/data-sources/google-sheets" />
+  <Card title="SmartSuite" icon="table" href="/data-sources/smartsuite" />
+  <Card title="ClickUp" icon="list-check" href="/data-sources/clickup" />
+  <Card title="API" icon="code" href="/data-sources/api" />
+  <Card title="Zapier" icon="bolt" href="/data-sources/zapier" />
+  <Card title="Glide" icon="mobile" href="/data-sources/glide" />
+  <Card title="n8n" icon="diagram-project" href="/data-sources/n8n" />
+  <Card title="Make" icon="gear" href="/data-sources/make" />
+</CardGroup>
+
+The placeholder **Name** field is what maps to your data source fields. For example, if your Airtable table has a "Company Name" field, set the placeholder name to match the field name configured in your automation's field mapping.
+
+---
+
+## Saving Your Template
+
+Click **Save** in the top navigation bar to persist your placeholder layout. The placeholders and sample data are saved to the automation and will be used during document generation.
+
+---
+
+## Related Pages
+
+<CardGroup cols={2}>
+  <Card title="Google Doc Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Alternative template approach using Google Docs
+  </Card>
+  <Card title="Placeholder Syntax Reference" icon="code" href="/docsautomator-basics/placeholder-syntax-reference">
+    Complete reference for all placeholder types
+  </Card>
+  <Card title="DocsAutomator eSign" icon="signature" href="/features/docsautomator-esign">
+    E-signature configuration and workflows
+  </Card>
+  <Card title="Dynamic Images" icon="image" href="/features/dynamic-images">
+    Image insertion and quality settings
+  </Card>
+</CardGroup>

@@ -2,9 +2,22 @@
 title: "DocsAutomator eSign"
 description: "Collect legally binding electronic signatures on generated documents"
 icon: "signature"
+keywords: ["electronic signatures", "e-signatures", "document signing", "legally binding", "ESIGN Act", "eIDAS"]
 ---
 
 DocsAutomator eSign enables collection of legally binding electronic signatures on generated documents with support for unlimited signers, multiple field types, and comprehensive compliance tracking.
+
+<Frame>
+  <iframe
+    width="100%"
+    height="400"
+    src="https://www.youtube.com/embed/ee21qEAe93E"
+    title="DocsAutomator eSign Overview"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</Frame>
 
 ## Feature Overview
 
@@ -33,8 +46,8 @@ Fields use the format: `{{esign.TYPE_SIGNER}}`
 |------|---------|---------|
 | Signature | `{{esign.signature_1}}` | Full signature capture |
 | Date | `{{esign.date_1}}` | Date picker with auto-fill |
-| Text | `{{esign.text_1}}` | Text input field |
-| Checkbox | `{{esign.checkbox_1}}` | Agreement checkbox |
+| Text | `{{esign.text_1_name}}` | Text input field (append `_name` for a unique label per field) |
+| Checkbox | `{{esign.checkbox_1_label}}` | Agreement checkbox (append `_label` for a unique name per field) |
 
 ## Configuring Signers
 
@@ -49,7 +62,7 @@ Fields use the format: `{{esign.TYPE_SIGNER}}`
   <Tab title="Airtable / Google Sheets / SmartSuite">
     Select fields from the dropdown menu to dynamically populate signer information.
   </Tab>
-  <Tab title="ClickUp / Other Sources">
+  <Tab title="Other Sources">
     Use placeholders like `{{buyer_email}}`, `{{client_name}}` in your configuration.
   </Tab>
 </Tabs>
@@ -228,7 +241,7 @@ DocsAutomator eSign includes:
 
 | Plan | eSign Access |
 |------|--------------|
-| Free | Not available |
+| Free | Preview/Test mode only |
 | Paid (no add-on) | Preview/Test mode only |
 | Paid (with add-on) | Full production access |
 

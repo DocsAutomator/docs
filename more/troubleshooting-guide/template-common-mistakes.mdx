@@ -1,0 +1,146 @@
+---
+title: "Template: Common Mistakes"
+description: "Fix common issues with Google Docs template placeholders and formatting"
+icon: "file-circle-exclamation"
+---
+
+## Placeholder Not Being Replaced
+
+### Problem
+
+A placeholder in your template (e.g., `{{customer_name}}`) appears in the generated document instead of being replaced with actual data.
+
+### Causes & Solutions
+
+<Tabs>
+  <Tab title="Name mismatch">
+    The placeholder name in your template must exactly match the field name from your data source. Placeholder names are **case-sensitive**.
+
+    | Template | Data Field | Result |
+    |----------|-----------|--------|
+    | `{{customer_name}}` | `customer_name` | Replaced |
+    | `{{Customer_Name}}` | `customer_name` | Not replaced |
+    | `{{customer name}}` | `customer_name` | Not replaced |
+  </Tab>
+  <Tab title="Hidden formatting">
+    Google Docs may insert invisible formatting characters inside your placeholder brackets, especially if you typed the brackets and placeholder name separately, or copy-pasted from another source.
+
+    **Solution:**
+    1. Delete the entire placeholder text in Google Docs
+    2. Type the full placeholder (including `{{` and `}}`) in one go without pausing
+    3. Or copy the placeholder from a plain text editor and paste it into Google Docs
+  </Tab>
+  <Tab title="Smart quotes">
+    Google Docs may auto-convert straight quotes to curly/smart quotes inside placeholders. While this primarily affects text content, some formatters may also alter bracket characters.
+
+    **Solution:** Disable smart quotes in **Tools > Preferences** and uncheck "Use smart quotes."
+  </Tab>
+  <Tab title="Field not mapped">
+    If you're using a data source with field mapping (Airtable, SmartSuite, etc.), ensure the field is properly mapped in your automation settings.
+  </Tab>
+</Tabs>
+
+## Mismatched Placeholder Brackets
+
+### Problem
+
+You see errors or unreplaced placeholders because the opening `{{` and closing `}}` brackets don't match.
+
+### Common Mistakes
+
+```
+{{customer_name}     -- Missing closing bracket
+{customer_name}}     -- Missing opening bracket
+{{ customer_name }}   -- Spaces inside brackets (these work, but watch for consistency)
+{{customer_name}}}   -- Extra closing bracket
+```
+
+### Solution
+
+Always use exactly two opening braces `{{` and two closing braces `}}`. Use the Template Check feature in DocsAutomator to validate your template before generating documents.
+
+<Tip>
+The Template Check badge on your automation page validates all placeholders. A green badge means all placeholders are properly formatted and mapped.
+</Tip>
+
+## Line Item Syntax Issues
+
+### Problem
+
+Line item rows are not being generated, or the table shows raw placeholder text.
+
+### Common Mistakes
+
+1. **Missing table row**: Line item placeholders must be placed inside a table row in your Google Docs template. They cannot be used in regular paragraph text.
+
+2. **Wrong prefix**: Line item placeholders use the format `{{line_items_N_fieldName}}` where N is the line item group number (1, 2, 3, etc.).
+
+3. **Inconsistent group numbers**: All placeholders in the same table row must use the same group number.
+
+| Correct | Incorrect |
+|---------|-----------|
+| `{{line_items_1_description}}` | `{{line_items_description}}` (missing group number) |
+| `{{line_items_1_price}}` | `{{lineItems_1_price}}` (wrong format) |
+
+### Solution
+
+1. Place all line item placeholders in a single table row
+2. Use the correct `line_items_N_` prefix format
+3. Ensure the field names after the prefix match your data source fields exactly
+
+## Special Characters in Placeholder Names
+
+### Problem
+
+Placeholders with special characters in their names fail to be replaced.
+
+### Rules for Placeholder Names
+
+- Use only letters, numbers, and underscores
+- Do not use spaces, hyphens, periods, or other special characters in placeholder names
+- Start with a letter or underscore, not a number
+
+| Valid | Invalid |
+|-------|---------|
+| `{{customer_name}}` | `{{customer-name}}` |
+| `{{address_line_1}}` | `{{address.line.1}}` |
+| `{{total_amount}}` | `{{total amount}}` |
+
+<Warning>
+If your data source field names contain special characters (e.g., Airtable field "Customer Name"), DocsAutomator's field mapping automatically converts them. Check the mapped placeholder name in your automation settings.
+</Warning>
+
+## Conditional Section Not Working
+
+### Problem
+
+A conditional section (`{{#if condition}}...{{/if}}`) is not showing or hiding as expected.
+
+### Common Causes
+
+- **Truthy/falsy values**: Empty strings, `null`, `undefined`, and `false` evaluate as falsy (section hidden). Non-empty strings, numbers, and `true` evaluate as truthy (section shown).
+- **Whitespace**: A field that appears empty might contain whitespace. Trim values in your data source.
+- **Wrong placeholder name**: The condition field name must match a field in your data, just like regular placeholders.
+
+## Image Placeholder Issues
+
+### Problem
+
+Dynamic image placeholders are not rendering the image, or the image appears broken.
+
+### Common Causes
+
+- **Invalid URL**: The image URL must be publicly accessible. Private or authenticated URLs will not work.
+- **URL expired**: Some data sources (like Airtable) generate temporary attachment URLs that expire. Ensure the URL is still valid.
+- **Image too large**: Very large images may cause timeouts. Optimize images before using them in templates.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Complete guide to creating templates
+  </Card>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Line items setup and configuration
+  </Card>
+</CardGroup>

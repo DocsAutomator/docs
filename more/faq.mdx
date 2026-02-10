@@ -1,0 +1,263 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about DocsAutomator"
+icon: "circle-question"
+keywords: ["FAQ", "frequently asked questions", "pricing", "limits", "troubleshooting"]
+---
+
+Find answers to common questions about DocsAutomator. If your question is not listed below, reach out via [in-app chat](https://app.docsautomator.co) or email us at support@docsautomator.co.
+
+## Getting Started
+
+<AccordionGroup>
+  <Accordion title="What data sources does DocsAutomator support?">
+    DocsAutomator supports multiple data sources:
+
+    - **Airtable** -- OAuth connection with field mapping, linked tables, and nested line items
+    - **Google Sheets** -- Auto-polling, manual trigger, and batch generation
+    - **SmartSuite** -- OAuth connection with solution/table mapping
+    - **ClickUp** -- OAuth connection with task automation
+    - **Zapier** -- Webhook-based integration
+    - **n8n** -- Community node for workflow automation
+    - **Make** -- HTTP module integration
+    - **Glide** -- Native no-code integration
+    - **Noloco** -- Native no-code integration
+    - **Softr** -- No-code integration
+    - **MCP** -- Model Context Protocol integration
+
+    You can also use the [DocsAutomator API](/integrations-api/docsautomator-api) to integrate from any custom application.
+  </Accordion>
+
+  <Accordion title="What output formats are available?">
+    DocsAutomator generates documents as **PDF** by default. You can also optionally save a **Google Doc** copy to a Google Drive folder for further editing. PDFs can be:
+
+    - Saved to your data source (Airtable attachment, Google Sheets cell, etc.)
+    - Stored in a Google Drive folder
+    - Sent as email attachments
+    - Accessed via the returned PDF URL in the API response
+  </Accordion>
+
+  <Accordion title="How do I get started?">
+    1. Create an account at [app.docsautomator.co](https://app.docsautomator.co)
+    2. Create a new automation and choose your data source
+    3. Select or create a Google Doc template with placeholders
+    4. Map your data fields to template placeholders
+    5. Generate a preview to verify your document
+
+    See the [Quickstart Guide](/docsautomator-basics/quickstart-guide) for a detailed walkthrough.
+  </Accordion>
+
+  <Accordion title="Is there a free plan?">
+    Yes. DocsAutomator offers a free plan with 20 documents so you can test the platform before committing to a paid subscription.
+  </Accordion>
+</AccordionGroup>
+
+## Templates
+
+<AccordionGroup>
+  <Accordion title="What template format does DocsAutomator use?">
+    DocsAutomator uses **Google Docs** as templates. You create your document layout in Google Docs and add placeholders using double curly bracket syntax (`{{placeholder}}`). The platform copies your template and replaces placeholders with your data to generate each document.
+  </Accordion>
+
+  <Accordion title="Can I use existing Google Doc templates?">
+    Yes. You can use any Google Doc as a template. Simply add placeholders (`{{fieldName}}`) where you want dynamic data inserted, then paste the Google Doc URL into your automation settings. You can also browse the [Template Gallery](https://docsautomator.co/templates/) for pre-built templates.
+  </Accordion>
+
+  <Accordion title="What placeholder syntax is supported?">
+    DocsAutomator supports several placeholder types:
+
+    | Type | Syntax | Example |
+    |------|--------|---------|
+    | Text | `{{fieldName}}` | `{{customer_name}}` |
+    | Image | `{{image_fieldName}}` | `{{image_logo}}` |
+    | Line items | `{{line_items_1}}{{field}}` | Invoice rows |
+    | Conditional | `{{#if condition}}...{{/if}}` | Show/hide sections |
+    | E-signature | `{{esign.type_signer}}` | `{{esign.signature_1}}` |
+
+    See the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) for the full syntax reference.
+  </Accordion>
+
+  <Accordion title="Can the same placeholder appear multiple times in a template?">
+    Yes. You can use the same placeholder in multiple places within a template. You only need to map the data once -- DocsAutomator replaces all occurrences automatically.
+  </Accordion>
+</AccordionGroup>
+
+## Pricing & Limits
+
+<AccordionGroup>
+  <Accordion title="What are the document generation limits per plan?">
+    Each plan includes a monthly document allowance. Here is a summary:
+
+    | Plan | Documents/Month | Annual Price |
+    |------|----------------|-------|
+    | Free | 20 | $0 |
+    | Starter | 100 | From $10/mo |
+    | Professional | 200 | From $19/mo |
+    | Business | 500 | From $30/mo |
+    | Scale | 1,000 | From $79/mo |
+    | 5000 | 5,000 | From $135/mo |
+    | Unlimited | Unlimited | From $299/mo |
+
+    Prices shown are for annual billing. Monthly billing is also available at a higher rate.
+
+    Visit [docsautomator.co/pricing](https://docsautomator.co/pricing) for full details.
+  </Accordion>
+
+  <Accordion title="What happens when I exceed my document limit?">
+    Paid plans can enable **overage documents** which allow you to continue generating documents beyond your plan limit at a per-document rate. If overage is not enabled or you exceed the overage cap, you receive a `402 Payment Required` error with the message: "You have reached your documents limit. Please upgrade your plan."
+  </Accordion>
+
+  <Accordion title="What are the API rate limits?">
+    | Scope | Limit |
+    |-------|-------|
+    | Global | 500 requests per 15 minutes per API key |
+    | Test email | 25 per hour per automation |
+    | Queue | Max 50 queued jobs per workspace |
+    | Queue concurrency | Max 5 active jobs per workspace |
+
+    Exceeding a rate limit returns a `429 Too Many Requests` response.
+  </Accordion>
+</AccordionGroup>
+
+## Data Sources
+
+<AccordionGroup>
+  <Accordion title="Which field types are supported for each data source?">
+    DocsAutomator supports all standard field types from each data source, including text, numbers, dates, single/multi-select, attachments (for images), and linked records. Linked records in Airtable can be expanded into line items for table generation. For Google Sheets, each column maps to a placeholder.
+  </Accordion>
+
+  <Accordion title="Can I use multiple data sources in one automation?">
+    Each automation is connected to a single data source. However, you can create multiple automations -- one for each data source -- and trigger them independently. If you need to combine data from multiple sources, you can use the [API](/integrations-api/docsautomator-api) or an integration tool like Zapier, Make, or n8n to aggregate data before sending it to DocsAutomator.
+  </Accordion>
+
+  <Accordion title="How does auto-creation work with Google Sheets?">
+    When auto-creation is enabled, DocsAutomator checks your spreadsheet every 5 minutes for new rows. When a new row is detected that does not yet have a PDF link in the designated column, a document is automatically generated. This is ideal for hands-off automation where documents should be created as soon as data is added.
+  </Accordion>
+</AccordionGroup>
+
+## E-Signatures
+
+<AccordionGroup>
+  <Accordion title="What e-signature field types are supported?">
+    DocsAutomator eSign supports four field types:
+
+    | Type | Placeholder | Purpose |
+    |------|-------------|---------|
+    | Signature | `{{esign.signature_1}}` | Full signature capture (draw via mouse, trackpad, or touch) |
+    | Date | `{{esign.date_1}}` | Date picker with auto-fill |
+    | Text | `{{esign.text_1_name}}` | Free text input (append `_name` for a unique label per field) |
+    | Checkbox | `{{esign.checkbox_1_label}}` | Agreement checkbox (append `_label` for a unique name per field) |
+
+    Increment the signer number for multiple signers (`_1`, `_2`, `_3`, etc.). There is no limit on the number of signers.
+  </Accordion>
+
+  <Accordion title="Is DocsAutomator eSign legally valid?">
+    Yes. DocsAutomator eSign is compliant with the **ESIGN Act** and **UETA** in the United States, and **eIDAS (Simple Electronic Signatures)** in the European Union. Every signed document includes a Certificate of Completion with audit trail, SHA-256 document integrity hashing, and secure access tokens. See [Compliance & Legal Validity](/features/docsautomator-esign/compliance-and-legal-validity) for details.
+  </Accordion>
+
+  <Accordion title="What signing workflows are available?">
+    Two signing workflows are supported:
+
+    - **Parallel signing (default)** -- All signers receive invitations simultaneously and can sign in any order
+    - **Sequential signing** -- Signers receive invitations one at a time in a defined order
+
+    You can configure the signing order in the eSign settings of your automation.
+  </Accordion>
+
+  <Accordion title="How long are signing links valid?">
+    Signing links expire after a configurable period, defaulting to **30 days**. You can set the expiration between 1 and 365 days. After expiration, links become invalid and the session status changes to "Expired."
+  </Accordion>
+
+  <Accordion title="Which plans include eSign?">
+    | Plan | eSign Access |
+    |------|-------------|
+    | Free | Preview/Test mode only |
+    | Paid (without add-on) | Preview/Test mode only |
+    | Paid (with add-on) | Full production access |
+    | Unlimited | Included with unlimited signatures |
+  </Accordion>
+</AccordionGroup>
+
+## Technical
+
+<AccordionGroup>
+  <Accordion title="What is async mode and when should I use it?">
+    By default, the `POST /createDocument` endpoint runs synchronously and waits up to 5 minutes for the document to be generated. In **async mode**, the API returns immediately with a `jobId` (HTTP 202) and you poll `GET /job/{jobId}` for the result.
+
+    Use async mode when:
+    - Your calling platform has execution time limits (e.g., Airtable's 120-second limit)
+    - You are generating complex or large documents
+    - You want non-blocking document generation in your application
+  </Accordion>
+
+  <Accordion title="How long does document generation take?">
+    Most documents generate in **5-30 seconds**. Complex documents with many line items, images, or large templates may take longer. When using async mode, poll with exponential backoff starting at 2 seconds.
+  </Accordion>
+
+  <Accordion title="Can I override the template at request time?">
+    Yes. Pass a `docTemplateLink` parameter in your `createDocument` request with either a full Google Docs URL or a document ID. The override template must be accessible by your connected Google account.
+  </Accordion>
+
+  <Accordion title="Where are generated PDFs stored?">
+    By default, PDFs are deleted shortly after generation for privacy. You can configure retention per automation with options ranging from immediate to never (including 1 day, 3 days, 7 days, 14 days, 30 days, 3 months, 6 months, and 1 year). For eSign-enabled automations, PDFs are automatically set to never expire. See [PDF Expiration / Storage](/features/pdf-expiration-storage) for details.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Why is my Google auth failing?">
+    Google OAuth tokens can expire or become invalid. Common causes:
+
+    - **Token expired** -- Google refresh tokens may become invalid after extended inactivity. Reconnect your Google account under **Settings > Integrations** in the DocsAutomator app.
+    - **Insufficient permissions** -- Ensure the connected Google account has access to the template and destination folder.
+    - **Shared Drive templates** -- You need Manager (Organizer) level permissions on the Shared Drive. See [Google Shared Drive Permissions](/more/troubleshooting-guide/google-shared-drive-template-permissions).
+  </Accordion>
+
+  <Accordion title="Why are my images not showing in the generated document?">
+    Images must be **publicly accessible** via URL. Common causes for missing images:
+
+    - The image URL requires authentication or is behind a firewall
+    - The URL has expired (e.g., temporary Airtable attachment URLs)
+    - The image format is not supported (supported: JPG, PNG, GIF, BMP, TIFF, SVG, WebP, and more)
+
+    See [Dynamic Images](/features/dynamic-images) for details and best practices.
+  </Accordion>
+
+  <Accordion title="Why is my document generation slow?">
+    Generation time depends on document complexity. Factors that increase generation time:
+
+    - Large number of line items or nested line items
+    - Multiple high-resolution images
+    - Complex template with many placeholders
+    - Google API rate limits during high-traffic periods
+
+    If generation consistently exceeds expectations, enable [async mode](/api-reference/introduction#sync-vs-async-mode) to avoid timeouts.
+  </Accordion>
+
+  <Accordion title="Why is my placeholder not being replaced?">
+    If a placeholder appears as raw text in the generated document:
+
+    - Verify the placeholder name matches exactly (case-sensitive) between your template and data mapping
+    - Check that curly brackets are not formatted differently (e.g., smart/curly quotes instead of straight brackets)
+    - Re-type the placeholder directly in Google Docs rather than copy-pasting, which can introduce hidden formatting
+    - Ensure the data field is mapped and has a value in the source record
+  </Accordion>
+</AccordionGroup>
+
+## Need More Help?
+
+<CardGroup cols={2}>
+  <Card title="In-App Chat" icon="comments">
+    Use the chat feature in your DocsAutomator dashboard for quick support
+  </Card>
+  <Card title="Email Support" icon="envelope" href="mailto:support@docsautomator.co">
+    Contact support@docsautomator.co (response within 24 hours)
+  </Card>
+  <Card title="Video Tutorials" icon="youtube" href="https://youtube.com/@docsautomator">
+    Watch tutorials on the DocsAutomator YouTube channel
+  </Card>
+  <Card title="Book a Call" icon="calendar" href="https://cal.com/docsautomator/20min">
+    Schedule a personal walkthrough with the team
+  </Card>
+</CardGroup>

@@ -6,6 +6,18 @@ icon: "layer-group"
 
 This feature enables hierarchical data presentation across up to 3 levels of nesting, ideal for invoices with services and tasks, bills of materials, or any parent-child-grandchild data structure.
 
+<Frame>
+  <iframe
+    width="100%"
+    height="400"
+    src="https://www.youtube.com/embed/hb45iiJ5vTk"
+    title="Nested Line Items Overview"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</Frame>
+
 ## Supported Levels
 
 | Level | Description | Example |
@@ -24,9 +36,9 @@ Each nesting tier uses a specific prefix structure:
 
 | Level | Prefix | Example |
 |-------|--------|---------|
-| Level 1 (Parent) | `{{line_items_N}}` | `{{line_items_1.product_name}}` |
-| Level 2 (Child) | `{{line_items_N_1}}` | `{{line_items_1_1.component}}` |
-| Level 3 (Grandchild) | `{{line_items_N_2}}` | `{{line_items_1_2.specification}}` |
+| Level 1 (Parent) | `{{line_items_N}}` | `{{line_items_1}}{{product_name}}` |
+| Level 2 (Child) | `{{line_items_N_1}}` | `{{line_items_1_1}}{{component}}` |
+| Level 3 (Grandchild) | `{{line_items_N_2}}` | `{{line_items_1_2}}{{specification}}` |
 
 Where N represents the line item table number (1, 2, 3, etc.).
 

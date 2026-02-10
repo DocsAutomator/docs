@@ -1,0 +1,248 @@
+---
+title: "Create Contracts with E-Signatures"
+description: "End-to-end walkthrough for generating contracts and collecting electronic signatures"
+icon: "file-signature"
+---
+
+Generate contracts from data and collect legally binding electronic signatures from one or more parties using DocsAutomator eSign.
+
+## What You'll Build
+
+By the end of this guide, you will have an automation that:
+
+- Generates a personalized contract from a template
+- Sends the contract to one or more signers for electronic signature
+- Tracks signing status and sends reminders
+- Saves the fully signed PDF back to your data source
+
+## Prerequisites
+
+- A DocsAutomator paid plan with the eSign add-on enabled
+- A Google account for creating the template
+- A data source (this guide covers API, but the same principles apply to Airtable, Google Sheets, and other sources)
+
+## Step-by-Step Setup
+
+<Steps>
+  <Step title="Create the Contract Template">
+    Create a Google Doc with your contract text and add placeholders for dynamic content and e-signature fields.
+
+    **Data placeholders:**
+
+    | Placeholder | Purpose |
+    |-------------|---------|
+    | `{{client_name}}` | Client's full name |
+    | `{{client_email}}` | Client's email address |
+    | `{{company_name}}` | Your company name |
+    | `{{contract_date}}` | Date of the contract |
+    | `{{contract_id}}` | Unique contract identifier |
+    | `{{scope_of_work}}` | Description of services |
+    | `{{total_amount}}` | Contract value |
+
+    **E-signature placeholders:**
+
+    | Placeholder | Purpose |
+    |-------------|---------|
+    | `{{esign.signature_1}}` | Client's signature |
+    | `{{esign.date_1}}` | Client's signing date (auto-filled) |
+    | `{{esign.text_1_printedname}}` | Client's typed name or title |
+    | `{{esign.signature_2}}` | Your company's signature |
+    | `{{esign.date_2}}` | Your company's signing date |
+
+    <Note>
+    The number after each e-sign placeholder (1, 2, etc.) corresponds to the signer number. Signer 1 sees fields tagged with `_1`, signer 2 sees fields tagged with `_2`, and so on.
+    </Note>
+
+    Place the signature placeholders where you want them to appear in the final document, typically at the bottom of the contract.
+  </Step>
+
+  <Step title="Create the Automation">
+    1. Click **+ New Automation** in your DocsAutomator dashboard
+    2. Name it "Client Contracts"
+    3. Select your data source:
+       - **API** for programmatic contract generation
+       - **Airtable**, **Google Sheets**, or another source for UI-based workflows
+    4. Select your contract template
+  </Step>
+
+  <Step title="Map Fields to Placeholders">
+    Connect your data source fields to the template placeholders.
+
+    <Tabs>
+      <Tab title="API">
+        When using the API, placeholders are mapped automatically from the `data` object in your request. No additional mapping is needed in the UI.
+      </Tab>
+      <Tab title="Airtable / Google Sheets">
+        Map each placeholder to the corresponding field or column in your data source using the field mapping interface.
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Enable E-Signatures">
+    In your automation's output settings, enable the **E-Signature** section. DocsAutomator automatically detects e-sign placeholders in your template.
+
+    **Configure signers:**
+
+    For each signer, provide:
+    - **Email**: Where the signing invitation is sent (use a placeholder like `{{client_email}}` for dynamic values)
+    - **Name** (optional): Displayed in the signing portal
+
+    <Tabs>
+      <Tab title="2 Signers (Client + Company)">
+        - **Signer 1**: Client -- email from `{{client_email}}`, name from `{{client_name}}`
+        - **Signer 2**: Your company representative -- enter a static email and name
+      </Tab>
+      <Tab title="1 Signer (Client Only)">
+        - **Signer 1**: Client -- email from `{{client_email}}`, name from `{{client_name}}`
+      </Tab>
+    </Tabs>
+
+    **Signing order:**
+
+    <CardGroup cols={2}>
+      <Card title="Parallel (Default)" icon="users">
+        Both parties receive the signing invitation simultaneously and can sign in any order.
+      </Card>
+      <Card title="Sequential" icon="list-ol">
+        Signer 1 receives the invitation first. Signer 2 receives theirs only after Signer 1 completes.
+      </Card>
+    </CardGroup>
+  </Step>
+
+  <Step title="Customize Signing Emails">
+    Customize the three email types sent during the signing workflow:
+
+    1. **Invitation email**: Sent when a signing request is created
+    2. **Reminder email**: Sent to signers who haven't completed signing
+    3. **Completion email**: Sent to all parties once everyone has signed
+
+    Use template variables in your emails:
+    - `{{documentName}}` -- the contract name
+    - `{{signerName}}` -- the recipient's name
+    - `{{signButton:Sign Now}}` -- a call-to-action button (invitation/reminder only)
+    - `{{downloadButton:Download}}` -- download link (completion email only)
+
+    **Email sender options:**
+    - **DocsAutomator Mail**: Sent from DocsAutomator's infrastructure (default)
+    - **Gmail**: Sent from your connected Gmail account for a branded experience
+
+    **Reminders:**
+    Enable automatic reminders and set the interval (e.g., every 3 days) and maximum number of reminders.
+  </Step>
+
+  <Step title="Configure Additional Output Actions">
+    Beyond e-signatures, set up additional post-generation actions:
+
+    - **Save signed PDF to data source**: Automatically saves the completed signed PDF back to your Airtable attachment field, Google Sheets column, etc.
+    - **Save to Google Drive**: Archive signed contracts in a specific Drive folder
+    - **Notify webhook**: Send a POST request with the signed PDF URL and signer details when signing completes
+  </Step>
+
+  <Step title="Test the Workflow">
+    Generate a test contract to verify the full flow:
+
+    <Tabs>
+      <Tab title="API">
+        Send a test request:
+
+        ```bash
+        curl -X POST https://api.docsautomator.co/createDocument \
+          -H "Authorization: Bearer YOUR_API_KEY" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "docId": "YOUR_AUTOMATION_ID",
+            "data": {
+              "client_name": "Jane Smith",
+              "client_email": "jane@example.com",
+              "company_name": "Acme Corp",
+              "contract_date": "February 10, 2025",
+              "contract_id": "CONTRACT-001",
+              "scope_of_work": "Website redesign and development",
+              "total_amount": "$15,000"
+            }
+          }'
+        ```
+
+        The response includes:
+        ```json
+        {
+          "success": true,
+          "pdfUrl": "https://...",
+          "signingSessionId": "session_abc123",
+          "signingLinks": [
+            { "email": "jane@example.com", "url": "https://sign.docsautomator.co/..." }
+          ]
+        }
+        ```
+      </Tab>
+      <Tab title="Airtable / Google Sheets">
+        Use the preview function to generate a test document, or trigger generation from a test record. Check your email for the signing invitation.
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Monitor Signing Status">
+    Track signing progress in the DocsAutomator dashboard or via the API:
+
+    - **Dashboard**: View all signing sessions with status indicators (Pending, In Progress, Completed, Declined, Expired)
+    - **API**: Call `GET /esign/sessions/{sessionId}` for detailed status
+    - **Webhooks**: Receive automatic notifications when signing completes
+
+    | Status | Meaning |
+    |--------|---------|
+    | Pending | Created, waiting for signers to open |
+    | In Progress | At least one signer has started |
+    | Completed | All signers have finished |
+    | Declined | A signer declined to sign |
+    | Expired | Signing link expired before completion |
+  </Step>
+</Steps>
+
+## Delivery Methods
+
+DocsAutomator supports two ways to deliver signing requests:
+
+<Tabs>
+  <Tab title="Email Delivery (Default)">
+    Signers receive an email with a link to the signing portal. This is the simplest approach and works for most use cases.
+
+    - Invitation emails are sent automatically when the document is generated
+    - Reminders can be configured to follow up with unsigned parties
+    - Completion emails notify all parties when signing is done
+  </Tab>
+  <Tab title="Link Delivery">
+    Retrieve signing URLs from the API response or dashboard and deliver them through your own channels (in-app notifications, SMS, custom emails, etc.).
+
+    ```json
+    {
+      "signingLinks": [
+        {
+          "email": "jane@example.com",
+          "url": "https://sign.docsautomator.co/..."
+        }
+      ]
+    }
+    ```
+
+    <Info>
+    Signing links expire after the configured expiration period (default: 30 days).
+    </Info>
+  </Tab>
+</Tabs>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="eSign API Reference" icon="code" href="/features/docsautomator-esign/docsautomator-esign-api-reference">
+    Programmatic control of signing sessions
+  </Card>
+  <Card title="Compliance & Legal Validity" icon="scale-balanced" href="/features/docsautomator-esign/compliance-and-legal-validity">
+    Legal standards and compliance details
+  </Card>
+  <Card title="E-Sign Date Formats" icon="calendar" href="/features/docsautomator-esign/e-sign-date-format-options">
+    Customize date formats in signed documents
+  </Card>
+  <Card title="Notify Webhook" icon="webhook" href="/features/actions-after-document-generation/notify-webhook">
+    Receive notifications on signing completion
+  </Card>
+</CardGroup>

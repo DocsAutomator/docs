@@ -1,0 +1,56 @@
+---
+title: "AI Field Mapping"
+description: "Automatically map template placeholders to data source fields using AI"
+icon: "wand-magic-sparkles"
+---
+
+AI Field Mapping uses artificial intelligence to automatically suggest the best mapping between your template placeholders and data source fields, saving time during automation setup.
+
+## How It Works
+
+When you reach the field mapping step of automation setup, click the **AI Field Mapping** button. The system:
+
+1. Reads all placeholder names from your Google Doc template
+2. Reads all available fields from your connected data source
+3. Uses AI to match placeholders to fields based on name similarity and field types
+4. Populates the mapping dropdowns with suggested matches
+
+<Info>
+AI mapping works best when your placeholder names are descriptive and similar to your data source field names. For example, `{{client_name}}` maps well to a field called "Client Name".
+</Info>
+
+## Supported Data Sources
+
+AI Field Mapping is available for the following data sources:
+
+| Data Source | Supported |
+|-------------|-----------|
+| Airtable | Yes |
+| Google Sheets | Yes |
+| SmartSuite | Yes |
+| ClickUp | Yes |
+
+## Using AI Field Mapping
+
+<Steps>
+  <Step title="Set Up Your Automation">
+    Create an automation, connect your data source, and select your template as usual.
+  </Step>
+  <Step title="Reach the Field Mapping Step">
+    Navigate to the field mapping section where placeholders are listed.
+  </Step>
+  <Step title="Click AI Field Mapping">
+    Click the AI mapping button. The system analyzes your placeholders and fields, then suggests the best matches.
+  </Step>
+  <Step title="Review and Adjust">
+    Review the suggested mappings. Correct any that don't match your needs using the dropdown menus. The AI may leave some fields unmapped if it isn't confident about a match.
+  </Step>
+</Steps>
+
+## Tips
+
+- **Descriptive names help**: The more descriptive your placeholder and field names are, the better the AI suggestions will be
+- **Image placeholders**: Placeholders starting with `image_` are automatically matched only to attachment-type fields
+- **Review all mappings**: Always verify the AI suggestions before proceeding, especially for fields with similar names
+- **Manual override**: You can manually change any mapping after the AI suggestion by selecting a different field from the dropdown
+- **Unmapped fields**: If the AI is not confident about a match, it will leave the placeholder unmapped rather than guess incorrectly

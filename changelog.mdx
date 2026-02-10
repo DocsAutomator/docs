@@ -1,0 +1,153 @@
+---
+title: "Changelog"
+description: "Latest updates and improvements to DocsAutomator"
+rss: true
+mode: "center"
+---
+
+<Update label="February 3, 2026">
+  ## API Improvements & Bug Fixes
+
+  New API features and document generation improvements.
+
+  **API**
+  - Template override support for `/createDocument` endpoint via `docTemplateLink` parameter
+  - Preserve paragraph alignment (justify) when inserting markdown/rich text content
+
+  **Document Generation**
+  - Fixed auto-number offset not applying when line items are empty
+  - Null check for missing line item placeholders
+</Update>
+
+<Update label="January 30, 2026">
+  ## E-Signature & Document Generation Updates
+
+  Several improvements to e-signatures and document generation.
+
+  **E-Signature**
+  - Multi-language support for signing UI (English, German, French, Spanish, Portuguese, Italian, Dutch)
+  - Use any automation placeholder in e-sign email subject lines and body (e.g., `{{clientName}}`, `{{projectTitle}}`)
+  - Placeholder autocomplete with "/" trigger in email templates
+  - Unicode character support in PDF text rendering
+  - Split checkbox fields with multiple positions
+
+  **Document Generation**
+  - Nested table support within line item cells
+  - First image only option for image placeholders
+  - PDF Drive URL field mapping for Airtable, Google Sheets, SmartSuite
+</Update>
+
+<Update label="January 28, 2026">
+  ## Make Integration
+
+  <Frame>
+    <img src="https://firebasestorage.googleapis.com/v0/b/docsautomator.appspot.com/o/docsautomator-assets%2Fmake-integration-newsletter.png?alt=media&token=0e48f9e6-dcb6-4465-b64a-8efc449b2379" alt="DocsAutomator + Make Integration" />
+  </Frame>
+
+  [Make (formerly Integromat)](/integrations-api/make) integration is now available.
+
+  - Visual workflow builder with drag-and-drop modules
+  - Connect 3,000+ apps to document generation
+  - Full DocsAutomator features including line items, images, e-signatures
+  - Built-in error handling and execution history
+  - Grouped placeholders UI with dynamic line items support
+</Update>
+
+<Update label="January 27, 2026">
+  ## Optional E-Signature Fields
+
+  E-signature fields can now be marked as optional or required.
+
+  - Add required field indicators on signing pages
+  - Configure each field as optional or required
+  - Better UX for signers with clear visual indicators
+</Update>
+
+<Update label="January 20, 2026">
+  ## Softr Integration
+
+  <Frame>
+    <img src="https://firebasestorage.googleapis.com/v0/b/docsautomator.appspot.com/o/docsautomator-assets%2Fsoftr-integration.jpg?alt=media&token=116fec3d-de47-4ab7-9bb4-0f3871010f34" alt="Softr Integration" />
+  </Frame>
+
+  Generate documents directly from [Softr](/integrations-api/softr) apps.
+
+  - Trigger from form submissions, button clicks, database changes, or schedules
+  - Works with Softr Databases, Airtable, Google Sheets, HubSpot, and more
+  - All features included: line items, images, e-signatures, conditional sections
+</Update>
+
+<Update label="January 15, 2026">
+  ## Unlimited Plan & E-Signature Improvements
+
+  New pricing option and e-signature enhancements.
+
+  **Unlimited Plan**
+  - Unlimited documents with predictable pricing
+  - Zero overage fees
+  - Unlimited e-signatures included
+  - $349/month or $299/month billed annually
+
+  **E-Signature Improvements**
+  - Free users can now test e-signatures in preview mode
+  - Custom button and link colors in signing emails
+  - Store signing URLs back to your data source
+  - Custom Gmail sender name support
+</Update>
+
+<Update label="January 14, 2026">
+  ## DocsAutomator eSign Launch
+
+  <Frame>
+    <img src="https://firebasestorage.googleapis.com/v0/b/docsautomator.appspot.com/o/docsautomator-assets%2Fdocsautomator-esign-newsletter%20(1).png?alt=media&token=253ec095-b236-4f96-875e-cd2a4dff35e4" alt="DocsAutomator eSign" />
+  </Frame>
+
+  Introducing [DocsAutomator eSign](/features/docsautomator-esign) - collect legally binding electronic signatures directly on your generated documents.
+
+  - Unlimited signers with parallel or sequential workflows
+  - Multiple field types: signatures, dates, text, checkboxes
+  - Automatic reminders and certificate of completion
+  - Custom email templates and branding
+  - Mobile-friendly signing on any device
+  - [ESIGN Act, UETA, and eIDAS (SES) compliant](/features/docsautomator-esign/compliance-and-legal-validity)
+</Update>
+
+<Update label="December 18, 2025">
+  ## n8n Integration
+
+  <Frame>
+    <img src="https://firebasestorage.googleapis.com/v0/b/docsautomator.appspot.com/o/docsautomator-assets%2Fnewsletter-image.png?alt=media&token=84105298-9418-4679-9c9d-a472512fb4d4" alt="DocsAutomator + n8n Integration" />
+  </Frame>
+
+  [n8n](/integrations-api/n8n) integration for advanced workflow automation and AI agents.
+
+  - Connect 400+ integrations including Notion, Stripe, HubSpot
+  - Full automation management via API
+  - Powerful data transformation before document generation
+  - Perfect for AI agent workflows
+</Update>
+
+<Update label="December 2, 2025">
+  ## Nested Line Items & More
+
+  <Frame>
+    <img src="https://firebasestorage.googleapis.com/v0/b/docsautomator.appspot.com/o/docsautomator-assets%2Fnested-line-items.png?alt=media&token=07a758fe-d396-40fe-bbf8-287d331a487e" alt="Nested Line Items" />
+  </Frame>
+
+  Major update with [nested line items](/features/line-items/nested-line-items) and several new features.
+
+  **Nested Line Items**
+  - Display hierarchical data with up to 3 levels of nesting
+  - Automatic hierarchical numbering (1, 1.1, 1.1.1)
+  - Perfect for complex invoices, bills of materials, project reports
+
+  **Airtable Linked Record Access**
+  - Access data from linked tables directly - no lookup fields required
+  - Works with single and multiple linked records
+
+  **More Improvements**
+  - Template Gallery - Browse and select pre-built templates in the app
+  - Dynamic Subfolders - Use placeholders in Google Drive folder paths
+  - Line Item Sorting - Sort at all nesting levels
+  - Merged Cell Support - Templates with merged table cells now work correctly
+</Update>

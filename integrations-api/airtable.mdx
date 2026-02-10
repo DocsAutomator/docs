@@ -1,10 +1,27 @@
 ---
 title: "Airtable"
 description: "Convert Airtable records into PDF documents and Google Docs"
-icon: "/icons/airtable.svg"
+icon: "/icons/airtable.png"
+keywords: ["Airtable integration", "Airtable document generation", "Airtable PDF", "Airtable automation"]
 ---
 
 The DocsAutomator-Airtable integration enables you to convert Airtable records into PDF documents and Google Docs. The system operates on a "primary table and linked tables" model, where documents are generated from records in your main table while data lists ("line items") can be pulled from related tables.
+
+<Frame>
+  <iframe
+    width="100%"
+    height="400"
+    src="https://www.youtube.com/embed/kYtHSNJucPI"
+    title="Airtable Integration Overview"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</Frame>
+
+<Frame>
+  <img src="/images/airtable/overview.png" alt="Airtable automation overview showing data source, template, and field mapping" />
+</Frame>
 
 <Note>
 Generated files automatically save to specified Airtable fields.
@@ -21,6 +38,10 @@ Generated files automatically save to specified Airtable fields.
   </Step>
   <Step title="Configure Template">
     Every automation requires a Google Doc template. Consult the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) for setup details, or use the Playground Template for testing.
+
+    <Frame>
+      <img src="/images/airtable/template-selection.png" alt="Template selection step with Template Check" />
+    </Frame>
   </Step>
   <Step title="Choose Base and Table">
     Select your primary Airtable base and table. DocsAutomator distinguishes between primary tables (containing main record data) and linked tables (containing related line items).
@@ -33,9 +54,21 @@ Generated files automatically save to specified Airtable fields.
   </Step>
   <Step title="Map Fields and Line Items">
     Connect all applicable fields from your Airtable table. For line items, select the linked field and corresponding view to determine sort order.
+
+    <Frame>
+      <img src="/images/airtable/field-mapping.png" alt="Primary table field mapping" />
+    </Frame>
+
+    <Frame>
+      <img src="/images/airtable/line-item-mapping.png" alt="Line item mapping with linked field, view, sort, and grouping options" />
+    </Frame>
   </Step>
   <Step title="Create Previews">
     Generate document previews. The system loads 50 records automatically; search functionality enables previewing specific records.
+
+    <Frame>
+      <img src="/images/airtable/preview.png" alt="Completed setup with PDF preview" />
+    </Frame>
   </Step>
   <Step title="Trigger Document Generation">
     Choose from three triggering methods: Automation Script, Scripting Extension, or Webhook.
@@ -44,23 +77,53 @@ Generated files automatically save to specified Airtable fields.
 
 ## Triggering Methods
 
-<Tabs>
-  <Tab title="Automation Script">
-    Copy the provided script into Airtable's automation action. Define the Record ID parameter to pass the triggering record's identifier.
+DocsAutomator supports two modes for generating documents from Airtable: **Automatic** and **Manual**.
 
-    <Info>
-    Automation scripts require a paid Airtable account.
-    </Info>
-  </Tab>
-  <Tab title="Scripting Extension">
-    Copy the script into Airtable's extension editor. Trigger via the "Run" button or add a button field set to "Run Script" (automatically passes the active record ID).
-  </Tab>
-  <Tab title="Webhook">
-    Copy the webhook URL and add it to a formula or button field. Clicking triggers the webhook, opening a browser window; the PDF appears within seconds and stores in Airtable.
+### Automatic
+
+Documents are generated automatically when records are created or updated, using an Airtable Automation Script.
+
+Copy the provided script into Airtable's automation action. Define the Record ID parameter to pass the triggering record's identifier.
+
+<Frame>
+  <img src="/images/airtable/automation-script.png" alt="Automation script code snippet" />
+</Frame>
+
+<Info>
+Automation scripts require a paid Airtable account.
+</Info>
+
+### Manual
+
+Choose from three manual triggering methods:
+
+<Tabs>
+  <Tab title="Button or Formula Field">
+    Add a webhook URL to a button or formula field in your table. Clicking the button triggers document generation — the PDF appears within seconds and stores in Airtable.
+
+    <Frame>
+      <img src="/images/airtable/webhook-setup.png" alt="Webhook formula URL and Run Test button" />
+    </Frame>
 
     <Tip>
-    Webhook triggering works on free Airtable plans.
+    This method works on free Airtable plans — no paid account required.
     </Tip>
+  </Tab>
+  <Tab title="DocsAutomator Extension">
+    Install the DocsAutomator Airtable Extension for a dedicated document generation UI directly inside Airtable.
+
+    1. Install the DocsAutomator Extension from the Airtable Marketplace
+    2. Copy your API key from DocsAutomator account settings into the extension
+    3. Select your automation and generate documents from any record
+  </Tab>
+  <Tab title="Interface Button">
+    Add a button to an Airtable Interface that triggers document generation via an automation script.
+
+    Copy the provided script into an Airtable automation triggered by an Interface button. The Record ID is passed automatically from the button click.
+
+    <Info>
+    Interface buttons require a paid Airtable account.
+    </Info>
   </Tab>
 </Tabs>
 
@@ -93,6 +156,20 @@ Generated files automatically save to specified Airtable fields.
     Professional assistance available for integrating DocsAutomator into existing workflows (service fee applies).
   </Accordion>
 </AccordionGroup>
+
+## E-Signatures
+
+DocsAutomator supports collecting legally binding e-signatures on documents generated from Airtable records. After a document is created, it can be automatically routed to one or more signers for signing.
+
+To enable e-signatures, open your automation's output settings and toggle on the e-signature option. You can then configure signers by mapping their email address and name to Airtable fields -- for example, map a "Client Email" field to the signer email and a "Client Name" field to the signer name.
+
+If your document requires multiple signers, you can choose between **sequential signing** (signers sign in a defined order) and **parallel signing** (all signers receive the request simultaneously). Add e-signature placeholders such as `{{esign.signature.1}}` and `{{esign.date.1}}` to your template to define where signatures and dates appear in the final document.
+
+Signed PDFs can be stored back to an Airtable attachment field automatically once all parties have signed. This keeps your records up to date without any manual steps.
+
+<Info>
+E-signatures work with both Google Doc templates and [PDF templates](/docsautomator-basics/pdf-template-guide). See the [E-Signature Guide](/features/docsautomator-esign) for full configuration details and placeholder reference.
+</Info>
 
 ## Frequently Asked Questions
 

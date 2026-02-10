@@ -1,0 +1,316 @@
+---
+title: "Placeholder Syntax Reference"
+description: "Quick reference for all DocsAutomator placeholder types and template syntax"
+icon: "code"
+keywords: ["placeholder syntax", "template variables", "line items", "conditional rendering", "e-signature fields"]
+---
+
+This page consolidates every placeholder syntax supported in DocsAutomator templates. Use it as a quick reference while building your templates.
+
+<Info>
+Google Doc templates use double curly brackets `{{...}}` placed directly in your document. PDF templates use a [visual editor](/docsautomator-basics/pdf-template-guide) instead of text syntax.
+</Info>
+
+## Standard Text Placeholders
+
+Replace a placeholder with a text value from your data source.
+
+| Syntax | Description | Example |
+|--------|-------------|---------|
+| `{{fieldName}}` | Simple text replacement | `{{company_name}}` |
+
+```
+Dear {{client_name}},
+
+Your order #{{order_number}} has been confirmed.
+Invoice date: {{invoice_date}}
+```
+
+<Note>
+Placeholder names must be unique within a document. The same placeholder can appear multiple times, but you only need to map the data once.
+</Note>
+
+---
+
+## Image Placeholders
+
+Insert images dynamically using the `image_` prefix. Images must be publicly accessible URLs.
+
+| Syntax | Description | Example |
+|--------|-------------|---------|
+| `{{image_fieldName}}` | Single or multiple image insertion | `{{image_company_logo}}` |
+
+```
+{{image_headshot}}
+{{image_product_photo}}
+{{image_signature}}
+```
+
+Supports JPG, PNG, GIF, BMP, TIFF, SVG, WebP, and more. PNG files retain transparency. See [Dynamic Images](/features/dynamic-images) for quality settings and resizing options.
+
+---
+
+## Line Item Placeholders
+
+Line items represent variable-length lists of data (invoice rows, attendees, products). They are declared as table rows in your template.
+
+### Basic Line Items
+
+| Syntax | Description |
+|--------|-------------|
+| `{{line_items_N}}` | Line item marker (placed at the start of a table row) |
+| `{{fieldName}}` | Field within a line item row |
+| `{{image_fieldName}}` | Image field within a line item row |
+
+Where `N` is the line item set number (1, 2, 3, etc.). The marker goes in the first cell, immediately followed by the first field placeholder. There is no closing tag.
+
+```
+{{line_items_1}}{{description}}  {{quantity}}  {{price}}
+```
+
+### Multiple Line Item Sets
+
+Use incrementing numbers for separate line item tables:
+
+```
+{{line_items_1}}{{product}}  {{price}}
+
+{{line_items_2}}{{service}}  {{hours}}
+```
+
+<Note>
+Line item sets must be numbered sequentially (1, 2, 3, etc.).
+</Note>
+
+### Images in Line Items
+
+```
+{{line_items_1}}{{image_product_photo}}  {{name}}  {{price}}
+```
+
+See [Line Items](/features/line-items) for complete documentation.
+
+---
+
+## Nested Line Items
+
+Create hierarchical data structures with up to 3 levels of nesting. Currently available for Airtable and API data sources.
+
+| Level | Prefix | Example |
+|-------|--------|---------|
+| Level 1 (Parent) | `{{line_items_N}}` | `{{line_items_1}}{{product_name}}` |
+| Level 2 (Child) | `{{line_items_N_1}}` | `{{line_items_1_1}}{{component}}` |
+| Level 3 (Grandchild) | `{{line_items_N_2}}` | `{{line_items_1_2}}{{specification}}` |
+
+Where `N` is the line item set number.
+
+### API Data Structure
+
+When using the API, nest items using the `children` key:
+
+```json
+{
+  "line_items_1": [
+    {
+      "product": "Service A",
+      "price": "$100",
+      "children": [
+        {
+          "task": "Task 1",
+          "children": [
+            { "detail": "Detail 1" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+See [Nested Line Items](/features/line-items/nested-line-items) for setup steps and configuration.
+
+---
+
+## Section Placeholders
+
+Sections wrap larger areas of your document for conditional rendering. Everything between the opening and closing tags can be shown or hidden based on conditions configured in the automation settings.
+
+| Syntax | Description |
+|--------|-------------|
+| `{{section_NAME}}` | Opening tag (start of conditional section) |
+| `{{/section_NAME}}` | Closing tag (end of conditional section) |
+
+```
+{{section_premium_content}}
+
+This entire area only appears if the condition is met.
+You can include text, images, tables, and line items.
+
+{{/section_premium_content}}
+```
+
+### Available Conditions
+
+| Condition | Description |
+|-----------|-------------|
+| equals | Value exactly matches |
+| does not equal | Value does not match |
+| contains | Value includes substring |
+| does not contain | Value excludes substring |
+| exists | Value is present (not empty) |
+| does not exist | Value is empty or missing |
+
+See [Sections](/features/sections) for use cases and configuration.
+
+---
+
+## E-Signature Placeholders
+
+Add e-signature fields to collect legally binding signatures. Fields use the format `{{esign.TYPE_SIGNER}}`.
+
+| Type | Syntax | Purpose |
+|------|--------|---------|
+| Signature | `{{esign.signature_N}}` | Full signature capture (draw/touch) |
+| Date | `{{esign.date_N}}` | Date picker with auto-fill |
+| Text | `{{esign.text_N_label}}` | Text input field (append `_label` for a unique name per field) |
+| Checkbox | `{{esign.checkbox_N_label}}` | Agreement checkbox (append `_label` for a unique name per field) |
+
+Where `N` is the signer number (1, 2, 3, etc.).
+
+```
+Signature: {{esign.signature_1}}
+Date: {{esign.date_1}}
+Printed Name: {{esign.text_1_printedname}}
+I agree to the terms: {{esign.checkbox_1_agreeterms}}
+
+Co-signer: {{esign.signature_2}}
+Date: {{esign.date_2}}
+```
+
+See [DocsAutomator eSign](/features/docsautomator-esign) for signer configuration, email customization, and API reference.
+
+---
+
+## PDF Template Placeholders
+
+PDF templates use a visual editor instead of text-based syntax. Rather than typing `{{placeholder}}` in a document, you upload an existing PDF and position data fields on top of it. The PDF itself is not modified — DocsAutomator overlays your data onto the original layout at generation time.
+
+PDF templates support the following placeholder types:
+
+| Type | Description |
+|------|-------------|
+| Text | Replaced with text data, with configurable font, size, color, alignment, and overflow |
+| Image | Replaced with an image, auto-scaled to fit the placeholder bounds |
+| Checkbox | Draws a checkmark when the value is truthy |
+| E-Sign Signature | Signature capture field for e-signing |
+| E-Sign Date | Auto-filled signing date |
+| E-Sign Text | Text input for the signer |
+| E-Sign Checkbox | Agreement checkbox for e-signing |
+
+Each placeholder has a **Name** property that maps to your data source fields, just like `{{fieldName}}` in Google Doc templates.
+
+See the [PDF Template Guide](/docsautomator-basics/pdf-template-guide) for detailed instructions on uploading PDFs and using the visual editor.
+
+---
+
+## Advanced Placeholder Options
+
+These features are configured through the settings/gear icon next to each placeholder in your automation settings. They do not require additional syntax in your template.
+
+### Conditional Paragraph / Row Deletion
+
+Automatically remove entire lines or table rows when a placeholder value is empty.
+
+| Context | Behavior |
+|---------|----------|
+| Outside tables | Entire paragraph is deleted |
+| Inside tables | Complete row is deleted |
+| Line items | Line item row is removed |
+
+See [Conditional Paragraph / Row Deletion](/features/advanced-placeholder-options/conditional-paragraph-row-deletion).
+
+### Conditional Show / Hide
+
+Show or hide individual placeholder values based on conditions (equals, contains, exists, etc.). Combine with row deletion to remove the entire line when hidden.
+
+See [Conditional Show / Hide](/features/advanced-placeholder-options/conditional-show-hide).
+
+### Conditional Styling
+
+Apply dynamic text formatting (color, bold, italic, font size, and more) when conditions are met.
+
+See [Conditional Styling](/features/advanced-placeholder-options/conditional-styling).
+
+### Markdown Formatting
+
+Interpret a placeholder value as Markdown to render headings, bold, italic, lists, and links in the generated document. Enable per-placeholder via the settings gear.
+
+See [Enable Markdown Formatting](/features/advanced-placeholder-options/enable-markdown-formatting).
+
+### Hidden Values
+
+Set a placeholder to "Always hide" so its value is never rendered in the document. Useful for driving section conditions or email routing without displaying the data.
+
+See [Hidden Values](/features/advanced-placeholder-options/hidden-values).
+
+---
+
+## Auto Row Numbers
+
+Enable automatic sequential numbering for line item rows. Configured in the line item settings (not via template syntax).
+
+| Scenario | Output |
+|----------|--------|
+| Flat line items | 1, 2, 3, ... |
+| Nested line items | 1, 1.1, 1.1.1, 1.2, 2, 2.1, ... |
+
+See [Auto Row Numbers](/features/line-items/auto-row-numbers).
+
+---
+
+## Quick Reference Table
+
+| Feature | Template Syntax | Configured In |
+|---------|----------------|---------------|
+| Text placeholder | `{{fieldName}}` | Template |
+| Image placeholder | `{{image_fieldName}}` | Template |
+| Line items (marker) | `{{line_items_N}}` | Template |
+| Line items (field) | `{{fieldName}}` | Template |
+| Nested level 2 (marker) | `{{line_items_N_1}}` | Template |
+| Nested level 3 (marker) | `{{line_items_N_2}}` | Template |
+| Section (open) | `{{section_NAME}}` | Template |
+| Section (close) | `{{/section_NAME}}` | Template |
+| E-signature | `{{esign.TYPE_N}}` | Template |
+| Row deletion | -- | Settings gear |
+| Show/hide | -- | Settings gear |
+| Conditional styling | -- | Settings gear |
+| Markdown formatting | -- | Settings gear |
+| Hidden values | -- | Settings gear |
+| Auto row numbers | -- | Line item settings |
+| PDF text/image/checkbox | -- | Visual editor |
+| PDF e-sign fields | -- | Visual editor |
+
+---
+
+## Related Pages
+
+<CardGroup cols={2}>
+  <Card title="Google Doc Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Template creation guide and best practices
+  </Card>
+  <Card title="PDF Template Guide" icon="file-pdf" href="/docsautomator-basics/pdf-template-guide">
+    Overlay data fields on existing PDFs
+  </Card>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Variable-length lists and tables
+  </Card>
+  <Card title="Sections" icon="square-dashed" href="/features/sections">
+    Conditional document sections
+  </Card>
+  <Card title="DocsAutomator eSign" icon="signature" href="/features/docsautomator-esign">
+    E-signature configuration and workflows
+  </Card>
+  <Card title="Dynamic Images" icon="image" href="/features/dynamic-images">
+    Image insertion and quality settings
+  </Card>
+</CardGroup>

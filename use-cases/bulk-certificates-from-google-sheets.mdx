@@ -1,0 +1,166 @@
+---
+title: "Bulk Generate Certificates from Google Sheets"
+description: "End-to-end walkthrough for generating certificates in bulk from Google Sheets data"
+icon: "certificate"
+---
+
+Generate personalized certificates for course completions, event attendance, or awards using Google Sheets as your data source with batch processing.
+
+## What You'll Build
+
+By the end of this guide, you will have an automation that:
+
+- Generates individual PDF certificates for each row in a Google Sheet
+- Personalizes each certificate with the recipient's name, date, and other details
+- Stores PDF links back in the spreadsheet
+- Supports batch generation for processing hundreds of certificates at once
+
+## Prerequisites
+
+- A DocsAutomator account ([sign up here](https://app.docsautomator.co))
+- A Google account (for both the template and spreadsheet)
+
+## Step-by-Step Setup
+
+<Steps>
+  <Step title="Create the Google Doc Template">
+    Design a certificate template in Google Docs. Use placeholders for dynamic content:
+
+    | Placeholder | Purpose | Example Value |
+    |-------------|---------|---------------|
+    | `{{recipient_name}}` | Certificate recipient | Jane Smith |
+    | `{{course_name}}` | Course or event name | Advanced Data Analysis |
+    | `{{completion_date}}` | Date of completion | January 15, 2025 |
+    | `{{certificate_id}}` | Unique certificate number | CERT-2025-001 |
+    | `{{instructor_name}}` | Instructor or issuer | Dr. John Doe |
+    | `{{image_signature}}` | Instructor signature image | (signature image URL) |
+    | `{{image_logo}}` | Organization logo | (logo image URL) |
+
+    <Tip>
+    Use tables with hidden borders (0pt border width) to precisely position elements like the recipient name, date, and signature on your certificate design.
+    </Tip>
+  </Step>
+
+  <Step title="Prepare Your Google Sheet">
+    Create a spreadsheet with a header row and one row per certificate recipient:
+
+    | Recipient Name | Course Name | Completion Date | Certificate ID | Instructor | Signature URL | Logo URL | PDF Link |
+    |---------------|-------------|-----------------|----------------|------------|---------------|----------|----------|
+    | Jane Smith | Advanced Data Analysis | January 15, 2025 | CERT-2025-001 | Dr. John Doe | https://... | https://... | |
+    | Bob Johnson | Advanced Data Analysis | January 15, 2025 | CERT-2025-002 | Dr. John Doe | https://... | https://... | |
+
+    <Note>
+    The **PDF Link** column should be left empty -- DocsAutomator will populate it with the generated PDF URL.
+    </Note>
+  </Step>
+
+  <Step title="Create the Automation in DocsAutomator">
+    1. Click **+ New Automation** in your DocsAutomator dashboard
+    2. Name it something like "Course Certificates"
+    3. Select **Google Sheets** as the data source
+    4. Connect your Google account if not already connected
+  </Step>
+
+  <Step title="Configure the Template">
+    Select your Google Doc certificate template. DocsAutomator will detect all `{{placeholder}}` tags in the document.
+  </Step>
+
+  <Step title="Select Your Spreadsheet and Configure Columns">
+    1. Choose your Google Spreadsheet from the list
+    2. Select the **Primary Sheet** containing your certificate data
+    3. Configure key columns:
+       - **Primary Column**: The column that uniquely identifies each row (e.g., Certificate ID)
+       - **Document Name Column**: Determines the generated file name (e.g., Certificate ID or Recipient Name)
+       - **PDF Link Column**: Where the generated PDF URL will be stored (e.g., PDF Link)
+  </Step>
+
+  <Step title="Map Placeholders to Columns">
+    Connect each template placeholder to a spreadsheet column:
+
+    - `{{recipient_name}}` to "Recipient Name"
+    - `{{course_name}}` to "Course Name"
+    - `{{completion_date}}` to "Completion Date"
+    - `{{certificate_id}}` to "Certificate ID"
+    - `{{instructor_name}}` to "Instructor"
+    - `{{image_signature}}` to "Signature URL"
+    - `{{image_logo}}` to "Logo URL"
+
+    <Info>
+    Use the **AI Field Mapping** button to auto-suggest mappings based on placeholder and column names.
+    </Info>
+  </Step>
+
+  <Step title="Generate a Preview">
+    Select a row from the preview panel and generate a test certificate. Verify that:
+    - The recipient name displays correctly
+    - Images (logo, signature) render at the right size
+    - Date formatting matches your requirements
+    - The overall layout looks professional
+  </Step>
+
+  <Step title="Configure Output Actions">
+    - **PDF Link**: Already configured to write back to your spreadsheet
+    - **Save to Google Drive** (optional): Select a Drive folder to store all generated certificate PDFs
+    - **Send Email** (optional): Enable to automatically email each certificate to the recipient
+
+    <Tip>
+    If you add an email column to your sheet, you can use the `{{email}}` placeholder as the email recipient to send each person their certificate automatically.
+    </Tip>
+  </Step>
+
+  <Step title="Set Up Batch Generation">
+    For generating certificates in bulk, use one of these methods:
+
+    <Tabs>
+      <Tab title="Apps Script Button (Recommended for Bulk)">
+        Copy the Apps Script from DocsAutomator and add it to your spreadsheet. This creates a custom menu button that processes all rows (or selected rows) in a queue.
+
+        The queue system:
+        - Processes rows sequentially to avoid rate limits
+        - Shows progress as each certificate is generated
+        - Writes PDF links back to the sheet as they complete
+      </Tab>
+      <Tab title="Webhook Formula">
+        Add a formula column that generates a clickable link for each row. Click a link to generate that row's certificate on demand. Best for generating individual certificates as needed.
+      </Tab>
+      <Tab title="Auto-Create">
+        Enable auto-create to automatically generate a certificate every time a new row is added to the sheet. DocsAutomator checks for new rows every 5 minutes.
+
+        <Info>
+        Best for ongoing workflows where new recipients are added over time.
+        </Info>
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Batch Processing Tips
+
+<AccordionGroup>
+  <Accordion title="Processing large batches" icon="layer-group">
+    The queue system handles rate limiting automatically. For batches of hundreds or thousands of certificates, the Apps Script method is recommended because it processes rows sequentially and tracks progress in the sheet.
+  </Accordion>
+  <Accordion title="Monitoring progress" icon="chart-bar">
+    As each certificate is generated, the PDF link is written back to the sheet. You can monitor progress by watching the PDF Link column fill in. Check the [Run History](/features/run-history) in DocsAutomator for detailed logs.
+  </Accordion>
+  <Accordion title="Handling errors" icon="triangle-exclamation">
+    If a row fails to generate, the PDF Link column will remain empty for that row. Check the Run History for error details, fix the data, and regenerate just the failed rows.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Dynamic Images" icon="image" href="/features/dynamic-images">
+    Add recipient photos or custom graphics
+  </Card>
+  <Card title="Send Email" icon="envelope" href="/features/actions-after-document-generation/send-email">
+    Email certificates to recipients automatically
+  </Card>
+  <Card title="Save PDFs to Drive" icon="hard-drive" href="/features/actions-after-document-generation/save-pdfs-in-google-drive">
+    Archive all certificates in Google Drive
+  </Card>
+  <Card title="PDF Expiration" icon="clock" href="/features/pdf-expiration-storage">
+    Configure storage duration for generated PDFs
+  </Card>
+</CardGroup>

@@ -2,6 +2,7 @@
 title: "Quickstart Guide"
 description: "Your fast track guide to get started automating documents"
 icon: "bolt"
+keywords: ["getting started", "setup guide", "first automation", "document template"]
 ---
 
 This guide helps you begin using DocsAutomator in minutes. It assumes you've already created an account at [app.docsautomator.co](https://app.docsautomator.co).
@@ -14,13 +15,21 @@ Need personal assistance? [Schedule a call](https://cal.com/docsautomator/20min)
 
 After logging in, you'll see the initial dashboard. Click the **"+ New Automation"** button to begin setting up document generation.
 
+<Frame>
+  <img src="/images/quickstart/dashboard.png" alt="DocsAutomator dashboard with New Automation button" />
+</Frame>
+
 <Note>
-An automation combines your data source (Airtable, Google Sheets, etc.) with a Google Doc template.
+An automation combines your data source (Airtable, Google Sheets, etc.) with a template — either a Google Doc or a PDF template.
 </Note>
 
 ## 2. Set Title & Choose Data Source
 
 Select your data source from the available integrations:
+
+<Frame>
+  <img src="/images/quickstart/choose-data-source.png" alt="Data source selection showing available integrations" />
+</Frame>
 
 <CardGroup cols={3}>
   <Card title="Airtable" icon="database" href="/integrations-api/airtable" />
@@ -38,24 +47,67 @@ Depending on your selection, you may need to connect your account.
 
 ## 3. Choose Document Template
 
-DocsAutomator uses Google Docs as templates. You have several options:
+DocsAutomator supports two template types:
 
-<AccordionGroup>
-  <Accordion title="Add the Playground Template" icon="play">
-    Use the built-in playground template to learn interactively and test the placeholder syntax before building your own.
-  </Accordion>
-  <Accordion title="Select from Template Library" icon="book">
-    Browse pre-built templates at [docsautomator.co/templates](https://docsautomator.co/templates/) for common use cases like invoices, contracts, and reports.
-  </Accordion>
-  <Accordion title="Create from Scratch" icon="file-plus">
-    Follow the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) to create a custom template.
-  </Accordion>
-  <Accordion title="Request Professional Template" icon="wand-magic-sparkles">
-    Need help? Request professional template creation through our [service form](https://docsautomator.co/templates/).
-  </Accordion>
-</AccordionGroup>
+<Tabs>
+  <Tab title="Google Doc Template">
+    Create a Google Doc with placeholder syntax (`{{field_name}}`). Best for text-heavy documents like invoices, contracts, and reports.
+
+    <Frame>
+      <img src="/images/quickstart/choose-template.png" alt="Template selection options" />
+    </Frame>
+
+    <AccordionGroup>
+      <Accordion title="Add the Playground Template" icon="play">
+        Use the built-in playground template to learn interactively and test the placeholder syntax before building your own.
+      </Accordion>
+      <Accordion title="Select from Template Library" icon="book">
+        Browse pre-built templates at [docsautomator.co/templates](https://docsautomator.co/templates/) for common use cases like invoices, contracts, and reports.
+      </Accordion>
+      <Accordion title="Create from Scratch" icon="file-plus">
+        Follow the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) to create a custom template.
+      </Accordion>
+      <Accordion title="Request Professional Template" icon="wand-magic-sparkles">
+        Need help? Request professional template creation through our [service form](https://docsautomator.co/templates/).
+      </Accordion>
+    </AccordionGroup>
+  </Tab>
+  <Tab title="PDF Template">
+    Upload an existing PDF and use the visual editor to define where data fields should be overlaid. The PDF itself is not modified — DocsAutomator fills in the fields on top of your original layout at generation time. Best for pre-designed forms, certificates, or branded documents.
+
+    See the [PDF Template Guide](/docsautomator-basics/pdf-template-guide) for full setup instructions.
+  </Tab>
+</Tabs>
 
 ## 4. Map Data, Create Previews & Start Automating
+
+Select your base and table, then map your template placeholders to your data source fields.
+
+<Frame>
+  <img src="/images/quickstart/airtable-setup.png" alt="Airtable base and table selection with field mapping" />
+</Frame>
+
+<Frame>
+  <img src="/images/quickstart/field-mapping.png" alt="Mapping template placeholders to data source fields" />
+</Frame>
+
+Once mapping is complete, generate a preview to verify your document looks correct.
+
+<Frame>
+  <img src="/images/quickstart/preview.png" alt="Completed automation setup with PDF preview" />
+</Frame>
+
+## 5. Configure Output Actions
+
+Set up what happens after a document is generated — save PDFs, send emails, merge documents, collect e-signatures, and more.
+
+<Frame>
+  <img src="/images/quickstart/output-settings.png" alt="Actions after document generation settings" />
+</Frame>
+
+<Info>
+Want to collect signatures? Enable e-signatures in your automation's output settings. See the [eSign guide](/features/docsautomator-esign) for setup instructions.
+</Info>
 
 The configuration process differs by integration:
 
@@ -139,13 +191,134 @@ The configuration process differs by integration:
       </Step>
     </Steps>
   </Tab>
+  <Tab title="Google Sheets">
+    <Steps>
+      <Step title="Select Spreadsheet">
+        Choose your Google Spreadsheet and the Primary Sheet containing your data
+      </Step>
+      <Step title="Configure Columns">
+        Set the Primary Column, Document Name Column, and PDF Link Column
+      </Step>
+      <Step title="Map Placeholders">
+        Map template placeholders to your sheet columns
+      </Step>
+      <Step title="Generate Preview">
+        Create a preview to verify the output looks correct
+      </Step>
+      <Step title="Set Up Trigger">
+        Choose between Auto-Create on new rows, webhook formula, or Apps Script
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="SmartSuite">
+    <Steps>
+      <Step title="Select Solution and Table">
+        Choose your SmartSuite Solution and the Table containing your data
+      </Step>
+      <Step title="Configure Output">
+        Set the document name field and attachment field
+      </Step>
+      <Step title="Map Placeholders">
+        Map template placeholders to your SmartSuite fields
+      </Step>
+      <Step title="Generate Preview">
+        Create a preview to verify the output
+      </Step>
+      <Step title="Set Up SmartSuite Automation">
+        Configure a SmartSuite automation with the DocsAutomator action
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Zapier">
+    <Steps>
+      <Step title="Create a Zap">
+        Start a new Zap and choose your trigger app and event
+      </Step>
+      <Step title="Add DocsAutomator Action">
+        Search for DocsAutomator and select "Create Document"
+      </Step>
+      <Step title="Connect Account">
+        Provide your API key and account email
+      </Step>
+      <Step title="Select Automation">
+        Choose the automation to use for document generation
+      </Step>
+      <Step title="Map Fields">
+        Map your trigger data to the template placeholders
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="n8n">
+    <Steps>
+      <Step title="Install Community Node">
+        Install the DocsAutomator node from the n8n community nodes panel
+      </Step>
+      <Step title="Add Credentials">
+        Configure your API key and account email in n8n credentials
+      </Step>
+      <Step title="Add DocsAutomator Node">
+        Add the node to your workflow and select "Create Document"
+      </Step>
+      <Step title="Configure Parameters">
+        Select your automation and map placeholder values
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Make">
+    <Steps>
+      <Step title="Create a Scenario">
+        Start a new scenario and add your trigger module
+      </Step>
+      <Step title="Add HTTP Module">
+        Add an HTTP "Make a request" module for the DocsAutomator API
+      </Step>
+      <Step title="Configure Request">
+        Set the API endpoint, authorization header, and request body
+      </Step>
+      <Step title="Map Data">
+        Map your trigger data to the template placeholders in the JSON body
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Softr">
+    <Steps>
+      <Step title="Add Integration">
+        Add DocsAutomator in your Softr app's integrations settings
+      </Step>
+      <Step title="Configure Credentials">
+        Provide your API key and account email
+      </Step>
+      <Step title="Create Workflow">
+        Create a Softr workflow with the DocsAutomator action
+      </Step>
+      <Step title="Map Fields">
+        Map your Softr data fields to template placeholders
+      </Step>
+      <Step title="Set Output">
+        Configure where the generated PDF will be stored
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="API">
+    <Steps>
+      <Step title="Get API Key">
+        Find your API key in the DocsAutomator dashboard settings
+      </Step>
+      <Step title="Send POST Request">
+        Send a POST request to the `/createDocument` endpoint with your automation ID and data
+      </Step>
+      <Step title="Handle Response">
+        Receive the PDF URL and optional Google Doc URL in the response
+      </Step>
+    </Steps>
+  </Tab>
 </Tabs>
 
 ## Need Help?
 
 <CardGroup cols={2}>
-  <Card title="Email Support" icon="envelope" href="mailto:hello@docsautomator.co">
-    Reach out at hello@docsautomator.co
+  <Card title="Email Support" icon="envelope" href="mailto:support@docsautomator.co">
+    Reach out at support@docsautomator.co
   </Card>
   <Card title="In-App Chat" icon="comments">
     Use the chat feature in your dashboard for quick assistance

@@ -1,0 +1,59 @@
+---
+title: "Error Notifications"
+description: "Receive email alerts when document generation fails"
+icon: "bell-exclamation"
+---
+
+Error notifications alert you by email when an automation fails to generate a document, so you can investigate and fix issues quickly.
+
+## Enabling Error Notifications
+
+<Steps>
+  <Step title="Open Workspace Settings">
+    Navigate to **Settings > Workspace > Notifications** in the DocsAutomator dashboard.
+  </Step>
+  <Step title="Toggle Error Notifications">
+    Switch the **Error Notifications** toggle to enable email alerts.
+  </Step>
+  <Step title="Add Email Recipients">
+    Your account email is always included as a recipient. Add additional email addresses to notify team members or monitoring systems:
+    1. Type an email address in the input field
+    2. Press Enter or click the **+** button to add it
+    3. Repeat for additional recipients
+  </Step>
+</Steps>
+
+## How It Works
+
+When error notifications are enabled:
+
+- If a document generation fails for any automation in your workspace, an email alert is sent to all configured recipients
+- The alert includes details about the failure to help you diagnose the issue
+- Your account email always receives notifications (cannot be removed)
+- Additional recipient emails can be added or removed at any time
+
+## Managing Recipients
+
+- **Add**: Type an email address and press Enter
+- **Remove**: Click the **x** next to any additional email address
+- **Disable all**: Toggle error notifications off to stop all alerts (this also clears additional recipients)
+
+<Note>
+Error notifications are workspace-wide. Enabling them covers all automations in the workspace, not just individual ones.
+</Note>
+
+## Common Error Scenarios
+
+Errors that trigger notifications include:
+
+| Error Type | Common Cause |
+|-----------|--------------|
+| Template not found | Google Doc template was deleted or permissions changed |
+| Data source error | Airtable/Google Sheets connection expired or record not found |
+| Rate limit exceeded | Too many document generation requests in a short period |
+| Google API error | Google Docs API temporarily unavailable or quota exceeded |
+| Authentication error | OAuth token expired and needs reconnection |
+
+<Tip>
+Check the [Run History](/features/run-history) for detailed error logs and timestamps for failed generations.
+</Tip>

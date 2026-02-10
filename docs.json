@@ -12,6 +12,54 @@
     "dark": "/logo/dark.svg"
   },
   "favicon": "/favicon.svg",
+  "background": {
+    "decoration": "gradient"
+  },
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Get Started Free",
+      "href": "https://app.docsautomator.co"
+    }
+  },
+  "banner": {
+    "content": "New: PDF Templates are here! Upload existing PDFs and overlay data fields. [Learn more →](/docsautomator-basics/pdf-template-guide)",
+    "dismissible": true
+  },
+  "appearance": {
+    "mode": "system"
+  },
+  "api": {
+    "playground": {
+      "display": "interactive",
+      "proxy": true
+    },
+    "auth": {
+      "method": "bearer",
+      "name": "Authorization"
+    }
+  },
+  "seo": {
+    "indexing": "all",
+    "metatags": {
+      "og:image": "https://docsautomator.co/og-image.png",
+      "og:site_name": "DocsAutomator Documentation",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@docsautomator"
+    }
+  },
+  "metadata": {
+    "timestamp": true
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "chatgpt",
+      "claude",
+      "cursor",
+      "vscode"
+    ]
+  },
   "navigation": {
     "languages": [
       {
@@ -24,8 +72,11 @@
                 "group": "DocsAutomator Basics",
                 "pages": [
                   "index",
+                  "docsautomator-basics/how-it-works",
                   "docsautomator-basics/quickstart-guide",
-                  "docsautomator-basics/google-doc-template-guide"
+                  "docsautomator-basics/google-doc-template-guide",
+                  "docsautomator-basics/pdf-template-guide",
+                  "docsautomator-basics/placeholder-syntax-reference"
                 ]
               },
               {
@@ -51,7 +102,8 @@
                   "features/docsautomator-esign",
                   "features/docsautomator-esign/compliance-and-legal-validity",
                   "features/docsautomator-esign/docsautomator-esign-api-reference",
-                  "features/docsautomator-esign/e-signing-tutorials-from-data-sources"
+                  "features/docsautomator-esign/e-signing-tutorials-from-data-sources",
+                  "features/docsautomator-esign/e-sign-date-format-options"
                 ]
               },
               {
@@ -86,6 +138,14 @@
                 ]
               },
               {
+                "group": "Use Cases",
+                "pages": [
+                  "use-cases/invoices-from-airtable",
+                  "use-cases/bulk-certificates-from-google-sheets",
+                  "use-cases/contracts-with-esign"
+                ]
+              },
+              {
                 "group": "More Features",
                 "pages": [
                   "features/dynamic-images",
@@ -93,6 +153,9 @@
                   "features/document-previews",
                   "features/run-history",
                   "features/pdf-expiration-storage",
+                  "features/ai-field-mapping",
+                  "features/folder-organization",
+                  "features/error-notifications",
                   "features/team-management",
                   "features/workspaces",
                   "features/transfer-automations"
@@ -101,6 +164,7 @@
               {
                 "group": "Resources",
                 "pages": [
+                  "more/faq",
                   "more/docsautomator-reviews",
                   "more/docsautomator-unlimited-fair-use-policy"
                 ]
@@ -112,18 +176,107 @@
                   "more/troubleshooting-guide/airtable-120-seconds-limit-on-automation-scripts",
                   "more/troubleshooting-guide/airtable-attachment-url-issue-when-sending-emails",
                   "more/troubleshooting-guide/data-source-is-set-as-airtable-and-no-record-id-is-given",
-                  "more/troubleshooting-guide/google-shared-drive-template-permissions"
+                  "more/troubleshooting-guide/google-shared-drive-template-permissions",
+                  "more/troubleshooting-guide/google-sheets-common-issues",
+                  "more/troubleshooting-guide/api-error-troubleshooting",
+                  "more/troubleshooting-guide/template-common-mistakes",
+                  "more/troubleshooting-guide/email-delivery-issues"
                 ]
               }
             ]
+          },
+          {
+            "tab": "API Reference",
+            "openapi": "openapi.json",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": ["api-reference/introduction"]
+              },
+              {
+                "group": "Documents",
+                "pages": [
+                  "POST /createDocument",
+                  "GET /job/{jobId}",
+                  "GET /queue/stats"
+                ]
+              },
+              {
+                "group": "Automations",
+                "pages": [
+                  "GET /automations",
+                  "GET /automation",
+                  "POST /createAutomation",
+                  "PUT /updateAutomation",
+                  "DELETE /deleteAutomation",
+                  "POST /duplicateAutomation"
+                ]
+              },
+              {
+                "group": "Templates",
+                "pages": [
+                  "GET /listPlaceholdersV2",
+                  "POST /duplicateGoogleDocTemplate"
+                ]
+              },
+              {
+                "group": "E-Signatures",
+                "pages": [
+                  "GET /esign/sessions",
+                  "GET /esign/sessions/{sessionId}",
+                  "GET /esign/sessions/{sessionId}/links",
+                  "GET /esign/sessions/{sessionId}/audit",
+                  "POST /esign/sessions/{sessionId}/cancel",
+                  "POST /esign/sessions/{sessionId}/resend/{signerIndex}"
+                ]
+              },
+              {
+                "group": "Email",
+                "pages": [
+                  "POST /sendTestEmail"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Changelog",
+            "pages": ["changelog"]
           }
         ]
       }
     ]
   },
-  "footerSocials": {
-    "twitter": "https://x.com/docsautomator",
-    "youtube": "https://youtube.com/@docsautomator"
+  "footer": {
+    "socials": {
+      "x": "https://x.com/docsautomator",
+      "youtube": "https://youtube.com/@docsautomator"
+    },
+    "links": [
+      {
+        "header": "Product",
+        "items": [
+          { "label": "Pricing", "href": "https://docsautomator.co/pricing" },
+          { "label": "Template Gallery", "href": "https://docsautomator.co/templates" },
+          { "label": "Changelog", "href": "/changelog" }
+        ]
+      },
+      {
+        "header": "Resources",
+        "items": [
+          { "label": "Documentation", "href": "/" },
+          { "label": "API Reference", "href": "/api-reference/introduction" },
+          { "label": "Video Tutorials", "href": "https://youtube.com/@docsautomator" }
+        ]
+      },
+      {
+        "header": "Company",
+        "items": [
+          { "label": "Website", "href": "https://docsautomator.co" },
+          { "label": "Book a Call", "href": "https://cal.com/docsautomator/20min" },
+          { "label": "Contact", "href": "mailto:support@docsautomator.co" }
+        ]
+      }
+    ]
   },
   "feedback": {
     "thumbsRating": true

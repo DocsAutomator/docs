@@ -7,10 +7,10 @@ icon: "wrench"
 The Troubleshooting Guide provides solutions for common problems encountered when setting up or using DocsAutomator.
 
 <Tip>
-Use your browser's search (Ctrl+F or Cmd+F) to find issues quickly.
+Use your browser's search (Ctrl+F or Cmd+F) to find issues quickly, or browse by category below.
 </Tip>
 
-## Common Issues
+## Airtable Issues
 
 <CardGroup cols={1}>
   <Card title="Airtable: 120 Seconds Limit" icon="clock" href="/more/troubleshooting-guide/airtable-120-seconds-limit-on-automation-scripts">
@@ -22,21 +22,57 @@ Use your browser's search (Ctrl+F or Cmd+F) to find issues quickly.
   <Card title="Airtable: No Record ID Given" icon="database" href="/more/troubleshooting-guide/data-source-is-set-as-airtable-and-no-record-id-is-given">
     Error when no valid record ID is passed while using Airtable as data source
   </Card>
+</CardGroup>
+
+## Google Sheets Issues
+
+<CardGroup cols={1}>
+  <Card title="Google Sheets: Common Issues" icon="table" href="/more/troubleshooting-guide/google-sheets-common-issues">
+    Polling not triggering, manual trigger queue issues, row number problems, formula fields
+  </Card>
+</CardGroup>
+
+## Template Issues
+
+<CardGroup cols={1}>
+  <Card title="Template: Common Mistakes" icon="file-circle-exclamation" href="/more/troubleshooting-guide/template-common-mistakes">
+    Mismatched brackets, hidden formatting, placeholder not replaced, line item syntax, special characters
+  </Card>
   <Card title="Google Shared Drive Permissions" icon="folder" href="/more/troubleshooting-guide/google-shared-drive-template-permissions">
     Template Check displays permission errors for Shared Drive templates
   </Card>
 </CardGroup>
 
+## API Issues
+
+<CardGroup cols={1}>
+  <Card title="API Error Troubleshooting" icon="code" href="/more/troubleshooting-guide/api-error-troubleshooting">
+    Diagnose and resolve 401, 402, 404, 429, and 500 errors from the DocsAutomator API
+  </Card>
+</CardGroup>
+
+## Email Issues
+
+<CardGroup cols={1}>
+  <Card title="Email Delivery Issues" icon="envelope-circle-exclamation" href="/more/troubleshooting-guide/email-delivery-issues">
+    Emails not sending, attachment problems, Gmail sender setup, test email rate limits
+  </Card>
+</CardGroup>
+
 ## Quick Reference
 
-| Issue | Data Source | Solution |
-|-------|-------------|----------|
+| Issue | Category | Solution |
+|-------|----------|----------|
 | 120 seconds limit | Airtable | Enable async mode |
 | Attachment URL disallowed | Airtable | Add wait mechanism |
 | No record ID given | Airtable | Configure recId variable |
-| Shared Drive permissions | All | Upgrade to Manager role |
-| Can't see all bases | Airtable | Reconnect account |
-| Webhook formula #Error | Google Sheets | Enable English formulas |
+| Polling not triggering | Google Sheets | Check automation status and Google connection |
+| Webhook formula #Error | Google Sheets | Enable English locale |
+| Placeholder not replaced | Template | Check for hidden formatting, retype placeholder |
+| Shared Drive permissions | Template | Upgrade to Manager role |
+| 401 Unauthorized | API | Reconnect Google account or check API key |
+| 429 Rate limited | API | Implement exponential backoff |
+| Emails not sending | Email | Check email settings and recipient field |
 
 ## Need More Help?
 
@@ -44,7 +80,7 @@ Use your browser's search (Ctrl+F or Cmd+F) to find issues quickly.
   <Card title="In-App Chat" icon="comments">
     Use the chat feature in your dashboard for quick support
   </Card>
-  <Card title="Email Support" icon="envelope" href="mailto:hello@docsautomator.co">
-    Contact hello@docsautomator.co (response within 24 hours)
+  <Card title="Email Support" icon="envelope" href="mailto:support@docsautomator.co">
+    Contact support@docsautomator.co (response within 24 hours)
   </Card>
 </CardGroup>

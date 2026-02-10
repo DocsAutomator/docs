@@ -1,0 +1,131 @@
+---
+title: "Email Delivery Issues"
+description: "Resolve problems with email delivery after document generation"
+icon: "envelope-circle-exclamation"
+---
+
+## Emails Not Being Sent
+
+### Problem
+
+You have email delivery configured on your automation, but emails are not being sent after document generation.
+
+### Causes & Solutions
+
+<Tabs>
+  <Tab title="Email not enabled">
+    Verify that email sending is turned on in your automation's output settings. Go to your automation page and check the **Send Email** section under output options.
+  </Tab>
+  <Tab title="Missing recipient">
+    The recipient email address field must contain a valid email address. If the field is empty or contains an invalid email, the email will not be sent.
+
+    Check that the email field in your data source has a value for the record being processed.
+  </Tab>
+  <Tab title="Condition not met">
+    If you have email conditions configured (e.g., only send when a certain field equals a value), verify the condition is being met for the record in question.
+  </Tab>
+  <Tab title="Document generation failed">
+    Emails are only sent when the document is successfully generated. Check the Run History tab to see if the document generation itself failed.
+  </Tab>
+</Tabs>
+
+## Gmail Sender Setup
+
+### Problem
+
+You want to send emails from your own Gmail address instead of the default DocsAutomator sender, but emails are still coming from DocsAutomator.
+
+### Solution
+
+<Steps>
+  <Step title="Connect Google account">
+    Go to **Settings > Integrations** and ensure your Google account is connected with Gmail permissions.
+  </Step>
+  <Step title="Configure email sender">
+    In your automation's email output settings, select **Gmail** as the sender instead of the default DocsAutomator option.
+  </Step>
+  <Step title="Select Gmail account">
+    Choose which connected Gmail account to send from. If you have multiple Google accounts connected, select the appropriate one.
+  </Step>
+  <Step title="Set sender name (optional)">
+    You can customize the "From" name that recipients see. If left blank, your Gmail account name will be used.
+  </Step>
+</Steps>
+
+<Info>
+Using Gmail as the sender means emails come from your own email address, which can improve deliverability and allow recipients to reply directly to you.
+</Info>
+
+## Attachment Issues
+
+### Problem
+
+The generated PDF is not attached to the email, or the attachment fails.
+
+### Common Causes
+
+- **PDF generation failed**: If the PDF could not be generated, there is nothing to attach. Check Run History for errors.
+- **File too large**: Very large PDFs (with many high-resolution images) may exceed email attachment limits. Optimize images in your template.
+- **Airtable attachment URLs**: If you're forwarding Airtable attachment URLs in emails, these temporary URLs may have expired by the time the email is sent. See the [Airtable Attachment URL Issue](/more/troubleshooting-guide/airtable-attachment-url-issue-when-sending-emails) guide.
+
+## Test Email Rate Limit
+
+### Problem
+
+You receive an error when trying to send a test email, with a message indicating you've exceeded the rate limit.
+
+### Details
+
+Test emails are rate-limited to **25 per hour per automation**. This limit applies to the `POST /sendTestEmail` endpoint and the "Send Test Email" button in the app.
+
+### Solution
+
+- Wait for the rate limit window to reset (1 hour from your first test email)
+- Use the document preview feature to verify your template before sending test emails
+- Test with actual document generation on a single record instead of the test email function
+
+<Warning>
+The 25-per-hour limit is per automation. Each automation has its own separate quota.
+</Warning>
+
+## Emails Going to Spam
+
+### Problem
+
+Emails sent by DocsAutomator are landing in recipients' spam folders.
+
+### Solutions
+
+- **Use Gmail sender**: Emails from your own Gmail address are less likely to be flagged as spam than emails from the default DocsAutomator sender
+- **Avoid spam trigger words**: Review your email subject and body for common spam trigger words
+- **Ask recipients to whitelist**: Have recipients add the sender address to their contacts or safe sender list
+- **Check email content**: Excessively large attachments, many links, or all-caps subject lines can trigger spam filters
+
+## Email Customization
+
+### Available Options
+
+DocsAutomator supports customizing the following email fields:
+
+| Field | Description |
+|-------|-------------|
+| Subject | Email subject line (supports placeholders) |
+| Body | Email body content (supports placeholders) |
+| Sender | DocsAutomator default or your Gmail account |
+| Sender name | Custom "From" name (Gmail only) |
+| Button color | CTA button color in the email template |
+
+<Tip>
+You can use placeholders in both the email subject and body. For example, use `{{customer_name}}` in the subject line to personalize each email.
+</Tip>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Send Email" icon="envelope" href="/features/actions-after-document-generation/send-email">
+    Complete email configuration guide
+  </Card>
+  <Card title="Run History" icon="clock-rotate-left" href="/features/run-history">
+    Monitor email delivery status
+  </Card>
+</CardGroup>

@@ -1,0 +1,196 @@
+---
+title: "Generate Invoices from Airtable"
+description: "End-to-end walkthrough for automating invoice generation from Airtable records"
+icon: "file-invoice-dollar"
+---
+
+Generate professional invoices from Airtable records with line items, automatic PDF delivery, and email distribution.
+
+## What You'll Build
+
+By the end of this guide, you will have an automation that:
+
+- Generates a branded PDF invoice from an Airtable record
+- Includes line items pulled from a linked table
+- Saves the PDF back to your Airtable record
+- Optionally emails the invoice to your client
+
+## Prerequisites
+
+- A DocsAutomator account ([sign up here](https://app.docsautomator.co))
+- An Airtable account with a base containing your invoice data
+- A Google account for creating the template
+
+## Step-by-Step Setup
+
+<Steps>
+  <Step title="Create the Google Doc Template">
+    Create a new Google Doc that will serve as your invoice template. Add placeholders using the `{{placeholder}}` syntax for fields that will be filled dynamically.
+
+    **Example template placeholders:**
+
+    | Section | Placeholder | Purpose |
+    |---------|-------------|---------|
+    | Header | `{{company_name}}` | Your company name |
+    | Header | `{{image_company_logo}}` | Company logo |
+    | Invoice details | `{{invoice_number}}` | Unique invoice ID |
+    | Invoice details | `{{invoice_date}}` | Date of invoice |
+    | Invoice details | `{{due_date}}` | Payment due date |
+    | Client info | `{{client_name}}` | Client's name |
+    | Client info | `{{client_email}}` | Client's email |
+    | Client info | `{{client_address}}` | Client's address |
+    | Totals | `{{subtotal}}` | Sum before tax |
+    | Totals | `{{tax}}` | Tax amount |
+    | Totals | `{{total}}` | Final amount due |
+
+    **Line items table:**
+
+    Add a table row with line item placeholders:
+
+    ```
+    {{line_items_1}}{{description}}  {{quantity}}  {{unit_price}}  {{amount}}
+    ```
+
+    <Tip>
+    Browse the [Template Gallery](https://docsautomator.co/templates/) for pre-built invoice templates you can use as a starting point.
+    </Tip>
+  </Step>
+
+  <Step title="Prepare Your Airtable Base">
+    Structure your Airtable base with two tables:
+
+    **Invoices table (primary):**
+    - Invoice Number (formula using `RECORD_ID()` or custom numbering)
+    - Client Name (single line text or linked record)
+    - Client Email (email field)
+    - Client Address (long text)
+    - Invoice Date (date)
+    - Due Date (date)
+    - Subtotal, Tax, Total (formula/currency fields)
+    - PDF (attachment field for generated documents)
+    - Document Name (formula: e.g., `"Invoice-" & {Invoice Number}`)
+
+    **Line Items table (linked):**
+    - Description (single line text)
+    - Quantity (number)
+    - Unit Price (currency)
+    - Amount (formula: `{Quantity} * {Unit Price}`)
+    - Invoice (linked record to Invoices table)
+  </Step>
+
+  <Step title="Create the Automation in DocsAutomator">
+    1. Click **+ New Automation** in your DocsAutomator dashboard
+    2. Give it a name like "Client Invoices"
+    3. Select **Airtable** as the data source
+    4. Connect your Airtable account if not already connected
+  </Step>
+
+  <Step title="Configure the Template">
+    Select your Google Doc invoice template, or choose one from the Template Gallery. DocsAutomator will scan the template and detect all placeholders automatically.
+  </Step>
+
+  <Step title="Select Base, Table, and Configure Output">
+    1. Choose your Airtable **Base** and **Invoices** table as the primary table
+    2. Set the **Document Name** field (e.g., your "Document Name" formula field)
+    3. Set the **Attachment field** to your "PDF" field where generated invoices will be saved
+    4. Enable **Overwrite attachment** if you want regeneration to replace existing PDFs
+  </Step>
+
+  <Step title="Map Fields and Line Items">
+    **Primary field mapping:**
+
+    Map each template placeholder to its corresponding Airtable field. For example:
+    - `{{invoice_number}}` to the Invoice Number field
+    - `{{client_name}}` to the Client Name field
+    - `{{total}}` to the Total field
+
+    <Info>
+    Use the **AI Field Mapping** button to automatically suggest mappings based on placeholder and field names.
+    </Info>
+
+    **Line item mapping:**
+
+    1. Select the linked field connecting to your Line Items table
+    2. Choose the view that determines sort order
+    3. Map line item placeholders to columns:
+       - `description` to Description
+       - `quantity` to Quantity
+       - `unit_price` to Unit Price
+       - `amount` to Amount
+  </Step>
+
+  <Step title="Generate a Preview">
+    Select an existing Airtable record and click **Preview** to generate a sample invoice. Verify that:
+    - All placeholders are replaced correctly
+    - Line items appear in the table
+    - Formatting looks correct (currency, dates, etc.)
+  </Step>
+
+  <Step title="Configure Output Actions">
+    Set up post-generation actions:
+
+    - **Save PDF to Airtable**: Already configured via the attachment field
+    - **Send Email** (optional): Enable email sending, set the recipient to `{{client_email}}`, customize the subject line (e.g., `Invoice #{{invoice_number}} from {{company_name}}`), and write your email body with placeholders
+    - **Save to Google Drive** (optional): Choose a Drive folder for archival
+
+    <Tip>
+    Use [conditional email sending](/features/actions-after-document-generation/send-email#conditional-email-sending) to only email invoices when a specific field (e.g., "Status") equals "Approved".
+    </Tip>
+  </Step>
+
+  <Step title="Set Up the Trigger">
+    Choose how invoices are generated:
+
+    <Tabs>
+      <Tab title="Button Field (Free Plan)">
+        Copy the webhook URL from DocsAutomator and paste it into a Button field in your Invoices table. Clicking the button generates the invoice instantly.
+      </Tab>
+      <Tab title="Automation Script (Paid Plan)">
+        Copy the automation script from DocsAutomator and paste it into an Airtable Automation. Set the trigger to "When record matches conditions" (e.g., Status = "Ready to Send").
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Example Template Layout
+
+Here is a simplified view of how your invoice template might look:
+
+```
+{{company_name}}
+{{image_company_logo}}
+
+INVOICE
+Invoice #: {{invoice_number}}
+Date: {{invoice_date}}
+Due: {{due_date}}
+
+Bill To:
+{{client_name}}
+{{client_address}}
+
+| Description | Qty | Unit Price | Amount |
+|-------------|-----|------------|--------|
+| {{line_items_1}}{{description}} | {{quantity}} | {{unit_price}} | {{amount}} |
+
+Subtotal: {{subtotal}}
+Tax: {{tax}}
+Total: {{total}}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Nested Line Items" icon="layer-group" href="/features/line-items/nested-line-items">
+    Add sub-items within line items for detailed breakdowns
+  </Card>
+  <Card title="Grouping + Calculations" icon="calculator" href="/features/line-items/line-items-grouping-+-calculations">
+    Group line items by category with subtotals
+  </Card>
+  <Card title="Conditional Content" icon="code-branch" href="/features/advanced-placeholder-options/conditional-show-hide">
+    Show or hide sections based on data values
+  </Card>
+  <Card title="E-Signatures" icon="signature" href="/features/docsautomator-esign">
+    Add signature fields for client approval
+  </Card>
+</CardGroup>

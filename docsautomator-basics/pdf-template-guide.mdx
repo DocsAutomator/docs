@@ -41,13 +41,25 @@ Looking for Google Doc templates instead? See the [Google Doc Template Guide](/d
     Navigate to the automation where you want to use a PDF template.
   </Step>
   <Step title="Select PDF template">
-    In the Template section, choose the PDF template option.
+    In the Template section, choose **Existing PDF** as the template type.
+
+    <Frame caption="Choose between Google Doc and Existing PDF template types">
+      <img src="/images/pdf-template/template-type-selection.png" alt="Template type selection showing Google Docs and Existing PDF options" />
+    </Frame>
   </Step>
   <Step title="Upload your PDF">
     Click the upload area or drag and drop your PDF file. The file must be under 10MB.
+
+    <Frame caption="Click to upload or drag and drop your PDF file">
+      <img src="/images/pdf-template/upload-area.png" alt="PDF upload area" />
+    </Frame>
   </Step>
-  <Step title="Review detected fields">
-    If your PDF contains AcroForm fields (interactive form fields), DocsAutomator automatically detects them and creates placeholders at the correct positions. You will see a notification showing how many fields were detected.
+  <Step title="Review your uploaded PDF">
+    Once uploaded, you will see a summary of your PDF including the filename, page count, and number of detected placeholders.
+
+    <Frame caption="Uploaded PDF showing file details and placeholder count">
+      <img src="/images/pdf-template/uploaded-pdf.png" alt="Uploaded PDF file summary showing 401k Enrollment Form with 3 pages and 31 placeholders" />
+    </Frame>
   </Step>
 </Steps>
 
@@ -77,6 +89,10 @@ After uploading a PDF, click the edit button to open the full-screen placeholder
 - **Center** -- The PDF viewer with draggable placeholder overlays
 - **Right sidebar** -- Properties panel for the selected placeholder
 
+<Frame caption="The visual editor with left sidebar, PDF viewer, and properties panel">
+  <img src="/images/pdf-template/visual-editor-overview.png" alt="Visual placeholder editor showing the PDF with field types in the left sidebar" />
+</Frame>
+
 ### Adding Placeholders
 
 You can add placeholders in two ways:
@@ -92,12 +108,20 @@ Available field types:
 | Image | Replaced with an image (auto-scaled to fit bounds) |
 | Checkbox | Shows a checkmark when the value is truthy |
 
+<Frame caption="Left sidebar showing available field types and e-sign field types">
+  <img src="/images/pdf-template/field-types-sidebar.png" alt="Add Field section with Text, Image, Checkbox and Add E-Sign Field section with Signature, Date, Text, Checkbox" />
+</Frame>
+
 ### Positioning and Resizing
 
 - **Drag** a placeholder to move it to the desired position on the page
 - **Resize** by dragging the handle in the bottom-right corner of a selected placeholder
 - **Nudge** with arrow keys for fine adjustments (1 point per press, hold Shift for 10 points)
 - **Set exact values** in the Properties panel on the right (X, Y, Width, Height)
+
+<Frame caption="Multiple data fields positioned on a PDF form">
+  <img src="/images/pdf-template/fields-placed-on-pdf.png" alt="Visual editor showing multiple text fields placed on a PDF enrollment form" />
+</Frame>
 
 ### Multi-Page Support
 
@@ -132,6 +156,10 @@ Use the **+** and **-** buttons in the toolbar to zoom in and out (50% to 200%).
 
 Select a placeholder to configure its properties in the right panel.
 
+<Frame caption="Properties panel showing field name, sample data, position, size, and font settings">
+  <img src="/images/pdf-template/field-properties-panel.png" alt="Right sidebar properties panel with field configuration options" />
+</Frame>
+
 ### Common Properties (All Types)
 
 | Property | Description |
@@ -160,6 +188,10 @@ Select a placeholder to configure its properties in the right panel.
 | **Expand vertically** | Text wraps at box width and grows downward for multiple lines |
 | **Shrink to fit** | Automatically reduces font size until text fits within the box |
 | **Truncate** | Clips text at box width and adds an ellipsis (...) |
+
+<Frame caption="Text Overflow dropdown options">
+  <img src="/images/pdf-template/text-overflow-options.png" alt="Text Overflow dropdown showing Expand horizontally, Expand vertically, Shrink to fit, and Truncate options" />
+</Frame>
 
 ### Image Properties
 
@@ -206,15 +238,15 @@ At least one **Signature** field is required for e-signing to work. The editor d
 PDF templates work with all DocsAutomator data sources:
 
 <CardGroup cols={3}>
-  <Card title="Airtable" icon="table" href="/data-sources/airtable" />
-  <Card title="Google Sheets" icon="table" href="/data-sources/google-sheets" />
-  <Card title="SmartSuite" icon="table" href="/data-sources/smartsuite" />
-  <Card title="ClickUp" icon="list-check" href="/data-sources/clickup" />
-  <Card title="API" icon="code" href="/data-sources/api" />
-  <Card title="Zapier" icon="bolt" href="/data-sources/zapier" />
-  <Card title="Glide" icon="mobile" href="/data-sources/glide" />
-  <Card title="n8n" icon="diagram-project" href="/data-sources/n8n" />
-  <Card title="Make" icon="gear" href="/data-sources/make" />
+  <Card title="Airtable" icon="/icons/airtable.png" href="/integrations-api/airtable" />
+  <Card title="Google Sheets" icon="/icons/google-sheets.png" href="/integrations-api/google-sheets" />
+  <Card title="SmartSuite" icon="/icons/smartsuite.png" href="/integrations-api/smartsuite" />
+  <Card title="ClickUp" icon="/icons/clickup.png" href="/integrations-api/clickup" />
+  <Card title="API" icon="/icons/api.png" href="/integrations-api/docsautomator-api" />
+  <Card title="Zapier" icon="/icons/zapier.svg" href="/integrations-api/zapier" />
+  <Card title="Glide" icon="/icons/glide.png" href="/integrations-api/glide" />
+  <Card title="n8n" icon="/icons/n8n.svg" href="/integrations-api/n8n" />
+  <Card title="Make" icon="/icons/make.svg" href="/integrations-api/make" />
 </CardGroup>
 
 The placeholder **Name** field is what maps to your data source fields. For example, if your Airtable table has a "Company Name" field, set the placeholder name to match the field name configured in your automation's field mapping.

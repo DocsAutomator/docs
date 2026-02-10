@@ -283,5 +283,14 @@
   },
   "search": {
     "prompt": "Search DocsAutomator docs..."
-  }
+  },
+  "redirects": [
+    { "source": "/docsautomator-basics/google-doc-template-guide/google-doc-template-guide", "destination": "/docsautomator-basics/google-doc-template-guide" },
+    { "source": "/docsautomator-basics/quickstart-guide/quickstart-guide", "destination": "/docsautomator-basics/quickstart-guide" },
+    { "source": "/features/line-items/line-items", "destination": "/features/line-items" },
+    { "source": "/features/docsautomator-esign/docsautomator-esign", "destination": "/features/docsautomator-esign" },
+    { "source": "/features/advanced-placeholder-options/advanced-placeholder-options", "destination": "/features/advanced-placeholder-options" },
+    { "source": "/features/actions-after-document-generation/actions-after-document-generation", "destination": "/features/actions-after-document-generation" },
+    { "source": "/more/troubleshooting-guide/troubleshooting-guide", "destination": "/more/troubleshooting-guide" }
+  ]
 }

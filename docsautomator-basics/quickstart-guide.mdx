@@ -15,7 +15,7 @@ Need personal assistance? [Schedule a call](https://cal.com/docsautomator/20min)
 
 After logging in, you'll see the initial dashboard. Click the **"+ New Automation"** button to begin setting up document generation.
 
-<Frame>
+<Frame caption="Click '+ New Automation' to get started">
   <img src="/images/quickstart/dashboard.png" alt="DocsAutomator dashboard with New Automation button" />
 </Frame>
 
@@ -27,20 +27,20 @@ An automation combines your data source (Airtable, Google Sheets, etc.) with a t
 
 Select your data source from the available integrations:
 
-<Frame>
+<Frame caption="Select your data source from the available integrations">
   <img src="/images/quickstart/choose-data-source.png" alt="Data source selection showing available integrations" />
 </Frame>
 
 <CardGroup cols={3}>
-  <Card title="Airtable" icon="database" href="/integrations-api/airtable" />
-  <Card title="Google Sheets" icon="table" href="/integrations-api/google-sheets" />
-  <Card title="SmartSuite" icon="grid" href="/integrations-api/smartsuite" />
-  <Card title="Glide" icon="mobile" href="/integrations-api/glide" />
-  <Card title="Noloco" icon="laptop" href="/integrations-api/noloco" />
-  <Card title="ClickUp" icon="check" href="/integrations-api/clickup" />
-  <Card title="Zapier" icon="bolt" href="/integrations-api/zapier" />
-  <Card title="n8n" icon="sitemap" href="/integrations-api/n8n" />
-  <Card title="API" icon="code" href="/integrations-api/docsautomator-api" />
+  <Card title="Airtable" icon="/icons/airtable.png" href="/integrations-api/airtable" />
+  <Card title="Google Sheets" icon="/icons/google-sheets.png" href="/integrations-api/google-sheets" />
+  <Card title="SmartSuite" icon="/icons/smartsuite.png" href="/integrations-api/smartsuite" />
+  <Card title="Glide" icon="/icons/glide.png" href="/integrations-api/glide" />
+  <Card title="Noloco" icon="/icons/noloco.png" href="/integrations-api/noloco" />
+  <Card title="ClickUp" icon="/icons/clickup.png" href="/integrations-api/clickup" />
+  <Card title="Zapier" icon="/icons/zapier.svg" href="/integrations-api/zapier" />
+  <Card title="n8n" icon="/icons/n8n.svg" href="/integrations-api/n8n" />
+  <Card title="API" icon="/icons/api.png" href="/integrations-api/docsautomator-api" />
 </CardGroup>
 
 Depending on your selection, you may need to connect your account.
@@ -49,12 +49,16 @@ Depending on your selection, you may need to connect your account.
 
 DocsAutomator supports two template types:
 
+<Frame caption="Choose between a Google Doc template or an existing PDF">
+  <img src="/images/quickstart/template-type-selection.png" alt="Template type selection showing Google Docs and Existing PDF options" />
+</Frame>
+
 <Tabs>
   <Tab title="Google Doc Template">
     Create a Google Doc with placeholder syntax (`{{field_name}}`). Best for text-heavy documents like invoices, contracts, and reports.
 
-    <Frame>
-      <img src="/images/quickstart/choose-template.png" alt="Template selection options" />
+    <Frame caption="Three ways to set up a Google Doc template">
+      <img src="/images/quickstart/choose-template.png" alt="Template selection options: import existing, start from scratch, or choose from gallery" />
     </Frame>
 
     <AccordionGroup>
@@ -83,17 +87,17 @@ DocsAutomator supports two template types:
 
 Select your base and table, then map your template placeholders to your data source fields.
 
-<Frame>
+<Frame caption="Select your Airtable base and table">
   <img src="/images/quickstart/airtable-setup.png" alt="Airtable base and table selection with field mapping" />
 </Frame>
 
-<Frame>
+<Frame caption="Map template placeholders to your data source fields">
   <img src="/images/quickstart/field-mapping.png" alt="Mapping template placeholders to data source fields" />
 </Frame>
 
 Once mapping is complete, generate a preview to verify your document looks correct.
 
-<Frame>
+<Frame caption="Generate a preview to verify your document looks correct">
   <img src="/images/quickstart/preview.png" alt="Completed automation setup with PDF preview" />
 </Frame>
 
@@ -101,13 +105,17 @@ Once mapping is complete, generate a preview to verify your document looks corre
 
 Set up what happens after a document is generated — save PDFs, send emails, merge documents, collect e-signatures, and more.
 
-<Frame>
+<Frame caption="Configure what happens after each document is generated">
   <img src="/images/quickstart/output-settings.png" alt="Actions after document generation settings" />
 </Frame>
 
 <Info>
 Want to collect signatures? Enable e-signatures in your automation's output settings. See the [eSign guide](/features/docsautomator-esign) for setup instructions.
 </Info>
+
+<Frame caption="E-signature settings with signer configuration and signing link delivery options">
+  <img src="/images/quickstart/esign-settings.png" alt="E-Signatures output settings showing signer email, signing link delivery, and link expiration options" />
+</Frame>
 
 The configuration process differs by integration:
 

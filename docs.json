@@ -66,7 +66,7 @@
             "tab": "Documentation",
             "groups": [
               {
-                "group": "DocsAutomator Basics",
+                "group": "Getting Started",
                 "pages": [
                   "index",
                   "docsautomator-basics/how-it-works",
@@ -77,74 +77,70 @@
                 ]
               },
               {
-                "group": "Integrations / API",
+                "group": "Integrations",
                 "pages": [
                   "integrations-api/airtable",
                   "integrations-api/google-sheets",
                   "integrations-api/smartsuite",
+                  "integrations-api/clickup",
                   "integrations-api/glide",
                   "integrations-api/noloco",
-                  "integrations-api/clickup",
+                  "integrations-api/softr",
                   "integrations-api/zapier",
                   "integrations-api/n8n",
-                  "integrations-api/softr",
                   "integrations-api/make",
                   "integrations-api/docsautomator-api",
                   "integrations-api/docsautomator-mcp"
                 ]
               },
               {
-                "group": "DocsAutomator eSign",
+                "group": "Features",
                 "pages": [
-                  "features/docsautomator-esign",
-                  "features/docsautomator-esign/compliance-and-legal-validity",
-                  "features/docsautomator-esign/docsautomator-esign-api-reference",
-                  "features/docsautomator-esign/e-signing-tutorials-from-data-sources",
-                  "features/docsautomator-esign/e-sign-date-format-options"
-                ]
-              },
-              {
-                "group": "Line Items",
-                "pages": [
-                  "features/line-items",
-                  "features/line-items/nested-line-items",
-                  "features/line-items/line-items-grouping-+-calculations",
-                  "features/line-items/auto-row-numbers"
-                ]
-              },
-              {
-                "group": "Advanced Placeholder Options",
-                "pages": [
-                  "features/advanced-placeholder-options",
-                  "features/advanced-placeholder-options/conditional-paragraph-row-deletion",
-                  "features/advanced-placeholder-options/enable-markdown-formatting",
-                  "features/advanced-placeholder-options/hidden-values",
-                  "features/advanced-placeholder-options/conditional-show-hide",
-                  "features/advanced-placeholder-options/conditional-styling"
-                ]
-              },
-              {
-                "group": "Actions After Document Generation",
-                "pages": [
-                  "features/actions-after-document-generation",
-                  "features/actions-after-document-generation/saving-google-docs",
-                  "features/actions-after-document-generation/save-pdfs-in-google-drive",
-                  "features/actions-after-document-generation/send-email",
-                  "features/actions-after-document-generation/merge-existing-pdfs",
-                  "features/actions-after-document-generation/notify-webhook"
-                ]
-              },
-              {
-                "group": "Use Cases",
-                "pages": [
-                  "use-cases/invoices-from-airtable",
-                  "use-cases/bulk-certificates-from-google-sheets",
-                  "use-cases/contracts-with-esign"
-                ]
-              },
-              {
-                "group": "More Features",
-                "pages": [
+                  {
+                    "group": "DocsAutomator eSign",
+                    "icon": "signature",
+                    "pages": [
+                      "features/docsautomator-esign",
+                      "features/docsautomator-esign/compliance-and-legal-validity",
+                      "features/docsautomator-esign/docsautomator-esign-api-reference",
+                      "features/docsautomator-esign/e-signing-tutorials-from-data-sources",
+                      "features/docsautomator-esign/e-sign-date-format-options"
+                    ]
+                  },
+                  {
+                    "group": "Line Items",
+                    "icon": "list",
+                    "pages": [
+                      "features/line-items",
+                      "features/line-items/nested-line-items",
+                      "features/line-items/line-items-grouping-+-calculations",
+                      "features/line-items/auto-row-numbers"
+                    ]
+                  },
+                  {
+                    "group": "Advanced Placeholder Options",
+                    "icon": "sliders",
+                    "pages": [
+                      "features/advanced-placeholder-options",
+                      "features/advanced-placeholder-options/conditional-paragraph-row-deletion",
+                      "features/advanced-placeholder-options/enable-markdown-formatting",
+                      "features/advanced-placeholder-options/hidden-values",
+                      "features/advanced-placeholder-options/conditional-show-hide",
+                      "features/advanced-placeholder-options/conditional-styling"
+                    ]
+                  },
+                  {
+                    "group": "Actions After Document Generation",
+                    "icon": "wand-magic-sparkles",
+                    "pages": [
+                      "features/actions-after-document-generation",
+                      "features/actions-after-document-generation/saving-google-docs",
+                      "features/actions-after-document-generation/save-pdfs-in-google-drive",
+                      "features/actions-after-document-generation/send-email",
+                      "features/actions-after-document-generation/merge-existing-pdfs",
+                      "features/actions-after-document-generation/notify-webhook"
+                    ]
+                  },
                   "features/dynamic-images",
                   "features/sections",
                   "features/document-previews",
@@ -159,25 +155,34 @@
                 ]
               },
               {
+                "group": "Use Cases",
+                "pages": [
+                  "use-cases/invoices-from-airtable",
+                  "use-cases/bulk-certificates-from-google-sheets",
+                  "use-cases/contracts-with-esign"
+                ]
+              },
+              {
                 "group": "Resources",
                 "pages": [
                   "more/faq",
                   "more/docsautomator-reviews",
-                  "more/docsautomator-unlimited-fair-use-policy"
-                ]
-              },
-              {
-                "group": "Troubleshooting Guide",
-                "pages": [
-                  "more/troubleshooting-guide",
-                  "more/troubleshooting-guide/airtable-120-seconds-limit-on-automation-scripts",
-                  "more/troubleshooting-guide/airtable-attachment-url-issue-when-sending-emails",
-                  "more/troubleshooting-guide/data-source-is-set-as-airtable-and-no-record-id-is-given",
-                  "more/troubleshooting-guide/google-shared-drive-template-permissions",
-                  "more/troubleshooting-guide/google-sheets-common-issues",
-                  "more/troubleshooting-guide/api-error-troubleshooting",
-                  "more/troubleshooting-guide/template-common-mistakes",
-                  "more/troubleshooting-guide/email-delivery-issues"
+                  "more/docsautomator-unlimited-fair-use-policy",
+                  {
+                    "group": "Troubleshooting",
+                    "icon": "wrench",
+                    "pages": [
+                      "more/troubleshooting-guide",
+                      "more/troubleshooting-guide/airtable-120-seconds-limit-on-automation-scripts",
+                      "more/troubleshooting-guide/airtable-attachment-url-issue-when-sending-emails",
+                      "more/troubleshooting-guide/data-source-is-set-as-airtable-and-no-record-id-is-given",
+                      "more/troubleshooting-guide/google-shared-drive-template-permissions",
+                      "more/troubleshooting-guide/google-sheets-common-issues",
+                      "more/troubleshooting-guide/api-error-troubleshooting",
+                      "more/troubleshooting-guide/template-common-mistakes",
+                      "more/troubleshooting-guide/email-delivery-issues"
+                    ]
+                  }
                 ]
               }
             ]

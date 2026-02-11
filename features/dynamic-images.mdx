@@ -39,7 +39,11 @@ The system optimizes images before insertion:
 
 ### Supported Formats
 
-JPG, PNG, GIF, BMP, TIFF, ICO, PDF, EPS, PSD, SVG, WebP, JXR, WDP
+JPG, PNG, GIF, BMP, TIFF, ICO, PDF (first page), EPS, AI, PSD, SVG, WebP, AVIF, HEIF, JXR, WDP
+
+<Note>
+If a placeholder value contains non-image content (such as HTML, plain text, or an unsupported file type), it will be silently skipped and the placeholder will be removed from the document. This ensures that invalid data in image fields never causes the entire document generation to fail.
+</Note>
 
 ### Image Quality Settings
 
@@ -115,8 +119,8 @@ To insert multiple images for a single placeholder, pass them as an array or com
 ## Best Practices
 
 <AccordionGroup>
-  <Accordion title="Use publicly accessible URLs" icon="globe">
-    Images must be accessible via public URL. Private or authenticated URLs will fail.
+  <Accordion title="Use publicly accessible image URLs" icon="globe">
+    Image placeholders expect valid, publicly accessible image URLs. If a value is not a valid image (e.g. HTML, plain text, or a broken link), the image will be skipped and the placeholder removed from the document.
   </Accordion>
   <Accordion title="Optimize source images" icon="compress">
     While DocsAutomator compresses images, starting with reasonably sized images improves processing speed.

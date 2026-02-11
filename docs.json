@@ -61,10 +61,7 @@
     ]
   },
   "navigation": {
-    "languages": [
-      {
-        "language": "en",
-        "tabs": [
+    "tabs": [
           {
             "tab": "Documentation",
             "groups": [
@@ -242,8 +239,6 @@
             "tab": "Changelog",
             "pages": ["changelog"]
           }
-        ]
-      }
     ]
   },
   "footer": {

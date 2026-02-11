@@ -11,6 +11,29 @@ This guide explains how to create templates in Google Docs for DocsAutomator, co
 This guide covers Google Doc templates. For PDF templates with visual placeholder positioning, see the [PDF Template Guide](/docsautomator-basics/pdf-template-guide).
 </Info>
 
+## Converting Word Templates
+
+If you have an existing Word template (`.docx`), you can upload it directly and DocsAutomator will convert it to a Google Doc automatically.
+
+<Steps>
+  <Step title="Select Convert Word Template">
+    In the Template / Document Design step, choose **Convert Word template (.docx)** as your template type.
+  </Step>
+  <Step title="Upload your file">
+    Click **Upload .docx File** and select your Word document. The file must be a `.docx` file under 10MB.
+  </Step>
+  <Step title="Conversion">
+    DocsAutomator uploads the file to Google Drive and converts it to a Google Doc. The converted template is placed in your team folder (if configured) or the DocsAutomator Demo folder.
+  </Step>
+  <Step title="Review and add placeholders">
+    Open the converted template to review the formatting and add DocsAutomator placeholders using the `{{placeholder}}` syntax described below.
+  </Step>
+</Steps>
+
+<Warning>
+Complex Word formatting (custom fonts, advanced layouts, macros) may not convert perfectly. Review the converted Google Doc and adjust formatting as needed.
+</Warning>
+
 <Frame caption="A Google Doc invoice template with placeholders">
   <img src="/images/google-doc-template/invoice-template-with-placeholders.png" alt="Google Doc invoice template showing placeholders like {{client_name}}, {{line_items_1}}{{service_name}}, and summary fields" />
 </Frame>

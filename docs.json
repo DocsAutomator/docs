@@ -23,7 +23,7 @@
     }
   },
   "banner": {
-    "content": "New: PDF Templates are here! Upload existing PDFs and overlay data fields. [Learn more →](/docsautomator-basics/pdf-template-guide)",
+    "content": "New: PDF Templates are here! Upload existing PDFs and overlay data fields. [Learn more →](/docs/docsautomator-basics/pdf-template-guide)",
     "dismissible": true
   },
   "appearance": {

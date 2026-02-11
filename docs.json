@@ -252,14 +252,14 @@
         "items": [
           { "label": "Pricing", "href": "https://docsautomator.co/pricing" },
           { "label": "Template Gallery", "href": "https://docsautomator.co/templates" },
-          { "label": "Changelog", "href": "/changelog" }
+          { "label": "Changelog", "href": "/docs/changelog" }
         ]
       },
       {
         "header": "Resources",
         "items": [
-          { "label": "Documentation", "href": "/" },
-          { "label": "API Reference", "href": "/api-reference/introduction" },
+          { "label": "Documentation", "href": "/docs" },
+          { "label": "API Reference", "href": "/docs/api-reference/introduction" },
           { "label": "Video Tutorials", "href": "https://youtube.com/@docsautomator" }
         ]
       },

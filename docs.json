@@ -278,6 +278,11 @@
       }
     ]
   },
+  "integrations": {
+    "posthog": {
+      "apiKey": "phc_yPsDdVmPczJK4ypcWm1RiPWfri6c2eSTgCiaQP95X3X"
+    }
+  },
   "feedback": {
     "thumbsRating": true
   },

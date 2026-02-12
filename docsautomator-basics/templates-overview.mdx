@@ -1,0 +1,67 @@
+---
+title: 'Templates Overview'
+description: 'Choose the right template type for your document automation — Google Docs, PDF, or Word conversion'
+icon: 'files'
+keywords:
+  [
+    'template',
+    'Google Doc template',
+    'PDF template',
+    'Word template',
+    'docx',
+    'template type',
+    'choose template',
+  ]
+---
+
+DocsAutomator supports multiple template types so you can pick the best fit for your documents.
+
+## Template Types
+
+<CardGroup cols={3}>
+  <Card
+    title="Google Doc"
+    icon="file-lines"
+    href="/docsautomator-basics/google-doc-template-guide"
+  >
+    Create templates directly in Google Docs using `{{ placeholder }}` syntax.
+    Best for dynamic content with variable-length sections, line items, and
+    conditional content.
+  </Card>
+  <Card
+    title="PDF"
+    icon="file-pdf"
+    href="/docsautomator-basics/pdf-template-guide"
+  >
+    Upload an existing PDF and use the visual editor to position data fields on
+    top. Best for fixed-layout documents like tax forms, branded designs, or
+    government docs.
+  </Card>
+  <Card
+    title="Word to Google Doc"
+    icon="file-word"
+    href="/docsautomator-basics/google-doc-template-guide#converting-word-templates"
+  >
+    Upload a `.docx` file and DocsAutomator converts it to a Google Doc
+    automatically. Best when you have existing Word templates you want to reuse.
+    Note that complex formatting may not convert perfectly.
+  </Card>
+</CardGroup>
+
+## Which Should I Use?
+
+|                                                        | Google Doc | PDF | Word Conversion        |
+| ------------------------------------------------------ | ---------- | --- | ---------------------- |
+| **Dynamic content** (variable-length text, line items) | Yes        | No  | Yes (after conversion) |
+| **Fixed layout** (exact positioning)                   | No         | Yes | No                     |
+| **Line items & repeating rows**                        | Yes        | No  | Yes (after conversion) |
+| **Conditional content** (show/hide sections)           | Yes        | No  | Yes (after conversion) |
+| **E-signatures**                                       | Yes        | Yes | Yes (after conversion) |
+| **Pixel-perfect design**                               | No         | Yes | No                     |
+| **Easy to edit & iterate**                             | Yes        | No  | Yes (after conversion) |
+
+<Tip>
+  If you're not sure, start with a **Google Doc template** — it's the most
+  flexible option and supports all of DocsAutomator's advanced features like
+  line items, conditional content, and e-signatures.
+</Tip>

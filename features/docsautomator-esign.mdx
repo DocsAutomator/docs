@@ -32,6 +32,7 @@ DocsAutomator eSign enables collection of legally binding electronic signatures 
 | Reminders | Automated follow-up emails |
 | Audit Trail | Complete signing activity record |
 | Data Integration | Save PDFs and field values to data sources |
+| Google Drive | Save signed PDFs to a Google Drive folder |
 | Webhooks | POST notifications on completion |
 
 ## Adding eSign Fields to Templates
@@ -164,9 +165,21 @@ After expiration, links become invalid and sessions change to "Expired" status.
 Signers can decline with optional reason. The session is marked as declined and administrator is notified.
 </Info>
 
-## Data Source Integration
+## Signed PDF Delivery
 
-### Saving Signed PDFs
+### Save to Google Drive
+
+Automatically save the signed PDF to a Google Drive folder after all signers complete.
+
+1. Enable "Save to Google Drive" in the Signed PDF Delivery section
+2. Select a Google Drive folder using the folder picker
+3. The signed PDF is uploaded with a `_signed` suffix after all signatures are collected
+
+<Note>
+This is separate from the "Save PDFs in Google Drive" output action, which saves the **unsigned** PDF at generation time. The e-sign Google Drive option saves the **signed** PDF after the signing process completes.
+</Note>
+
+### Save to Data Source
 
 | Source | Save Method |
 |--------|------------|

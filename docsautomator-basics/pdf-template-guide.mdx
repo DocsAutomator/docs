@@ -105,8 +105,10 @@ Available field types:
 | Type | Description |
 |------|-------------|
 | Text | Replaced with text data from your data source |
-| Image | Replaced with an image (auto-scaled to fit bounds) |
+| Image | Replaced with an image from your data source (auto-scaled to fit bounds) |
 | Checkbox | Shows a checkmark when the value is truthy |
+| Static Text | Fixed text baked into every document (not mapped to a data source) |
+| Static Image | Fixed image (logo, stamp, watermark) baked into every document |
 
 <Frame caption="Left sidebar showing available field types and e-sign field types">
   <img src="/images/pdf-template/field-types-sidebar.png" alt="Add Field section with Text, Image, Checkbox and Add E-Sign Field section with Signature, Date, Text, Checkbox" />
@@ -137,7 +139,8 @@ The editor displays all pages of your PDF in a scrollable view. Each placeholder
 | Ctrl/Cmd + Z | Undo |
 | Ctrl/Cmd + Shift + Z | Redo |
 | Ctrl/Cmd + C | Copy selected placeholder |
-| Ctrl/Cmd + V | Paste copied placeholder |
+| Ctrl/Cmd + X | Cut selected placeholder |
+| Ctrl/Cmd + V | Paste copied placeholder (on the last interacted page) |
 | Escape | Deselect (or close editor if nothing selected) |
 
 ### Preview Mode
@@ -196,6 +199,15 @@ Select a placeholder to configure its properties in the right panel.
 ### Image Properties
 
 Image placeholders automatically scale the source image to fit within the placeholder bounds while maintaining the original aspect ratio. Supports JPG, PNG, and base64-encoded images.
+
+### Static Fields
+
+PDF templates support two static field types that are baked into every generated document, independent of your data source:
+
+- **Static Text** -- Fixed text that appears on every document (e.g. disclaimers, terms, labels). Configure the text value in the properties panel.
+- **Static Image** -- Fixed image that appears on every document (e.g. logos, stamps, watermarks). Upload a PNG or JPEG image (up to 5MB) in the properties panel. Images are automatically optimized for fast rendering.
+
+Add static fields from the **Add Static Field** section in the left sidebar. Static fields support the same drag, resize, and positioning controls as regular placeholders.
 
 ### Checkbox Properties
 

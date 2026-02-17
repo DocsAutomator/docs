@@ -206,7 +206,11 @@ Signature images are not mapped to data sources.
 
 ## Webhook Integration
 
-Webhooks fire **once** when all signers complete and final PDF is generated.
+If your automation has a webhook URL configured, DocsAutomator will send webhook notifications for e-signature events. The webhook URL and `webhookParams` are the same ones configured in your automation's [output settings](/features/actions-after-document-generation/notify-webhook).
+
+### Session Completed
+
+Fires once when all signers complete and the final signed PDF is generated.
 
 ```json
 {
@@ -230,6 +234,32 @@ Webhooks fire **once** when all signers complete and final PDF is generated.
   }
 }
 ```
+
+### Session Declined
+
+Fires when a signer declines to sign the document.
+
+```json
+{
+  "event": "esign.session_declined",
+  "sessionId": "unique-identifier",
+  "documentName": "Document name",
+  "status": "declined",
+  "declinedAt": "ISO date string",
+  "declinedBy": {
+    "email": "signer@example.com",
+    "name": "Signer Name",
+    "signerIndex": 1
+  },
+  "reason": "Optional reason provided by the signer",
+  "sourceData": { },
+  "additionalParams": { }
+}
+```
+
+<Info>
+The `sourceData` field contains the original data from your data source that was used to generate the document. The `additionalParams` field contains any `webhookParams` you passed in the API request. Both are included so you can identify which record the declined session belongs to.
+</Info>
 
 ## Session Statuses
 

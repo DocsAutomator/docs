@@ -20,12 +20,16 @@ Generate an unlimited amount of previews without wasting credits. Document previ
   </Tab>
   <Tab title="Preview Mode for Entire Automation">
     Enable preview mode for the complete automation workflow:
-    - Applies a watermark to generated documents
+    - Applies a watermark to generated PDFs
     - Consumes zero document credits
-    - Beneficial for testing document generation workflows directly from data sources
+    - If "Save Google Doc" is enabled, preserves the Google Doc with a "PREVIEW — NOT FOR DISTRIBUTION" header
+    - If "Save PDFs in Google Drive" is enabled, saves the watermarked PDF to your Drive folder
+    - If URL writeback fields are configured, writes Google Doc URL and PDF Drive URL back to your data source
+    - Document names are prefixed with `[PREVIEW]` for easy identification
+    - Emails are not sent
 
     <Tip>
-    Use this mode to test your automation end-to-end before going live.
+    Use this mode to test your full automation pipeline end-to-end — including Drive saves and data source writebacks — before going live.
     </Tip>
   </Tab>
 </Tabs>
@@ -51,10 +55,14 @@ Generate an unlimited amount of previews without wasting credits. Document previ
 
 | Feature | Preview Mode | Production Mode |
 |---------|--------------|-----------------|
-| Watermark | Yes | No |
+| PDF Watermark | Yes | No |
+| Google Doc Header | "PREVIEW — NOT FOR DISTRIBUTION" | None |
+| Document Name Prefix | `[PREVIEW]` | None |
 | Credit Usage | None | 1 per document |
 | PDF Quality | Full | Full |
-| All Features | Available | Available |
+| Save PDF to Google Drive | Yes (if configured) | Yes (if configured) |
+| Save Google Doc | Yes (if configured) | Yes (if configured) |
+| URL Writeback to Data Source | Yes (if configured) | Yes (if configured) |
 | Emails Sent | No | Yes (if configured) |
 
 ## Best Practices

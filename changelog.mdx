@@ -6,6 +6,25 @@ mode: "center"
 ---
 
 <Update label="February 18, 2026">
+  ## Shared Template Protection
+
+  PDF templates that are shared across multiple automations are now protected from accidental deletion when duplicating or transferring automations.
+
+  - Duplicating an automation no longer deletes the original's PDF template
+  - Transferring automations preserves shared template references
+</Update>
+
+<Update label="February 18, 2026">
+  ## Vertical Text Alignment for PDF Templates
+
+  PDF template placeholders now support vertical alignment — top, middle, or bottom — giving you precise control over how text sits within its bounding box.
+
+  - New **Vertical Alignment** option in the placeholder properties panel
+  - Choose between top (default), middle, or bottom alignment
+  - Works with all text overflow modes
+</Update>
+
+<Update label="February 18, 2026">
   ## Newsletter Subscription Toggle
 
   Manage your newsletter subscription directly from workspace settings — no need to wait for an email unsubscribe link.
@@ -24,6 +43,36 @@ mode: "center"
   - Document names are prefixed with `[PREVIEW]` for easy identification
   - Google Doc URL and PDF Drive URL fields are written back to Airtable, Google Sheets, and SmartSuite
   - Emails, billing, and credit usage remain skipped in preview mode
+</Update>
+
+<Update label="February 17, 2026">
+  ## Airtable Rich Text in PDF Templates
+
+  Airtable rich text fields now render correctly in PDF templates. Markdown formatting is automatically converted to clean plain text with proper bullet points, and long-form content auto-wraps vertically.
+
+  - Rich text fields are automatically detected and unwrapped
+  - Markdown bold, italic, and list syntax converted to plain text
+  - Long content automatically switches to vertical expand mode
+  - Newlines are properly sanitized for single-line overflow modes
+</Update>
+
+<Update label="February 17, 2026">
+  ## E-Signature Decline Webhook
+
+  When a signer declines to sign, a webhook notification is now sent to your configured URL — so you can trigger follow-up workflows automatically.
+
+  - New `esign.session_declined` webhook event
+  - Includes who declined, their reason, and the original source data
+  - Works with all data sources and the API
+</Update>
+
+<Update label="February 17, 2026">
+  ## Bug Fixes & Improvements
+
+  - Fixed PDF overlay issues with forms that contain AcroForm widget annotations
+  - Added Safari <18 compatibility fix (URL.parse polyfill)
+  - Google auth check is now skipped for PDF templates that don't require a Google connection
+  - Fixed billing upgrade flow to correctly handle e-sign add-on items
 </Update>
 
 <Update label="February 17, 2026">

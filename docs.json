@@ -23,7 +23,7 @@
     }
   },
   "banner": {
-    "content": "New: PDF Templates are here! Upload existing PDFs and overlay data fields. [Learn more →](/docs/docsautomator-basics/pdf-template-guide)",
+    "content": "New: AI Template Generator (Beta) — describe what you need and get a ready-to-use Google Doc template. [Learn more →](/docs/features/ai-template-generator)",
     "dismissible": true
   },
   "appearance": {

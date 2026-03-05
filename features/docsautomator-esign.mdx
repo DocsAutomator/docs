@@ -231,9 +231,17 @@ Fires once when all signers complete and the final signed PDF is generated.
       "type": "text",
       "value": "entered value"
     }
-  }
+  },
+  "sourceData": { },
+  "additionalParams": { }
 }
 ```
+
+<Info>
+The `sourceData` field contains the original data from your data source that was used to generate the document. The `additionalParams` field contains any `webhookParams` you passed in the API request.
+
+For Airtable and SmartSuite automations, the record ID (`recId`) is automatically included in `additionalParams`, so you can identify which record the e-sign session belongs to.
+</Info>
 
 ### Session Declined
 
@@ -258,7 +266,7 @@ Fires when a signer declines to sign the document.
 ```
 
 <Info>
-The `sourceData` field contains the original data from your data source that was used to generate the document. The `additionalParams` field contains any `webhookParams` you passed in the API request. Both are included so you can identify which record the declined session belongs to.
+The `sourceData` field contains the original data from your data source that was used to generate the document. The `additionalParams` field contains any `webhookParams` you passed in the API request. For Airtable and SmartSuite automations, the record ID (`recId`) is automatically included in `additionalParams`.
 </Info>
 
 ## Session Statuses

@@ -153,6 +153,7 @@
                   "features/document-previews",
                   "features/run-history",
                   "features/pdf-expiration-storage",
+                  "features/ai-template-generator",
                   "features/ai-field-mapping",
                   "features/folder-organization",
                   "features/error-notifications",

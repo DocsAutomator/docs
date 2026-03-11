@@ -269,6 +269,33 @@ Fires when a signer declines to sign the document.
 The `sourceData` field contains the original data from your data source that was used to generate the document. The `additionalParams` field contains any `webhookParams` you passed in the API request. For Airtable and SmartSuite automations, the record ID (`recId`) is automatically included in `additionalParams`.
 </Info>
 
+## Signer Language
+
+Localize the entire signing experience for your signers. The selected language applies to the signing page UI, email notifications, field labels, and date month names.
+
+### Supported Languages
+
+| Language | Code |
+|----------|------|
+| English | `en` |
+| Deutsch (German) | `de` |
+| Español (Spanish) | `es` |
+| Suomi (Finnish) | `fi` |
+| Français (French) | `fr` |
+| Português (Portuguese) | `pt` |
+| עברית (Hebrew) | `he` |
+| Nederlands (Dutch) | `nl` |
+
+### How to Set
+
+1. Open your automation
+2. Go to **Output Settings**
+3. Under **E-Signature**, select a **Signer Language** from the dropdown
+
+<Info>
+The default language is English. The language setting affects the signing page, all email templates (invitation, reminder, completion), and date month name localization (e.g., `MMMM` renders as "januari" in Dutch).
+</Info>
+
 ## Session Statuses
 
 | Status | Meaning |

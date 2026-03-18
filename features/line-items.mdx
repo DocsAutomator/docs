@@ -78,6 +78,7 @@ See [Conditional Styling](/features/advanced-placeholder-options/conditional-sty
 - Variables must be unique per line item row
 - Line items must occupy entire rows, not partial rows
 - No limit on items passed (users report hundreds to thousands)
+- Each `{{line_items_N}}` number must be unique across the entire template — even if the tables are in mutually exclusive sections. Reusing the same number (e.g. `{{line_items_1}}` twice) causes a generation error.
 </Warning>
 
 ## API Example

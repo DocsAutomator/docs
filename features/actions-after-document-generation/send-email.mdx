@@ -69,6 +69,42 @@ Multiple Gmail accounts can be connected for use across different automations.
 - Included by default
 - Optional: Deselect "Attach Generated PDF to Email" to send notification emails with download links instead
 
+## Email Personalization
+
+All placeholders from your document template are available in your email subject line and body. This means you can personalize every email with data from your data source.
+
+### Using Placeholders in Emails
+
+Any placeholder mapped in your automation can be used in:
+
+- **Recipient field**: `{{client_email}}` or `{{contact_email}}`
+- **Subject line**: `Invoice #{{invoice_number}} for {{client_name}}`
+- **Email body**: `Hi {{first_name}}, please find your document attached.`
+
+### Using Data That Shouldn't Appear in the Document
+
+Sometimes you need data for email personalization that shouldn't be visible in the generated document. For example, you may want to route emails to different recipients or personalize the greeting, but that information isn't part of the document itself.
+
+Use the **Always hide** option to pass data through your automation without rendering it in the document:
+
+<Steps>
+  <Step title="Add the placeholder to your template">
+    Add the placeholder (e.g. `{{recipient_email}}` or `{{first_name}}`) anywhere in your Google Doc template. The end of the document works well.
+  </Step>
+  <Step title="Enable Always Hide">
+    In your automation's placeholder settings, click the gear icon next to the placeholder and toggle on "Always hide".
+  </Step>
+  <Step title="Use in email settings">
+    Reference the placeholder in your email recipient, subject, or body fields. The value will be used for the email but won't appear in the generated document.
+  </Step>
+</Steps>
+
+<Tip>
+This is especially useful for multi-recipient workflows where different documents go to different people, or when you need personalization data (like a first name for the greeting) that isn't part of the document content.
+
+Learn more about this feature in the [Hidden Values](/features/advanced-placeholder-options/hidden-values) documentation.
+</Tip>
+
 ## Conditional Email Sending
 
 Send emails only when specific conditions are met based on document data.

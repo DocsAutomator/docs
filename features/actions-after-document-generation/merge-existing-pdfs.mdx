@@ -19,6 +19,10 @@ This feature enables you to incorporate pre-existing PDF files into your generat
     1. In your automation settings, find the "Merge Existing PDFs" option
     2. Select the field/column containing your PDF files
     3. Configure the insert position (before or after)
+
+    <Tip>
+    **Airtable lookup fields**: You can also select a lookup field that references an attachment field in a linked table. This is useful when PDFs are stored in a related table rather than directly on the record.
+    </Tip>
   </Tab>
   <Tab title="API">
     Pass the top-level key `existingPdfs` containing an array of one or more publicly accessible PDF URLs.

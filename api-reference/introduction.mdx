@@ -18,10 +18,14 @@ https://api.docsautomator.co
 
 ## Authentication
 
-All API requests require a bearer token in the `Authorization` header:
+All API requests require authentication. Pass your API key using either method:
 
 ```bash
+# Bearer token (recommended)
 Authorization: Bearer YOUR_API_KEY
+
+# Alternative header
+X-API-Key: YOUR_API_KEY
 ```
 
 <Info>
@@ -198,7 +202,7 @@ When you exceed a rate limit, the API returns `429 Too Many Requests`.
 
 ### Common 401 Causes
 
-- Missing `Authorization` header
+- Missing `Authorization` or `X-API-Key` header
 - Incorrect API key
 - Expired Google refresh token (reconnect Google account in the app)
 
@@ -321,12 +325,12 @@ curl -X POST https://api.docsautomator.co/createDocument \
       "total": "$5,500.00"
     }
   }'
-# Returns: { "jobId": "job_abc123", "status": "queued" }
+# Returns: { "message": "Document creation request queued.", "jobId": "job_abc123", "logId": "..." }
 
 # 2. Poll for the result
 curl https://api.docsautomator.co/job/job_abc123 \
   -H "Authorization: Bearer YOUR_API_KEY"
-# Returns: { "status": "completed", "pdfUrl": "https://..." }
+# Returns: { "status": "completed", "result": { "pdfUrl": "https://...", ... } }
 ```
 
 ```javascript Node.js
@@ -361,7 +365,7 @@ while (true) {
   const job = await jobResponse.json();
 
   if (job.status === "completed") {
-    console.log("PDF URL:", job.pdfUrl);
+    console.log("PDF URL:", job.result.pdfUrl);
     break;
   }
   if (job.status === "failed") {
@@ -407,7 +411,7 @@ while True:
     job = job_response.json()
 
     if job["status"] == "completed":
-        print("PDF URL:", job["pdfUrl"])
+        print("PDF URL:", job["result"]["pdfUrl"])
         break
     if job["status"] == "failed":
         raise Exception(f"Job failed: {job.get('error')}")

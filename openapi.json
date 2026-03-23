@@ -380,11 +380,20 @@
           {
             "name": "automationId",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string"
             },
-            "description": "The automation ID."
+            "description": "The automation ID. Either `automationId` or `docId` is required."
+          },
+          {
+            "name": "docId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative to `automationId`."
           }
         ],
         "responses": {
@@ -540,8 +549,8 @@
                   "pdfExpiration": {
                     "type": "string",
                     "nullable": true,
-                    "enum": ["7d", "30d", "90d", null],
-                    "description": "PDF expiration period. `null` for no expiration."
+                    "enum": ["never", "immediate", "oneday", "threedays", "oneweek", "twoweeks", "onemonth", "threemonths", "sixmonths", "oneyear"],
+                    "description": "PDF expiration period. `never` means PDFs never expire, `immediate` means they expire right away, and other values set the expiration window."
                   },
                   "imageOptions": {
                     "type": "object",
@@ -685,11 +694,20 @@
           {
             "name": "automationId",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string"
             },
-            "description": "The automation ID. The automation must have a template configured."
+            "description": "The automation ID. The automation must have a template configured. Either `automationId` or `docId` is required."
+          },
+          {
+            "name": "docId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative to `automationId`."
           }
         ],
         "responses": {
@@ -1264,7 +1282,7 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "description": "API key from your workspace settings. Find it at [app.docsautomator.co/settings/workspace/api](https://app.docsautomator.co/settings/workspace/api)."
+        "description": "API key from your workspace settings. Pass as `Authorization: Bearer <key>` or `X-API-Key: <key>`. Find it at [app.docsautomator.co/settings/workspace/api](https://app.docsautomator.co/settings/workspace/api)."
       }
     },
     "schemas": {
@@ -1302,6 +1320,10 @@
             "type": "string",
             "format": "uri",
             "description": "URL of the generated PDF."
+          },
+          "documentName": {
+            "type": "string",
+            "description": "Name of the generated document."
           },
           "googleDocUrl": {
             "type": "string",

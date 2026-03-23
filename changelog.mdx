@@ -6,13 +6,73 @@ mode: "center"
 ---
 
 <Update label="March 23, 2026">
-  ## Lookup Fields Now Resolve Linked Record Names
+  ## Lookup Fields & PDF Template Error Messages
 
   Lookup fields that reference a linked record field now display the actual record names instead of raw Airtable record IDs.
 
   - Automatically resolves to the primary field value of the linked record
   - Works on main record fields, line items, and nested line items
   - No configuration changes needed — existing automations with these lookup fields will start showing names automatically
+  - PDF template automations now show a clear error message when the Google Doc template ID is invalid
+</Update>
+
+<Update label="March 21, 2026">
+  ## PDF Merge & Email Security Improvements
+
+  Fixed an issue where merging PDFs from Google Drive URLs could fail due to a strict content-type check. Also improved email security.
+
+  - PDF merge now correctly handles Google Drive file URLs regardless of content-type headers
+  - Improved email header sanitization to prevent potential injection in recipient addresses
+</Update>
+
+<Update label="March 20, 2026">
+  ## Template Validation & Line Deletion Fixes
+
+  Improved template validation to catch common line item placeholder mistakes before generation, and fixed a bug where line deletion could leave behind stray placeholders.
+
+  - Line item placeholders are now validated for correct syntax during template checks
+  - Warning shown when your template has no placeholders matching your test data
+  - PDF templates now supported in Glide test data generation
+  - Fixed an issue where placeholders split across multiple text runs in a table row were not properly deleted
+</Update>
+
+<Update label="March 19, 2026">
+  ## Grouping & Field Mapping Fixes
+
+  Fixed issues with grouped line items where the grouping key column could fail to be identified in certain table layouts.
+
+  - Fixed grouping key column detection when the table doesn't start at the first row
+  - Fixed a crash when the grouping key referenced a column in an invalid table position
+  - Field names in the mapping UI no longer overflow when they are very long
+</Update>
+
+<Update label="March 18, 2026">
+  ## Test Mode Emails & API Improvements
+
+  Emails configured on automations now send in test mode, so you can verify your full email workflow without leaving test mode. Previously, emails were skipped entirely in test mode.
+
+  - Emails now send during test mode document generation (only skipped for in-app previews)
+  - The `createDocument` API response now includes `documentName` when a dynamic document name is configured
+  - Google Sheets automations now show a clear prompt to connect your Google account when not authenticated
+</Update>
+
+<Update label="March 16, 2026">
+  ## ClickUp, PDF & Reliability Fixes
+
+  Several fixes to improve reliability across data sources and document generation.
+
+  - Fixed a crash in ClickUp automations when automation options were not configured
+  - Image placeholders now gracefully handle invalid or empty values instead of failing the entire generation
+  - ClickUp webhook URL now includes the taskId parameter for easier copy-paste setup
+  - Usage warning emails now show the correct document count
+</Update>
+
+<Update label="March 13, 2026">
+  ## Better Airtable Error Messages
+
+  Airtable API errors now show the original error message and status code from Airtable, making it easier to diagnose issues like permission errors or invalid configurations.
+
+  - Error messages from the Airtable API are now preserved and shown as-is instead of generic error text
 </Update>
 
 <Update label="March 12, 2026">

@@ -86,32 +86,86 @@ The integration operates on a primary table and linked table basis, enabling doc
 
 ## Field Type Reference
 
+### Text Fields
+
 | Field Type | Output Format | Notes |
 |------------|---------------|-------|
 | Text | Unmodified | Text displays as-is |
 | Text Area | Unmodified | Multi-line text |
-| Number | Numeric value | Precision follows automation settings |
-| Currency | $299.99 | Symbol and precision preserved |
-| Percent | 75% | Percentage value |
-| Date | 21/05/2024 | Format respects automation settings |
-| Due Date | Date range | Start and end dates |
-| Yes/No | ✅ or ❌ | Icon reflects checked/unchecked state |
-| Single Select | Unmodified | Text displays as-is |
-| Multiple Select | Comma-separated | Includes space before each item |
-| Status | Status label | Displays the status text |
-| Rating | Numeric value | Star count as number |
-| Formula | Varies | Respects formatting options |
-| Lookup | Varies | Matches the looked-up field's format |
-| Linked Record | Record name(s) | Displays primary field value |
-| File | Image(s) | Map to image placeholders |
-| Signature | Image or text | Drawn signatures render as images; typed signatures render as text with a typewriter-style font. Map to image placeholders |
-| Full Name | Formatted name | Combined name fields |
-| Phone | Unmodified | Phone number as text |
-| Email | Unmodified | Email address as text |
-| URL | Unmodified | URL as text |
-| Address | Formatted address | Combined address fields |
+| Record Title | Unmodified | Primary field value |
+| Full Name | `Title First Middle Last` | Combined name parts. Individual components accessible via `field.first_name`, `field.last_name`, etc. |
+| Address | `Street, City, State, Zip, Country` | Combined address parts. Individual components accessible via `field.location_city`, `field.location_state`, etc. |
+| Phone | `Number (Number, ...)` | Comma-separated if multiple |
+| Email | `email@example.com` | Comma-separated if multiple |
+| Link/URL | `url1, url2` | Comma-separated if multiple |
+| IP Address | `192.168.1.1 (US)` | Includes country code if available |
+| Social Network | `Facebook: user, Twitter: user` | Lists each network with username |
+| SmartDoc (Rich Text) | Rich text | Preserves formatting when used with Google Doc templates |
+| Checklist | `☑ Item 1\n☐ Item 2` | Checked/unchecked icons with content |
+| Color Picker | `Name: #hex, #hex` | Includes color name if set |
+
+### Number Fields
+
+| Field Type | Output Format | Notes |
+|------------|---------------|-------|
+| Number | `299.99` | Respects locale formatting settings |
+| Currency | `$299.99` | Symbol and precision from SmartSuite field config |
+| Percent | `75%` | Appends % symbol |
+| Percent Complete | `75%` | Appends % symbol |
+| Number Slider | Numeric value | Raw number |
+| Rating | ⭐⭐⭐ / 🚩🚩 / ❤️❤️ / etc. | Emoji format matches SmartSuite display format (stars, flags, hearts, thumbs up, smileys, numbers, rectangles) |
+| Vote | `5` | Total vote count |
 | Count | Numeric value | Count of linked records |
-| Vote | Numeric value | Vote count |
+
+### Date & Time Fields
+
+| Field Type | Output Format | Notes |
+|------------|---------------|-------|
+| Date | `21/05/2024` | Format respects automation locale, date format, and time zone settings. Includes time if configured in SmartSuite |
+| Date Range | `01/01/2024 to 01/31/2024` | From and to dates, includes time if configured |
+| Due Date | `01/31/2024 (Overdue)` | Includes completion/overdue status |
+| Duration | `2:05:30` | Hours:minutes:seconds format |
+| Time | Unmodified | Time value as-is |
+| Time Tracking | `2h 5m 30s` | Total tracked duration |
+
+### Selection Fields
+
+| Field Type | Output Format | Notes |
+|------------|---------------|-------|
+| Single Select | Label text | Resolves internal value to display label |
+| Multiple Select | `Label 1, Label 2` | Comma-separated labels |
+| Tags | `Tag 1, Tag 2` | Comma-separated tag labels |
+| Status | Label text | Resolves internal value to display label |
+| Yes/No | ✅ or ❌ | Icon reflects checked/unchecked state |
+
+### Reference Fields
+
+| Field Type | Output Format | Notes |
+|------------|---------------|-------|
+| Linked Record | `Record 1, Record 2` | Primary field values of linked records |
+| Lookup | Varies | Matches the looked-up field's format. Lookup of file fields returns images |
+| Rollup | Varies | Matches the target field's format. Rollup of file fields returns images |
+| Formula | Varies | Output depends on the formula's result field type |
+| User | `Full Name, Full Name` | Resolves user IDs to full names |
+| Sub-Items | `3` | Returns count of sub-items |
+| Dependency | `Predecessors: id1 Successors: id2` | Lists predecessor and successor record IDs |
+
+### File & Image Fields
+
+| Field Type | Output Format | Notes |
+|------------|---------------|-------|
+| File | Image(s) | Map to image placeholders (`{{image_*}}`). Multiple files supported |
+| Signature | Image or text | Drawn signatures are embedded as images. Typed signatures render as text with a typewriter-style font. Map to image placeholders |
+
+### System Fields
+
+| Field Type | Output Format | Notes |
+|------------|---------------|-------|
+| Auto Number | Numeric value | Auto-incrementing ID |
+| Record ID | Unmodified | SmartSuite record ID |
+| First Created | `3/24/2026, 2:30:00 PM by Name` | Date and creator |
+| Last Updated | `3/24/2026, 2:30:00 PM by Name` | Date and updater |
+| Comments Count | Numeric value | Number of comments |
 
 ## FAQ
 

@@ -84,6 +84,35 @@ The integration operates on a primary table and linked table basis, enabling doc
 **API Key Location**: [https://app.docsautomator.co/settings/workspace/api](https://app.docsautomator.co/settings/workspace/api)
 </Info>
 
+## Field Type Reference
+
+| Field Type | Output Format | Notes |
+|------------|---------------|-------|
+| Text | Unmodified | Text displays as-is |
+| Text Area | Unmodified | Multi-line text |
+| Number | Numeric value | Precision follows automation settings |
+| Currency | $299.99 | Symbol and precision preserved |
+| Percent | 75% | Percentage value |
+| Date | 21/05/2024 | Format respects automation settings |
+| Due Date | Date range | Start and end dates |
+| Yes/No | ✅ or ❌ | Icon reflects checked/unchecked state |
+| Single Select | Unmodified | Text displays as-is |
+| Multiple Select | Comma-separated | Includes space before each item |
+| Status | Status label | Displays the status text |
+| Rating | Numeric value | Star count as number |
+| Formula | Varies | Respects formatting options |
+| Lookup | Varies | Matches the looked-up field's format |
+| Linked Record | Record name(s) | Displays primary field value |
+| File | Image(s) | Map to image placeholders |
+| Signature | Image or text | Drawn signatures render as images; typed signatures render as text with a typewriter-style font. Map to image placeholders |
+| Full Name | Formatted name | Combined name fields |
+| Phone | Unmodified | Phone number as text |
+| Email | Unmodified | Email address as text |
+| URL | Unmodified | URL as text |
+| Address | Formatted address | Combined address fields |
+| Count | Numeric value | Count of linked records |
+| Vote | Numeric value | Vote count |
+
 ## FAQ
 
 <AccordionGroup>

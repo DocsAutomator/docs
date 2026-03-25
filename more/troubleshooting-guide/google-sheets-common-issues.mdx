@@ -26,7 +26,7 @@ Your Google Sheets automation is set to auto-polling, but new or updated rows ar
     DocsAutomator tracks which rows have been processed using a "last processed row" cursor. If a row was already generated, it won't be processed again. To re-process rows, click the last processed row number in your automation settings and set it to a lower value.
   </Tab>
   <Tab title="Auto-creation was disabled">
-    If auto-creation fails 5 times in a row, it is automatically disabled to prevent repeated errors. You will receive an email notification when this happens. Check the error message, fix the issue (e.g., reconnect your Google account), and re-enable auto-creation in your automation settings.
+    Auto-creation is automatically disabled after repeated failures to protect your account. This happens when either the polling itself fails 5 times in a row, or when 5 consecutive polling cycles result in all document creations failing. You will receive an email notification explaining the reason. Check the error message, fix the issue (e.g., reconnect your Google account, fix your template), and re-enable auto-creation in your automation settings.
   </Tab>
 </Tabs>
 

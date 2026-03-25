@@ -115,7 +115,11 @@ DocsAutomator's Google Sheets integration enables rapid document generation from
     - **Run Now** — Triggers an immediate poll without waiting for the next 5-minute cycle.
 
     **Automatic safety shutoff:**
-    If auto-creation fails 5 times in a row (e.g., due to a disconnected Google account or a deleted sheet), it is automatically disabled and workspace owners receive an email notification. Fix the underlying issue and re-enable to resume.
+    Auto-creation is automatically disabled in two cases, and workspace owners receive an email notification:
+    - **Polling failures** — If checking your sheet fails 5 times in a row (e.g., disconnected Google account, deleted sheet)
+    - **Document creation failures** — If 5 consecutive polling cycles result in all documents failing (e.g., broken template, missing permissions)
+
+    Fix the underlying issue and re-enable auto-creation to resume.
 
     <Info>
     Perfect for hands-off automation where documents should be created as soon as data is added.

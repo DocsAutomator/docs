@@ -15,7 +15,7 @@ mode: "center"
   - Document creation logs now show whether they were triggered by auto-polling, a manual trigger, or an API call
   - The last processed row is now editable, letting you re-process rows or skip ahead
   - "Skip to end" button sets the cursor to the last row in your sheet
-  - Auto-creation is automatically disabled after 5 consecutive failures, with an email notification to workspace owners explaining the issue
+  - Auto-creation is automatically disabled after 5 consecutive polling failures or 5 cycles of all documents failing, with an email notification to workspace owners
   - Re-enabling auto-creation resets the failure counter
 </Update>
 

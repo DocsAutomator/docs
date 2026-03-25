@@ -5,6 +5,20 @@ rss: true
 mode: "center"
 ---
 
+<Update label="March 25, 2026">
+  ## Google Sheets Auto-Creation Upgrade
+
+  The auto-creation system for Google Sheets has been rebuilt for better reliability, observability, and control.
+
+  - Auto-creation now runs on a dedicated job queue with per-automation scheduling
+  - Each polling cycle is tracked and visible in the run history
+  - Document creation logs now show whether they were triggered by auto-polling, a manual trigger, or an API call
+  - The last processed row is now editable, letting you re-process rows or skip ahead
+  - "Skip to end" button sets the cursor to the last row in your sheet
+  - Auto-creation is automatically disabled after 5 consecutive failures, with an email notification to workspace owners explaining the issue
+  - Re-enabling auto-creation resets the failure counter
+</Update>
+
 <Update label="March 24, 2026">
   ## SmartSuite Signature Field Support
 

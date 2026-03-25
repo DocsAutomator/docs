@@ -101,7 +101,21 @@ DocsAutomator's Google Sheets integration enables rapid document generation from
 
 <Tabs>
   <Tab title="Auto-Create">
-    System checks every 5 minutes for new rows and automatically generates documents.
+    The system checks every 5 minutes for new rows and automatically generates documents. Enable it from your automation's settings under the Google Sheets section.
+
+    **How it works:**
+    - DocsAutomator tracks a "last processed row" cursor for each automation
+    - Every 5 minutes, it checks your sheet for rows after that cursor
+    - New rows are queued for document creation automatically
+    - Up to 50 new rows are processed per polling cycle
+
+    **Controls:**
+    - **Editable cursor** — Click the last processed row number to change it. Set it lower to re-process rows, or higher to skip rows.
+    - **Skip to end** — Sets the cursor to the last row in your sheet, so only future rows are processed.
+    - **Run Now** — Triggers an immediate poll without waiting for the next 5-minute cycle.
+
+    **Automatic safety shutoff:**
+    If auto-creation fails 5 times in a row (e.g., due to a disconnected Google account or a deleted sheet), it is automatically disabled and workspace owners receive an email notification. Fix the underlying issue and re-enable to resume.
 
     <Info>
     Perfect for hands-off automation where documents should be created as soon as data is added.

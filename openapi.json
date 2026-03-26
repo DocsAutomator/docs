@@ -1704,24 +1704,26 @@
             "type": "string",
             "enum": [
               "session_created",
-              "invitation_sent",
+              "session_completed",
+              "session_expired",
+              "session_cancelled",
+              "invite_sent",
+              "invite_resent",
               "link_opened",
               "document_viewed",
               "consent_given",
-              "field_submitted",
               "signer_completed",
-              "session_completed",
-              "reminder_sent",
-              "session_cancelled",
-              "session_declined",
-              "session_expired",
-              "invite_resent"
+              "signer_declined",
+              "field_signed",
+              "field_cleared",
+              "session_voided",
+              "reminder_sent"
             ],
             "description": "Type of audit event."
           },
           "actorType": {
             "type": "string",
-            "enum": ["signer", "admin"]
+            "enum": ["system", "signer", "admin"]
           },
           "actorEmail": {
             "type": "string"

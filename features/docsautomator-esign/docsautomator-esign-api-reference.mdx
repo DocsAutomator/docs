@@ -77,17 +77,20 @@ Returns expiration dates and signer status for each link.
 | Event | Description |
 |-------|-------------|
 | `session_created` | Signing session initiated |
-| `invitation_sent` | Email invitation dispatched |
+| `invite_sent` | Email invitation dispatched |
+| `invite_resent` | Invitation re-sent to signer |
 | `link_opened` | Signer accessed signing link |
 | `document_viewed` | Signer viewed PDF |
 | `consent_given` | E-consent provided |
-| `field_submitted` | Field value entered |
+| `field_signed` | Field value entered |
+| `field_cleared` | Field value cleared |
 | `signer_completed` | All fields finished |
+| `signer_declined` | Signer declined to sign |
 | `session_completed` | All signers done, PDF generated |
-| `reminder_sent` | Reminder email sent |
 | `session_cancelled` | Session cancelled |
-| `session_declined` | Signer declined |
 | `session_expired` | Session expired |
+| `session_voided` | Session voided by admin |
+| `reminder_sent` | Reminder email sent |
 
 ---
 
@@ -192,10 +195,12 @@ Parameters are returned in all webhook notifications as `additionalParams`.
 
 ## Rate Limits
 
-| Endpoint Type | Limit |
-|---------------|-------|
-| Admin endpoints | 500 requests per 15 minutes |
-| Session list | 100 requests per minute |
+Rate limits apply to the public signing page routes (not the authenticated admin API endpoints):
+
+| Route | Limit |
+|-------|-------|
+| Signing page access | 100 requests per 15 minutes per IP |
+| Field submissions | 30 requests per minute per IP |
 
 ---
 

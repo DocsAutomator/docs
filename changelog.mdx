@@ -5,6 +5,15 @@ rss: true
 mode: "center"
 ---
 
+<Update label="March 27, 2026">
+  ## Fix: Duplicate Google Drive Folders
+
+  DocsAutomator now correctly detects existing Google Drive folders created by external tools (e.g. Make, Zapier, manual creation) and saves into them instead of creating duplicates.
+
+  - Affects both PDF and Google Doc saving with dynamic subfolders
+  - Previously, folders created outside DocsAutomator could be missed, resulting in duplicate folders with the same name
+</Update>
+
 <Update label="March 25, 2026">
   ## Google Sheets Auto-Creation Upgrade
 

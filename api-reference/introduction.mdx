@@ -140,43 +140,27 @@ curl https://api.docsautomator.co/job/YOUR_JOB_ID \
 
 **Polling pattern:** Use exponential backoff starting at 2 seconds. Jobs typically complete in 5-30 seconds.
 
-## Line Items
+## Data Source Guides
 
-Pass line items as arrays alongside your `data` object. Use `line_items_1`, `line_items_2`, etc. to match line item groups in your template.
+The `POST /createDocument` endpoint works differently depending on your automation's data source. See the guide for your data source:
 
-```json
-{
-  "docId": "abc123",
-  "data": { "customer_name": "Acme Corp" },
-  "line_items_1": [
-    { "description": "Consulting", "quantity": 10, "rate": 150, "amount": 1500 },
-    { "description": "Development", "quantity": 20, "rate": 200, "amount": 4000 }
-  ]
-}
-```
-
-### Nested line items
-
-Use the `children` key for nesting (up to 3 levels):
-
-```json
-{
-  "line_items_1": [
-    {
-      "phase": "Design",
-      "children": [
-        {
-          "task": "Wireframes",
-          "hours": 8,
-          "children": [
-            { "detail": "Homepage wireframe", "status": "Complete" }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
+<CardGroup cols={2}>
+  <Card title="API" icon="code" href="/api-reference/documents/create-from-api">
+    Pass data directly — most flexible option
+  </Card>
+  <Card title="Airtable" icon="table" href="/api-reference/documents/create-from-airtable">
+    Pass a record ID
+  </Card>
+  <Card title="Google Sheets" icon="table-cells" href="/api-reference/documents/create-from-google-sheets">
+    Pass a row number
+  </Card>
+  <Card title="SmartSuite" icon="grid" href="/api-reference/documents/create-from-smartsuite">
+    Pass a record ID
+  </Card>
+  <Card title="ClickUp" icon="check" href="/api-reference/documents/create-from-clickup">
+    Pass a task ID
+  </Card>
+</CardGroup>
 
 ## Rate Limits
 
@@ -231,273 +215,6 @@ Pass custom data through to webhooks using `webhookParams` in your `createDocume
 When an automation has e-signatures enabled and the template contains e-sign placeholders (`{{esign.signature_1}}`, `{{esign.date_1}}`, etc.), creating a document automatically starts a signing workflow. The response includes the signing session ID and signing links.
 
 See the [E-Signatures](/api-reference/e-signatures) endpoints for managing signing sessions programmatically, or the [eSign guide](/features/docsautomator-esign) for setup instructions.
-
-## Code Examples
-
-Below are complete examples for common API workflows. Each example is shown in cURL, JavaScript, and Python.
-
-### Create a document (sync)
-
-<CodeGroup>
-```bash cURL
-curl -X POST https://api.docsautomator.co/createDocument \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "docId": "YOUR_AUTOMATION_ID",
-    "data": {
-      "customer_name": "Acme Corp",
-      "invoice_number": "INV-2025-001",
-      "invoice_date": "2025-01-15",
-      "due_date": "2025-02-15",
-      "total": "$5,500.00"
-    }
-  }'
-```
-
-```javascript Node.js
-const response = await fetch("https://api.docsautomator.co/createDocument", {
-  method: "POST",
-  headers: {
-    "Authorization": "Bearer YOUR_API_KEY",
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    docId: "YOUR_AUTOMATION_ID",
-    data: {
-      customer_name: "Acme Corp",
-      invoice_number: "INV-2025-001",
-      invoice_date: "2025-01-15",
-      due_date: "2025-02-15",
-      total: "$5,500.00",
-    },
-  }),
-});
-
-const result = await response.json();
-// result.pdfUrl — direct link to the generated PDF
-// result.googleDocUrl — link to the Google Doc (if enabled)
-```
-
-```python Python
-import requests
-
-response = requests.post(
-    "https://api.docsautomator.co/createDocument",
-    headers={
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json",
-    },
-    json={
-        "docId": "YOUR_AUTOMATION_ID",
-        "data": {
-            "customer_name": "Acme Corp",
-            "invoice_number": "INV-2025-001",
-            "invoice_date": "2025-01-15",
-            "due_date": "2025-02-15",
-            "total": "$5,500.00",
-        },
-    },
-)
-
-result = response.json()
-# result["pdfUrl"] — direct link to the generated PDF
-# result["googleDocUrl"] — link to the Google Doc (if enabled)
-```
-</CodeGroup>
-
-### Create a document (async with polling)
-
-Use async mode for high-volume workflows. The API returns a `jobId` immediately, and you poll for the result.
-
-<CodeGroup>
-```bash cURL
-# 1. Start async document creation
-curl -X POST https://api.docsautomator.co/createDocument \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "docId": "YOUR_AUTOMATION_ID",
-    "async": true,
-    "data": {
-      "customer_name": "Acme Corp",
-      "total": "$5,500.00"
-    }
-  }'
-# Returns: { "message": "Document creation request queued.", "jobId": "job_abc123", "logId": "..." }
-
-# 2. Poll for the result
-curl https://api.docsautomator.co/job/job_abc123 \
-  -H "Authorization: Bearer YOUR_API_KEY"
-# Returns: { "status": "completed", "result": { "pdfUrl": "https://...", ... } }
-```
-
-```javascript Node.js
-// 1. Start async document creation
-const createResponse = await fetch("https://api.docsautomator.co/createDocument", {
-  method: "POST",
-  headers: {
-    "Authorization": "Bearer YOUR_API_KEY",
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    docId: "YOUR_AUTOMATION_ID",
-    async: true,
-    data: {
-      customer_name: "Acme Corp",
-      total: "$5,500.00",
-    },
-  }),
-});
-
-const { jobId } = await createResponse.json();
-
-// 2. Poll for the result with exponential backoff
-let delay = 2000;
-while (true) {
-  await new Promise((resolve) => setTimeout(resolve, delay));
-
-  const jobResponse = await fetch(
-    `https://api.docsautomator.co/job/${jobId}`,
-    { headers: { "Authorization": "Bearer YOUR_API_KEY" } }
-  );
-  const job = await jobResponse.json();
-
-  if (job.status === "completed") {
-    console.log("PDF URL:", job.result.pdfUrl);
-    break;
-  }
-  if (job.status === "failed") {
-    throw new Error(`Job failed: ${job.error}`);
-  }
-
-  delay = Math.min(delay * 2, 30000); // Max 30s between polls
-}
-```
-
-```python Python
-import requests
-import time
-
-# 1. Start async document creation
-create_response = requests.post(
-    "https://api.docsautomator.co/createDocument",
-    headers={
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json",
-    },
-    json={
-        "docId": "YOUR_AUTOMATION_ID",
-        "async": True,
-        "data": {
-            "customer_name": "Acme Corp",
-            "total": "$5,500.00",
-        },
-    },
-)
-
-job_id = create_response.json()["jobId"]
-
-# 2. Poll for the result with exponential backoff
-delay = 2
-while True:
-    time.sleep(delay)
-
-    job_response = requests.get(
-        f"https://api.docsautomator.co/job/{job_id}",
-        headers={"Authorization": "Bearer YOUR_API_KEY"},
-    )
-    job = job_response.json()
-
-    if job["status"] == "completed":
-        print("PDF URL:", job["result"]["pdfUrl"])
-        break
-    if job["status"] == "failed":
-        raise Exception(f"Job failed: {job.get('error')}")
-
-    delay = min(delay * 2, 30)  # Max 30s between polls
-```
-</CodeGroup>
-
-### Create a document with line items
-
-<CodeGroup>
-```bash cURL
-curl -X POST https://api.docsautomator.co/createDocument \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "docId": "YOUR_AUTOMATION_ID",
-    "data": {
-      "customer_name": "Acme Corp",
-      "invoice_date": "2025-01-15",
-      "subtotal": "$5,500.00",
-      "tax": "$495.00",
-      "total": "$5,995.00"
-    },
-    "line_items_1": [
-      { "description": "Consulting", "quantity": 10, "rate": "$150", "amount": "$1,500" },
-      { "description": "Development", "quantity": 20, "rate": "$200", "amount": "$4,000" }
-    ]
-  }'
-```
-
-```javascript Node.js
-const response = await fetch("https://api.docsautomator.co/createDocument", {
-  method: "POST",
-  headers: {
-    "Authorization": "Bearer YOUR_API_KEY",
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    docId: "YOUR_AUTOMATION_ID",
-    data: {
-      customer_name: "Acme Corp",
-      invoice_date: "2025-01-15",
-      subtotal: "$5,500.00",
-      tax: "$495.00",
-      total: "$5,995.00",
-    },
-    line_items_1: [
-      { description: "Consulting", quantity: 10, rate: "$150", amount: "$1,500" },
-      { description: "Development", quantity: 20, rate: "$200", amount: "$4,000" },
-    ],
-  }),
-});
-
-const result = await response.json();
-console.log(result.pdfUrl);
-```
-
-```python Python
-import requests
-
-response = requests.post(
-    "https://api.docsautomator.co/createDocument",
-    headers={
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json",
-    },
-    json={
-        "docId": "YOUR_AUTOMATION_ID",
-        "data": {
-            "customer_name": "Acme Corp",
-            "invoice_date": "2025-01-15",
-            "subtotal": "$5,500.00",
-            "tax": "$495.00",
-            "total": "$5,995.00",
-        },
-        "line_items_1": [
-            {"description": "Consulting", "quantity": 10, "rate": "$150", "amount": "$1,500"},
-            {"description": "Development", "quantity": 20, "rate": "$200", "amount": "$4,000"},
-        ],
-    },
-)
-
-result = response.json()
-print(result["pdfUrl"])
-```
-</CodeGroup>
 
 <Info>
 Each endpoint in the API Reference section includes an interactive API playground where you can test requests directly from the docs. Navigate to any endpoint page and look for the "Try it" panel on the right side.

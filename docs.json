@@ -206,7 +206,11 @@
               {
                 "group": "Documents",
                 "pages": [
-                  "POST /createDocument",
+                  "api-reference/documents/create-from-api",
+                  "api-reference/documents/create-from-airtable",
+                  "api-reference/documents/create-from-google-sheets",
+                  "api-reference/documents/create-from-smartsuite",
+                  "api-reference/documents/create-from-clickup",
                   "GET /job/{jobId}",
                   "GET /queue/stats"
                 ]

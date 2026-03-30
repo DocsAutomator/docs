@@ -60,7 +60,8 @@
                 "properties": {
                   "docId": {
                     "type": "string",
-                    "description": "The automation ID to execute. Also accepted as `automationId`."
+                    "description": "The automation ID to execute. Also accepted as `automationId`.",
+                    "example": "abc123"
                   },
                   "data": {
                     "type": "object",
@@ -68,70 +69,44 @@
                     "description": "Key-value pairs for template placeholders. Keys must match placeholder names in your template (Google Doc syntax or PDF placeholder names).",
                     "example": {
                       "customer_name": "Acme Corp",
+                      "invoice_number": "INV-2025-001",
                       "invoice_date": "2025-01-15",
-                      "total": "$1,500.00"
+                      "due_date": "2025-02-15",
+                      "subtotal": "$5,500.00",
+                      "tax": "$495.00",
+                      "total": "$5,995.00"
                     }
                   },
                   "documentName": {
                     "type": "string",
-                    "description": "Custom name for the generated document. Overrides the automation's document name setting."
+                    "description": "Custom name for the generated document. Overrides the automation's document name setting.",
+                    "example": "Invoice INV-2025-001"
                   },
                   "async": {
                     "type": "boolean",
                     "default": false,
-                    "description": "When `true`, returns immediately with a `jobId` (HTTP 202). Poll `GET /job/{jobId}` for the result. When `false` (default), the request blocks until the document is ready (up to 5 minutes)."
-                  },
-                  "recId": {
-                    "type": "string",
-                    "description": "Airtable record ID. Required when the automation's data source is Airtable."
-                  },
-                  "rowNumber": {
-                    "type": "integer",
-                    "description": "Google Sheets row number. Required when the automation's data source is Google Sheets."
+                    "description": "When `true`, returns immediately with a `jobId` (HTTP 202). Poll `GET /job/{jobId}` for the result. When `false` (default), the request blocks until the document is ready (up to 5 minutes).",
+                    "example": false
                   },
                   "line_items_1": {
                     "type": "array",
                     "items": {
                       "$ref": "#/components/schemas/LineItem"
                     },
-                    "description": "First set of line items. Each object's keys must match line item placeholder names. Use the `children` key for nested line items (up to 3 levels)."
-                  },
-                  "line_items_2": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/LineItem"
-                    },
-                    "description": "Second set of line items."
-                  },
-                  "line_items_3": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/LineItem"
-                    },
-                    "description": "Third set of line items."
-                  },
-                  "conditionalRendering": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "boolean"
-                    },
-                    "description": "Control conditional section visibility. Keys are section names, values are booleans.",
-                    "example": {
-                      "show_discount": true,
-                      "show_notes": false
-                    }
-                  },
-                  "lineDeletions": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Placeholder keys whose empty rows/paragraphs should be deleted from the output."
+                    "description": "First set of line items. Each object's keys must match line item placeholder names. Use the `children` key for nested line items (up to 2 levels). You can pass any number of line item groups (`line_items_1`, `line_items_2`, `line_items_3`, etc.).",
+                    "example": [
+                      { "description": "Consulting", "quantity": 10, "rate": "$150", "amount": "$1,500" },
+                      { "description": "Development", "quantity": 20, "rate": "$200", "amount": "$4,000" }
+                    ]
                   },
                   "webhookParams": {
                     "type": "object",
                     "additionalProperties": true,
-                    "description": "Custom parameters passed through to webhook notifications as `additionalParams`."
+                    "description": "Custom parameters passed through to webhook notifications as `additionalParams`.",
+                    "example": {
+                      "orderId": "ORD-123",
+                      "source": "api"
+                    }
                   },
                   "existingPdfs": {
                     "type": "array",
@@ -139,12 +114,14 @@
                       "type": "string",
                       "format": "uri"
                     },
-                    "description": "PDF URLs to merge or prepend to the generated document."
+                    "description": "PDF URLs to merge or prepend to the generated document.",
+                    "example": ["https://example.com/terms-and-conditions.pdf"]
                   },
                   "docTemplateLink": {
                     "type": "string",
                     "format": "uri",
-                    "description": "Override the automation's Google Doc template URL for this request only."
+                    "description": "Override the automation's Google Doc template URL for this request only.",
+                    "example": "https://docs.google.com/document/d/your-template-id/edit"
                   }
                 }
               },
@@ -219,6 +196,45 @@
                     "data": {
                       "customer_name": "Acme Corp"
                     }
+                  }
+                },
+                "withWebhook": {
+                  "summary": "With webhook params",
+                  "value": {
+                    "docId": "abc123",
+                    "data": {
+                      "customer_name": "Acme Corp",
+                      "contract_date": "2025-01-15"
+                    },
+                    "webhookParams": {
+                      "orderId": "ORD-123",
+                      "source": "api"
+                    }
+                  }
+                },
+                "withMergedPdfs": {
+                  "summary": "With merged PDFs",
+                  "value": {
+                    "docId": "abc123",
+                    "data": {
+                      "customer_name": "Acme Corp",
+                      "proposal_date": "2025-01-15"
+                    },
+                    "existingPdfs": [
+                      "https://example.com/terms-and-conditions.pdf",
+                      "https://example.com/appendix.pdf"
+                    ]
+                  }
+                },
+                "withTemplateOverride": {
+                  "summary": "With template override",
+                  "value": {
+                    "docId": "abc123",
+                    "data": {
+                      "customer_name": "Acme Corp",
+                      "total": "$1,500.00"
+                    },
+                    "docTemplateLink": "https://docs.google.com/document/d/your-template-id/edit"
                   }
                 }
               }
@@ -1298,14 +1314,14 @@
       "LineItem": {
         "type": "object",
         "additionalProperties": true,
-        "description": "A line item object. Keys correspond to line item placeholder names in your template. Use the `children` key for nested line items (up to 3 levels).",
+        "description": "A line item object. Keys correspond to line item placeholder names in your template. Use the `children` key for nested line items (up to 2 levels).",
         "properties": {
           "children": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LineItem"
             },
-            "description": "Nested child line items (supports up to 3 levels of nesting)."
+            "description": "Nested child line items (supports up to 2 levels of nesting)."
           }
         }
       },

@@ -5,6 +5,18 @@ rss: true
 mode: "center"
 ---
 
+<Update label="March 31, 2026">
+  ## Fix: Auto-Number Column with Tables That Have Rows Below Line Items
+
+  Fixed several issues where enabling the auto-number column on a line items table caused document generation to fail when the table had rows below the line items row (e.g. totals or summary rows).
+
+  - Auto-number column offset calculation now correctly accounts for rows below the line items row
+  - Group calculation values and group text are now inserted at the correct position when auto-numbering is enabled
+  - Regular placeholders (like totals) in the same table are no longer incorrectly skipped when line item data includes nested children
+  - AI-generated sample data no longer creates unnecessary nested children when the template has no nested line item rows
+  - Fixed a UI issue where editing one group calculation column could unintentionally modify another
+</Update>
+
 <Update label="March 27, 2026">
   ## Fix: Duplicate Google Drive Folders
 

@@ -112,7 +112,8 @@
                     "type": "array",
                     "items": {
                       "type": "string",
-                      "format": "uri"
+                      "format": "uri",
+                      "example": "https://example.com/terms-and-conditions.pdf"
                     },
                     "description": "PDF URLs to merge or prepend to the generated document.",
                     "example": ["https://example.com/terms-and-conditions.pdf"]

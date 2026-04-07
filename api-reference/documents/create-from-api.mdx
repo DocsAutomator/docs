@@ -39,8 +39,8 @@ POST https://api.docsautomator.co/createDocument
   Custom parameters passed through to webhook notifications as `additionalParams`.
 </ParamField>
 
-<ParamField body="existingPdfs" type="array">
-  PDF URLs to merge or prepend to the generated document.
+<ParamField body="existingPdfs" type="string[]">
+  Array of publicly accessible PDF URLs to merge or prepend to the generated document.
 </ParamField>
 
 <ParamField body="docTemplateLink" type="string">

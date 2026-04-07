@@ -30,6 +30,7 @@
     "mode": "system"
   },
   "api": {
+    "baseUrl": "https://api.docsautomator.co",
     "playground": {
       "display": "interactive",
       "proxy": true

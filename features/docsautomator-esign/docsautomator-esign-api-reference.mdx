@@ -130,6 +130,35 @@ Triggered when signing session created with `deliveryMethod: "manual"`. Use to r
 
 Triggered when all signers complete signing and final PDF is generated.
 
+**Payload:**
+
+```json
+{
+  "signedPdfUrl": "https://...",
+  "sessionId": "unique-identifier",
+  "documentName": "Document name",
+  "status": "completed",
+  "completedAt": "ISO date string",
+  "signers": [
+    {
+      "email": "signer@example.com",
+      "name": "Signer Name",
+      "signedAt": "ISO date string"
+    }
+  ],
+  "fieldValues": { },
+  "googleDriveFileId": "1aBcDeFgHiJkLmNoPqRsTuVwXyZ",
+  "googleDriveUrl": "https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/view",
+  "googleDriveFolderId": "0BxAbCdEfGhIjKlMnOpQrStUvWx",
+  "sourceData": { },
+  "additionalParams": { }
+}
+```
+
+<Note>
+The `googleDriveFileId`, `googleDriveUrl`, and `googleDriveFolderId` fields are only present when "Save to Google Drive" is enabled in the Signed PDF Delivery settings.
+</Note>
+
 ### Passing Additional Parameters
 
 Include `webhookParams` in document creation requests to receive custom data in webhook notifications:
@@ -260,7 +289,8 @@ def handle_esign_webhook():
     elif payload.get('status') == 'completed':
         signed_pdf_url = payload['signedPdfUrl']
         order_id = payload.get('additionalParams', {}).get('orderId')
-        process_signed_document(signed_pdf_url, order_id)
+        drive_url = payload.get('googleDriveUrl')  # Present if Save to Drive is enabled
+        process_signed_document(signed_pdf_url, order_id, drive_url=drive_url)
 
     return jsonify({'received': True})
 ```

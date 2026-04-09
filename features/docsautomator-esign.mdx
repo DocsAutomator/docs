@@ -233,6 +233,9 @@ Fires once when all signers complete and the final signed PDF is generated.
       "value": "entered value"
     }
   },
+  "googleDriveFileId": "1aBcDeFgHiJkLmNoPqRsTuVwXyZ",
+  "googleDriveUrl": "https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/view",
+  "googleDriveFolderId": "0BxAbCdEfGhIjKlMnOpQrStUvWx",
   "sourceData": { },
   "additionalParams": { }
 }
@@ -242,6 +245,10 @@ Fires once when all signers complete and the final signed PDF is generated.
 The `sourceData` field contains the original data from your data source that was used to generate the document. The `additionalParams` field contains any `webhookParams` you passed in the API request.
 
 For Airtable and SmartSuite automations, the record ID (`recId`) is automatically included in `additionalParams`, so you can identify which record the e-sign session belongs to.
+</Info>
+
+<Info>
+The `googleDriveFileId`, `googleDriveUrl`, and `googleDriveFolderId` fields are only included when the signed PDF is saved to Google Drive (i.e., "Save to Google Drive" is enabled in the Signed PDF Delivery section). If Google Drive is not configured, these fields are omitted from the payload.
 </Info>
 
 ### Session Declined

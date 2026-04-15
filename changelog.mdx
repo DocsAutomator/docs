@@ -5,6 +5,19 @@ rss: true
 mode: "center"
 ---
 
+<Update label="April 15, 2026">
+  ## Fix: E-Signature Date Field No Longer Drifts by a Day
+
+  The signed date now matches what the signer selects in the date picker, regardless of their timezone or where our servers run. Previously, signers in negative-UTC timezones could see the rendered date come out one day earlier than what they picked.
+
+  ## Improved: Live Mode Requires the E-Sign Add-on
+
+  Automations with e-signatures enabled can no longer be set Live without an active E-Sign add-on (or Unlimited plan). The Live option in the status menu now links straight to billing when the add-on is missing.
+
+  - Test mode remains free for trying out e-signing
+  - Existing Live automations are unaffected
+</Update>
+
 <Update label="April 1, 2026">
   ## New: Manual Document Generation & Batch Processing
 

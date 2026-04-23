@@ -5,6 +5,17 @@ rss: true
 mode: "center"
 ---
 
+<Update label="April 23, 2026">
+  ## New: E-Signature Expiration & Per-Signer Webhooks
+
+  More visibility into signing sessions — know the moment each signer completes, and never miss a signing link that expires before anyone signs.
+
+  - **`esign.session_expired` webhook** — fires when a signing link expires before all signers complete. Payload includes the list of pending signers, along with `sourceData` and `additionalParams` for data continuity.
+  - **Expiration email** — workspace notification recipients (or workspace owners as fallback) receive an email when a session expires, listing who didn't finish.
+  - **`esign.signer_signed` webhook** — fires once for every signer as they complete, including the final signer, with a `progress` block (`completed`, `total`, `allSigned`). Useful for tracking multi-party signing in real time.
+  - **Refusal fields in session API** — `GET /esign/sessions/:sessionId` now returns `declinedAt`, `declineReason`, and top-level `declinedBy` when a session is declined, so integrations can pull refusal details without depending on webhook history.
+</Update>
+
 <Update label="April 15, 2026">
   ## Fix: E-Signature Date Field No Longer Drifts by a Day
 

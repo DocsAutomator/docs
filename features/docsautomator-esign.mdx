@@ -139,7 +139,7 @@ Only unsigned documents receive reminders; they stop upon completion.
 |---------|---------|-------|
 | Link Expiration | 30 days | 1-365 days |
 
-After expiration, links become invalid and sessions change to "Expired" status.
+After expiration, links become invalid and sessions change to "Expired" status. When a session expires without being completed, DocsAutomator sends an **expiration email** to the workspace's notification recipients (falling back to workspace owners) and fires an **[`esign.session_expired` webhook](#session-expired)** if one is configured.
 
 ## The Signing Experience
 
@@ -275,6 +275,66 @@ Fires when a signer declines to sign the document.
 
 <Info>
 The `sourceData` field contains the original data from your data source that was used to generate the document. The `additionalParams` field contains any `webhookParams` you passed in the API request. For Airtable and SmartSuite automations, the record ID (`recId`) is automatically included in `additionalParams`.
+</Info>
+
+### Signer Signed
+
+Fires once every time a signer completes all of their required fields — including the final signer. Use this to track multi-party signing progress in real time without waiting for the `Session Completed` event.
+
+```json
+{
+  "event": "esign.signer_signed",
+  "sessionId": "unique-identifier",
+  "documentName": "Document name",
+  "status": "in_progress",
+  "signer": {
+    "email": "signer@example.com",
+    "name": "Signer Name",
+    "signerIndex": 1,
+    "role": "buyer",
+    "signedAt": "ISO date string"
+  },
+  "progress": {
+    "completed": 1,
+    "total": 2,
+    "allSigned": false
+  },
+  "sourceData": { },
+  "additionalParams": { }
+}
+```
+
+<Info>
+For the final signer, `progress.allSigned` is `true`, but the session `status` will still be `in_progress` at this point. The separate [Session Completed](#session-completed) webhook fires once the final signed PDF is generated.
+</Info>
+
+### Session Expired
+
+Fires when a signing session expires before all signers complete it. An expiration email is also sent to your workspace's notification recipients.
+
+```json
+{
+  "event": "esign.session_expired",
+  "sessionId": "unique-identifier",
+  "documentName": "Document name",
+  "status": "expired",
+  "expiredAt": "ISO date string",
+  "expiresAt": "ISO date string",
+  "pendingSigners": [
+    {
+      "email": "signer@example.com",
+      "name": "Signer Name",
+      "signerIndex": 2,
+      "status": "invited"
+    }
+  ],
+  "sourceData": { },
+  "additionalParams": { }
+}
+```
+
+<Info>
+`pendingSigners` lists signers who had not yet signed or declined when the session expired. If a session has already been declined, cancelled, or completed before the expiration time, this webhook does **not** fire.
 </Info>
 
 ## Signer Language

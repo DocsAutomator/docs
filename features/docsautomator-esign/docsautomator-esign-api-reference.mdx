@@ -54,6 +54,8 @@ curl -X GET "https://api.docsautomator.co/esign/sessions?status=pending&page=1&l
   Returns comprehensive session information including signer statuses, document hashes, e-sign fields with positions, and completion timestamps.
 </ParamField>
 
+Per-signer fields include `declinedAt` and `declineReason` for any signer who declined. When the session `status` is `declined`, the response additionally includes top-level `declinedAt`, `declinedBy` (`email`, `name`, `signerIndex`), and `declineReason` so you can read refusal details without inspecting the signers array.
+
 ---
 
 ### Get Signing Links
@@ -122,6 +124,16 @@ Cannot cancel completed sessions.
 
 ## Webhook Events
 
+| Event | When it fires |
+|-------|---------------|
+| *(no `event` field)* | All signers completed — signed PDF ready |
+| `esign.session_created` | Session created with `deliveryMethod: "manual"` |
+| `esign.signer_signed` | An individual signer completed all their fields |
+| `esign.session_declined` | A signer declined to sign |
+| `esign.session_expired` | Session expired before all signers completed |
+
+See [eSign overview — Webhook Integration](/features/docsautomator-esign#webhook-integration) for the full payload of each event.
+
 ### Session Created (Manual Delivery)
 
 Triggered when signing session created with `deliveryMethod: "manual"`. Use to retrieve and distribute signing links manually.
@@ -157,6 +169,66 @@ Triggered when all signers complete signing and final PDF is generated.
 
 <Note>
 The `googleDriveFileId`, `googleDriveUrl`, and `googleDriveFolderId` fields are only present when "Save to Google Drive" is enabled in the Signed PDF Delivery settings.
+</Note>
+
+### Signer Signed
+
+Fires once per signer as they complete, including the final signer. Use to track progress for multi-party documents.
+
+```json
+{
+  "event": "esign.signer_signed",
+  "sessionId": "unique-identifier",
+  "documentName": "Document name",
+  "status": "in_progress",
+  "signer": {
+    "email": "signer@example.com",
+    "name": "Signer Name",
+    "signerIndex": 1,
+    "role": "buyer",
+    "signedAt": "ISO date string"
+  },
+  "progress": {
+    "completed": 1,
+    "total": 2,
+    "allSigned": false
+  },
+  "sourceData": { },
+  "additionalParams": { }
+}
+```
+
+<Note>
+For the final signer, `progress.allSigned` is `true` but the session `status` is still `in_progress`. The separate `Signing Completed` webhook fires afterwards, once the signed PDF is ready.
+</Note>
+
+### Session Expired
+
+Fires when a signing session expires before all signers complete. An expiration email is also sent to workspace notification recipients.
+
+```json
+{
+  "event": "esign.session_expired",
+  "sessionId": "unique-identifier",
+  "documentName": "Document name",
+  "status": "expired",
+  "expiredAt": "ISO date string",
+  "expiresAt": "ISO date string",
+  "pendingSigners": [
+    {
+      "email": "signer@example.com",
+      "name": "Signer Name",
+      "signerIndex": 2,
+      "status": "invited"
+    }
+  ],
+  "sourceData": { },
+  "additionalParams": { }
+}
+```
+
+<Note>
+If a session is already declined, cancelled, or completed before its expiration time, this webhook does not fire.
 </Note>
 
 ### Passing Additional Parameters

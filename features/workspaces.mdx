@@ -79,6 +79,44 @@ Configure settings via Settings in Workspace menu:
 | **API** | API keys and settings |
 | **Notifications** | Error email alerts and newsletter subscription preferences |
 
+## Deleting a Workspace
+
+Workspace deletion is permanent and removes all of the workspace's automations, templates, and settings. Only the workspace **owner** can delete a workspace, and the workspace must not have an active subscription.
+
+<Steps>
+  <Step title="Cancel any active subscription">
+    Go to **Settings → Billing** and cancel the subscription. Workspaces with an active subscription cannot be deleted.
+  </Step>
+  <Step title="Open the Danger Zone">
+    Navigate to **Settings → Workspace → Danger Zone**.
+  </Step>
+  <Step title="Confirm deletion">
+    Click **Delete Workspace**, then type `delete workspace` in the confirmation dialog and click **Delete Workspace**.
+  </Step>
+</Steps>
+
+If the deleted workspace was your active workspace, DocsAutomator switches you to another workspace you belong to, or — if it was your last workspace — sends you to the **Create Workspace** screen.
+
+## Deleting Your Account
+
+You can permanently delete your DocsAutomator account once you no longer belong to any workspaces. Account deletion removes your user record entirely; it cannot be undone.
+
+<Steps>
+  <Step title="Leave or delete every workspace">
+    Delete each workspace you own (see above), and leave any workspace where you are an Admin or Member. The Delete Account option only appears when you have zero workspaces.
+  </Step>
+  <Step title="Open the Create Workspace screen">
+    Once you have no workspaces, you'll be taken to the **Create Workspace** screen automatically. The **Delete Account** link is shown next to the Logout button.
+  </Step>
+  <Step title="Confirm deletion">
+    Click **Delete Account**, type `delete account` in the confirmation dialog, and click **Delete Account**. You'll be logged out as soon as the account is removed.
+  </Step>
+</Steps>
+
+<Note>
+  If you signed up with the same email later, it will be treated as a brand-new account — old workspaces, automations, and run history are not recoverable.
+</Note>
+
 ## Best Practices
 
 <AccordionGroup>
@@ -103,7 +141,10 @@ Configure settings via Settings in Workspace menu:
     Yes, owners can transfer and remove ownership.
   </Accordion>
   <Accordion title="What happens when I delete a workspace?">
-    Deletion removes only that workspace and its contents. Your account remains active with access to other workspaces.
+    Deletion removes only that workspace and its contents. Your account remains active with access to other workspaces. The workspace must have no active subscription before it can be deleted.
+  </Accordion>
+  <Accordion title="How do I delete my entire DocsAutomator account?">
+    Delete or leave every workspace you belong to. Once you have zero workspaces, a **Delete Account** option appears on the Create Workspace screen. Account deletion is permanent — old workspaces, automations, and run history cannot be recovered.
   </Accordion>
   <Accordion title="Can I rename a workspace?">
     Yes, via Workspace Settings → General.

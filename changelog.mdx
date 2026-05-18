@@ -6,7 +6,7 @@ mode: "center"
 ---
 
 <Update label="May 18, 2026">
-  ## New: Replace a PDF Template Without Losing Placeholders
+  ## Replace a PDF Template Without Losing Placeholders
 
   You can now swap the underlying PDF file on a template without rebuilding any of the placeholders you've already positioned. Useful when you receive a revised version of the same document (new logo, updated branding, minor copy change) and want to keep all your data mappings intact.
 
@@ -15,7 +15,7 @@ mode: "center"
   - **Review positions if the layout shifted.** If the new PDF has different page dimensions or content reflowed, open the editor and nudge placeholders as needed. Page count differences can leave placeholders pointing at pages that no longer exist.
   - **Switching template format still resets cleanly.** Use the "Switch template format" menu item (or the Change button in the format picker) when you want to start over with a different format — that path discards the PDF and its placeholders, as before.
 
-  ## New: Configure E-Signature From Your AI Assistant
+  ## Configure E-Signature From Your AI Assistant
 
   The DocsAutomator MCP server now exposes a dedicated tool for editing the full e-signature configuration of an automation. Ask Claude, ChatGPT, or Cursor to set up signing in plain English instead of clicking through the dashboard.
 
@@ -26,7 +26,7 @@ mode: "center"
 
   Also fixed: `update_automation`, `delete_automation`, and `duplicate_automation` MCP tools now work end-to-end. Previously they all returned "Document not found" because the automation id was sent in the request body instead of the query string.
 
-  ## New: Pick Workspace When Connecting an MCP Client
+  ## Pick Workspace When Connecting an MCP Client
 
   If your DocsAutomator account belongs to more than one workspace, the OAuth consent screen (shown when you connect Claude Desktop, ChatGPT, or any OAuth-based MCP client) now lets you choose which workspace the connection grants access to. Previously the connection was bound to whichever workspace happened to be active in DocsAutomator at the moment you authorized, with no way to confirm or change it from inside the flow.
 

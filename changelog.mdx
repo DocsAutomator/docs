@@ -25,6 +25,16 @@ mode: "center"
   - **In-flight sessions are not retroactively changed.** Signing sessions already sent out keep their original email config; only newly-created sessions pick up the new settings.
 
   Also fixed: `update_automation`, `delete_automation`, and `duplicate_automation` MCP tools now work end-to-end. Previously they all returned "Document not found" because the automation id was sent in the request body instead of the query string.
+
+  ## New: Pick Workspace When Connecting an MCP Client
+
+  If your DocsAutomator account belongs to more than one workspace, the OAuth consent screen (shown when you connect Claude Desktop, ChatGPT, or any OAuth-based MCP client) now lets you choose which workspace the connection grants access to. Previously the connection was bound to whichever workspace happened to be active in DocsAutomator at the moment you authorized, with no way to confirm or change it from inside the flow.
+
+  - **Workspace dropdown on the consent screen.** Defaults to your currently active workspace; switch without leaving the OAuth flow.
+  - **Single-workspace accounts** see the workspace name on the consent screen for confirmation, no dropdown.
+  - **Existing connections are unaffected.** The workspace baked into existing tokens stays the same; this only changes new connections.
+  - **To switch the workspace of an existing connection**, disconnect the integration in your AI client and reconnect.
+  - **API key connections are unchanged.** Those are bound to the workspace of the key itself, no picker involved.
 </Update>
 
 <Update label="May 5, 2026">

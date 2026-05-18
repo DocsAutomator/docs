@@ -24,6 +24,16 @@ The Model Context Protocol (MCP) is an open standard that allows AI assistants t
 
 ---
 
+## Multi-Workspace Accounts
+
+If your DocsAutomator account belongs to more than one workspace and you connect through OAuth (Claude Desktop, ChatGPT, and other OAuth-based MCP clients), the authorization screen shows a workspace picker. The connection is bound to the workspace you select, and only that workspace's automations are reachable through it.
+
+To change which workspace an existing connection points at, disconnect the integration in your AI client and reconnect. That triggers a fresh OAuth flow and lets you pick a different workspace.
+
+API key connections (Claude Code CLI, Cursor, custom clients) are bound to the workspace of the key itself, so no picker is involved; switch workspaces by using a different API key.
+
+---
+
 ## Setup by Client
 
 ### Claude Desktop

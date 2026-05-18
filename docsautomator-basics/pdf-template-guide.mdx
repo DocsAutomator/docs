@@ -81,6 +81,36 @@ Button and radio group fields are not supported and will be skipped.
 
 ---
 
+## Replacing or Updating Your PDF
+
+Once a PDF template is uploaded, you have two options for changing it, depending on whether you want to keep your placeholders:
+
+| Action | When to use | What happens to placeholders |
+|--------|-------------|------------------------------|
+| **Replace PDF file** | The new PDF is the same template with minor changes (updated logo, revised copy, branding tweak) | Kept. Positions, sample data, and field properties carry over to the new file. |
+| **Switch template format** | You want to start over with a different template, or switch to Google Docs / Word | Deleted along with the PDF. You'll be returned to the template-format picker. |
+
+### Replace PDF file (keep placeholders)
+
+Use this when you receive a revised version of the same document and want to swap the file without rebuilding your placeholder layout.
+
+You can trigger it from two places:
+
+- **Three-dots menu** on the minimized template row → **Replace PDF file**
+- **Upload icon** between the Edit and Delete buttons on the PDF template card
+
+Pick the new PDF and DocsAutomator updates the file binary in place. AcroForm field detection is **not** re-run — your existing placeholders are reused as-is.
+
+<Warning>
+If the new PDF has different page dimensions, fewer pages, or content has reflowed, some placeholders may end up in the wrong position or point at a page that no longer exists. Open the editor after replacing the file and review each placeholder.
+</Warning>
+
+### Switch template format
+
+Use the **Switch template format** option in the three-dots menu (or the **Change** button in the format picker) when you want to discard the current PDF entirely — for example, to move to a Google Docs template instead. This removes the PDF file from DocsAutomator's storage and clears all placeholders.
+
+---
+
 ## The Visual Placeholder Editor
 
 After uploading a PDF, click the edit button to open the full-screen placeholder editor. This editor lets you define **where** data fields appear on top of your PDF — it does not modify the PDF content itself. The editor has three panels:

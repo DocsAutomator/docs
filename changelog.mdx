@@ -6,6 +6,15 @@ mode: "center"
 ---
 
 <Update label="May 18, 2026">
+  ## New: Replace a PDF Template Without Losing Placeholders
+
+  You can now swap the underlying PDF file on a template without rebuilding any of the placeholders you've already positioned. Useful when you receive a revised version of the same document (new logo, updated branding, minor copy change) and want to keep all your data mappings intact.
+
+  - **New "Replace PDF file" action** in the three-dots menu on the template row, and a dedicated upload icon between Edit and Delete on the PDF template card.
+  - **Placeholders, positions, sample data, and field properties carry over.** Only the file binary is replaced. The new PDF is treated as the same template revision, not a fresh upload — DocsAutomator does not auto-detect AcroForm fields again.
+  - **Review positions if the layout shifted.** If the new PDF has different page dimensions or content reflowed, open the editor and nudge placeholders as needed. Page count differences can leave placeholders pointing at pages that no longer exist.
+  - **Switching template format still resets cleanly.** Use the "Switch template format" menu item (or the Change button in the format picker) when you want to start over with a different format — that path discards the PDF and its placeholders, as before.
+
   ## New: Configure E-Signature From Your AI Assistant
 
   The DocsAutomator MCP server now exposes a dedicated tool for editing the full e-signature configuration of an automation. Ask Claude, ChatGPT, or Cursor to set up signing in plain English instead of clicking through the dashboard.

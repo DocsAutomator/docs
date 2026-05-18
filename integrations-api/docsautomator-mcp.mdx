@@ -170,7 +170,19 @@ Create a new automation.
 - `docTemplateLink` - Google Doc template URL
 
 #### `update_automation`
-Update an automation's settings.
+Update an automation's basic settings (title, template link, active flag, locale, save destination, document-name field). For e-signature configuration, use `update_automation_esignature`.
+
+#### `update_automation_esignature`
+Update the e-signature configuration of an automation: enable or disable signing, set signers, customize invitation/reminder/completion email templates, switch the signing language, set the CTA button color, configure save-to-Drive, and edit field display names and required flags.
+
+Call `get_automation` first to see the current esignature state before editing. Arrays (signers, notificationRecipients) and field maps (fieldConfigs, esignFieldMappings) are full-replace, so send the complete value rather than a delta.
+
+In-flight signing sessions snapshot their email config at creation time, so editing an automation does NOT retroactively change sessions already sent out.
+
+**Example prompts:**
+> "Enable e-signing on automation abc123 and set the signing language to German."
+>
+> "On automation abc123, make Jana the second signer with email jana@acme.com, and change the invitation subject to 'Please sign your Acme contract'."
 
 #### `delete_automation`
 Permanently delete an automation.

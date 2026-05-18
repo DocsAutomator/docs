@@ -5,6 +5,19 @@ rss: true
 mode: "center"
 ---
 
+<Update label="May 18, 2026">
+  ## New: Configure E-Signature From Your AI Assistant
+
+  The DocsAutomator MCP server now exposes a dedicated tool for editing the full e-signature configuration of an automation. Ask Claude, ChatGPT, or Cursor to set up signing in plain English instead of clicking through the dashboard.
+
+  - **New `update_automation_esignature` tool** — enable signing, set signers, switch signing language, customize invitation/reminder/completion email templates, set the CTA button color, configure save-to-Drive, and edit field display names and required flags.
+  - **Example prompt:** "On automation abc123, enable e-signing, set the language to German, and make Jana the second signer with email jana@acme.com."
+  - **Validated server-side.** Bad inputs (unknown language code, signer index collisions, non-hex button color, Gmail account not connected to the workspace) return a clear field-level error instead of silently saving broken state.
+  - **In-flight sessions are not retroactively changed.** Signing sessions already sent out keep their original email config; only newly-created sessions pick up the new settings.
+
+  Also fixed: `update_automation`, `delete_automation`, and `duplicate_automation` MCP tools now work end-to-end. Previously they all returned "Document not found" because the automation id was sent in the request body instead of the query string.
+</Update>
+
 <Update label="May 5, 2026">
   ## Redesigned: Automation Editor
 

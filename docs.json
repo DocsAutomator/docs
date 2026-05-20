@@ -88,6 +88,7 @@
                 "group": "Integrations",
                 "pages": [
                   "integrations-api/airtable",
+                  "integrations-api/notion",
                   "integrations-api/google-sheets",
                   "integrations-api/smartsuite",
                   "integrations-api/clickup",

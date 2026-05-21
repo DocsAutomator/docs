@@ -33,6 +33,7 @@ Select your data source from the available integrations:
 
 <CardGroup cols={3}>
   <Card title="Airtable" icon="/icons/airtable.png" href="/integrations-api/airtable" />
+  <Card title="Notion" icon="/icons/notion.png" href="/integrations-api/notion" />
   <Card title="Google Sheets" icon="/icons/google-sheets.png" href="/integrations-api/google-sheets" />
   <Card title="SmartSuite" icon="/icons/smartsuite.png" href="/integrations-api/smartsuite" />
   <Card title="Glide" icon="/icons/glide.png" href="/integrations-api/glide" />
@@ -139,6 +140,25 @@ The configuration process differs by integration:
       </Step>
       <Step title="Set Up Automation">
         Configure document creation using webhooks or automation scripts within Airtable
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Notion">
+    <Steps>
+      <Step title="Connect Notion">
+        Authorize DocsAutomator and pick the workspace and database containing your data
+      </Step>
+      <Step title="Configure Output">
+        Set the title property and (optionally) the file property where PDFs will be saved back
+      </Step>
+      <Step title="Map Placeholders">
+        Map template placeholders to your Notion database properties — or to the page body as Markdown
+      </Step>
+      <Step title="Generate Preview">
+        Create a preview to verify the output looks correct
+      </Step>
+      <Step title="Set Up Automation">
+        Trigger document creation from a Notion button (requires Notion Plus or higher)
       </Step>
     </Steps>
   </Tab>

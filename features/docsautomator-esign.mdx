@@ -52,6 +52,10 @@ Fields use the format: `{{esign.TYPE_SIGNER}}`
 | Text | `{{esign.text_1_name}}` | Text input field (append `_name` for a unique label per field) |
 | Checkbox | `{{esign.checkbox_1_label}}` | Agreement checkbox (append `_label` for a unique name per field) |
 
+## E-Sign Fields in Conditional Sections
+
+E-sign fields placed inside a [conditional section](/features/sections) are automatically excluded from the signing workflow when that section is hidden. If all e-sign fields are in hidden sections, no signing session is created and no charge is billed. This lets you build a single template that supports both e-sign and wet-ink workflows by toggling a section.
+
 ## Configuring Signers
 
 ### Required Information

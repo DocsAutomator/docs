@@ -5,6 +5,17 @@ rss: true
 mode: "center"
 ---
 
+<Update label="May 26, 2026">
+  ## E-Sign Fields Respect Conditional Sections
+
+  E-signature fields placed inside a hidden [conditional section](/features/sections) are now fully excluded from the signing workflow and billing.
+
+  - **No signing session** is created when all e-sign fields fall inside hidden sections
+  - **No $0.50 charge** is billed for documents where the e-sign section was hidden
+  - **Partial filtering** works too: if some signers' fields are in a hidden section and others are visible, only the visible signers receive a signing request
+  - **Email delivery proceeds normally** when e-sign is skipped, instead of being held for a signing session that won't happen
+</Update>
+
 <Update label="May 21, 2026">
   ## Notion Integration
 

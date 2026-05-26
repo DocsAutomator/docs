@@ -73,6 +73,16 @@ The system supports six conditional operators:
 
 These conditions are evaluated against placeholder values passed to the document.
 
+## E-Signature Fields in Sections
+
+E-sign fields (`{{esign.signature_1}}`, `{{esign.date_1}}`, etc.) placed inside a conditional section are fully excluded from the signing workflow when the section is hidden:
+
+- No signing session is created for fields in hidden sections
+- No $0.50 e-sign charge is billed
+- If all e-sign fields are inside hidden sections, email delivery proceeds normally instead of being held for signing
+
+This lets you use a single template for both e-sign and wet-ink workflows by placing each signature block in its own section and toggling visibility with a field value.
+
 ## Use Cases
 
 <CardGroup cols={2}>
@@ -85,8 +95,8 @@ These conditions are evaluated against placeholder values passed to the document
   <Card title="Regional Content" icon="globe">
     Display region-specific information
   </Card>
-  <Card title="Optional Details" icon="plus">
-    Show extended information when available
+  <Card title="E-Sign vs Wet Ink" icon="signature">
+    Use one template for both signing methods
   </Card>
 </CardGroup>
 

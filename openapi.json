@@ -66,7 +66,7 @@
                   "data": {
                     "type": "object",
                     "additionalProperties": true,
-                    "description": "Key-value pairs for template placeholders. Keys must match placeholder names in your template (Google Doc syntax or PDF placeholder names).",
+                    "description": "Key-value pairs for template placeholders. Keys must match placeholder names in your template (Google Doc syntax or PDF placeholder names). Line items are also included inside this object as `line_items_1`, `line_items_2`, etc. — each is an array of objects whose keys match line item placeholder names. Use the `children` key within line item objects for nested line items (up to 2 levels).",
                     "example": {
                       "customer_name": "Acme Corp",
                       "invoice_number": "INV-2025-001",
@@ -87,17 +87,6 @@
                     "default": false,
                     "description": "When `true`, returns immediately with a `jobId` (HTTP 202). Poll `GET /job/{jobId}` for the result. When `false` (default), the request blocks until the document is ready (up to 5 minutes).",
                     "example": false
-                  },
-                  "line_items_1": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/LineItem"
-                    },
-                    "description": "First set of line items. Each object's keys must match line item placeholder names. Use the `children` key for nested line items (up to 2 levels). You can pass any number of line item groups (`line_items_1`, `line_items_2`, `line_items_3`, etc.).",
-                    "example": [
-                      { "description": "Consulting", "quantity": 10, "rate": "$150", "amount": "$1,500" },
-                      { "description": "Development", "quantity": 20, "rate": "$200", "amount": "$4,000" }
-                    ]
                   },
                   "webhookParams": {
                     "type": "object",
@@ -143,22 +132,22 @@
                     "documentName": "Invoice #001",
                     "data": {
                       "customer_name": "Acme Corp",
-                      "invoice_date": "2025-01-15"
-                    },
-                    "line_items_1": [
-                      {
-                        "description": "Consulting",
-                        "quantity": 10,
-                        "rate": 150,
-                        "amount": 1500
-                      },
-                      {
-                        "description": "Development",
-                        "quantity": 20,
-                        "rate": 200,
-                        "amount": 4000
-                      }
-                    ]
+                      "invoice_date": "2025-01-15",
+                      "line_items_1": [
+                        {
+                          "description": "Consulting",
+                          "quantity": 10,
+                          "rate": 150,
+                          "amount": 1500
+                        },
+                        {
+                          "description": "Development",
+                          "quantity": 20,
+                          "rate": 200,
+                          "amount": 4000
+                        }
+                      ]
+                    }
                   }
                 },
                 "nestedLineItems": {
@@ -166,25 +155,25 @@
                   "value": {
                     "docId": "abc123",
                     "data": {
-                      "project_name": "Website Redesign"
-                    },
-                    "line_items_1": [
-                      {
-                        "phase": "Design",
-                        "children": [
-                          {
-                            "task": "Wireframes",
-                            "hours": 8,
-                            "children": [
-                              {
-                                "detail": "Homepage wireframe",
-                                "status": "Complete"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                      "project_name": "Website Redesign",
+                      "line_items_1": [
+                        {
+                          "phase": "Design",
+                          "children": [
+                            {
+                              "task": "Wireframes",
+                              "hours": 8,
+                              "children": [
+                                {
+                                  "detail": "Homepage wireframe",
+                                  "status": "Complete"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
                   }
                 },
                 "async": {

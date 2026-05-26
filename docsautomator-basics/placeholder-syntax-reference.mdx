@@ -106,24 +106,28 @@ Where `N` is the line item set number.
 
 ### API Data Structure
 
-When using the API, nest items using the `children` key:
+When using the API, pass line items inside the `data` object using the `children` key for nesting:
 
 ```json
 {
-  "line_items_1": [
-    {
-      "product": "Service A",
-      "price": "$100",
-      "children": [
-        {
-          "task": "Task 1",
-          "children": [
-            { "detail": "Detail 1" }
-          ]
-        }
-      ]
-    }
-  ]
+  "docId": "your-automation-id",
+  "data": {
+    "project_name": "Website Redesign",
+    "line_items_1": [
+      {
+        "product": "Service A",
+        "price": "$100",
+        "children": [
+          {
+            "task": "Task 1",
+            "children": [
+              { "detail": "Detail 1" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 

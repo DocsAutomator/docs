@@ -7,7 +7,7 @@ icon: "object-group"
 This feature enables you to incorporate pre-existing PDF files into your generated documents.
 
 <Note>
-**Availability**: Only available for Airtable, Google Sheets, ClickUp, SmartSuite, and API.
+**Availability**: Requires the Business plan or above. Only available for Airtable, Google Sheets, ClickUp, SmartSuite, and API.
 </Note>
 
 ## Implementation Methods
@@ -50,6 +50,10 @@ This feature enables you to incorporate pre-existing PDF files into your generat
 |--------|----------|
 | Insert After (Default) | Appends additional PDFs following the generated document |
 | Insert Before | Positions existing documents ahead of newly generated content |
+
+### Order of Multiple PDFs
+
+When the selected field or column holds several PDFs, they're merged in the order they appear there. This applies to every supported source. DocsAutomator does not reorder them, so changing their order at the source changes the merge order accordingly. For example, rearranging the attachments in an Airtable field, reordering the comma-separated URLs in a Google Sheets cell, or changing the order of URLs in the API `existingPdfs` array all shift the merge order to match.
 
 ## Use Cases
 

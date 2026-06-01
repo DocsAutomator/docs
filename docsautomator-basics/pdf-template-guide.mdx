@@ -11,6 +11,10 @@ PDF templates let you use an existing PDF as the base for document generation. U
 The visual editor positions data fields **on top of** your PDF. It does not edit the PDF itself. If you need to change the underlying layout, update the source PDF in your design tool and re-upload it.
 </Info>
 
+<Warning>
+**Don't type `{{placeholders}}` into your PDF.** The double-curly-bracket syntax only works in [Google Doc templates](/docsautomator-basics/google-doc-template-guide), where DocsAutomator finds and replaces the text for you. In a PDF, that text is part of the page itself, so it prints **literally** in your generated document (you would see `{{invoice_number}}` instead of the value, with no error to warn you). Upload your PDF unchanged, then add fields with the visual editor described below.
+</Warning>
+
 <Info>
 Looking for Google Doc templates instead? See the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide).
 </Info>

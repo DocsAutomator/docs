@@ -5,6 +5,17 @@ rss: true
 mode: "center"
 ---
 
+<Update label="June 1, 2026">
+  ## Cross-Field Conditions
+
+  Conditional rules can now compare against another field, not just a value you type in. This works across [sections](/features/sections), [show / hide](/features/advanced-placeholder-options/conditional-show-hide), [conditional styling](/features/advanced-placeholder-options/conditional-styling), and email send conditions.
+
+  - **Compare against another field.** A rule can compare a placeholder to another mapped placeholder, or to any field from your data source, including fields not mapped to a placeholder and the parent record's field inside line items.
+  - **Field-type-aware operators.** Number fields get greater than / less than, date fields get is after / is before, and checkboxes get is true / is false, alongside the existing text and presence operators.
+  - **ANY or ALL.** When a section or placeholder has several conditions, choose whether all of them must pass (AND) or any one of them (OR).
+  - Existing conditions are unaffected and behave exactly as before.
+</Update>
+
 <Update label="May 26, 2026">
   ## E-Sign Fields Respect Conditional Sections
 

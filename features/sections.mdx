@@ -60,18 +60,42 @@ Once sections are defined in the template, they appear in automation settings wh
 
 ## Available Conditions
 
-The system supports six conditional operators:
+Each rule is built from three parts: the **operator**, what you **compare against**, and (when a section has more than one rule) the **match mode**.
 
-| Condition | Description |
-|-----------|-------------|
-| equals | Value exactly matches |
-| does not equal | Value does not match |
-| contains | Value includes substring |
-| does not contain | Value excludes substring |
-| exists | Value is present (not empty) |
-| does not exist | Value is empty or missing |
+### Operators
 
-These conditions are evaluated against placeholder values passed to the document.
+Operators adapt to the field type, so a number field offers numeric comparisons, a date field offers chronological ones, and a checkbox offers true/false.
+
+| Type | Operators |
+|------|-----------|
+| Text | equals, does not equal, contains, does not contain |
+| Presence | exists, does not exist |
+| Number | greater than, less than, greater than or equal, less than or equal |
+| Date | is after, is before, is on or after, is on or before |
+| Checkbox | is true, is false |
+
+### Compare against
+
+A condition no longer has to compare to a fixed value you type in. You can compare against:
+
+| Source | Description |
+|--------|-------------|
+| A value | A literal value you enter (the default) |
+| Another placeholder | The value of any other mapped placeholder |
+| A source field | Any field from your connected data source, including fields not mapped to a placeholder. Inside line items you can target the row's own field or the parent record's field. |
+
+This enables dynamic comparisons, for example showing a section only when `amount_paid` is less than `amount_due`, or when one date field is after another.
+
+### Multiple conditions
+
+Add more than one rule to a section and choose how they combine:
+
+- **ALL**: the section shows only when every condition passes (AND)
+- **ANY**: the section shows when at least one condition passes (OR)
+
+<Note>
+Existing sections keep working unchanged. A single rule that compares a placeholder to a value behaves exactly as it did before.
+</Note>
 
 ## E-Signature Fields in Sections
 

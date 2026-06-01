@@ -12,14 +12,23 @@ Configure conditions to control when a placeholder value is displayed or hidden 
 
 ## Available Conditions
 
-| Condition | Description |
-|-----------|-------------|
-| equals | Value exactly matches specified text |
-| does not equal | Value does not match specified text |
-| contains | Value includes specified substring |
-| does not contain | Value excludes specified substring |
-| exists | Value is present (not empty/null) |
-| does not exist | Value is empty or missing |
+Operators adapt to the field type:
+
+| Type | Operators |
+|------|-----------|
+| Text | equals, does not equal, contains, does not contain |
+| Presence | exists, does not exist |
+| Number | greater than, less than, greater than or equal, less than or equal |
+| Date | is after, is before, is on or after, is on or before |
+| Checkbox | is true, is false |
+
+### Compare against
+
+The value you compare to can be a literal value, **another mapped placeholder**, or a **raw field from your data source** (including unmapped fields, and the parent record's field when used inside line items). This makes dynamic comparisons possible, such as showing a value only when it is greater than another field.
+
+### Multiple conditions
+
+When a placeholder has more than one rule, choose **ALL** (show only when every condition passes) or **ANY** (show when at least one passes).
 
 ## Configuration
 
@@ -31,10 +40,10 @@ Configure conditions to control when a placeholder value is displayed or hidden 
     Select "Show/Hide Conditionally" option
   </Step>
   <Step title="Set Condition">
-    Choose the condition type (equals, contains, etc.)
+    Choose the operator (equals, contains, greater than, is after, etc.)
   </Step>
-  <Step title="Enter Value">
-    Specify the value to compare against
+  <Step title="Choose What to Compare Against">
+    Enter a literal value, or pick another placeholder or a source field to compare against
   </Step>
   <Step title="Choose Behavior">
     Select whether to show or hide when condition is met

@@ -176,7 +176,7 @@ Create a new automation.
 
 **Parameters:**
 - `title` (required) - Name for the automation
-- `dataSourceName` (required) - One of: Airtable, Google Sheets, API, Zapier, SmartSuite, ClickUp, Glide, Noloco, n8n, Make
+- `dataSourceName` (required) - One of: Airtable, Google Sheets, Notion, API, Zapier, SmartSuite, ClickUp, Glide, Noloco, Softr, n8n, Make
 - `docTemplateLink` - Google Doc template URL
 
 #### `update_automation`
@@ -267,7 +267,7 @@ Resend the signing invitation email to a signer.
 ### Email Tools
 
 #### `send_test_email`
-Send a test email for an automation (rate limited to 5/hour).
+Send a test email for an automation (rate limited to 25 per automation per hour).
 
 ---
 
@@ -333,5 +333,5 @@ Would you like me to resend the invitation?"
 
 ### Rate limiting
 - Document generation: 2000 requests per 15 minutes
-- Test emails: 5 per hour
+- Test emails: 25 per automation per hour
 - If you hit limits, wait for the reset period

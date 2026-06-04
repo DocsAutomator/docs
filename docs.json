@@ -23,7 +23,7 @@
     }
   },
   "banner": {
-    "content": "New: Notion integration. [Learn more →](/docs/integrations-api/notion)",
+    "content": "New: Microsoft Word (.docx) templates. [Learn more →](/docs/docsautomator-basics/word-template-guide)",
     "dismissible": true
   },
   "appearance": {
@@ -78,7 +78,8 @@
                     "pages": [
                       "docsautomator-basics/templates-overview",
                       "docsautomator-basics/google-doc-template-guide",
-                      "docsautomator-basics/pdf-template-guide"
+                      "docsautomator-basics/pdf-template-guide",
+                      "docsautomator-basics/word-template-guide"
                     ]
                   },
                   "docsautomator-basics/placeholder-syntax-reference"

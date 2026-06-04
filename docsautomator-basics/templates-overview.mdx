@@ -1,6 +1,6 @@
 ---
 title: 'Templates Overview'
-description: 'Choose the right template type for your document automation — Google Docs, PDF, or Word conversion'
+description: 'Choose the right template type for your document automation — Google Docs, PDF, or native Word (.docx)'
 icon: 'files'
 keywords:
   [
@@ -21,7 +21,7 @@ DocsAutomator supports multiple template types so you can pick the best fit for 
 </Note>
 
 <Frame>
-  <img src="/images/quickstart/template-type-selection.png" alt="Template type selection — Google Docs, Word to Google Docs, or Existing PDF" />
+  <img src="/images/quickstart/template-type-selection.png" alt="Template type selection: Google Docs, Microsoft Word, or Upload an existing PDF" />
 </Frame>
 
 ## Template Types
@@ -46,27 +46,28 @@ DocsAutomator supports multiple template types so you can pick the best fit for 
     government docs.
   </Card>
   <Card
-    title="Word to Google Doc"
+    title="Word (.docx)"
     icon="file-word"
-    href="/docsautomator-basics/google-doc-template-guide#converting-word-templates"
+    href="/docsautomator-basics/word-template-guide"
   >
-    Upload a `.docx` file and DocsAutomator converts it to a Google Doc
-    automatically. Best when you have existing Word templates you want to reuse.
-    Note that complex formatting may not convert perfectly.
+    Use a native Word file as your template with the same `{{ placeholder }}`
+    syntax as Google Docs. Stays a `.docx` for its whole life and renders
+    straight to PDF. Best when your team designs documents in Microsoft Word.
   </Card>
 </CardGroup>
 
 ## Which Should I Use?
 
-|                                                        | Google Doc | PDF | Word Conversion        |
-| ------------------------------------------------------ | ---------- | --- | ---------------------- |
-| **Dynamic content** (variable-length text, line items) | Yes        | No  | Yes (after conversion) |
-| **Fixed layout** (exact positioning)                   | No         | Yes | No                     |
-| **Line items & repeating rows**                        | Yes        | No  | Yes (after conversion) |
-| **Conditional content** (show/hide sections)           | Yes        | No  | Yes (after conversion) |
-| **E-signatures**                                       | Yes        | Yes | Yes (after conversion) |
-| **Pixel-perfect design**                               | No         | Yes | No                     |
-| **Easy to edit & iterate**                             | Yes        | No  | Yes (after conversion) |
+|                                                        | Google Doc | PDF | Word (.docx)       |
+| ------------------------------------------------------ | ---------- | --- | ------------------ |
+| **Dynamic content** (variable-length text, line items) | Yes        | No  | Yes                |
+| **Fixed layout** (exact positioning)                   | No         | Yes | No                 |
+| **Line items & repeating rows**                        | Yes        | No  | Yes (single level) |
+| **Nested (multi-level) line items**                    | Yes        | No  | No                 |
+| **Conditional content** (show/hide sections)           | Yes        | No  | Yes                |
+| **E-signatures**                                       | Yes        | Yes | Yes                |
+| **Pixel-perfect design**                               | No         | Yes | No                 |
+| **Edit in Microsoft Word**                             | No         | No  | Yes                |
 
 <Tip>
   If you're not sure, start with a **Google Doc template** — it's the most

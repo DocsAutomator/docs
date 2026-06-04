@@ -1,0 +1,294 @@
+---
+title: "Word Template Guide"
+description: "Use native Word (.docx) files as templates: the same placeholder syntax and features as Google Docs, rendered straight to PDF"
+icon: "file-word"
+keywords:
+  [
+    "Word template",
+    "docx template",
+    "Word document automation",
+    "Microsoft Word",
+    "native Word",
+    "Word placeholders",
+  ]
+---
+
+Word templates let you use a native Microsoft Word (`.docx`) file as the base for document generation. You type `{{placeholders}}` directly into the Word document, map them to your data source, and DocsAutomator fills them in and renders the result to a PDF at generation time. Your original template file is never modified.
+
+Word templates support the **same placeholder syntax and almost all of the same features as [Google Doc templates](/docsautomator-basics/google-doc-template-guide)**. Line items, conditional sections, dynamic images, conditional styling, and e-signatures all work the same way.
+
+## When to Use Word Templates
+
+<CardGroup cols={2}>
+  <Card title="Word (.docx) Templates" icon="file-word">
+    - Your team already designs documents in Microsoft Word
+    - You want to keep editing the template in Word, not Google Docs
+    - You need dynamic content: line items, conditional sections, e-signatures
+    - You have an existing `.docx` brand template to reuse
+  </Card>
+  <Card title="Google Doc Templates" icon="file-lines">
+    - You prefer to build and edit templates in Google Docs
+    - You want the in-app live preview while editing
+    - You need nested (multi-level) line items
+    - You collaborate on the template in real time
+  </Card>
+</CardGroup>
+
+<Tip>
+The placeholder syntax is identical between Google Docs and Word, so you can move between the two without relearning anything. If you already know how to build a Google Doc template, you already know how to build a Word template.
+</Tip>
+
+---
+
+## Three Ways to Start a Word Template
+
+In the **Template** step of your automation, choose **Word (.docx)** as the template type. You then have three ways to get a template in place.
+
+<Frame caption="The Word template picker: choose a gallery design, upload your own .docx, or create one with AI">
+  <img src="/images/word-template/template-type-picker.png" alt="Word template picker showing three options: Choose from the Word Template Gallery, Upload a Word (.docx) file, and Create with AI" />
+</Frame>
+
+<CardGroup cols={3}>
+  <Card title="Word Template Gallery" icon="grid-2">
+    Pick a ready-made `.docx` design from the gallery. DocsAutomator copies it into your automation, detects its placeholders, and you map your data.
+  </Card>
+  <Card title="Upload a .docx" icon="arrow-up-from-bracket">
+    Upload your own Word file with `{{placeholders}}` already typed in. DocsAutomator scans it and lists every placeholder it finds.
+  </Card>
+  <Card title="Create with AI" icon="wand-magic-sparkles">
+    Describe the document you need and AI generates a complete `.docx` template, layout, formatting, and placeholders included.
+  </Card>
+</CardGroup>
+
+### Option 1: Choose from the Word Template Gallery
+
+The gallery contains a large set of ready-made `.docx` designs (invoices, contracts, certificates, reports, and more). Select one and DocsAutomator copies the file into your automation and detects its placeholders automatically. From there you map each placeholder to your data source and customize the wording in Word if you want.
+
+### Option 2: Upload your own .docx
+
+<Steps>
+  <Step title="Build your template in Word">
+    Type `{{placeholders}}` directly into your Word document wherever you want data to appear (see [Placeholder Syntax](#placeholder-syntax) below).
+  </Step>
+  <Step title="Upload the file">
+    Click **Upload a Word (.docx) file** and select your document. The file must be a `.docx` (not the older `.doc`) and under **25 MB**.
+  </Step>
+  <Step title="Review detected placeholders">
+    DocsAutomator scans the body, headers, and footers and reports how many placeholders it found. You then map each one to a field in your data source.
+
+    <Frame caption="After upload, DocsAutomator shows the file name and the number of placeholders detected">
+      <img src="/images/word-template/uploaded-docx.png" alt="Uploaded Word template showing the file name Non-Disclosure Agreement.docx, a 22-placeholder count, action buttons, and a live document preview" />
+    </Frame>
+  </Step>
+</Steps>
+
+<Warning>
+Only `.docx` files are supported, up to **25 MB**. The older binary `.doc` format and other word processors' formats are not accepted. Save or export as `.docx` first.
+</Warning>
+
+### Option 3: Create with AI
+
+Don't have a template yet? Describe what you need ("a clean consulting invoice with a logo, line items, and totals") and AI generates a complete `.docx` template for you, headings, tables, formatting, and `{{placeholders}}` in the right places.
+
+You can:
+
+- **Refine the colors and title**, let AI suggest a title or pull a brand color palette
+- **Add images**, upload a logo or graphic to embed in the design
+- **Edit by chatting**, ask for changes ("make the header navy", "add a notes section") and the document updates
+- **Undo**, step back if an edit isn't what you wanted
+- **Preview as PDF**, see exactly how the document will render before you save
+
+When you're happy, save it and the generated `.docx` becomes your template, ready for data mapping. This is the Word counterpart to the [AI Template Generator](/features/ai-template-generator), no Google account required.
+
+---
+
+## Placeholder Syntax
+
+You write placeholders **directly into the Word document** using double curly brackets. This is the same syntax as Google Doc templates.
+
+<Warning>
+This is the opposite of [PDF templates](/docsautomator-basics/pdf-template-guide). In a PDF you must **not** type `{{...}}` (it would print literally); you position fields with a visual editor instead. In a Word template you **do** type `{{...}}` into the document, exactly like a Google Doc.
+</Warning>
+
+### Standard Text Placeholders
+
+| Syntax | Description | Example |
+|--------|-------------|---------|
+| `{{fieldName}}` | Simple text replacement | `{{company_name}}` |
+| `{{image_fieldName}}` | Dynamic image, any placeholder whose name contains `image` is filled with a picture from your data | `{{image_logo}}` |
+
+```
+Dear {{client_name}},
+
+Your order #{{order_number}} has been confirmed.
+Invoice date: {{invoice_date}}
+```
+
+<Tip>
+For a placeholder to be found reliably, DocsAutomator stitches text back together even if Word splits it across formatting runs. To keep things robust, type each placeholder in one go (avoid changing the font mid-placeholder) and apply bold/italic/color to the **whole** `{{placeholder}}` rather than part of it.
+</Tip>
+
+### Line Items (Repeating Table Rows)
+
+Line items repeat a table row once per record in a list, perfect for invoice line items, order details, or any repeating data.
+
+To build one in Word:
+
+1. Insert a table with a header row and one data row.
+2. In the **first cell of the data row**, type the marker `{{line_items_1}}`.
+3. In the cells of that same row, type the **bare field names** for each column, for example `{{description}}`, `{{quantity}}`, `{{price}}`.
+
+```
+| Description        | Qty           | Price       |
+| ------------------ | ------------- | ----------- |
+| {{line_items_1}}{{description}} | {{quantity}} | {{price}} |
+```
+
+At generation time DocsAutomator repeats that row for every item in the list. You can have multiple independent line-item tables in one document by using `{{line_items_2}}`, `{{line_items_3}}`, and so on (up to nine).
+
+<Note>
+**Nested (multi-level) line items are not yet supported in native Word templates.** The `{{line_items_1_1}}` / `{{line_items_1_2}}` syntax for sub-lists currently works only in [Google Doc templates](/features/line-items/nested-line-items). If you need nested line items today, use a Google Doc template. Single-level line items are fully supported in Word.
+</Note>
+
+See [Line Items](/features/line-items) for the full feature reference, including [grouping and calculations](/features/line-items/line-items-grouping-+-calculations) and [automatic row numbers](/features/line-items/auto-row-numbers), all of which work in Word.
+
+### Conditional Sections
+
+Show or hide whole blocks of the document based on your data. Put each tag in its own paragraph.
+
+```
+{{section_eu_terms}}
+These additional terms apply to customers in the EU…
+{{/section_eu_terms}}
+```
+
+Configure the show/hide rules in the section settings UI (the same six condition types as Google Docs: equals, does not equal, contains, does not contain, exists, does not exist; multiple conditions combine with AND). See [Sections](/features/sections) for details.
+
+### E-Signature Placeholders
+
+Word templates work with [DocsAutomator eSign](/features/docsautomator-esign) using the same text-based tags as Google Docs:
+
+```
+{{esign.signature_1}}   Signature field for signer 1
+{{esign.date_1}}        Auto-filled date for signer 1
+{{esign.text_1_label}}  Text field for signer 1
+{{esign.checkbox_1_label}}  Checkbox for signer 1
+```
+
+Type these tags where the signing elements should appear, then configure signers in the [e-signature output settings](/features/docsautomator-esign).
+
+---
+
+## Supported Features
+
+Almost everything you can do in a Google Doc template works in a Word template. The table below maps the platform's features onto native Word support.
+
+| Feature | Native Word | Notes |
+|---------|:-----------:|-------|
+| Simple text placeholders | Yes | `{{fieldName}}` |
+| [Dynamic images](/features/dynamic-images) | Yes | Any placeholder whose name contains `image` |
+| [Line items](/features/line-items) (single level) | Yes | `{{line_items_1}}` in the table row, up to 9 tables |
+| [Nested line items](/features/line-items/nested-line-items) | No | Google Doc templates only (for now) |
+| [Auto row numbers](/features/line-items/auto-row-numbers) | Yes | Inserts a numbered column into the line-item table |
+| [Conditional sections](/features/sections) (show/hide) | Yes | `{{section_x}}…{{/section_x}}` |
+| [Conditional show/hide of placeholders](/features/advanced-placeholder-options/conditional-show-hide) | Yes | Empty/hidden values drop their paragraph or table row |
+| [Conditional styling](/features/advanced-placeholder-options/conditional-styling) | Yes | Bold/italic/color rules per placeholder |
+| [Markdown formatting](/features/advanced-placeholder-options/enable-markdown-formatting) | Yes | Rich text from markdown values |
+| Date & number formatting | Yes | Per-placeholder formatting options |
+| [E-signatures](/features/docsautomator-esign) | Yes | `{{esign.*}}` tags |
+| In-editor live preview | Yes | Sample data rendered to PDF in the split view |
+
+<Tip>
+Per-placeholder options (formatting, conditional show/hide, conditional styling, markdown) are configured in the field-mapping UI, exactly like Google Doc templates. See [Advanced Placeholder Options](/features/advanced-placeholder-options).
+</Tip>
+
+---
+
+## How Word Templates Render
+
+When you generate a document, DocsAutomator fills your Word template and produces a clean `.docx`, then converts it to a PDF for the final output. To make those PDFs faithful, keep the following in mind.
+
+### Fonts
+
+For the PDF to match your design exactly, **embed your fonts in the Word file**. In Microsoft Word:
+
+> **File ▸ Options ▸ Save ▸ "Embed fonts in the file"**
+
+If a non-standard font isn't embedded, the PDF renderer substitutes the closest available font, which can shift spacing and line breaks. Standard system fonts (Arial, Times New Roman, Calibri, and similar) render reliably without embedding. DocsAutomator lists the fonts it detected in your template after upload so you know what to embed.
+
+### Table Borders
+
+The renderer automatically neutralizes invisible **white borders on white backgrounds** (which some converters would otherwise render as faint gaps in the PDF). Intentional, visible borders and dividers are always preserved, this fix is non-destructive and only touches borders that were invisible anyway.
+
+### Floating & Anchored Objects
+
+Floating text boxes and anchored drawings are kept as-is but can shift position when rendered to PDF. For the most predictable results, prefer in-line images and standard tables over floating objects.
+
+---
+
+## Replacing or Removing a Word Template
+
+Once a Word template is attached, the template card gives you two controls:
+
+| Action | What happens |
+|--------|--------------|
+| **Replace** | Upload a new `.docx` in place of the current one. Placeholders are re-detected from the new file. |
+| **Delete** | Removes the Word template and returns you to the template-type picker so you can start over (or switch to Google Docs or PDF). |
+
+---
+
+## Data Source Compatibility
+
+Word templates work with every DocsAutomator data source:
+
+<CardGroup cols={3}>
+  <Card title="Airtable" icon="/icons/airtable.png" href="/integrations-api/airtable" />
+  <Card title="Notion" icon="/icons/notion.png" href="/integrations-api/notion" />
+  <Card title="Google Sheets" icon="/icons/google-sheets.png" href="/integrations-api/google-sheets" />
+  <Card title="SmartSuite" icon="/icons/smartsuite.png" href="/integrations-api/smartsuite" />
+  <Card title="ClickUp" icon="/icons/clickup.png" href="/integrations-api/clickup" />
+  <Card title="API" icon="/icons/api.png" href="/integrations-api/docsautomator-api" />
+  <Card title="Zapier" icon="/icons/zapier.svg" href="/integrations-api/zapier" />
+  <Card title="Glide" icon="/icons/glide.png" href="/integrations-api/glide" />
+  <Card title="Make" icon="/icons/make.svg" href="/integrations-api/make" />
+  <Card title="n8n" icon="/icons/n8n.svg" href="/integrations-api/n8n" />
+</CardGroup>
+
+The placeholder **name** is what maps to your data source. Field mapping is free-form: a placeholder named `{{company_name}}` can map to any column or field, regardless of what that field is called in your source.
+
+---
+
+## Limitations vs Google Docs
+
+Native Word templates support nearly the full feature set, with a few differences to be aware of:
+
+- **Nested line items** (`{{line_items_1_1}}`) are not yet supported, use a single level, or a Google Doc template for multi-level lists.
+- **Fonts must be embedded** in the `.docx` for non-standard typefaces to render faithfully in the PDF.
+- **Floating/anchored objects** may shift position in the PDF; prefer in-line layout.
+
+For documents that need nested line items or heavy real-time collaboration on the template itself, a [Google Doc template](/docsautomator-basics/google-doc-template-guide) may be the better fit.
+
+---
+
+## Related Pages
+
+<CardGroup cols={2}>
+  <Card title="Templates Overview" icon="files" href="/docsautomator-basics/templates-overview">
+    Compare Google Doc, PDF, and Word template types
+  </Card>
+  <Card title="Placeholder Syntax Reference" icon="code" href="/docsautomator-basics/placeholder-syntax-reference">
+    Complete reference for all placeholder types
+  </Card>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Repeating rows and tables from list data
+  </Card>
+  <Card title="Sections" icon="square-dashed" href="/features/sections">
+    Show or hide blocks based on your data
+  </Card>
+  <Card title="DocsAutomator eSign" icon="signature" href="/features/docsautomator-esign">
+    E-signature configuration and workflows
+  </Card>
+  <Card title="AI Template Generator" icon="wand-magic-sparkles" href="/features/ai-template-generator">
+    Generate a template from a prompt
+  </Card>
+</CardGroup>

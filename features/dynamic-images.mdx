@@ -116,6 +116,26 @@ To insert multiple images for a single placeholder, pass them as an array or com
   </Tab>
 </Tabs>
 
+## Choosing Which Image to Insert
+
+When a placeholder receives multiple images, you can choose which of them end up in the document. Open the placeholder's image options and set **Which image**:
+
+| Option | Behavior |
+|--------|----------|
+| All images (default) | Every image is inserted inline |
+| First image only | Only the first image in the list |
+| Last image only | Only the last image in the list |
+
+The setting is per placeholder and works with every data source and template type. Width and height settings apply to whichever image is inserted.
+
+<Tip>
+Attachment fields often collect photos over time. Since new files are added at one end of the list, "First image only" and "Last image only" let you reliably pick the newest or the oldest image, no matter how many are attached.
+</Tip>
+
+<Note>
+Word templates insert a single image per placeholder: "First image only" and "Last image only" work as described, while a multi-image field left on "All images" is not rendered. Google Doc templates insert all images inline.
+</Note>
+
 ## Best Practices
 
 <AccordionGroup>

@@ -6,6 +6,29 @@ mode: "center"
 ---
 
 <Update label="June 4, 2026">
+  ## Choose Which Image to Insert
+
+  Image placeholders backed by multiple images (for example an Airtable attachment field) now have a "Which image" setting: insert all of them (the default), only the first, or only the last.
+
+  - **Set per placeholder** in the image options, right next to width and height.
+  - **Useful for attachment fields that collect photos over time**: "First image only" and "Last image only" let you target either end of the list, so you can reliably pick the newest or the oldest file regardless of how many are attached.
+  - **Works with every data source** and with Google Docs, Word, and PDF templates.
+  - Existing "first image only" settings carry over unchanged.
+
+  See [Dynamic Images](/features/dynamic-images#choosing-which-image-to-insert) for details.
+</Update>
+
+<Update label="June 4, 2026">
+  ## Conditions on Lookups of Linked Records
+
+  Conditional rules that reference an Airtable lookup of a linked record (or a linked-record field itself) now compare against the linked record's primary field, the value you see in Airtable, instead of its internal record ID.
+
+  - Applies to [section](/features/sections) conditions, [conditional show / hide](/features/advanced-placeholder-options/conditional-show-hide), [conditional styling](/features/advanced-placeholder-options/conditional-styling), and email send conditions.
+  - Fields with several linked records compare as the comma-separated list of names, matching what the placeholder prints. Use "contains" to match on a single record.
+  - If you built a formula-field workaround for this, it keeps working; it's just no longer needed.
+</Update>
+
+<Update label="June 4, 2026">
   ## Microsoft Word (.docx) Templates
 
   <Frame>

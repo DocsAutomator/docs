@@ -56,6 +56,22 @@ Fields use the format: `{{esign.TYPE_SIGNER}}`
 
 E-sign fields placed inside a [conditional section](/features/sections) are automatically excluded from the signing workflow when that section is hidden. If all e-sign fields are in hidden sections, no signing session is created and no charge is billed. This lets you build a single template that supports both e-sign and wet-ink workflows by toggling a section.
 
+## Review Before Signing (skipEsign)
+
+By default, generating a document from an e-sign-enabled automation starts the signing workflow immediately. To review a document first — for example, have your team check a contract before it goes out — pass `skipEsign: true` in the [createDocument](/api-reference/documents/create-from-api) request:
+
+```json
+{
+  "docId": "YOUR_AUTOMATION_ID",
+  "recId": "rec1234567890",
+  "skipEsign": true
+}
+```
+
+The document is generated and delivered normally (Drive save, email, webhook), but no signing session is created, no signing invitations are sent, and nothing is billed for e-signing. For Google Docs and Word templates, the `{{esign.*}}` tags remain visible in the output so reviewers can see where signature blocks will be placed; PDF templates simply leave those areas blank. Once the document is approved, run the same request again **without** `skipEsign` to send it for signing.
+
+This makes two-step approval flows easy to build — e.g. two Airtable buttons triggering the same automation: "Draft for Review" (with `skipEsign: true`) and "Send for Signing" (without it).
+
 ## Configuring Signers
 
 ### Required Information

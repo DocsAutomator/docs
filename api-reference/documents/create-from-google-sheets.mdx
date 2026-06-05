@@ -35,6 +35,10 @@ POST https://api.docsautomator.co/createDocument
   Custom parameters passed through to webhook notifications as `additionalParams`.
 </ParamField>
 
+<ParamField body="skipEsign" type="boolean" default="false">
+  When `true`, skips e-signing for this request even if the automation has e-signing enabled. The document is generated and delivered normally (Drive save, email, webhook), but no signing session is started and no signing invitations are sent. Useful for two-step approval flows: generate a draft for review first, then re-run without `skipEsign` to send the document for signing. Also accepted as a query parameter (`?skipEsign=true`) on GET requests.
+</ParamField>
+
 <ParamField body="docTemplateLink" type="string">
   Override the automation's Google Doc template URL for this request only.
 </ParamField>

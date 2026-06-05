@@ -35,6 +35,10 @@ POST https://api.docsautomator.co/createDocument
   Custom parameters passed through to webhook notifications as `additionalParams`.
 </ParamField>
 
+<ParamField body="skipEsign" type="boolean" default="false">
+  When `true`, skips e-signing for this request even if the automation has e-signing enabled. The document is generated and delivered normally (Drive save, email, webhook), but no signing session is started and no signing invitations are sent. Useful for two-step approval flows: generate a draft for review first, then re-run without `skipEsign` to send the document for signing. Also accepted as a query parameter (`?skipEsign=true`) on GET requests.
+</ParamField>
+
 <ParamField body="existingPdfs" type="string[]">
   Array of publicly accessible PDF URLs to merge or prepend to the generated document.
 </ParamField>
@@ -363,6 +367,7 @@ Additional fields are included depending on your automation's configuration:
 | `signingStatus` | E-signature is enabled (`"created"` or `"queued"`) |
 | `signingLinks` | E-signature is enabled (array of signer objects with `signerIndex`, `email`, `name`, `signingUrl`, `status`) |
 | `signingDeliveryMethod` | E-signature is enabled |
+| `esignSkipped` | E-signature is enabled but skipped for this request via `skipEsign: true` |
 
 ### Async mode (202)
 

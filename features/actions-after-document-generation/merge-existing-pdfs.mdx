@@ -7,18 +7,20 @@ icon: "object-group"
 This feature enables you to incorporate pre-existing PDF files into your generated documents.
 
 <Note>
-**Availability**: Requires the Business plan or above. Only available for Airtable, Google Sheets, ClickUp, SmartSuite, and API.
+**Availability**: Requires the Business plan or above. Only available for Airtable, Google Sheets, ClickUp, SmartSuite, Notion, and API.
 </Note>
 
 ## Implementation Methods
 
 <Tabs>
-  <Tab title="Airtable / Google Sheets / ClickUp / SmartSuite">
-    Designate a specific field or column within DocsAutomator's interface that contains one or multiple PDFs intended for merging with the generated documents.
+  <Tab title="Airtable / Google Sheets / ClickUp / SmartSuite / Notion">
+    Designate one or more fields or columns within DocsAutomator's interface that contain the PDFs intended for merging with the generated documents.
 
     1. In your automation settings, find the "Merge Existing PDFs" option
-    2. Select the field/column containing your PDF files
+    2. Select the field(s)/column(s) containing your PDF files
     3. Configure the insert position (before or after)
+
+    When you select multiple fields, their PDFs are merged in the order you select the fields. Fields that happen to be empty on a given record are simply skipped, so optional attachments (say, a W-9 that only some vendors provide) don't block document generation.
 
     <Tip>
     **Airtable lookup fields**: You can also select a lookup field that references an attachment field in a linked table. This is useful when PDFs are stored in a related table rather than directly on the record.
@@ -53,7 +55,13 @@ This feature enables you to incorporate pre-existing PDF files into your generat
 
 ### Order of Multiple PDFs
 
-When the selected field or column holds several PDFs, they're merged in the order they appear there. This applies to every supported source. DocsAutomator does not reorder them, so changing their order at the source changes the merge order accordingly. For example, rearranging the attachments in an Airtable field, reordering the comma-separated URLs in a Google Sheets cell, or changing the order of URLs in the API `existingPdfs` array all shift the merge order to match.
+When a selected field or column holds several PDFs, they're merged in the order they appear there. This applies to every supported source. DocsAutomator does not reorder them, so changing their order at the source changes the merge order accordingly. For example, rearranging the attachments in an Airtable field, reordering the comma-separated URLs in a Google Sheets cell, or changing the order of URLs in the API `existingPdfs` array all shift the merge order to match.
+
+### Multiple Fields
+
+You can select more than one field or column. The merge then works field by field: all PDFs from the first selected field, then all PDFs from the second, and so on. Within each field, the order from the source applies as described above. To change the order across fields, remove the selections and re-add them in the order you want.
+
+Empty fields are skipped. If a record has PDFs in only two of three selected fields, the document is generated with those two merged and the empty field is ignored.
 
 ## Use Cases
 

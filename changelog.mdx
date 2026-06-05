@@ -5,6 +5,17 @@ rss: true
 mode: "center"
 ---
 
+<Update label="June 5, 2026">
+  ## Merge PDFs from Multiple Fields
+
+  The [Merge Existing PDFs](/features/actions-after-document-generation/merge-existing-pdfs) action now accepts more than one attachment field, so PDFs spread across separate fields can all end up in the same generated document without aggregating them first.
+
+  - Select multiple attachment fields, columns, or file properties in Airtable, Google Sheets, SmartSuite, and Notion automations
+  - PDFs are merged field by field in the order you select the fields; within a field, the source order applies as before
+  - Empty fields are skipped, so optional attachments (a W-9 only some vendors provide, for example) never block generation
+  - Existing single-field setups keep working unchanged
+</Update>
+
 <Update label="June 4, 2026">
   ## Choose Which Image to Insert
 

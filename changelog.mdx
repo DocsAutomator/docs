@@ -6,6 +6,18 @@ mode: "center"
 ---
 
 <Update label="June 5, 2026">
+  ## Review Documents Before E-Signing
+
+  A new `skipEsign` parameter on the createDocument API generates the document without starting the signing workflow, so your team can review a contract before it goes out for signature.
+
+  - Pass `skipEsign: true` in any createDocument call (works with every data source): the document is created and delivered as usual, but no signing session is started and no signing emails go out
+  - Once the document is approved, run the same automation again without the parameter to send it for signing
+  - Build two-step approval flows, for example two Airtable buttons: "Draft for Review" and "Send for Signing"
+  - The response includes `esignSkipped: true` so connected tools can tell drafts apart
+  - See [Review Before Signing](/features/docsautomator-esign#review-before-signing-skipesign) and the [API reference](/api-reference/documents/create-from-api) for details
+</Update>
+
+<Update label="June 5, 2026">
   ## Merge PDFs from Multiple Fields
 
   The [Merge Existing PDFs](/features/actions-after-document-generation/merge-existing-pdfs) action now accepts more than one attachment field, so PDFs spread across separate fields can all end up in the same generated document without aggregating them first.

@@ -1,0 +1,82 @@
+---
+title: "Save PDFs in OneDrive"
+description: "Automatically store generated PDFs in OneDrive folders"
+icon: "cloud"
+---
+
+Save generated PDFs straight to your Microsoft OneDrive, with optional dynamic subfolder organization. This works just like saving to Google Drive, using a connected Microsoft account.
+
+## Basic Setup
+
+1. Open the **Actions** tab of the automation editor
+2. Click **Add action** and pick "Save PDF in OneDrive"
+3. Choose your connected **Microsoft account** (or connect one)
+4. **Browse** to your target OneDrive folder
+5. (Optional) Configure a dynamic subfolder
+
+<Note>
+If no folder is selected, PDFs save to the root of your OneDrive.
+</Note>
+
+## Connecting a Microsoft account
+
+If you have not connected a Microsoft account yet, click **Connect Microsoft Account** and authorize DocsAutomator. One connection covers both OneDrive output and [Outlook sending](/features/actions-after-document-generation/send-email). You can connect or disconnect accounts anytime under **Workspace Settings → Integrations**.
+
+## Dynamic Subfolders
+
+Automatically organize PDFs by creating dynamic subfolders using static text and placeholders.
+
+### Setup Instructions
+
+<Steps>
+  <Step title="Pick a destination">
+    Select your connected Microsoft account and browse to a destination folder
+  </Step>
+  <Step title="Configure Subfolder">
+    Enter "Subfolder Name (Optional)" using text and/or placeholders
+  </Step>
+  <Step title="Create Hierarchy">
+    Use forward slashes (`/`) to create nested folder structures
+  </Step>
+</Steps>
+
+### Subfolder Examples
+
+**Static Organization:**
+```
+Reports
+Invoices/2024
+Contracts/Pending
+```
+
+**Dynamic with Placeholders:**
+```
+{{client_name}}
+{{date}}_Documents
+Clients/{{client_name}}/{{year}}
+{{department}}/{{project_name}}/Finals
+```
+
+## Adding Placeholders
+
+- Type `/` in the subfolder field to browse available placeholders
+- Manual entry: Use `{{placeholder_name}}` format
+
+<Info>
+Line item placeholders are automatically excluded from the placeholder list.
+</Info>
+
+## How It Works
+
+1. DocsAutomator replaces placeholders with actual document values
+2. Creates the folder structure if it does not exist (prevents duplicates)
+3. Saves the PDF to the final subfolder location in your OneDrive
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| No account to select | Click "Connect Microsoft Account" to authorize access |
+| Account shows inactive | Reconnect it under Workspace Settings → Integrations (access may have been revoked on Microsoft's side) |
+| Folders not created | Verify placeholder values exist in your data |
+| Empty placeholders | PDFs save to the selected destination folder if subfolder values are blank |

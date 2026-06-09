@@ -4,7 +4,7 @@ description: "Automatically send generated documents via email"
 icon: "envelope"
 ---
 
-DocsAutomator provides flexible email automation with two service options: DocsAutomator Mail for reliable delivery and Gmail integration for sending from your own domain.
+DocsAutomator provides flexible email automation with three service options: DocsAutomator Mail for reliable delivery, and Gmail or Outlook for sending from your own connected mailbox.
 
 ## Email Service Options
 
@@ -21,19 +21,25 @@ DocsAutomator provides flexible email automation with two service options: DocsA
     - **Best for**: Personal communications and branded emails
     - **Requirements**: Gmail account connection via OAuth
   </Tab>
+  <Tab title="Outlook Integration">
+    - **Sender**: Your connected Microsoft (Outlook) account
+    - **Benefits**: Personal sender reputation, custom sender names, your domain
+    - **Best for**: Teams on Microsoft 365 / Outlook
+    - **Requirements**: Microsoft account connection via OAuth
+  </Tab>
 </Tabs>
 
-## Connecting Gmail
+## Connecting Gmail or Outlook
 
 <Steps>
-  <Step title="Select Gmail">
-    Select Gmail as the email service in automation settings
+  <Step title="Select the service">
+    Select Gmail or Outlook as the email service in automation settings
   </Step>
   <Step title="Authorize">
-    Click "Connect Gmail Account" to authorize DocsAutomator
+    Click "Connect Gmail Account" or "Connect Microsoft Account" to authorize DocsAutomator
   </Step>
   <Step title="Choose Account">
-    Choose which Gmail account to use
+    Choose which connected account to send from
   </Step>
   <Step title="Custom Name (Optional)">
     Set a custom sender name to replace the default "DocsAutomator" display
@@ -41,7 +47,7 @@ DocsAutomator provides flexible email automation with two service options: DocsA
 </Steps>
 
 <Info>
-Multiple Gmail accounts can be connected for use across different automations.
+You can connect multiple accounts and pick which one each automation uses. Connect or disconnect accounts anytime under **Workspace Settings → Integrations**.
 </Info>
 
 ## Email Configuration
@@ -72,7 +78,7 @@ Multiple Gmail accounts can be connected for use across different automations.
 ### Reply-To Address
 
 - Optional address that replies are routed to, instead of the default sender
-- Works with both DocsAutomator Mail and Gmail
+- Works with DocsAutomator Mail, Gmail, and Outlook
 - Leave blank to keep the default reply behavior
 
 ## Email Personalization
@@ -150,10 +156,10 @@ Before going live, test your email configuration:
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Gmail Issues">
-    - **"Gmail account inactive"**: Reconnect your Gmail account in settings
-    - **"No Gmail account selected"**: Choose a Gmail account in email service settings
-    - **Authentication errors**: Re-authorize Gmail access in workspace settings > integrations
+  <Accordion title="Gmail or Outlook Issues">
+    - **"Account inactive"**: Reconnect the account under workspace settings > integrations (it can go inactive if access was revoked on the provider's side)
+    - **"No account selected"**: Choose a connected account in email service settings
+    - **Authentication errors**: Re-authorize the connection in workspace settings > integrations
   </Accordion>
   <Accordion title="Delivery Issues">
     - Check spam folders and verify recipient addresses

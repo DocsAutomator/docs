@@ -220,13 +220,22 @@ Per-placeholder options (formatting, conditional show/hide, conditional styling,
 
 When you generate a document, DocsAutomator fills your Word template and produces a clean `.docx`, then converts it to a PDF for the final output. To make those PDFs faithful, keep the following in mind.
 
+### Higher-fidelity rendering with Microsoft
+
+If you connect a Microsoft account, you can render the PDF with **Microsoft's own Word engine** instead of the default renderer, for the closest possible match to how the document looks in Word. This is the best option for templates with floating elements, text boxes, or non-standard fonts.
+
+- DocsAutomator turns it on automatically when it detects elements the default renderer may not reproduce exactly (for example floating objects or a font it cannot match), and you will see a note explaining why.
+- You can also turn it on or off yourself for any Word template: it is a toggle in the template view, and an option in the template's `⋮` menu.
+- If Microsoft is briefly unavailable, generation automatically falls back to the default renderer, so documents always go out.
+- Requires a connected Microsoft account (the same connection used for [OneDrive output](/features/actions-after-document-generation/save-pdfs-in-onedrive) and [Outlook sending](/features/actions-after-document-generation/send-email)).
+
 ### Fonts
 
 For the PDF to match your design exactly, **embed your fonts in the Word file**. In Microsoft Word:
 
 > **File ▸ Options ▸ Save ▸ "Embed fonts in the file"**
 
-If a non-standard font isn't embedded, the PDF renderer substitutes the closest available font, which can shift spacing and line breaks. Standard system fonts (Arial, Times New Roman, Calibri, and similar) render reliably without embedding. DocsAutomator lists the fonts it detected in your template after upload so you know what to embed.
+If a non-standard font isn't embedded, the default PDF renderer substitutes the closest available font, which can shift spacing and line breaks. Standard system fonts (Arial, Times New Roman, Calibri, and similar) render reliably without embedding. DocsAutomator lists the fonts it detected in your template after upload so you know what to embed. Alternatively, rendering with Microsoft (above) draws on Microsoft's broader font set and matches Word more closely.
 
 ### Table Borders
 
@@ -234,7 +243,7 @@ The renderer automatically neutralizes invisible **white borders on white backgr
 
 ### Floating & Anchored Objects
 
-Floating text boxes and anchored drawings are kept as-is but can shift position when rendered to PDF. For the most predictable results, prefer in-line images and standard tables over floating objects.
+Floating text boxes and anchored drawings are kept as-is but can shift position when rendered by the default engine. Rendering with Microsoft (above) reproduces them most faithfully. For the most predictable results with the default renderer, prefer in-line images and standard tables over floating objects.
 
 ---
 

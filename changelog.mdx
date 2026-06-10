@@ -5,6 +5,18 @@ rss: true
 mode: "center"
 ---
 
+<Update label="June 10, 2026">
+  ## Send Emails from the Team Member Who Generates the Document
+
+  Automation emails and e-signing emails can now be sent from the team member who generates the document, instead of one fixed account per automation.
+
+  - Enable **Send from the team member who generates the document** in the email settings, and separately in the e-sign email settings, when Gmail or Outlook is the selected service
+  - DocsAutomator matches the generating member's login email against the Gmail and Outlook accounts connected to the workspace and sends from their account
+  - The account configured in the automation stays the fallback, for example for automated triggers or members without a connected account
+  - Works automatically with the in-app Generate button; API calls and button links can name the member with the new `actingUserEmail` parameter or `X-Acting-User-Email` header
+  - See [Send Email](/features/actions-after-document-generation/send-email#sending-from-the-team-member-who-generates-the-document) and the [API reference](/api-reference/documents/create-from-api) for details
+</Update>
+
 <Update label="June 9, 2026">
   ## Microsoft 365 Support: Sign-In, OneDrive, Outlook, and Higher-Fidelity Word PDFs
 

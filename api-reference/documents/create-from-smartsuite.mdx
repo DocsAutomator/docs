@@ -39,6 +39,10 @@ POST https://api.docsautomator.co/createDocument
   When `true`, skips e-signing for this request even if the automation has e-signing enabled. The document is generated and delivered normally (Drive save, email, webhook), but no signing session is started and no signing invitations are sent. Useful for two-step approval flows: generate a draft for review first, then re-run without `skipEsign` to send the document for signing. Also accepted as a query parameter (`?skipEsign=true`) on GET requests.
 </ParamField>
 
+<ParamField body="actingUserEmail" type="string">
+  Email address of the team member generating this document. When the automation's email delivery (or e-signature email settings) has **Send from the team member who generates the document** enabled, the email is sent from this member's own connected Gmail or Outlook account instead of the configured sender. The address must match a mailbox connected to the workspace; otherwise DocsAutomator falls back to the automation's configured sender. Also accepted as a query parameter (`?actingUserEmail=...`) on GET requests or as an `X-Acting-User-Email` request header (the header takes precedence). The in-app Generate button passes this automatically.
+</ParamField>
+
 <ParamField body="docTemplateLink" type="string">
   Override the automation's Google Doc template URL for this request only.
 </ParamField>

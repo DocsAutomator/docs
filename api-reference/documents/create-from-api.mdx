@@ -232,6 +232,41 @@ Use the `children` key for nesting (up to 2 levels):
 Learn more about setting up line items in your template in the [Line Items guide](/features/line-items).
 </Info>
 
+## Images
+
+Any placeholder whose name contains `image` is filled with a picture. Pass a publicly accessible URL as the value (a single URL, or an array for a multi-image placeholder):
+
+```json
+{
+  "docId": "YOUR_AUTOMATION_ID",
+  "data": {
+    "image_logo": "https://example.com/logo.png",
+    "image_gallery": [
+      "https://example.com/a.jpg",
+      "https://example.com/b.jpg"
+    ]
+  }
+}
+```
+
+To make an image a clickable link, pass it as a `{ "url", "link" }` object instead of a plain URL string. No automation setup is required, and the link survives PDF export (Google Doc and Word templates). Arrays work too, with a `link` per image:
+
+```json
+{
+  "docId": "YOUR_AUTOMATION_ID",
+  "data": {
+    "image_product": {
+      "url": "https://example.com/product.jpg",
+      "link": "https://shop.example.com/products/123"
+    }
+  }
+}
+```
+
+<Info>
+See [Dynamic Images](/features/dynamic-images) for supported formats, resizing, choosing which image to insert, and clickable links.
+</Info>
+
 ## Async Mode
 
 For high-volume or latency-sensitive workflows, use async mode. The API returns a `jobId` immediately, and you poll for the result.

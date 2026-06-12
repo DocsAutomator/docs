@@ -87,7 +87,10 @@ Turn any image into a clickable hyperlink. Open the placeholder's image options,
     Pick the field or column whose value holds the target URL. The URL is resolved per record, so every generated document links to the right place.
   </Tab>
   <Tab title="API, Zapier, Make, n8n, Glide, Noloco, MCP">
-    These sources have no field list, so point the link at another mapped placeholder that holds the URL. Map the URL to a placeholder, select it as the link source, and hide that placeholder so it does not also render as text.
+    These sources have no field list to pick from, so you have two options:
+
+    - **Pass the link inline** (direct API or MCP): send the image value as a `{ "url", "link" }` object instead of a plain URL string. No setup is required. See [Passing Images via API](#passing-images-via-api) below.
+    - **Reference another placeholder** (no-code tools): map the URL to a separate placeholder, select it as the link source in the image options, and hide that placeholder so it does not also render as text.
   </Tab>
 </Tabs>
 
@@ -104,6 +107,33 @@ When using the DocsAutomator API, pass an array of image URLs for processing:
     "image_product": "https://example.com/product.jpg",
     "image_signature": "https://example.com/signature.png"
   }
+}
+```
+
+### Clickable Images via API
+
+To make an image clickable, pass it as a `{ "url", "link" }` object instead of a plain URL string. The `url` is the image and the `link` is where it points. No automation setup is required, and the link survives PDF export (Google Doc and Word templates):
+
+```json
+{
+  "docId": "your-automation-id",
+  "data": {
+    "image_product": {
+      "url": "https://example.com/product.jpg",
+      "link": "https://shop.example.com/products/123"
+    }
+  }
+}
+```
+
+This works for single images and for arrays, where each image can carry its own `link`:
+
+```json
+{
+  "image_gallery": [
+    { "url": "https://example.com/a.jpg", "link": "https://shop.example.com/a" },
+    { "url": "https://example.com/b.jpg", "link": "https://shop.example.com/b" }
+  ]
 }
 ```
 

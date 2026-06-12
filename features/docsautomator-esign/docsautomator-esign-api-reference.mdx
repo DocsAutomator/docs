@@ -60,6 +60,7 @@ curl -X GET "https://api.docsautomator.co/esign/sessions?status=pending&page=1&l
         { "index": 1, "email": "alice@example.com", "name": "Alice", "status": "signed" },
         { "index": 2, "email": "bob@example.com", "name": "Bob", "status": "invited" }
       ],
+      "webhookParams": { "recId": "recAbC123XyZ" },
       "expiresAt": "2026-05-20T10:00:00.000Z",
       "completedAt": null,
       "createdAt": "2026-04-20T10:00:00.000Z"
@@ -134,11 +135,14 @@ Per-signer fields include `declinedAt` and `declineReason` for any signer who de
   "reminderDays": 3,
   "reminderCount": 0,
   "lastReminderSent": null,
+  "webhookParams": { "recId": "recAbC123XyZ" },
   "expiresAt": "2026-05-20T10:00:00.000Z",
   "completedAt": "2026-04-22T14:02:45.000Z",
   "createdAt": "2026-04-20T10:00:00.000Z"
 }
 ```
+
+`webhookParams` echoes the custom parameters from the original document creation request, plus the identifier of the triggering record, folded in automatically per data source: `recId` (Airtable, SmartSuite, Notion — `pageId` and Notion Button payloads are normalized to `recId`), `taskId` (ClickUp), or `rowNumber` (Google Sheets — positional at trigger time, so treat it as "which row triggered this", not a durable key). Your own `webhookParams` keys are never overwritten by the folded identifier. Use it to correlate signing sessions with records in your data source — for example, when polling sessions periodically to reconcile signing status against your own records. It is `null` when no identifier or parameters were passed.
 
 When `status` is `declined`, the response also includes:
 

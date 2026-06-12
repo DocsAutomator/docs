@@ -91,7 +91,7 @@
                   "webhookParams": {
                     "type": "object",
                     "additionalProperties": true,
-                    "description": "Custom parameters passed through to webhook notifications as `additionalParams`.",
+                    "description": "Custom parameters passed through to webhook notifications (under both `additionalParams` and `webhookParams`) and stored on signing sessions. The trigger record identifier (`recId`, Notion `pageId`, ClickUp `taskId`, Google Sheets `rowNumber`) is folded in automatically — your own keys are never overwritten.",
                     "example": {
                       "orderId": "ORD-123",
                       "source": "api"
@@ -1541,6 +1541,16 @@
               }
             }
           },
+          "webhookParams": {
+            "type": "object",
+            "additionalProperties": true,
+            "nullable": true,
+            "description": "Custom parameters passed in the original document creation request (`webhookParams`), returned verbatim. The trigger record identifier is folded in automatically — `recId` (Airtable, SmartSuite, Notion), `taskId` (ClickUp) or `rowNumber` (Google Sheets; positional at trigger time) — useful for correlating sessions with records in your data source. Caller-supplied keys are never overwritten. `null` when no identifier or parameters were provided.",
+            "example": {
+              "recId": "recAbC123XyZ",
+              "orderId": "ORD-123"
+            }
+          },
           "expiresAt": {
             "type": "string",
             "format": "date-time"
@@ -1682,6 +1692,16 @@
           },
           "reminderDays": {
             "type": "integer"
+          },
+          "webhookParams": {
+            "type": "object",
+            "additionalProperties": true,
+            "nullable": true,
+            "description": "Custom parameters passed in the original document creation request (`webhookParams`), returned verbatim. The trigger record identifier is folded in automatically — `recId` (Airtable, SmartSuite, Notion), `taskId` (ClickUp) or `rowNumber` (Google Sheets; positional at trigger time) — useful for correlating sessions with records in your data source. Caller-supplied keys are never overwritten. `null` when no identifier or parameters were provided.",
+            "example": {
+              "recId": "recAbC123XyZ",
+              "orderId": "ORD-123"
+            }
           },
           "expiresAt": {
             "type": "string",

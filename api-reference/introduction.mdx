@@ -204,11 +204,12 @@ Configure a webhook URL on your automation to receive notifications after docume
   "message": "success",
   "pdfUrl": "https://...",
   "googleDocUrl": "https://...",
-  "additionalParams": { "orderId": "ORD-123" }
+  "webhookParams": { "orderId": "ORD-123", "recId": "recAbC123XyZ" },
+  "additionalParams": { "orderId": "ORD-123", "recId": "recAbC123XyZ" }
 }
 ```
 
-Pass custom data through to webhooks using `webhookParams` in your `createDocument` request.
+Pass custom data through to webhooks using `webhookParams` in your `createDocument` request. It is returned under both `webhookParams` and `additionalParams` (identical content; the latter is kept for backward compatibility), together with the automatically included trigger record identifier — `recId` (Airtable, SmartSuite, Notion), `taskId` (ClickUp), or `rowNumber` (Google Sheets). Your own keys are never overwritten.
 
 ## E-Signatures
 

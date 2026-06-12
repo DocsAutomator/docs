@@ -91,7 +91,7 @@
                   "webhookParams": {
                     "type": "object",
                     "additionalProperties": true,
-                    "description": "Custom parameters passed through to webhook notifications (under both `additionalParams` and `webhookParams`) and stored on signing sessions. The trigger record identifier (`recId`, Notion `pageId`, ClickUp `taskId`, Google Sheets `rowNumber`) is folded in automatically — your own keys are never overwritten.",
+                    "description": "Custom parameters passed through to webhook notifications and stored on signing sessions. Returned in webhook payloads as `webhookParams` (an identical `additionalParams` key also exists, kept only for legacy integrations). The trigger record identifier (`recId`, Notion `pageId`, ClickUp `taskId`, Google Sheets `rowNumber`) is folded in automatically — your own keys are never overwritten.",
                     "example": {
                       "orderId": "ORD-123",
                       "source": "api"

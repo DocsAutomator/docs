@@ -48,7 +48,7 @@ The system supports sending supplementary data alongside webhook notifications t
 }
 ```
 
-These parameters appear as `additionalParams` in the webhook payload sent to your endpoint.
+These parameters appear in the webhook payload sent to your endpoint under two keys with identical content: `webhookParams` (matching the request parameter name) and `additionalParams` (the original key, kept for backward compatibility). Use whichever you prefer — existing integrations built on `additionalParams` keep working unchanged.
 
 ## Webhook Payload Structure
 
@@ -58,17 +58,29 @@ These parameters appear as `additionalParams` in the webhook payload sent to you
   "googleDocUrl": "https://docs.google.com/document/d/...",
   "documentName": "Invoice #123",
   "status": "completed",
+  "webhookParams": {
+    "orderId": "ORD-12345",
+    "customerId": "CUST-789",
+    "recId": "recAbC123XyZ"
+  },
   "additionalParams": {
     "orderId": "ORD-12345",
-    "customerId": "CUST-789"
+    "customerId": "CUST-789",
+    "recId": "recAbC123XyZ"
   }
 }
 ```
 
-## Special Parameters
+## Trigger Record Identifier
 
 <Info>
-**Airtable Records**: When using Airtable as a data source, the record ID is automatically included as an additional parameter with every webhook notification.
+The identifier of the record that triggered the generation is included automatically, so you can match webhook notifications to records in your data source:
+
+- **Airtable, SmartSuite, Notion**: `recId` (Notion `pageId` and button triggers are normalized to `recId`)
+- **ClickUp**: `taskId`
+- **Google Sheets**: `rowNumber` — positional at trigger time, so treat it as "which row triggered this" rather than a durable key
+
+Your own `webhookParams` keys are never overwritten by the automatic identifier.
 </Info>
 
 ## Use Cases

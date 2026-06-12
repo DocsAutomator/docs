@@ -260,14 +260,15 @@ Fires once when all signers complete and the final signed PDF is generated.
   "googleDriveUrl": "https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/view",
   "googleDriveFolderId": "0BxAbCdEfGhIjKlMnOpQrStUvWx",
   "sourceData": { },
+  "webhookParams": { },
   "additionalParams": { }
 }
 ```
 
 <Info>
-The `sourceData` field contains the original data from your data source that was used to generate the document. The `additionalParams` field contains any `webhookParams` you passed in the API request.
+The `sourceData` field contains the original data from your data source that was used to generate the document. The `webhookParams` field contains any `webhookParams` you passed in the API request; `additionalParams` is an identical copy that exists only for legacy reasons — use `webhookParams` in new integrations.
 
-For Airtable and SmartSuite automations, the record ID (`recId`) is automatically included in `additionalParams`, so you can identify which record the e-sign session belongs to.
+The identifier of the triggering record is included automatically, so you can identify which record the e-sign session belongs to: `recId` for Airtable, SmartSuite, and Notion, `taskId` for ClickUp, and `rowNumber` for Google Sheets.
 </Info>
 
 <Info>
@@ -292,12 +293,13 @@ Fires when a signer declines to sign the document.
   },
   "reason": "Optional reason provided by the signer",
   "sourceData": { },
+  "webhookParams": { },
   "additionalParams": { }
 }
 ```
 
 <Info>
-The `sourceData` field contains the original data from your data source that was used to generate the document. The `additionalParams` field contains any `webhookParams` you passed in the API request. For Airtable and SmartSuite automations, the record ID (`recId`) is automatically included in `additionalParams`.
+The `sourceData` field contains the original data from your data source that was used to generate the document. The `webhookParams` field contains any `webhookParams` you passed in the API request, plus the automatically included trigger record identifier (`recId` for Airtable, SmartSuite, and Notion, `taskId` for ClickUp, `rowNumber` for Google Sheets). `additionalParams` is an identical copy that exists only for legacy reasons — use `webhookParams` in new integrations.
 </Info>
 
 ### Signer Signed
@@ -323,6 +325,7 @@ Fires once every time a signer completes all of their required fields — includ
     "allSigned": false
   },
   "sourceData": { },
+  "webhookParams": { },
   "additionalParams": { }
 }
 ```
@@ -352,6 +355,7 @@ Fires when a signing session expires before all signers complete it. An expirati
     }
   ],
   "sourceData": { },
+  "webhookParams": { },
   "additionalParams": { }
 }
 ```

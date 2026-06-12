@@ -6,6 +6,18 @@ mode: "center"
 ---
 
 <Update label="June 12, 2026">
+  ## Match Signing Sessions and Webhooks to Your Records
+
+  Signing sessions and webhook notifications now carry the identifier of the record that triggered the generation, so you can reconcile signing status and generated documents against your data source without guesswork.
+
+  - `GET /esign/sessions` and `GET /esign/sessions/{sessionId}` return a `webhookParams` object with your custom parameters plus the trigger record identifier — ideal for periodic polling and reconciliation
+  - The record identifier is included automatically per data source: `recId` for Airtable, SmartSuite, and Notion (including button and formula-link triggers), `taskId` for ClickUp, and `rowNumber` for Google Sheets
+  - Your own `webhookParams` keys are always preserved and never overwritten
+  - Webhook notifications (document creation and all e-signing events) now include the same data under `webhookParams`, matching the request parameter name — the existing `additionalParams` key is unchanged and stays supported
+  - See the [e-sign API reference](/features/docsautomator-esign/docsautomator-esign-api-reference) for examples
+</Update>
+
+<Update label="June 12, 2026">
   ## Format Values for API, Softr, Zapier, Make, and More
 
   The per-placeholder Format option now works for all API-based data sources, so raw values like `1234.5` can render as `€1,234.50` without pre-formatting them in your tool.

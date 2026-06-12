@@ -32,7 +32,7 @@ POST https://api.docsautomator.co/createDocument
 </ParamField>
 
 <ParamField body="webhookParams" type="object">
-  Custom parameters passed through to webhook notifications as `additionalParams`.
+  Custom parameters passed through to webhook notifications as `webhookParams` (plus an identical `additionalParams` copy kept only for legacy integrations). The triggering `rowNumber` is folded in automatically (positional at trigger time); your own keys are never overwritten.
 </ParamField>
 
 <ParamField body="skipEsign" type="boolean" default="false">

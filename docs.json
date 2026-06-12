@@ -133,7 +133,7 @@
                     "pages": [
                       "features/advanced-placeholder-options",
                       "features/advanced-placeholder-options/conditional-paragraph-row-deletion",
-                      "features/advanced-placeholder-options/enable-markdown-formatting",
+                      "features/advanced-placeholder-options/enable-markdown-formatting", "features/advanced-placeholder-options/format-values",
                       "features/advanced-placeholder-options/hidden-values",
                       "features/advanced-placeholder-options/conditional-show-hide",
                       "features/advanced-placeholder-options/conditional-styling"

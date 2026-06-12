@@ -5,6 +5,19 @@ rss: true
 mode: "center"
 ---
 
+<Update label="June 12, 2026">
+  ## Format Values for API, Softr, Zapier, Make, and More
+
+  The per-placeholder Format option now works for all API-based data sources, so raw values like `1234.5` can render as `€1,234.50` without pre-formatting them in your tool.
+
+  - Available for API, Softr, Zapier, Make, n8n, Glide, Noloco, and MCP automations — open the gear icon next to any placeholder and pick a format
+  - Number styles (plain, decimal, currency with any ISO code, percent), date formats with optional time, and custom true/false labels (`Yes`/`No`, `☑`/`☐`, or your own)
+  - Output follows your automation's locale, and works on line item fields too
+  - Values that don't match the chosen format print exactly as passed, so a `"N/A"` in a currency field never breaks a document
+  - Show/Hide conditions, conditional styling, sorting, and grouping calculations keep evaluating the raw value you send — formatting is display-only
+  - See [Format Values](/features/advanced-placeholder-options/format-values) for details
+</Update>
+
 <Update label="June 10, 2026">
   ## Send Emails from the Team Member Who Generates the Document
 

@@ -1,0 +1,65 @@
+---
+title: "Format Values"
+description: "Render numbers as currency or percent, pick a date format, and map true/false to custom labels — per placeholder"
+icon: "coins"
+---
+
+Format Values lets you control how a single placeholder renders in the generated document: currency with the right symbol and decimals, percentages, custom date formats, or custom labels for true/false values. The formatting is applied by DocsAutomator at generation time, so your data source can send plain raw values like `1234.5` or `2026-06-30`.
+
+## Supported Data Sources
+
+| Source | Where the Format option appears |
+|--------|--------------------------------|
+| Notion | On number, date, checkbox, and formula/rollup properties (the picker adapts to the property type) |
+| API, Softr, Zapier, Make, n8n, Glide, Noloco, MCP | On every placeholder — pick the style that matches the value you send |
+
+For other sources (Airtable, Google Sheets, SmartSuite, ClickUp), format your values in the source itself for now — per-placeholder formatting for these is planned.
+
+## Available Formats
+
+Choose **Custom…** in the Format dropdown and pick a style:
+
+| Style | Example input | Example output |
+|-------|---------------|----------------|
+| Plain | `1234.5` | `1234.5` (no separators or symbols) |
+| Decimal | `1234.5` | `1,234.50` (decimals configurable, 0–4) |
+| Currency | `1234.5` | `€1,234.50` (any ISO currency, searchable) |
+| Percent | `0.425` | `42.50%` |
+| Date | `2026-06-30` | `June 30, 2026` (year/month/day style + optional time) |
+| True / False | `true` | `Yes`, `☑`, or any custom label pair |
+
+Leaving the dropdown on **Default** keeps the value exactly as your data source sends it (for Notion, as the Notion column displays it). Output follows your automation's locale, so `de` renders `1.234,50 €` where `en-us` renders `€1,234.50`.
+
+## Mismatched Values Print As Passed
+
+Formatting never breaks a document. If a value doesn't match the chosen format, it is printed exactly as your source sent it:
+
+- `"N/A"` with a currency format renders `N/A`
+- `"free"` with a currency format renders `free`
+- Empty values stay empty (and still trigger [Delete Line / Row When Empty](/features/advanced-placeholder-options/conditional-paragraph-row-deletion))
+
+## Conditions Compare the Raw Value
+
+Formatting is display-only. [Show / Hide conditions](/features/advanced-placeholder-options/conditional-show-hide), [conditional styling](/features/advanced-placeholder-options/conditional-styling), line item sorting, and grouping calculations all evaluate the **raw value your source sent** — not the formatted text. A rule like *hide if greater than 1000* keeps working on a placeholder formatted as currency.
+
+## Configuration
+
+<Steps>
+  <Step title="Open Placeholder Settings">
+    Click the gear/settings icon next to the placeholder you want to format
+  </Step>
+  <Step title="Choose a Format">
+    In the **Format** section, switch from **Default** to **Custom…** and pick the style
+  </Step>
+  <Step title="Fine-Tune">
+    Set decimals and currency for numbers, the year/month/day/time parts for dates, or the label pair for true/false values — the live preview shows the result
+  </Step>
+</Steps>
+
+<Info>
+Format Values works on line item fields too — open the gear icon next to a line item placeholder the same way.
+</Info>
+
+<Tip>
+Sending numbers? Pass them raw (`1234.5`, not `"€1.234,50"`). DocsAutomator handles separators, symbols, and locale — and conditions, sorting, and calculations stay reliable because they see the raw number.
+</Tip>

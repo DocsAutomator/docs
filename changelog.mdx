@@ -6,6 +6,17 @@ mode: "center"
 ---
 
 <Update label="June 12, 2026">
+  ## Clickable Images and Better Word Image Handling
+
+  Image placeholders can now be clickable links, and Word (.docx) templates handle images the same way Google Doc templates do.
+
+  - Make any image a clickable hyperlink: open the placeholder's image options, turn on **Linked image**, and pick the field, column, or placeholder whose value is the target URL. The link survives PDF export and works in both Google Doc and Word templates.
+  - For API-based sources (API, Zapier, Make, n8n, Glide, Noloco, MCP), point the link at another mapped placeholder that holds the URL, then hide that placeholder.
+  - Word templates now resize images per placeholder, optimize them for file size with the same quality and maximum-width settings as Google Docs, and insert images from attachment and multi-image fields (a multi-image field inserts the first image).
+  - See [Dynamic Images](/features/dynamic-images) for setup.
+</Update>
+
+<Update label="June 12, 2026">
   ## Match Signing Sessions and Webhooks to Your Records
 
   Signing sessions and webhook notifications now carry the identifier of the record that triggered the generation, so you can reconcile signing status and generated documents against your data source without guesswork.

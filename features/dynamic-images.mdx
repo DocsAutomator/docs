@@ -78,6 +78,21 @@ Resize individual placeholder images through DocsAutomator's interface:
 If the resizing parameter exceeds the maximum width in automation settings, the image will be expanded and lose quality.
 </Warning>
 
+## Clickable Image Links
+
+Turn any image into a clickable hyperlink. Open the placeholder's image options, enable **Linked image**, and choose where the target URL comes from. The link is applied to the image and survives PDF export.
+
+<Tabs>
+  <Tab title="Airtable, Google Sheets, SmartSuite, ClickUp">
+    Pick the field or column whose value holds the target URL. The URL is resolved per record, so every generated document links to the right place.
+  </Tab>
+  <Tab title="API, Zapier, Make, n8n, Glide, Noloco, MCP">
+    These sources have no field list, so point the link at another mapped placeholder that holds the URL. Map the URL to a placeholder, select it as the link source, and hide that placeholder so it does not also render as text.
+  </Tab>
+</Tabs>
+
+Clickable image links work in both Google Doc and Word (.docx) templates.
+
 ## Passing Images via API
 
 When using the DocsAutomator API, pass an array of image URLs for processing:
@@ -133,7 +148,7 @@ The setting is per placeholder and works with every data source and template typ
 </Tip>
 
 <Note>
-Word templates insert a single image per placeholder: "First image only" and "Last image only" work as described, while a multi-image field left on "All images" is not rendered. Google Doc templates insert all images inline.
+Word templates insert a single image per placeholder: "First image only" and "Last image only" work as described, and a multi-image field left on "All images" inserts the first image. Google Doc templates insert all images inline.
 </Note>
 
 ## Best Practices

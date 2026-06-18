@@ -48,7 +48,7 @@ Generated files automatically save to specified Airtable fields.
   </Step>
   <Step title="Set Output Configuration">
     Specify three key settings:
-    - **Document name field**: Determines generated file naming (use formula fields for unique names)
+    - **Document name field**: Determines generated file naming. Pick any text-based field: single line text, **long text**, formula, select, number, date, and more all work (bases imported from Excel/CSV create long-text columns, which are now selectable). Long values are trimmed to a safe length and have line breaks removed automatically.
     - **Attachment field**: Designates where PDFs store; select "Overwrite attachment" to replace existing files
     - **Google Doc URL field**: Stores URLs for generated Google Docs (optional)
   </Step>

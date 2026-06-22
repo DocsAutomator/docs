@@ -131,6 +131,10 @@ DocsAutomator's Google Sheets integration enables rapid document generation from
     <Tip>
     Add a formula to create clickable links that trigger document generation when clicked.
     </Tip>
+
+    <Info>
+    When you click a generation link, DocsAutomator opens a **"Generate this document?"** confirmation page, and the document is created only after you click **Generate document**. This prevents accidental duplicates from browser link prefetching, link scanners, or double-clicks. If the same generation is re-submitted (a double-click or a page refresh), it is treated as a duplicate and not generated again, with a **Generate another copy** option for when you want a second document on purpose.
+    </Info>
   </Tab>
   <Tab title="Apps Script">
     Custom menu button for batch generation. Ideal for generating multiple documents at once.

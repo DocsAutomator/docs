@@ -5,6 +5,18 @@ rss: true
 mode: "center"
 ---
 
+<Update label="June 22, 2026">
+  ## Confirmation Step Prevents Accidental Duplicate Documents
+
+  Opening a generation link in your browser now shows a quick confirmation page, so prefetching, link scanners, and double-clicks can no longer create duplicate documents on their own.
+
+  - When you open a generation link in a browser, such as the Google Sheets per-row **GENERATE DOC** link or an Airtable or Notion button, DocsAutomator now shows a **"Generate this document?"** page. Nothing is created until you click **Generate document**.
+  - This prevents accidental duplicates caused by browser link prefetching, by email and link security scanners, or by a browser firing the same link more than once.
+  - If a generation is accidentally re-submitted, for example a quick double-click or a page refresh, it is recognized as a duplicate and not generated again. A **Generate another copy** option is available for when you genuinely want a second document.
+  - Automations triggered by Zapier, Make, n8n, the API, MCP, ClickUp, or auto-polling are unaffected. The confirmation only applies to links you open in a browser.
+  - See the [Google Sheets guide](/integrations-api/google-sheets) for the generation link.
+</Update>
+
 <Update label="June 18, 2026">
   ## More Field Types for Document Naming (Airtable)
 

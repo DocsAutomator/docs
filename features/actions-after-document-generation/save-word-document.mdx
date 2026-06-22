@@ -1,0 +1,74 @@
+---
+title: "Save Word Document"
+description: "Keep the editable Word (.docx) file alongside the generated PDF"
+icon: "file-word"
+---
+
+When you generate from a [Word (.docx) template](/docsautomator-basics/word-template-guide), DocsAutomator always produces a PDF. The **Save Word document** action additionally keeps the editable Word file, so you can download, forward, or keep editing the `.docx` after generation.
+
+<Note>
+This action only appears for **Word (.docx) templates**. For Google Docs templates, use [Saving Google Docs](/features/actions-after-document-generation/saving-google-docs) instead.
+</Note>
+
+## Basic Setup
+
+1. Open the **Actions** tab of the automation editor
+2. Click **Add action** and pick "Save Word document"
+
+That's it. From now on every generated `.docx` is kept and is downloadable from the document's [run history](/features/run-history).
+
+## Where the Word file goes
+
+By default the generated `.docx` is stored with the run and available for download from your run history. You can optionally send a copy to other destinations:
+
+### Upload to a data source attachment field
+
+When your data source is Airtable, SmartSuite, or Notion, you can upload the `.docx` straight into an attachment / file field on the originating record. The field picker appears inside the action card after you add it.
+
+<Info>
+This is the same attachment-field option used for PDFs, but it stores the editable `.docx` instead. You can enable both if you want the PDF and the Word file saved side by side.
+</Info>
+
+### Save to Google Drive
+
+Toggle **Save to Google Drive?** to also upload a copy of the `.docx` to a Google Drive folder.
+
+<Steps>
+  <Step title="Connect Google">
+    If you have not connected a Google account yet, you will be prompted to authorize DocsAutomator.
+  </Step>
+  <Step title="Pick a folder">
+    Browse to the destination folder in your Google Drive.
+  </Step>
+  <Step title="(Optional) dynamic subfolder">
+    Organize files using static text and placeholders, exactly like [Save PDFs in Google Drive](/features/actions-after-document-generation/save-pdfs-in-google-drive). Use forward slashes (`/`) to create nested folders, and `{{placeholder_name}}` to vary the path per document.
+  </Step>
+</Steps>
+
+<Note>
+The Drive option is collapsed behind a toggle because most Word users only want the `.docx` kept or attached. Leaving it off does not disable saving the file, it just skips the Google Drive copy.
+</Note>
+
+## API Integration
+
+When you generate via the API, the response includes a `wordFileUrl` key with a link to the generated Word file, alongside the usual `pdfUrl`.
+
+```json
+{
+  "pdfUrl": "https://...",
+  "wordFileUrl": "https://..."
+}
+```
+
+This lets you keep working with the `.docx` in whatever system called DocsAutomator.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Word Template Guide" icon="file-word" href="/docsautomator-basics/word-template-guide">
+    How to build and use Word (.docx) templates
+  </Card>
+  <Card title="Run History" icon="clock-rotate-left" href="/features/run-history">
+    Download generated documents and review past runs
+  </Card>
+</CardGroup>

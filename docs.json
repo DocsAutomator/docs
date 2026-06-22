@@ -145,6 +145,7 @@
                     "pages": [
                       "features/actions-after-document-generation",
                       "features/actions-after-document-generation/saving-google-docs",
+                      "features/actions-after-document-generation/save-word-document",
                       "features/actions-after-document-generation/save-pdfs-in-google-drive",
                       "features/actions-after-document-generation/save-pdfs-in-onedrive",
                       "features/actions-after-document-generation/send-email",

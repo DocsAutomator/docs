@@ -6,6 +6,18 @@ mode: "center"
 ---
 
 <Update label="June 22, 2026">
+  ## Save Generated Word Files to OneDrive
+
+  Word (.docx) automations can now save the generated Word file straight to a Microsoft OneDrive folder, in addition to keeping it in run history or saving it to Google Drive.
+
+  - Enable **Save Word document**, then turn on **Save to OneDrive?** to upload a copy of the generated `.docx` to a OneDrive folder of your choice.
+  - Uses your connected Microsoft account, the same one that powers Save PDFs in OneDrive and Outlook sending.
+  - Supports dynamic subfolders with `{{placeholders}}`, so each document can land in its own folder.
+  - Google Drive and OneDrive are independent options, so you can save to either, both, or neither.
+  - See the [Save Word Document guide](/features/actions-after-document-generation/save-word-document).
+</Update>
+
+<Update label="June 22, 2026">
   ## Confirmation Step Prevents Accidental Duplicate Documents
 
   Opening a generation link in your browser now shows a quick confirmation page, so prefetching, link scanners, and double-clicks can no longer create duplicate documents on their own.

@@ -49,14 +49,35 @@ Toggle **Save to Google Drive?** to also upload a copy of the `.docx` to a Googl
 The Drive option is collapsed behind a toggle because most Word users only want the `.docx` kept or attached. Leaving it off does not disable saving the file, it just skips the Google Drive copy.
 </Note>
 
+### Save to OneDrive
+
+Toggle **Save to OneDrive?** to also upload a copy of the `.docx` to a Microsoft OneDrive folder.
+
+<Steps>
+  <Step title="Connect Microsoft">
+    If you have not connected a Microsoft account yet, you will be prompted to authorize DocsAutomator. The same connection also powers [Save PDFs in OneDrive](/features/actions-after-document-generation/save-pdfs-in-onedrive) and Outlook sending.
+  </Step>
+  <Step title="Pick a folder">
+    Browse to the destination folder in your OneDrive.
+  </Step>
+  <Step title="(Optional) dynamic subfolder">
+    Organize files using static text and `{{placeholder_name}}` placeholders, with forward slashes (`/`) for nested folders, exactly like [Save PDFs in OneDrive](/features/actions-after-document-generation/save-pdfs-in-onedrive).
+  </Step>
+</Steps>
+
+<Note>
+Google Drive and OneDrive are independent toggles, so you can keep the `.docx` in either, both, or neither.
+</Note>
+
 ## API Integration
 
-When you generate via the API, the response includes a `wordFileUrl` key with a link to the generated Word file, alongside the usual `pdfUrl`.
+When you generate via the API, the response includes a `wordFileUrl` key with a link to the generated Word file, alongside the usual `pdfUrl`. If the OneDrive copy is enabled, the response also includes `saveWordOneDriveUrl` (plus `saveWordOneDriveFileId` and `saveWordOneDriveFolderId`).
 
 ```json
 {
   "pdfUrl": "https://...",
-  "wordFileUrl": "https://..."
+  "wordFileUrl": "https://...",
+  "saveWordOneDriveUrl": "https://onedrive.live.com/..."
 }
 ```
 

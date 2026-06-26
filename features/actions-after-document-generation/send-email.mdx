@@ -89,7 +89,12 @@ This also works in per-row generate links and button fields: append `&actingUser
 
 - Static emails entered directly
 - Dynamic emails using placeholders like `{{email}}` or `{{contact_email}}`
-- Multiple recipients separated by commas
+- Add as many recipients as you need
+
+When you add more than one recipient, everyone receives **one shared email** rather than a separate copy each. All addresses are placed on the **To** line of a single message, so recipients can see each other, just like an email you'd send with several people in the To field.
+
+- If a placeholder recipient resolves to an empty or invalid address, it is skipped and the email is still sent to the remaining valid recipients.
+- Duplicate addresses are removed automatically, so no one is emailed twice.
 
 ### Subject Line
 

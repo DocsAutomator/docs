@@ -5,6 +5,19 @@ rss: true
 mode: "center"
 ---
 
+<Update label="June 26, 2026">
+  ## Multiple Email Recipients Now Receive One Shared Email
+
+  When an automation email has more than one recipient, everyone now receives a single shared email instead of a separate private copy each.
+
+  - Every address you add is placed on the **To** line of one message, so recipients can see each other, just like an email you'd send with several people in the To field.
+  - This replaces the previous behavior, where each recipient received their own separate copy of the email.
+  - If a placeholder recipient (such as `{{contact_email}}`) resolves to an empty or invalid address, it is skipped and the email is still sent to the remaining valid recipients.
+  - Duplicate addresses are removed automatically, so no one is emailed twice.
+  - Applies to all senders: DocsAutomator Mail, Gmail, and Outlook. E-signature emails are unaffected, since each signer still receives their own unique signing link.
+  - See the [Send Email guide](/features/actions-after-document-generation/send-email).
+</Update>
+
 <Update label="June 22, 2026">
   ## Save Generated Word Files to OneDrive
 

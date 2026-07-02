@@ -5,6 +5,16 @@ rss: true
 mode: "center"
 ---
 
+<Update label="July 2, 2026">
+  ## Fixed: Hidden Windows Line Breaks No Longer Break Generation
+
+  Google Docs documents whose source data contains Windows-style line breaks (common when text is pasted from Word or Outlook) now generate correctly.
+
+  - Previously, hidden carriage-return characters in line item fields could make a generation fail with a Google Docs error ("The insertion index must be inside the bounds of an existing paragraph").
+  - DocsAutomator now removes these hidden characters automatically before rendering, matching how Google Docs itself treats them. The visible line breaks in your text are preserved exactly as before.
+  - No action needed: previously affected records generate correctly on the next run.
+</Update>
+
 <Update label="June 26, 2026">
   ## Multiple Email Recipients Now Receive One Shared Email
 

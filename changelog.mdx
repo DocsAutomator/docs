@@ -6,6 +6,16 @@ mode: "center"
 ---
 
 <Update label="July 2, 2026">
+  ## Fixed: E-Signature Fields in Templates Using the Inter Font
+
+  E-signature fields are now placed correctly in documents generated from templates that use the Inter font.
+
+  - Previously, signature and date fields could be missing from the signing page when the template used Inter, while text fields kept working. The cause: exported PDFs encode Inter's special bracket shapes next to numbers in a way that made tags like `{{esign.signature_1}}` unrecognizable to the field scanner.
+  - The scanner now recognizes these bracket variants, for Inter and any other font that renders them the same way.
+  - No action needed: affected automations work again on the next run. If you switched your template to a different font as a workaround, you can switch back to Inter.
+</Update>
+
+<Update label="July 2, 2026">
   ## Fixed: Hidden Windows Line Breaks No Longer Break Generation
 
   Google Docs documents whose source data contains Windows-style line breaks (common when text is pasted from Word or Outlook) now generate correctly.

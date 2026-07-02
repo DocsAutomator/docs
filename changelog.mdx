@@ -6,6 +6,16 @@ mode: "center"
 ---
 
 <Update label="July 2, 2026">
+  ## Fixed: Word Templates With Layered Layouts No Longer Fail to Generate
+
+  Word templates with deeply layered content, such as an image inside a table inside a text box (common in certificate and badge layouts), now generate correctly.
+
+  - Previously, these templates failed with an "XML maximum depth reached" error. A safety limit in the template parser was stricter than the document structures Word itself produces.
+  - The limit now accommodates any realistic Word document. Existing templates are unaffected.
+  - No action needed: affected automations work again on the next run.
+</Update>
+
+<Update label="July 2, 2026">
   ## Fixed: E-Signature Fields in Templates Using the Inter Font
 
   E-signature fields are now placed correctly in documents generated from templates that use the Inter font.

@@ -108,10 +108,14 @@ When you add more than one recipient, everyone receives **one shared email** rat
 - Dynamic placeholders throughout email body
 - Access to document data dynamically
 
-### PDF Attachments
+### Attachments
 
-- Included by default
-- Optional: Deselect "Attach Generated PDF to Email" to send notification emails with download links instead
+- **PDF**: Included by default. Deselect "Attach Generated PDF to Email" to send notification emails with download links instead.
+- **Word document (.docx)**: For automations that use a Word template, enable "Attach Generated Word document (.docx)" to attach the editable Word file. This works on its own, so you can email the Word file without also saving a copy to storage. Enable both options to send the PDF and the Word file in the same email.
+
+<Info>
+The Word attachment option appears only for automations built on a Word (.docx) template. It is not shown for PDF or Google Docs templates.
+</Info>
 
 ### Reply-To Address
 

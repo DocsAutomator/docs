@@ -5,6 +5,16 @@ rss: true
 mode: "center"
 ---
 
+<Update label="July 13, 2026">
+  ## Fixed: Outlook Now Sends Large Document Attachments
+
+  Automations that send through a connected Outlook / Microsoft 365 account can now email documents of any size, including large PDFs.
+
+  - Previously, sending a document larger than about 3 MB through Outlook failed with an "Access is denied" error. Smaller attachments were unaffected, which is why most emails went through.
+  - Larger files are sent through an upload step that needed an extra mailbox permission, which DocsAutomator now requests when you connect Outlook.
+  - Action needed: reconnect your Outlook account under **Workspace Settings → Integrations** to grant the added permission. You will see one extra line about mailbox access on the Microsoft consent screen, which is expected.
+</Update>
+
 <Update label="July 9, 2026">
   ## Email the Generated Word Document
 

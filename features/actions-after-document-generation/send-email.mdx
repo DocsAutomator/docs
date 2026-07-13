@@ -202,6 +202,7 @@ Before going live, test your email configuration:
     - **"Account inactive"**: Reconnect the account under workspace settings > integrations (it can go inactive if access was revoked on the provider's side)
     - **"No account selected"**: Choose a connected account in email service settings
     - **Authentication errors**: Re-authorize the connection in workspace settings > integrations
+    - **Outlook "Access is denied" when sending**: This appears on Outlook accounts connected before the large-attachment update, when the document being sent is larger than about 3 MB. Reconnect your Microsoft account under workspace settings > integrations to grant the added mailbox permission, then run the automation again.
   </Accordion>
   <Accordion title="Delivery Issues">
     - Check spam folders and verify recipient addresses

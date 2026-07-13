@@ -6,6 +6,16 @@ mode: "center"
 ---
 
 <Update label="July 13, 2026">
+  ## Fixed: Word Templates Now Work With the Zapier "Create Document" Action
+
+  Automations built on a Word (.docx) template can now be selected in the Zapier "Create Document" action.
+
+  - Previously the action reported "This automation does not have a document template" for Word template automations, even when the template was uploaded and previews worked. Google Doc and PDF template automations were unaffected.
+  - The action now recognizes Word templates and lists their placeholders as mappable fields.
+  - Action needed: none. If you built a Zap before this fix, reopen the Create Document step to refresh the automation and its fields.
+</Update>
+
+<Update label="July 13, 2026">
   ## Fixed: Outlook Now Sends Large Document Attachments
 
   Automations that send through a connected Outlook / Microsoft 365 account can now email documents of any size, including large PDFs.

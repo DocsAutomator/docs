@@ -6,6 +6,18 @@ mode: "center"
 ---
 
 <Update label="July 17, 2026">
+  ## Control Signature Size With Your Template's Font Size
+
+  Signatures in finished documents now scale with the font size of the signature tag in your template.
+
+  - Make the `{{esign.signature_1}}` tag bigger in your Google Doc or Word template (for example 24 to 30pt) and the signed signature renders proportionally bigger. Tags at the standard 11pt or smaller render exactly as before.
+  - Date and text fields scale the same way, so a larger date tag produces a larger date.
+  - Signatures are also centered on the tag line and cropped to the drawn strokes, so they sit cleanly in the space where the tag was placed.
+  - This works per placement: different signature spots in the same document can use different sizes.
+  - Action needed: none. Existing templates and in-progress signing sessions are unaffected.
+</Update>
+
+<Update label="July 17, 2026">
   ## Fixed: Word Template Line Items From Zapier and Other Connectors Now Fill One Value Per Row
 
   Line items in Word (.docx) templates now populate correctly when the data comes from Zapier, Noloco, and similar connectors.

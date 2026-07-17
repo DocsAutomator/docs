@@ -52,6 +52,12 @@ Fields use the format: `{{esign.TYPE_SIGNER}}`
 | Text | `{{esign.text_1_name}}` | Text input field (append `_name` for a unique label per field) |
 | Checkbox | `{{esign.checkbox_1_label}}` | Agreement checkbox (append `_label` for a unique name per field) |
 
+### Field Size
+
+Signature, date, and text fields in the finished document scale with the font size of their tag in the template. For a bigger signature, make the `{{esign.signature_1}}` tag bigger. For example, a 24 to 30pt tag produces a signature roughly 2 to 3 times the standard size. The document reflows around the larger tag, so the space you see in the template is the space the signature will occupy.
+
+Tags at the standard body text size (11pt) or smaller render at the default size, and each tag is sized independently, so different signature spots in the same document can use different sizes. Checkbox size is fixed.
+
 ## E-Sign Fields in Conditional Sections
 
 E-sign fields placed inside a [conditional section](/features/sections) are automatically excluded from the signing workflow when that section is hidden. If all e-sign fields are in hidden sections, no signing session is created and no charge is billed. This lets you build a single template that supports both e-sign and wet-ink workflows by toggling a section.

@@ -5,6 +5,16 @@ rss: true
 mode: "center"
 ---
 
+<Update label="July 17, 2026">
+  ## Fixed: Word Template Line Items From Zapier and Other Connectors Now Fill One Value Per Row
+
+  Line items in Word (.docx) templates now populate correctly when the data comes from Zapier, Noloco, and similar connectors.
+
+  - Previously a line-item table repeated the correct number of rows but showed the whole column, every value joined together, in each row instead of one value per row. Google Doc templates were unaffected.
+  - This affected automations whose connector sends line-item fields grouped by the line-item table. The Zapier "Create Document" action always does, and Noloco and similar tools can too.
+  - Action needed: none. Re-run the automation and the rows fill in correctly. No changes to your template or field mapping are required.
+</Update>
+
 <Update label="July 13, 2026">
   ## Fixed: Word Templates Now Work With the Zapier "Create Document" Action
 

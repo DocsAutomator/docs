@@ -176,11 +176,24 @@
                 ]
               },
               {
+                "group": "Account & Billing",
+                "pages": [
+                  "account-billing/manage-cancel-subscription",
+                  "account-billing/overage-documents",
+                  "account-billing/invoices-and-receipts",
+                  "account-billing/nonprofit-education-discount",
+                  "account-billing/refund-policy",
+                  "account-billing/delete-account-and-data"
+                ]
+              },
+              {
                 "group": "Resources",
                 "pages": [
                   "more/faq",
                   "more/docsautomator-reviews",
                   "more/docsautomator-unlimited-fair-use-policy",
+                  "more/finding-your-api-key",
+                  "more/responsible-disclosure",
                   {
                     "group": "Troubleshooting",
                     "icon": "wrench",

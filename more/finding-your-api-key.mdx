@@ -1,0 +1,36 @@
+---
+title: "Finding Your API Key"
+description: "Where to find, copy, and regenerate your DocsAutomator API key"
+icon: "key"
+keywords: ["API key", "authentication", "token", "regenerate"]
+---
+
+Your API key authenticates requests to the DocsAutomator API and connects integrations such as Glide, Noloco, Zapier, Make, and n8n.
+
+## Where to find it
+
+1. Go to [Workspace Settings > API](https://app.docsautomator.co/settings/workspace/api).
+2. Copy the key with the copy button.
+
+The API key belongs to the **workspace**, not to your user. All automations in the workspace share it.
+
+## Using the key
+
+Send it as a Bearer token in the Authorization header:
+
+```bash
+curl -X POST "https://api.docsautomator.co/createDocument" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"docId": "...", "recId": "..."}'
+```
+
+See the [API introduction](/api-reference/introduction) for full usage.
+
+## Regenerate the key
+
+On the same page you can **regenerate** the key. The old key stops working immediately, so update every integration that uses it (Glide, Zapier scenarios, custom scripts) right after regenerating.
+
+<Warning>
+Treat the API key like a password. Anyone with the key can generate documents against your plan allowance. If a key may have leaked, regenerate it.
+</Warning>

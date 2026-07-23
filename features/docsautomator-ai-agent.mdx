@@ -1,0 +1,60 @@
+---
+title: "DocsAutomator AI Agent"
+description: "Describe the document you need in plain language and the AI Agent builds the automation: data source, template, field mapping and a first test document"
+icon: "sparkles"
+keywords: ["ai agent", "ai assistant", "copilot", "chat", "automation setup", "template generation"]
+---
+
+The DocsAutomator AI Agent sets up document automations from a plain language description. Type something like "Turn every record in my Invoices table into a PDF invoice with its line items and save it to Drive" and the AI Agent asks a couple of questions, then builds the automation while you watch: it reads your data, designs the template, maps the fields and generates a first document for you to check.
+
+The AI Agent is available in every workspace, on all plans. Open the app and you'll find it in the left column, ready for your first sentence.
+
+<Frame caption="The AI Agent building an automation from a single sentence">
+  <img src="/images/ai-agent/agent-chat.png" alt="DocsAutomator AI Agent chat building a client invoice automation from a Notion database" />
+</Frame>
+
+## How It Works
+
+<Steps>
+  <Step title="Describe the document you need">
+    Write what you want in the chat, in your own words. Mention the data source if you already know it, for example "from my Airtable Invoices table". The AI Agent asks follow-up questions when something is unclear.
+  </Step>
+  <Step title="It reads your data">
+    Connect Airtable, Google Sheets, Notion, SmartSuite or ClickUp and the AI Agent browses your bases, tables and databases, then picks the fields that fit your document. It looks at a few sample records to get the mapping right; these are used for setup only and are not stored.
+  </Step>
+  <Step title="It designs the template">
+    Pick a style and the AI Agent writes a Word template with your placeholders already in the right spots. Line items are mapped too, so repeating rows work from the first run.
+  </Step>
+  <Step title="It generates a test document">
+    Before anything goes live, the AI Agent creates a real PDF from a real record so you can check the result.
+  </Step>
+  <Step title="It sets up the rest">
+    Signature fields, email delivery, Drive folders and the other [actions after document generation](/features/actions-after-document-generation) can all be configured straight from the chat.
+  </Step>
+</Steps>
+
+## What Else It Can Do
+
+- **Edit templates on request**: describe the change in words, for example "make the header blue and add a payment terms section", and it rewrites the template.
+- **Generate one-off documents**: need a single document rather than a recurring automation? Ask for one and fill in the values directly, no data source required.
+- **Answer product questions**: it answers setup questions from our documentation. Use **Talk to a human** in the chat header whenever you'd rather have one of us help; the AI Agent also hands over on its own when it cannot help.
+
+## Pricing
+
+<Info>
+The AI Agent is included on every plan at no extra charge for now. If we ever put pricing around it, you will hear it from us first.
+</Info>
+
+## Your Existing Automations
+
+Nothing changes for what you've already built. Existing automations, templates, field mappings and integrations keep working exactly as before, and you can keep setting up automations manually whenever you prefer; the AI Agent works alongside the regular editor, not instead of it.
+
+<Frame caption="The AI Agent sits alongside the regular automation editor">
+  <img src="/images/ai-agent/v4-workspace.png" alt="DocsAutomator workspace with the AI Agent chat on the left and the automation editor with data mapping on the right" />
+</Frame>
+
+## Tips
+
+- **Be specific**: name the table, the fields you care about and where the document should go. "Invoice from my Invoices table with line items, saved to Drive" beats "make me an invoice".
+- **Iterate in chat**: you don't need the perfect first prompt. Get a first version, then refine it with follow-up messages.
+- **Check the test document**: the AI Agent always generates one before your automation goes live. Look it over and describe anything that's off.

@@ -106,6 +106,7 @@
               {
                 "group": "Features",
                 "pages": [
+                  "features/docsautomator-ai-agent",
                   {
                     "group": "DocsAutomator eSign",
                     "icon": "signature",

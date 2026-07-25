@@ -38,6 +38,27 @@ Formatting never breaks a document. If a value doesn't match the chosen format, 
 - `"free"` with a currency format renders `free`
 - Empty values stay empty (and still trigger [Delete Line / Row When Empty](/features/advanced-placeholder-options/conditional-paragraph-row-deletion))
 
+### A Date Format Needs a Complete Date
+
+To apply a date format, DocsAutomator has to be able to read the year, month and day out of the value. A date that is **missing its year** cannot be formatted, and is printed exactly as sent rather than guessed at:
+
+| Source value | Date format applied | Result |
+|---|---|---|
+| `2026-07-24` | Day / month / year | `24/07/2026` |
+| `24/07/2026` | Long month | `24 July 2026` |
+| `24-juli` | any | `24-juli` (printed as sent, no year to format) |
+| `July 24` | any | `July 24` (printed as sent) |
+
+This most often shows up with **Google Sheets**, where a cell can *look* like a date while holding text. If a date placeholder isn't picking up your format:
+
+1. Select the cell in your sheet and check the formula bar. A real date shows a complete date (for example `2026-07-24`); text shows exactly what was typed.
+2. If it's text, set the column to **Format → Number → Date** and re-enter the value, or type the full date including the year.
+3. Prefer a real date column over free text. Then the format you choose in DocsAutomator controls how it reads in the document, in your automation's locale.
+
+<Tip>
+If you want a specific wording that no format produces (for example a Spanish month name while the rest of the sheet is in another language), set the cell to plain text and type the date exactly as it should appear. DocsAutomator prints text values unchanged.
+</Tip>
+
 ## Conditions Compare the Raw Value
 
 Formatting is display-only. [Show / Hide conditions](/features/advanced-placeholder-options/conditional-show-hide), [conditional styling](/features/advanced-placeholder-options/conditional-styling), line item sorting, and grouping calculations all evaluate the **raw value your source sent** — not the formatted text. A rule like *hide if greater than 1000* keeps working on a placeholder formatted as currency.

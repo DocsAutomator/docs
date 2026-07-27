@@ -6,6 +6,17 @@ mode: "center"
 ---
 
 <Update label="July 27, 2026">
+  ## Reuse the same section in several places
+
+  A conditional section name can now be used as many times as you like in one template, so a block that belongs in three places no longer needs three separate names and three identical rules.
+
+  - Use `{{section_NAME}}` ... `{{/section_NAME}}` wherever the block should appear. One rule controls every copy, so they all show or hide together.
+  - Useful for long documents where the same clause, signature block or table column appears in more than one place, and for hiding a table column by wrapping both its header cell and its data cell in the same section.
+  - Previously a repeated section name could stop a document generating, or hide only the first copy in Word templates and leave the rest visible. Both are fixed.
+  - Section names that appear once are unaffected.
+</Update>
+
+<Update label="July 27, 2026">
   ## See which signature requests are actually stuck
 
   Your dashboard now shows why each pending document has not been signed yet, so you can tell the difference between a contract someone is still reading and one that never reached them.

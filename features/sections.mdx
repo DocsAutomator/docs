@@ -34,6 +34,28 @@ DocsAutomator enables rendering of entire document areas dynamically using Secti
 The closing tag requires a forward slash before `section`.
 </Note>
 
+### Reusing a section name
+
+The same section name can be used as many times as you like in one template. Each pair of tags is treated as its own block, and the single rule you configure for that name controls every copy, so they all show or hide together.
+
+```
+{{section_vendor_2}}
+Vendor 2 details
+{{/section_vendor_2}}
+
+... other content ...
+
+{{section_vendor_2}}
+Vendor 2 signature block
+{{/section_vendor_2}}
+```
+
+This is useful when the same clause, signature block or table column appears in more than one place in a long document. To hide a table column, wrap both its header cell and its data cell in a section with the same name.
+
+<Note>
+Copies of a section cannot be given different conditions. If two blocks need to appear independently, give them different names.
+</Note>
+
 ## Example
 
 ```

@@ -211,9 +211,12 @@ This is separate from the "Save PDFs in Google Drive" output action, which saves
 
 ### Save to Data Source
 
+Set this in the automation's **E-Signing** panel, under **After signing → Save Signed PDF To**. It is a separate setting from the PDF write-back in the Actions card, which saves the unsigned document at generation time.
+
 | Source | Save Method |
 |--------|------------|
 | Airtable | Attachment field |
+| Notion | Files property |
 | Google Sheets | HYPERLINK in cell |
 | SmartSuite | File field |
 | ClickUp | Task attachment |

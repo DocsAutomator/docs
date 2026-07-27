@@ -153,6 +153,37 @@ With Gmail or Outlook selected, you can additionally enable **Send from the team
 Only unsigned documents receive reminders; they stop upon completion.
 </Note>
 
+<Warning>
+Reminders are never sent for sessions using link delivery (`deliveryMethod: "manual"`), because you distribute those signing links yourself. See [Tracking Open Requests](#tracking-open-requests).
+</Warning>
+
+## Tracking Open Requests
+
+The **Waiting to be signed** list appears on your home page and as a tab in Documents. It shows every open signing request, with a status that tells you where each one is stuck.
+
+| Status | Meaning | What usually helps |
+|--------|---------|--------------------|
+| Not opened yet | Nobody has opened the signing link | Share the link through another channel |
+| Read, not signed | A signer opened the document but did not finish | Send a reminder |
+| Partly signed | At least one signer is done | Chase the remaining signers |
+
+Each row also shows how long the request has been waiting and how many reminders have already been sent, counting both scheduled reminders and any you triggered by hand.
+
+<Tip>
+Whether a document has been opened is the strongest signal of whether it will be signed. If nobody has opened a request after a few days, another email to the same address rarely helps. Use **Copy link** to send the signing link through a channel the recipient actually checks.
+</Tip>
+
+Requests nobody has opened after 72 hours are marked as going cold. This is a hint about the odds, not an expiry: the signing link stays valid for its full expiration period.
+
+### Actions
+
+| Action | Available when |
+|--------|----------------|
+| Copy link | The request uses link delivery, or nobody has opened it yet |
+| Remind | The request uses email delivery |
+
+Sessions using link delivery only ever offer **Copy link**, since DocsAutomator does not email those signers.
+
 ## Branding
 
 ### Custom Logo

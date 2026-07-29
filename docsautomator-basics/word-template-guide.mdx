@@ -54,7 +54,7 @@ The placeholder syntax is identical between Google Docs and Word, so you can mov
 
 ## Three Ways to Start a Word Template
 
-In the **Template** step of your automation, choose **Word (.docx)** as the template type. You then have three ways to get a template in place.
+In your automation's template area, start a Word template by choosing **Start from scratch** and then **Microsoft Word**, or by uploading or dropping a `.docx` file. From there, you have three ways to get a template in place.
 
 <Frame caption="The Word template picker: choose a gallery design, upload your own .docx, or create one with AI">
   <img src="/images/word-template/template-type-picker.png" alt="Word template picker showing three options: Choose from the Word Template Gallery, Upload a Word (.docx) file, and Create with AI" />
@@ -174,7 +174,7 @@ These additional terms apply to customers in the EU…
 {{/section_eu_terms}}
 ```
 
-Configure the show/hide rules in the section settings UI (the same six condition types as Google Docs: equals, does not equal, contains, does not contain, exists, does not exist; multiple conditions combine with AND). See [Sections](/features/sections) for details.
+Configure the show/hide rules in the section settings UI. Word sections use the same condition engine as Google Docs. Operators adapt to the field type: equals, does not equal, contains, does not contain, exists, does not exist, greater than, less than, greater than or equal, less than or equal, and is true / is false. A condition can compare against a value you enter, another placeholder, or a source field. When a section has multiple conditions, choose the match mode: **ALL** (the section shows only when every condition passes) or **ANY** (it shows when at least one passes). See [Sections](/features/sections) for details.
 
 ### E-Signature Placeholders
 
@@ -187,7 +187,7 @@ Word templates work with [DocsAutomator eSign](/features/docsautomator-esign) us
 {{esign.checkbox_1_label}}  Checkbox for signer 1
 ```
 
-Type these tags where the signing elements should appear, then configure signers in the [e-signature output settings](/features/docsautomator-esign).
+Type these tags where the signing elements should appear, then configure signers in the [E-Signing card](/features/docsautomator-esign) of your automation.
 
 ---
 

@@ -10,7 +10,7 @@ Generate an unlimited amount of previews without wasting credits. Document previ
 
 <Tabs>
   <Tab title="From Automation Interface">
-    After selecting a data source and template, a preview area appears on the right side of the interface.
+    After selecting a data source and template, click the **Preview** button in the top bar to open a preview of your document.
 
     **For Airtable and ClickUp integrations:**
     - Map specific records or tasks from your selected bases, tables, spaces, or lists
@@ -18,12 +18,12 @@ Generate an unlimited amount of previews without wasting credits. Document previ
     **For other integrations:**
     - Use the mapping interface to associate data with placeholders in your template
   </Tab>
-  <Tab title="Preview Mode for Entire Automation">
-    Enable preview mode for the complete automation workflow:
+  <Tab title="Test Mode for Entire Automation">
+    Set the automation's status to **Test Mode** to test the complete workflow:
     - Applies a watermark to generated PDFs
     - Consumes zero document credits
     - If "Save Google Doc" is enabled, preserves the Google Doc with a "PREVIEW — NOT FOR DISTRIBUTION" header
-    - If "Save PDFs in Google Drive" is enabled, saves the watermarked PDF to your Drive folder
+    - If "Save PDF in Google Drive" is enabled, saves the watermarked PDF to your Drive folder
     - If URL writeback fields are configured, writes Google Doc URL and PDF Drive URL back to your data source
     - Document names are prefixed with `[PREVIEW]` for easy identification
     - Emails are not sent
@@ -51,9 +51,9 @@ Generate an unlimited amount of previews without wasting credits. Document previ
   </Card>
 </CardGroup>
 
-## Preview vs Production
+## Test Mode vs Production
 
-| Feature | Preview Mode | Production Mode |
+| Feature | Test Mode | Production Mode |
 |---------|--------------|-----------------|
 | PDF Watermark | Yes | No |
 | Google Doc Header | "PREVIEW — NOT FOR DISTRIBUTION" | None |

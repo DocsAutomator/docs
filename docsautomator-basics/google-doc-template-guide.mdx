@@ -122,7 +122,7 @@ I agree to the terms and conditions: {{esign.checkbox_2_agreeterms}}
 </Frame>
 
 <Info>
-E-signature signer details (name, email, signing order) are configured in the automation's output settings, not in the template itself. See [DocsAutomator eSign](/features/docsautomator-esign) for setup instructions.
+E-signature signer details (name, email, signing order) are configured in the automation's E-Signing card, not in the template itself. See [DocsAutomator eSign](/features/docsautomator-esign) for setup instructions.
 </Info>
 
 ---
@@ -152,8 +152,8 @@ Instead of building a Google Doc template from scratch, you can describe what yo
     Generated Google Docs inherit sharing permissions from either the selected Google Drive folder or the template folder.
   </Accordion>
 
-  <Accordion title="Test with Preview Mode" icon="eye">
-    Always use preview mode when setting up a new automation to verify your template renders correctly before going live.
+  <Accordion title="Test in Test Mode" icon="eye">
+    Always use Test Mode when setting up a new automation to verify your template renders correctly before going live.
   </Accordion>
 </AccordionGroup>
 
@@ -164,8 +164,7 @@ Instead of building a Google Doc template from scratch, you can describe what yo
 | `{{field}}` | Simple text replacement | `{{name}}` |
 | `{{image_field}}` | Image insertion | `{{image_logo}}` |
 | `{{line_items_1}}{{field}}` | Line item row | Invoice rows |
-| `{{field\|format}}` | Formatted output | `{{date\|date}}` |
-| `{{#if condition}}` | Conditional content | Show/hide sections |
+| `{{section_NAME}}` ... `{{/section_NAME}}` | Conditional section (show/hide rules set in the section settings) | `{{section_discount}}` |
 
 ## Next Steps
 

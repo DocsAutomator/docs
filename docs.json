@@ -228,6 +228,7 @@
                 "pages": [
                   "api-reference/documents/create-from-api",
                   "api-reference/documents/create-from-airtable",
+                  "api-reference/documents/create-from-notion",
                   "api-reference/documents/create-from-google-sheets",
                   "api-reference/documents/create-from-smartsuite",
                   "api-reference/documents/create-from-clickup",

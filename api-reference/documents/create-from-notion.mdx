@@ -1,0 +1,129 @@
+---
+title: "Create Document from Notion"
+api: "POST https://api.docsautomator.co/createDocument"
+description: "Trigger document generation for a Notion page via the API"
+keywords: ["Notion", "create document", "page ID", "pageId", "recId"]
+---
+
+When your automation's data source is set to **Notion**, you only need to pass the ID of the Notion page you want to turn into a document. All property mapping, line items, page-body content, and output settings are pulled from the DocsAutomator app automatically.
+
+<Info>
+For setup instructions on connecting Notion to DocsAutomator, see the [Notion integration guide](/integrations-api/notion).
+</Info>
+
+## Endpoint
+
+```
+POST https://api.docsautomator.co/createDocument
+```
+
+## Request Body
+
+<ParamField body="docId" type="string" required>
+  The automation ID. Find it on the automation's settings page or via `GET /automations`.
+</ParamField>
+
+<ParamField body="recId" type="string" required>
+  The Notion page ID, with or without dashes (e.g. `1a2b3c4d5e6f4708b1c2d3e4f5a6b7c8`). DocsAutomator fetches all mapped properties from this page automatically.
+
+  Two aliases are accepted, in this order of precedence:
+
+  1. `recId` — the DocsAutomator standard, used by every data source and by the in-app Generate button.
+  2. `pageId` — a Notion-specific alias, accepted as a body or query parameter.
+  3. `data.id` — the payload shape Notion itself posts from a **Button** property configured to send a webhook. You do not build this by hand; point the button at the generation URL and Notion supplies it.
+
+  The first one present wins, so you never need to send more than one.
+</ParamField>
+
+<ParamField body="pageId" type="string">
+  Notion-specific alias for `recId`. Use whichever reads better in your integration.
+</ParamField>
+
+<ParamField body="async" type="boolean" default="false">
+  When `true`, returns immediately with a `jobId` (HTTP 202). Poll [`GET /job/{jobId}`](/api-reference/documents/get-job-status) for the result.
+</ParamField>
+
+<ParamField body="webhookParams" type="object">
+  Custom parameters passed through to webhook notifications as `webhookParams` (plus an identical `additionalParams` copy kept only for legacy integrations). The triggering page ID is folded in automatically; your own keys are never overwritten.
+</ParamField>
+
+<ParamField body="skipEsign" type="boolean" default="false">
+  When `true`, skips e-signing for this request even if the automation has e-signing enabled. The document is generated and delivered normally (Drive save, email, webhook), but no signing session is started and no signing invitations are sent. Useful for two-step approval flows: generate a draft for review first, then re-run without `skipEsign` to send the document for signing. Also accepted as a query parameter (`?skipEsign=true`) on GET requests.
+</ParamField>
+
+<ParamField body="actingUserEmail" type="string">
+  Email address of the team member generating this document. When the automation's email delivery (or e-signature email settings) has **Send from the team member who generates the document** enabled, the email is sent from this member's own connected Gmail or Outlook account instead of the configured sender. The address must match a mailbox connected to the workspace; otherwise DocsAutomator falls back to the automation's configured sender. Also accepted as a query parameter, and as an `X-Acting-User-Email` request header, which takes precedence.
+</ParamField>
+
+<ParamField body="docTemplateLink" type="string">
+  Override the automation's Google Doc template URL for this request only.
+</ParamField>
+
+## Example
+
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.docsautomator.co/createDocument \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "docId": "YOUR_AUTOMATION_ID",
+    "recId": "1a2b3c4d5e6f4708b1c2d3e4f5a6b7c8"
+  }'
+```
+
+```javascript Node.js
+const response = await fetch("https://api.docsautomator.co/createDocument", {
+  method: "POST",
+  headers: {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    docId: "YOUR_AUTOMATION_ID",
+    recId: "1a2b3c4d5e6f4708b1c2d3e4f5a6b7c8",
+  }),
+});
+
+const result = await response.json();
+console.log(result.pdfUrl);
+```
+
+```python Python
+import requests
+
+response = requests.post(
+    "https://api.docsautomator.co/createDocument",
+    headers={
+        "Authorization": "Bearer YOUR_API_KEY",
+        "Content-Type": "application/json",
+    },
+    json={
+        "docId": "YOUR_AUTOMATION_ID",
+        "recId": "1a2b3c4d5e6f4708b1c2d3e4f5a6b7c8",
+    },
+)
+
+result = response.json()
+print(result["pdfUrl"])
+```
+</CodeGroup>
+
+## Triggering from a Notion button
+
+You do not have to call the API yourself. A **Button** property in your Notion database can send the request for you, which is the usual setup for non-technical users. See [Notion button setup](/integrations-api/notion) in the integration guide. Notion posts the source page under `data`, and DocsAutomator reads the page ID from there.
+
+<Note>
+Notion buttons require a Notion Plus plan or higher.
+</Note>
+
+## Response
+
+```json
+{
+  "message": "success",
+  "pdfUrl": "https://files.docsautomator.co/..."
+}
+```
+
+Additional fields like `googleDocUrl`, `savePdfGoogleDriveUrl`, and e-signature fields are included depending on your automation's configuration. See the [API data source page](/api-reference/documents/create-from-api#response) for the full list.

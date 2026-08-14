@@ -4,6 +4,10 @@ description: "Fix common issues with Google Docs template placeholders and forma
 icon: "file-circle-exclamation"
 ---
 
+<Info>
+This page uses Google Docs for its examples. The placeholder rules below apply to [Word (.docx) templates](/docsautomator-basics/word-template-guide) as well, since both use the same `{{placeholder}}` syntax. [PDF templates](/docsautomator-basics/pdf-template-guide) work differently: fields are positioned visually rather than typed into the page.
+</Info>
+
 ## Placeholder Not Being Replaced
 
 ### Problem
@@ -71,7 +75,7 @@ Line item rows are not being generated, or the table shows raw placeholder text.
 
 ### Common Mistakes
 
-1. **Missing table row**: Line item placeholders must be placed inside a table row in your Google Docs template. They cannot be used in regular paragraph text.
+1. **Missing table row**: Line item placeholders must be placed inside a table row. They cannot be used in regular paragraph text. This applies to [Word templates](/docsautomator-basics/word-template-guide) too: a line item marker outside a table row is dropped.
 
 2. **Wrong prefix**: Line item placeholders use the format `{{line_items_N_fieldName}}` where N is the line item group number (1, 2, 3, etc.).
 

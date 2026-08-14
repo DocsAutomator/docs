@@ -36,7 +36,7 @@ First, set up your automation in DocsAutomator:
 1. Log in to your [DocsAutomator account](https://app.docsautomator.co)
 2. Click **New**, then **New automation** in your dashboard
 3. Select **Softr** as your data source
-4. Choose or create your Google Doc template
+4. Choose or create your template: a Google Doc, a Word (.docx) file, or a PDF
 5. Configure your output settings (PDF, email, Google Drive folder, etc.)
 6. Save the automation
 
@@ -101,7 +101,7 @@ Only automations with Softr as the data source will appear in the Automation ID 
 
 ### Step 4: Map Your Data
 
-In the JSON body, map your workflow data to the placeholders in your Google Doc template. Use the **@** button to insert dynamic values from your workflow.
+In the JSON body, map your workflow data to the placeholders in your template. Use the **@** button to insert dynamic values from your workflow.
 
 ```json
 {
@@ -193,7 +193,7 @@ Then in the DocsAutomator action, reference the code step's output:
 
 ## Including Images
 
-To include images in your documents, use the `image_` prefix for your placeholder names in your Google Doc template:
+To include images in your documents, use the `image_` prefix for your placeholder names in your template:
 
 ```
 {{image_logo}}
@@ -302,7 +302,7 @@ Automatically generate reports on a recurring basis:
 
 ## Tips & Best Practices
 
-- **Use Descriptive Placeholder Names:** In your Google Doc template, name placeholders clearly (e.g., `Project_Name` instead of `name`) to make JSON mapping easier
+- **Use Descriptive Placeholder Names:** In your template, name placeholders clearly (e.g., `Project_Name` instead of `name`) to make JSON mapping easier
 - **Test Each Step:** Use Softr's Testing tab to test each workflow step individually before running the full workflow
 - **Test with Preview Mode:** Enable preview mode in DocsAutomator to test without using document credits
 - **Organize Your Automations:** Name automations descriptively so they're easy to identify in the Automation ID dropdown
@@ -337,7 +337,7 @@ This lets users access their generated documents directly from your Softr app.
 ## E-Signatures and PDF Templates
 
 <Info>
-DocsAutomator supports [e-signatures](/features/docsautomator-esign) with all data sources, including Softr. After generating a document, you can automatically route it for signing. DocsAutomator also supports [PDF templates](/docsautomator-basics/pdf-template-guide) in addition to Google Doc templates.
+DocsAutomator supports [e-signatures](/features/docsautomator-esign) with all data sources, including Softr. After generating a document, you can automatically route it for signing. DocsAutomator also supports [Word (.docx) templates](/docsautomator-basics/word-template-guide) and [PDF templates](/docsautomator-basics/pdf-template-guide) in addition to Google Doc templates.
 </Info>
 
 ## Resources

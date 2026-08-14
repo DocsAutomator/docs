@@ -16,6 +16,20 @@ mode: "center"
   - Truncated names still show in full when you hover over them.
 </Update>
 
+<Update label="August 14, 2026">
+  ## Auto Creation conditions: more field types and operators
+
+  Airtable Auto Creation now triggers on far more than a select or checkbox, with real conditions instead of only "equals".
+
+  - **New trigger fields**: text (single line, long text, email, URL, phone), numbers (number, currency, percent, rating), dates, attachments, and computed fields: formulas, rollups, counts, and lookups.
+  - **New conditions**, matched to the field type: does not equal, contains, does not contain, greater/less than (or equal), is empty, is not empty, and is after/before for dates. The vocabulary is the same one conditional sections use.
+  - **Computed fields fire on indirect changes**: edit a line item, and a trigger on the invoice's rollup total fires when the recomputed total crosses your threshold. Lookup triggers fire when any looked-up value matches.
+  - Formula, rollup, and lookup conditions follow the computed result type, so a number formula gets number conditions and a date formula gets date conditions.
+  - Percent conditions are entered on the normal percent scale (50 means 50%).
+
+  Also fixed: updating an automation's data source through the API returned an error when the automation had an Auto Creation trigger configured.
+</Update>
+
 <Update label="August 13, 2026">
   ## Auto Creation for Airtable
 

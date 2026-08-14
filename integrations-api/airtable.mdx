@@ -81,14 +81,20 @@ You can generate documents from Airtable three ways: automatically when a field 
 
 ### Automatic — Auto Creation
 
-Pick a field and a value that should fire generation. When a record changes to match (for example, **Status = Approved**), DocsAutomator generates a document for that record, usually within seconds. Nothing needs to be set up inside Airtable.
+Pick a field and a condition that should fire generation. When a record changes to match (for example, **Status = Approved**, or **Invoice Total is greater than 5,000**), DocsAutomator generates a document for that record, usually within seconds. Nothing needs to be set up inside Airtable.
 
 Trigger field types supported:
-- **Single select**
-- **Multiple select** (fires when the chosen option is among the selected values)
+- **Single select** and **multiple select** (multiple select fires when the chosen option is among the selected values)
 - **Checkbox**
+- **Text fields**: single line text, long text, email, URL, phone
+- **Number fields**: number, currency, percent, rating
+- **Date** and **date and time**
+- **Formula, rollup, count, and lookup** fields. The conditions follow the computed result: a number formula gets number conditions, a text formula gets text conditions. These also fire on indirect changes: edit a line item, and a trigger on the invoice's rollup total fires when the recomputed total matches. For lookups, the trigger fires when any looked-up value matches the condition.
+- **Attachments** (empty / not empty)
 
-Records that are created already matching the condition also fire, so imports and bulk-added rows are covered. Renaming the select option in Airtable does not break the trigger.
+Conditions match the field type and use the same vocabulary as conditional sections: equals, does not equal, contains, does not contain, is greater/less than (or equal), is empty, is not empty, is checked/unchecked, and is after/before for dates. "Is empty" and "is not empty" need no value.
+
+Records that are created already matching the condition also fire, so imports and bulk-added rows are covered. Renaming a select option in Airtable does not break the trigger, and percent conditions are entered on the normal percent scale (50 means 50%).
 
 Every evaluated change is visible in **Documents → Logs**: records that fired show as runs marked **Auto**, and records that did not fire show a row explaining why.
 

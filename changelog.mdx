@@ -5,6 +5,17 @@ rss: true
 mode: "center"
 ---
 
+<Update label="August 14, 2026">
+  ## Show unique values only
+
+  When a placeholder reads a field through an Airtable linked record, repeated values can now be listed once instead of over and over.
+
+  - Mapping a placeholder through a linked record field reads that field from every linked record and joins the results with commas. If several linked records share a value, it repeated: `Acme Corp, Acme Corp, Acme Corp`.
+  - Turn on **Show unique values only** in the placeholder settings and each value is listed once, in the order it first appears.
+  - The option shows up only on placeholders mapped through a linked record, and works for main fields and line item fields.
+  - It is off by default, so existing documents are unchanged.
+</Update>
+
 <Update label="August 13, 2026">
   ## Resizable Mapping Panel
 

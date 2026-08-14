@@ -1,0 +1,59 @@
+---
+title: "Show Unique Values Only"
+description: "Collapse repeated values when a placeholder reads a field through linked records"
+icon: "layer-group"
+---
+
+When an Airtable placeholder reads a field **through** a linked record field, DocsAutomator reads that field from every linked record and joins the results with commas. If several linked records share the same value, that value repeats. "Show unique values only" lists each value once instead.
+
+<Note>
+This option applies to Airtable placeholders that read a field through a linked record. It appears in the placeholder settings only when the mapping uses that kind of path, for example **Company name > Industry**.
+</Note>
+
+## Example
+
+An invoice record links to three projects, and all three belong to the same client.
+
+| Setting | Output |
+|---------|--------|
+| Off (default) | `Acme Corp, Acme Corp, Acme Corp` |
+| On | `Acme Corp` |
+
+With four projects across two clients, the output changes from `Acme Corp, Acme Corp, Globex, Acme Corp` to `Acme Corp, Globex`. Values keep the order in which they first appear.
+
+## Enabling It
+
+<Steps>
+  <Step title="Map Through a Linked Record">
+    In the field dropdown, pick a linked record field, then pick the field you want from the linked table. The mapping then reads like **Company name > Industry**.
+  </Step>
+  <Step title="Open Placeholder Settings">
+    Click the gear icon next to the placeholder.
+  </Step>
+  <Step title="Toggle Show Unique Values Only">
+    The option sits under "Delete paragraph / row when empty".
+  </Step>
+</Steps>
+
+## Key Details
+
+<Info>
+- The setting is off by default, so existing documents keep their current output.
+- It works on main-table placeholders and on line item fields.
+- Each placeholder is set separately. Use **Copy** and **Paste** in the settings panel to apply it to another placeholder.
+- Values are compared as text, so two linked records only collapse when the value is identical.
+</Info>
+
+## Related Features
+
+<CardGroup cols={3}>
+  <Card title="Airtable Integration" icon="table" href="/integrations-api/airtable">
+    How linked records and line items are read
+  </Card>
+  <Card title="Line Items" icon="list" href="/features/line-items">
+    Repeat rows from a linked table
+  </Card>
+  <Card title="Format Values" icon="coins" href="/features/advanced-placeholder-options/format-values">
+    Control how numbers and dates are rendered
+  </Card>
+</CardGroup>

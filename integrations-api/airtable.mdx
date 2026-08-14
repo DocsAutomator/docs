@@ -83,6 +83,12 @@ You can generate documents from Airtable three ways: automatically when a field 
 
 Pick a field and a condition that should fire generation. When a record changes to match (for example, **Status = Approved**, or **Invoice Total is greater than 5,000**), DocsAutomator generates a document for that record, usually within seconds. Nothing needs to be set up inside Airtable.
 
+<Frame>
+  <img src="/images/airtable/auto-creation.png" alt="Auto Creation settings: a trigger on the Status field, condition equals, value Approved" />
+</Frame>
+
+Open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value. The status line under the toggle shows when Airtable last sent an event, so you can tell at a glance that the connection is alive.
+
 Every evaluated change is visible in **Documents → Logs**: records that fired show as runs marked **Auto**, and records that did not fire show a row explaining why.
 
 <Tip>

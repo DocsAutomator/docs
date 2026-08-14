@@ -83,6 +83,18 @@ You can generate documents from Airtable three ways: automatically when a field 
 
 Pick a field and a condition that should fire generation. When a record changes to match (for example, **Status = Approved**, or **Invoice Total is greater than 5,000**), DocsAutomator generates a document for that record, usually within seconds. Nothing needs to be set up inside Airtable.
 
+Every evaluated change is visible in **Documents → Logs**: records that fired show as runs marked **Auto**, and records that did not fire show a row explaining why.
+
+<Tip>
+Auto Creation works on every Airtable plan, including Free.
+</Tip>
+
+<Info>
+Enabling Auto Creation registers a webhook with Airtable. This needs a connection with webhook access (connections made before August 2026 show a prompt to reconnect Airtable in Settings → Integrations; your automations and mappings are kept) and Creator permission on the base.
+</Info>
+
+### Fields and conditions you can trigger on
+
 Trigger field types supported:
 - **Single select** and **multiple select** (multiple select fires when the chosen option is among the selected values)
 - **Checkbox**
@@ -96,15 +108,27 @@ Conditions match the field type and use the same vocabulary as conditional secti
 
 Records that are created already matching the condition also fire, so imports and bulk-added rows are covered. Renaming a select option in Airtable does not break the trigger, and percent conditions are entered on the normal percent scale (50 means 50%).
 
-Every evaluated change is visible in **Documents → Logs**: records that fired show as runs marked **Auto**, and records that did not fire show a row explaining why.
+### How often Auto Creation fires
 
-<Tip>
-Auto Creation works on every Airtable plan, including Free.
-</Tip>
+Auto Creation reacts to *changes*, and it deliberately avoids generating the same document twice:
 
-<Info>
-Enabling Auto Creation registers a webhook with Airtable. This needs a connection with webhook access (connections made before August 2026 show a prompt to reconnect Airtable in Settings → Integrations; your automations and mappings are kept) and Creator permission on the base.
-</Info>
+- **Only the watched field counts.** The condition is evaluated when the field you picked changes. Editing other fields on a record that already matches does not generate another document.
+- **The same record does not fire twice within 10 minutes.** If a record generated a document less than 10 minutes ago, a further matching change is skipped and logged as a suppressed refire. This prevents duplicates when a record is edited several times in a row.
+- **Rapid edits within 5 seconds count as one change.** Airtable batches quick successive edits, and DocsAutomator collapses them into a single evaluation.
+- **Bulk updates log at most 25 skipped records per automation**, per batch of changes. The documents still generate for every matching record; only the skip rows are capped, so the log stays readable after a mass update.
+
+<Warning>
+**Time alone never triggers a document.** A condition such as "Due date is before today" fires only when a record is edited, not when the date arrives. The same applies to formulas using `TODAY()` or `NOW()`: Airtable recalculates them quietly and sends no change event, so DocsAutomator has nothing to react to. For date-driven documents, use a scheduled Airtable automation and the button or script method instead.
+</Warning>
+
+### Auto Creation limits and lifecycle
+
+- Auto-generated documents **count against your plan's document quota**, exactly like manual runs.
+- Turning Auto Creation off **removes the webhook** from your Airtable base.
+- **Changing the base or table** of an automation switches Auto Creation off, because the watched field no longer exists. Pick a new trigger field and switch it back on.
+- Automations that use the same base **share one webhook**. Airtable allows an app two webhooks per base, so this stays within the limit no matter how many automations you run.
+- DocsAutomator **refreshes the webhook daily**. Airtable expires webhooks after seven days and stops notifications after repeated delivery failures; the daily job renews them, re-enables notifications, and recreates a registration that Airtable has dropped. Missed changes are collected on the next refresh.
+- Formula fields in an error state (`#ERROR!`, `NaN`) are treated as empty and never match a condition.
 
 ### Trigger from Airtable
 
@@ -212,6 +236,18 @@ E-signatures work with both Google Doc templates and [PDF templates](/docsautoma
 <AccordionGroup>
   <Accordion title="Can I use DocsAutomator on a free Airtable account?">
     Yes! Auto Creation and button/formula triggering both work on free Airtable plans. Only automation scripts and Interface buttons require a paid Airtable account.
+  </Accordion>
+  <Accordion title="Auto Creation did not generate a document. What do I check?" icon="bolt">
+    Work through this list in order:
+
+    1. **Open Documents → Logs.** Every evaluated change appears there. A skip row tells you the reason: the condition did not match, or the record already generated a document in the last 10 minutes.
+    2. **No row at all?** Then Airtable sent no change event. Confirm you edited the field the trigger watches. Editing other fields does not fire the trigger, and a date passing does not either.
+    3. **Check the record still matches.** Number, percent and date conditions compare the stored value: a percent field stores 0.5 for 50%, and a date and time field carries a timestamp, so "equals" rarely matches. Use "is after" or "is before" instead.
+    4. **Check the connection.** If Airtable was disconnected or the grant was revoked, the automation page shows a prompt to reconnect. Reconnecting keeps your automations and mappings.
+    5. **Check your document quota.** Auto-generated documents count against your plan.
+  </Accordion>
+  <Accordion title="Why did editing a record twice only create one document?" icon="clock">
+    A record does not generate a second document within 10 minutes of the previous one. The second change is logged as a suppressed refire. This keeps a burst of edits from producing duplicates. Wait ten minutes, or generate the extra copy manually.
   </Accordion>
   <Accordion title="Why don't my bases appear after granting access?">
     Disconnect and reconnect in settings while selecting all desired bases.

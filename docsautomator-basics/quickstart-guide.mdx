@@ -27,43 +27,20 @@ After logging in, you'll see the initial dashboard. Click the green **New** butt
 An automation combines your data source (Airtable, Google Sheets, etc.) with a template: a Google Doc, a Word (.docx) file, or a PDF.
 </Note>
 
-## 2. Set Title & Choose Data Source
-
-Select your data source from the available integrations:
-
-<Frame caption="Select your data source from the available integrations">
-  <img src="/images/quickstart/choose-data-source.png" alt="Data source selection showing available integrations" />
-</Frame>
-
-<CardGroup cols={3}>
-  <Card title="Airtable" icon="/icons/airtable.png" href="/integrations-api/airtable" />
-  <Card title="Notion" icon="/icons/notion.png" href="/integrations-api/notion" />
-  <Card title="Google Sheets" icon="/icons/google-sheets.png" href="/integrations-api/google-sheets" />
-  <Card title="SmartSuite" icon="/icons/smartsuite.png" href="/integrations-api/smartsuite" />
-  <Card title="Glide" icon="/icons/glide.png" href="/integrations-api/glide" />
-  <Card title="Noloco" icon="/icons/noloco.png" href="/integrations-api/noloco" />
-  <Card title="ClickUp" icon="/icons/clickup.png" href="/integrations-api/clickup" />
-  <Card title="Zapier" icon="/icons/zapier.svg" href="/integrations-api/zapier" />
-  <Card title="n8n" icon="/icons/n8n.svg" href="/integrations-api/n8n" />
-  <Card title="API" icon="/icons/api.png" href="/integrations-api/docsautomator-api" />
-</CardGroup>
-
-Depending on your selection, you may need to connect your account.
-
-## 3. Choose Document Template
+## 2. Choose Your Document Template
 
 DocsAutomator supports three template formats: Google Docs, Word (.docx), and PDF. In the template area you can pick **Create template with AI**, **Browse templates**, or **Start from scratch**, or drag and drop a `.docx` or PDF file directly.
 
 <Frame caption="Choose how to start your template">
-  <img src="/images/quickstart/template-type-selection.png" alt="Template type selection showing Google Docs, Microsoft Word, and Upload an existing PDF options" />
+  <img src="/images/quickstart/template-type-selection.png" alt="Template area offering Create template with AI, Browse templates and Start from scratch, above a drag and drop area for PDF, Word and Google Docs files" />
 </Frame>
 
 <Tabs>
   <Tab title="Google Doc Template">
     Create a Google Doc with placeholder syntax (`{{field_name}}`). Best for text-heavy documents like invoices, contracts, and reports.
 
-    <Frame caption="Three ways to set up a Google Doc template">
-      <img src="/images/quickstart/choose-template.png" alt="Template selection options: import existing, start from scratch, or choose from gallery" />
+    <Frame caption="Browse the template library and apply a ready-made design">
+      <img src="/images/quickstart/choose-template.png" alt="Template library showing featured designs by category, with format toggles for Word and Google Docs" />
     </Frame>
 
     <AccordionGroup>
@@ -91,6 +68,29 @@ DocsAutomator supports three template formats: Google Docs, Word (.docx), and PD
   </Tab>
 </Tabs>
 
+## 3. Connect Your Data Source
+
+Open the **Data / Placeholders** panel on the right and click **Connect**. Pick the app that holds your data:
+
+<Frame caption="Pick the app that holds your data">
+  <img src="/images/quickstart/choose-data-source.png" alt="Data Source picker showing Airtable, Google Sheets, Google Forms, Notion, SmartSuite and ClickUp, plus Zapier, Make, n8n, Softr, Glide, Noloco and the DocsAutomator API and MCP server" />
+</Frame>
+
+<CardGroup cols={3}>
+  <Card title="Airtable" icon="/icons/airtable.png" href="/integrations-api/airtable" />
+  <Card title="Notion" icon="/icons/notion.png" href="/integrations-api/notion" />
+  <Card title="Google Sheets" icon="/icons/google-sheets.png" href="/integrations-api/google-sheets" />
+  <Card title="SmartSuite" icon="/icons/smartsuite.png" href="/integrations-api/smartsuite" />
+  <Card title="Glide" icon="/icons/glide.png" href="/integrations-api/glide" />
+  <Card title="Noloco" icon="/icons/noloco.png" href="/integrations-api/noloco" />
+  <Card title="ClickUp" icon="/icons/clickup.png" href="/integrations-api/clickup" />
+  <Card title="Zapier" icon="/icons/zapier.svg" href="/integrations-api/zapier" />
+  <Card title="n8n" icon="/icons/n8n.svg" href="/integrations-api/n8n" />
+  <Card title="API" icon="/icons/api.png" href="/integrations-api/docsautomator-api" />
+</CardGroup>
+
+Airtable, Google Sheets, Google Forms, Notion, SmartSuite and ClickUp connect directly and you authorise them once. Zapier, Make, n8n, Softr, Glide and Noloco push data to DocsAutomator instead, so you set those up in the tool itself. The DocsAutomator API and MCP server let you generate documents programmatically or straight from an AI assistant.
+
 ## 4. Map Data, Create Previews & Start Automating
 
 Select your base and table, then map your template placeholders to your data source fields.
@@ -106,7 +106,7 @@ Select your base and table, then map your template placeholders to your data sou
 Once mapping is complete, generate a preview to verify your document looks correct.
 
 <Frame caption="Generate a preview to verify your document looks correct">
-  <img src="/images/quickstart/preview.png" alt="Completed automation setup with PDF preview" />
+  <img src="/images/quickstart/preview.png" alt="Preview dialog showing a generated invoice PDF for the selected record" />
 </Frame>
 
 ## 5. Configure Output Actions
@@ -114,15 +114,15 @@ Once mapping is complete, generate a preview to verify your document looks corre
 Set up what happens after a document is generated — save PDFs, send emails, merge documents, collect e-signatures, and more.
 
 <Frame caption="Configure what happens after each document is generated">
-  <img src="/images/quickstart/output-settings.png" alt="Actions after document generation settings" />
+  <img src="/images/quickstart/output-settings.png" alt="Add action dialog offering Save PDF URL to Airtable field, Save Word document, Save PDF in Google Drive, Save in Documents folder, Save PDF in OneDrive, Send Email, Merge Existing PDFs and Notify Webhook" />
 </Frame>
 
 <Info>
 Want to collect signatures? Enable e-signatures in the **E-Signing** card of your automation. See the [eSign guide](/features/docsautomator-esign) for setup instructions.
 </Info>
 
-<Frame caption="E-signature settings with signer configuration and signing link delivery options">
-  <img src="/images/quickstart/esign-settings.png" alt="E-Signatures output settings showing signer email, signing link delivery, and link expiration options" />
+<Frame caption="E-signature settings: add signers and take their email from your data or a fixed address">
+  <img src="/images/quickstart/esign-settings.png" alt="E-Signing panel with two signers: one taking the email and name from data fields, one using a fixed email address" />
 </Frame>
 
 The configuration process differs by integration:

@@ -20,7 +20,7 @@ The DocsAutomator-Airtable integration enables you to convert Airtable records i
 </Frame>
 
 <Frame>
-  <img src="/images/airtable/overview.png" alt="Airtable automation overview showing data source, template, and field mapping" />
+  <img src="/images/airtable/overview.png" alt="Automation editor with the Word invoice template on the left and the Data / Placeholders, E-Signing and Actions panels on the right" />
 </Frame>
 
 <Note>
@@ -33,15 +33,15 @@ Generated files automatically save to specified Airtable fields.
   <Step title="Create Automation">
     Begin by establishing a new automation within your DocsAutomator account.
   </Step>
-  <Step title="Select Data Source">
-    Choose Airtable as your data integration source.
-  </Step>
   <Step title="Configure Template">
-    Every automation requires a Google Doc template. Consult the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) for setup details, or use the Playground Template for testing.
+    Every automation needs a template. Use a Google Doc, a Word (.docx) file, or a PDF. Create one with AI, browse the template library, start from scratch, or drag your own file in. See the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide), the [Word Template Guide](/docsautomator-basics/word-template-guide), or the [PDF Template Guide](/docsautomator-basics/pdf-template-guide).
 
     <Frame>
-      <img src="/images/airtable/template-selection.png" alt="Template selection step with Template Check" />
+      <img src="/images/airtable/template-selection.png" alt="Automation with a Word invoice template applied, showing the Data / Placeholders, E-Signing and Actions panels" />
     </Frame>
+  </Step>
+  <Step title="Connect Airtable">
+    Open the **Data / Placeholders** panel, click **Connect**, and choose Airtable. Authorise the bases you want DocsAutomator to read.
   </Step>
   <Step title="Choose Base and Table">
     Select your primary Airtable base and table. DocsAutomator distinguishes between primary tables (containing main record data) and linked tables (containing related line items).
@@ -56,22 +56,22 @@ Generated files automatically save to specified Airtable fields.
     Connect all applicable fields from your Airtable table. For line items, select the linked field and corresponding view to determine sort order.
 
     <Frame>
-      <img src="/images/airtable/field-mapping.png" alt="Primary table field mapping" />
+      <img src="/images/airtable/field-mapping.png" alt="Data / Placeholders panel showing the Airtable base, primary table, document name field and the mapped placeholders" />
     </Frame>
 
     <Frame>
-      <img src="/images/airtable/line-item-mapping.png" alt="Line item mapping with linked field, view, sort, and grouping options" />
+      <img src="/images/airtable/line-item-mapping.png" alt="Line Items section showing the linked field, view, sort order, auto number toggle and the mapped level 1 fields" />
     </Frame>
   </Step>
   <Step title="Create Previews">
     Generate document previews. The system loads 50 records automatically; search functionality enables previewing specific records.
 
     <Frame>
-      <img src="/images/airtable/preview.png" alt="Completed setup with PDF preview" />
+      <img src="/images/airtable/preview.png" alt="Preview dialog showing the generated invoice PDF for the selected record" />
     </Frame>
   </Step>
   <Step title="Trigger Document Generation">
-    Choose from three triggering methods: Automation Script, Scripting Extension, or Webhook.
+    Turn on Auto Creation to generate documents when a field changes to match your condition, or trigger from inside Airtable with a button, formula field, automation script, or the DocsAutomator extension.
   </Step>
 </Steps>
 
@@ -147,7 +147,7 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
     Copy the provided script into Airtable's automation action. Define the Record ID parameter to pass the triggering record's identifier.
 
     <Frame>
-      <img src="/images/airtable/automation-script.png" alt="Automation script code snippet" />
+      <img src="/images/airtable/automation-script.png" alt="Trigger from Airtable dialog showing the automation script to copy, with the API key and document id replaced by placeholders" />
     </Frame>
 
     <Info>
@@ -158,7 +158,7 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
     Add a webhook URL to a button or formula field in your table. Clicking the button triggers document generation — the PDF appears within seconds and stores in Airtable.
 
     <Frame>
-      <img src="/images/airtable/webhook-setup.png" alt="Webhook formula URL and Run Test button" />
+      <img src="/images/airtable/webhook-setup.png" alt="Trigger from Airtable dialog showing the formula to paste into a button or formula field, and the Run Test button" />
     </Frame>
 
     <Tip>
@@ -206,7 +206,7 @@ You can always generate a document for any record from inside DocsAutomator: cli
 | Currency | $299.99 | Symbol and precision preserved |
 | Formula/Rollup | Varies | Respects formatting options |
 | Lookup | Varies | Matches the looked-up field's format. Lookups of linked record fields resolve to record names |
-| Linked record | Record name(s) | Displays primary field value, comma-separated for multiple |
+| Linked record | Record name(s) | Displays primary field value, comma-separated for multiple. You can also map any field **inside** the linked table; repeated values can be collapsed with [Show Unique Values Only](/features/advanced-placeholder-options/show-unique-values) |
 | User | Name format | Comma-separated for multiple |
 
 ## Configuration Options

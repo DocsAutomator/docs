@@ -52,7 +52,7 @@ Generated PDFs can be uploaded straight to a **file property** on the Notion pag
     Pick the Notion database you want to generate documents from. DocsAutomator lists every database you've shared with the integration.
 
     <Frame>
-      <img src="/images/notion/database-select.png" alt="Selecting a Notion database in the DocsAutomator automation builder" />
+      <img src="/images/notion/database-select.png" alt="Data / Placeholders panel showing the connected Notion database and the document name property" />
     </Frame>
   </Step>
   <Step title="Choose the document name">
@@ -62,7 +62,7 @@ Generated PDFs can be uploaded straight to a **file property** on the Notion pag
     Match every template placeholder to a Notion property. Renaming a property in Notion later won't break the mapping — DocsAutomator tracks properties even when you rename them.
 
     <Frame>
-      <img src="/images/notion/property-mapping.png" alt="Mapping template placeholders to Notion properties" />
+      <img src="/images/notion/property-mapping.png" alt="Data Mapping list pairing each template placeholder with a Notion property" />
     </Frame>
 
     <Tip>
@@ -73,7 +73,7 @@ Generated PDFs can be uploaded straight to a **file property** on the Notion pag
     If your template includes `{{line_items_1}}` markers, pick a **Relation** property on your database, then map the fields on the related pages to the line-item placeholders. You can nest line items up to three levels deep.
 
     <Frame>
-      <img src="/images/notion/line-items.png" alt="Configuring line items from a Notion Relation property" />
+      <img src="/images/notion/line-items.png" alt="Line Items section showing the relation property, sort order, grouping and the mapped level 1 properties" />
     </Frame>
   </Step>
   <Step title="Preview">
@@ -87,7 +87,7 @@ Generated PDFs can be uploaded straight to a **file property** on the Notion pag
     - Send the PDF by email, save it to Google Drive, merge it with an existing PDF, or send a webhook notification.
 
     <Frame>
-      <img src="/images/notion/output-settings.png" alt="Actions tab with file property and URL property pickers for Notion write-back" />
+      <img src="/images/notion/output-settings.png" alt="Actions panel with a Save PDF URL to Notion action and its PDF link property" />
     </Frame>
   </Step>
   <Step title="Choose how documents get triggered">
@@ -110,7 +110,7 @@ Trigger property types supported:
 - **Checkbox**
 
 <Frame>
-  <img src="/images/notion/auto-creation.png" alt="Auto Creation panel showing the trigger property and value selection" />
+  <img src="/images/notion/auto-creation.png" alt="Automatic generation dialog with the Auto creation toggle, and a note that Notion batches webhook events so generation can take one to two minutes" />
 </Frame>
 
 <Warning>
@@ -160,7 +160,7 @@ You can always click **Generate** on any page from inside DocsAutomator. This wo
 DocsAutomator can drop the entire **body of a Notion page** (everything you write below the property panel) into your document. In the property picker, choose **📄 Page body (Markdown)** for any placeholder, and the page's content appears at that spot in the document.
 
 <Frame>
-  <img src="/images/notion/page-body-mapping.png" alt="Selecting Page body in the property picker" />
+  <img src="/images/notion/page-body-mapping.png" alt="Property picker open, with Page body (Markdown) listed above the database properties" />
 </Frame>
 
 Supported content includes:

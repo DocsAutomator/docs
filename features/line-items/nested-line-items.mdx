@@ -27,7 +27,9 @@ This feature enables hierarchical data presentation across up to 3 levels of nes
 | Level 3 (Grandchild) | Items from a linked table within Level 2 | Specifications |
 
 <Note>
-Currently available for Airtable or DocsAutomator's API. Requires linked record fields connecting your tables.
+Available for Airtable, Notion, and the [DocsAutomator API](/integrations-api/docsautomator-api). Google Doc templates only — [Word templates](/docsautomator-basics/word-template-guide) do not support nested line items yet.
+
+Airtable uses a linked-record field at each level. Notion uses a Relation property at each level. The API sends nested rows in a `children` array.
 </Note>
 
 ## Placeholder Format
@@ -48,7 +50,7 @@ Nesting is defined by the placeholder names themselves: `{{line_items_1}}` start
 
 <Steps>
   <Step title="Configure Data Source">
-    In your automation's line item settings, select the linked field for each level so DocsAutomator knows which related records to pull for the child and grandchild lists.
+    In your automation's line item settings, select the link for each level so DocsAutomator knows which related records to pull. In Airtable, pick the linked-record field. In Notion, pick the Relation property.
   </Step>
   <Step title="Create Template">
     In the template modal:
@@ -90,7 +92,7 @@ Nesting is defined by the placeholder names themselves: `{{line_items_1}}` start
 
 ## Best Practices
 
-- Use Airtable views for consistent sorting
+- Use Airtable views or Notion / Airtable sort settings for consistent order
 - Test with small datasets before large batches
 - Design columns so nested rows align logically with parents
 - Use clear, meaningful field names for easier maintenance
@@ -99,6 +101,6 @@ Nesting is defined by the placeholder names themselves: `{{line_items_1}}` start
 
 | Issue | Solution |
 |-------|----------|
-| Nested rows not appearing | Verify linked record fields contain data; check that Level 2/3 linked fields are selected in DocsAutomator; ensure placeholders use correct prefixes |
-| Wrong nesting order | Check Airtable view sorting; configure sorting in DocsAutomator's line item settings |
+| Nested rows not appearing | Verify the linked records or Relation pages contain data; check that Level 2/3 links are selected in DocsAutomator; ensure placeholders use the correct prefixes |
+| Wrong nesting order | Check Airtable view sorting or Notion relation order; configure sorting in DocsAutomator's line item settings |
 | Merged cells misaligned | Ensure template table has correct column count; verify each level's placeholders are in separate rows |

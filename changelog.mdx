@@ -17,6 +17,45 @@ mode: "center"
   - Also fixed: "Add signer" on Word templates now opens the template editor, and switching a signer from a fixed address to a data field clears the old address.
 </Update>
 
+<Update label="August 21, 2026">
+  ## Fixes across sections, line items, Notion, and Word templates
+
+  - A hidden section nested inside another hidden section no longer deletes content below the outer closing tag. This affected Google Docs and Word templates.
+  - Grouped line items keep their row borders again. Before, rows above the first group header lost their column borders.
+  - A line item field named `section_name` is no longer treated as a conditional section. A `{{section_*}}` tag counts as a section only when the template also has the closing tag, or when a rule with that name exists.
+  - Word templates: a `{{line_items_1}}` marker followed by a line break, or alone in its paragraph, no longer leaves an empty line above the first row.
+  - Word templates: one unclosed `{{` in a document no longer blocks every AI edit. The template check now names the stray brace and shows the text around it.
+  - PDF templates: Chinese, Japanese, and Korean text renders with Noto Sans CJK instead of empty boxes.
+  - Notion: date and time values keep the time zone set in Notion. Before, the time shifted to UTC on generation.
+  - Airtable, SmartSuite, ClickUp: images with a link attached keep the link when the image is a URL or formula field. Linked images in line items no longer lose the link.
+  - Duplicating or transferring an automation now copies the Word template file. Before, the copy shared the file with the original, and a new upload on the copy removed the original's file.
+  - A run that never reached the queue now shows as **Interrupted** after 60 minutes instead of pending forever. The run page tells you to trigger the record again.
+  - The AI Agent accepts a bare Google Doc ID as well as the full URL.
+  - Email editor: image alignment and size set in the editor now reach the sent email. Image formats that email clients cannot show (webp, svg, avif, heic, tiff, bmp, ico) are rejected when you add them.
+</Update>
+
+<Update label="August 20, 2026">
+  ## AI Agent creates Google Doc templates, and shows you looks before it writes
+
+  - **Google Doc templates from scratch**: ask the AI Agent for a template and it can now author a native Google Doc in your Drive, not only a Word file. This is the path to use for nested line items, which Word templates do not support. If a template is already linked, the agent asks before it replaces it, and the old file is never deleted.
+  - **Preview looks first**: for Word templates the agent renders your own document in three looks (restrained, branded, expressive) and shows them as image cards. Pick one and the agent adopts it without a second generation. Brand colours are inferred from what you tell it.
+  - **Keeps your nested line items**: changing the data source from the chat no longer removes level 2 and 3 line item settings made in the Data card.
+  - **Plan access up front**: on a plan without e-signing, the agent says so before it sets up signers instead of presenting the automation as ready to go live. Test Mode signing still works.
+  - **Email content guard**: the agent refuses to save email subjects or bodies shaped like credential phishing (account threat plus a "verify your account" call to action). This is a platform rule with no override.
+  - The chat no longer jumps to the bottom while the agent writes if you scrolled up.
+
+  ## Transparent group rows
+
+  Grouped line items have a new **Transparent background** option for the group header row and the calculation row. Turn it on and the row takes no fill, so the table keeps the look of your template.
+
+  ## Smaller changes
+
+  - **Live webinars** in the left sidebar lists the upcoming sessions from our calendar. The next two also appear in the welcome email new signups receive.
+  - **Download** is a bulk action in My Templates, Recently used, and Trash for Word and PDF templates. **Open** is a bulk action in the Template Library.
+  - The document generated from **New Document** opens full size in a scrollable viewer, with a button to open it in a new tab.
+  - The Documents, Templates, Automations, and Logs lists share one layout, and Automations sits above Templates in the sidebar.
+</Update>
+
 <Update label="August 14, 2026">
   ## Show unique values only
 

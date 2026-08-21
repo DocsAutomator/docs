@@ -58,6 +58,14 @@ Signature, date, and text fields in the finished document scale with the font si
 
 Tags at the standard body text size (11pt) or smaller render at the default size, and each tag is sized independently, so different signature spots in the same document can use different sizes. Checkbox size is fixed.
 
+## Switching Signing On
+
+Signing has an explicit on/off switch. Open the **E-Signing** card of your automation and turn on **Signing**. While signing is off, the panel shows only the switch, and generated documents are delivered without a signing request.
+
+- Adding `{{esign.*}}` tags to the template does not switch signing on. Removing them does not switch it off.
+- When the template has signing tags and signers are set, but signing is off, the E-Signing card shows **Off · template has signing tags**.
+- Through the API or MCP, set `esignature.enabled` to `true` or `false`. Setting signers for the first time switches it on.
+
 ## E-Sign Fields in Conditional Sections
 
 E-sign fields placed inside a [conditional section](/features/sections) are automatically excluded from the signing workflow when that section is hidden. If all e-sign fields are in hidden sections, no signing session is created and no charge is billed. This lets you build a single template that supports both e-sign and wet-ink workflows by toggling a section.

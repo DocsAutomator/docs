@@ -56,6 +56,21 @@ This is useful when the same clause, signature block or table column appears in 
 Copies of a section cannot be given different conditions. If two blocks need to appear independently, give them different names.
 </Note>
 
+### Nesting sections
+
+A section can sit inside another section. Each one keeps its own rule: the inner block shows only when both its own rule and the outer rule pass. Hiding the outer section removes everything between its tags, inner sections included.
+
+```
+{{section_eu_customer}}
+EU terms apply.
+{{section_vat_registered}}
+VAT number: {{vatNumber}}
+{{/section_vat_registered}}
+{{/section_eu_customer}}
+```
+
+Close the inner section before the outer one. Nesting works in Google Doc and Word templates.
+
 ## Example
 
 ```

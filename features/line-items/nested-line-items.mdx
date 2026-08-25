@@ -27,7 +27,11 @@ This feature enables hierarchical data presentation across up to 3 levels of nes
 | Level 3 (Grandchild) | Items from a linked table within Level 2 | Specifications |
 
 <Note>
-Available for Airtable, Notion, and the [DocsAutomator API](/integrations-api/docsautomator-api). Google Doc templates only — [Word templates](/docsautomator-basics/word-template-guide) do not support nested line items yet.
+Available for Airtable, Notion, and the [DocsAutomator API](/integrations-api/docsautomator-api), in **both** Google Doc and [Word templates](/docsautomator-basics/word-template-guide).
+
+In Word, place the child row **immediately below** its parent's marker row in the same table (level 3 immediately below the child row). A nested marker in the same row as its parent, or separated from it by another row, does not repeat — the template linter flags it. [Auto row numbers](/features/line-items/auto-row-numbers) work with nested rows: parent records are numbered and child rows get an empty numbering cell.
+
+Nested tables also work inside a [repeating section](/features/line-items/repeating-sections).
 
 Airtable uses a linked-record field at each level. Notion uses a Relation property at each level. The API sends nested rows in a `children` array.
 </Note>

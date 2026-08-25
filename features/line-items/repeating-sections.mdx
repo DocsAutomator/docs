@@ -1,0 +1,67 @@
+---
+title: "Repeating Sections"
+description: "Repeat whole blocks of content — paragraphs, tables, images — once per record"
+icon: "repeat"
+---
+
+Repeating sections repeat a whole block of your template once per record: one section per room in an inspection report, per project on an invoice, per attendee in a summary. Where a line items table repeats a **row**, a repeating section repeats **everything between two tags** — headings, paragraphs, tables, and images.
+
+Repeating sections work identically in Google Doc and Word templates.
+
+## Syntax
+
+Wrap the content to repeat between a `{{line_items_N}}` tag and a `{{/line_items_N}}` tag. Each tag must sit **alone in its own paragraph**:
+
+```
+{{line_items_1}}
+Room: {{roomName}}
+{{roomDescription}}
+
+[any tables or images for this room]
+{{/line_items_1}}
+```
+
+The closing tag is what turns the group into a repeating section. Without it, `{{line_items_1}}` in a table row keeps its normal meaning — repeat that row.
+
+Fields inside the section are written as **bare placeholders** (`{{roomName}}`, never `{{line_items_1_roomName}}`), exactly like fields in a line items table row. Mapping, sorting, and grouping work the same as for tables — a repeating section **is** a line items group, just with a block layout.
+
+## Nested tables inside a section
+
+A table inside the section can repeat its own rows per child record. Put `{{line_items_1_1}}` in the first cell of the repeating row, with that row's fields written bare beside it:
+
+```
+{{line_items_1}}
+Room: {{roomName}}
+
+| Work Item                        | Hours     | Cost     |
+| {{line_items_1_1}}{{workItem}}   | {{hours}} | {{cost}} |
+{{/line_items_1}}
+```
+
+<Note>
+Nested rows inside a repeating section work in **both** Google Doc and Word templates. Supported sources: Airtable and Notion (a linked-record / relation field at each level) and the [DocsAutomator API](/integrations-api/docsautomator-api) (each record carries a `children` array). One nested table per section; level 3 nesting and sections inside sections are not supported.
+</Note>
+
+## Page break between sections
+
+Turn on **Page Break Between Sections** on the group's card (Data / Placeholders → Repeating Section) to start every record on a fresh page. DocsAutomator inserts a page break *between* sections — never after the last one, so content following the section flows naturally.
+
+## Skip records conditionally
+
+**Skip Records Conditionally** on the same card adds rules evaluated against each record's own fields — for example, *show records when `condition` does not equal `Good`*. Records that don't match are dropped entirely: their section, page break, auto numbers, and group calculation contributions all disappear. With two or more rules you can require ALL or ANY to match. The same option works on regular line items tables, where it skips rows.
+
+## Empty lists and empty values
+
+- An empty record list removes the whole section, tags included.
+- A record with no child rows keeps the nested table's header and drops the data row.
+- **Delete paragraph / row when empty** works per record: a flagged field that is empty for one record removes that paragraph only in that record's copy.
+
+## Images and lists inside a section
+
+- A bare `{{image_photo}}` placeholder inside the section renders that record's image. Set its size in the placeholder's image options, as for any image placeholder.
+- Inside a nested `{{line_items_1_1}}` row, `{{image_photo}}` renders the child record's image. Send image values for child rows as arrays of URLs.
+- Bulleted and numbered lists inside the section keep their list formatting in both Google Docs and Word templates. A numbered list restarts at 1 for every record.
+
+## Current limits
+
+- One nested table per section; no level 3; a repeating section cannot contain another repeating section. Conditional sections inside a repeating section are evaluated once, not per record.

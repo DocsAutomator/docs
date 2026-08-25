@@ -123,6 +123,7 @@
                     "icon": "list",
                     "pages": [
                       "features/line-items",
+                      "features/line-items/repeating-sections",
                       "features/line-items/nested-line-items",
                       "features/line-items/line-items-grouping-+-calculations",
                       "features/line-items/auto-row-numbers"

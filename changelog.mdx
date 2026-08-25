@@ -5,6 +5,32 @@ rss: true
 mode: "center"
 ---
 
+<Update label="August 25, 2026">
+  ## Repeating sections
+
+  Line items can now repeat a whole block of content per record, not only table rows. Put `{{line_items_1}}` and `{{/line_items_1}}` in their own paragraphs, and everything between the two tags repeats for each record. This works in Google Docs and Word templates.
+
+  - The repeated block can hold headings, paragraphs, tables, images, bullet lists, and numbered lists. Numbered lists restart at 1 for each record.
+  - Nested line items work inside a block: a table row with `{{line_items_1_1}}` fields repeats per child record, per section.
+  - **Page break between sections**: an option in the line item settings starts each record on a new page.
+  - **Skip records conditionally**: rules in the line item settings skip records, for example rooms without findings. Rules read the record's own fields or the count of its nested records.
+  - **1-click AI mapping** now also maps nested line item fields, each level against its own linked table (Airtable and Notion).
+  - The template check warns about tags that share a paragraph with other text, unclosed tags, and other layouts the engine cannot repeat.
+  - The AI Agent knows the syntax and the options.
+
+  See [Repeating sections](/features/line-items/repeating-sections) for the full guide.
+
+  ## Two behavior changes for existing Word templates
+
+  - A `{{line_items_1}}` marker in the **last cell** of a table row now repeats the row per record. Before, all records were joined inside that one cell.
+  - Nested line item rows (`{{line_items_1_1}}` in the row below the parent row) now render in Word templates. Before, Word ignored them.
+
+  ## Smaller changes
+
+  - Switching an automation's template format (for example Word to Google Docs) no longer deletes the old template file. The file stays in My Templates as its own entry.
+  - The line item cards use one wording across all data sources, and a card with block tags is named **Repeating Section** instead of **Line Items**.
+</Update>
+
 <Update label="August 21, 2026">
   ## Signing switch in the E-Signing panel
 

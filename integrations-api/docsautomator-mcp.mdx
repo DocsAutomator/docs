@@ -177,6 +177,7 @@ Two description fields help an AI client work with your automations without extr
 
 - **Automation description** — a note on what the automation is for and what data it needs. Set it in the app under **Automation Settings → Description**, or via `set_document_settings`. Returned by `list_automations`, so the AI picks the right automation.
 - **Placeholder descriptions** — per-placeholder instructions (for example "Customer VAT number, format NL123456789B01"). Set them via the gear icon next to a mapping, or via `set_placeholder_descriptions`. Returned by `list_placeholders` (also on the REST API), so the AI knows what data belongs in each placeholder.
+- When an AI client generates a template (`generate_word_template`, `create_google_doc_template`), it can pass `placeholderDescriptions` in the same call — the descriptions are saved with the template, so the map fills itself.
 
 **Example prompt:**
 > "Describe the placeholders of automation abc123 so my CRM agent can fill them."

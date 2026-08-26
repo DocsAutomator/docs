@@ -10,11 +10,12 @@ Connect DocsAutomator to AI assistants like Claude, Cursor, and other MCP-compat
 
 The Model Context Protocol (MCP) is an open standard that allows AI assistants to securely connect to external tools and data sources. With the DocsAutomator MCP server, you can:
 
+- Build complete automations: generate Word templates with AI, connect data, map fields, and configure the output
 - Generate documents from your automations
 - List and manage automations
 - Check document generation status
 - View and manage e-signature sessions
-- Extract placeholders from templates
+- Extract placeholders from templates, with per-placeholder descriptions for AI clients
 
 ## Quick Start
 
@@ -137,6 +138,51 @@ Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/sett
 
 ## Available Tools
 
+The MCP server exposes the same tool set as the in-app DocsAutomator Agent — 50+ tools. The sections below describe the most used tools. Your AI client sees the full list with detailed instructions after it connects.
+
+### Build an Automation with AI
+
+These tools let an AI client build a complete automation from scratch:
+
+| Tool | Purpose |
+|------|---------|
+| `generate_word_template` | Create a new Word template from a prompt, with a style preset and brand colors |
+| `edit_word_template` | Edit the Word template with an instruction (layout, styling, placeholders, logo) |
+| `undo_template_edit` | Revert the last AI template change |
+| `create_google_doc_template` | Create a new Google Doc template from a prompt |
+| `set_google_doc_template` / `replace_text_in_google_doc` | Link an existing Google Doc and turn static text into placeholders |
+| `upload_word_template` / `upload_pdf_template` | Upload an existing .docx or PDF as the template (base64) |
+| `search_template_gallery` / `use_gallery_template` | Find and apply a template from the gallery |
+| `get_data_source_structure` | Browse connected bases, tables, fields, sheets, and forms |
+| `set_data_source` | Wire a data source (including line-item tables) to the automation |
+| `set_field_mappings` | Map placeholders to source fields, validated against the live schema |
+| `get_sample_records` | Read a few sample records to verify the mapping |
+| `configure_line_items` | Grouping, sorting, auto-number column, repeating-section options |
+| `configure_conditional_logic` | Section show/hide rules and conditional rendering |
+| `configure_output` | Email, PDF-to-Drive, OneDrive, PDF merge, webhook, write-back fields |
+| `configure_esignature` | Signers, order, reminders, branding, save-to-Drive |
+| `configure_generation` | Automatic triggers: Notion and Airtable triggers, Sheets auto-polling |
+| `set_document_settings` | Document name field, locale, time zone, date format, automation description |
+| `set_placeholder_descriptions` | Per-placeholder instructions for AI clients (see below) |
+| `get_recent_runs` | Recent generations with real failure messages, for debugging |
+| `search_docs` | Search the DocsAutomator documentation |
+
+<Note>
+Data source connections (Airtable, Notion, Google, and the others) use OAuth and must be made once in the DocsAutomator app under **Settings → Integrations**. All other setup steps work headlessly through MCP.
+</Note>
+
+### Descriptions for AI Clients
+
+Two description fields help an AI client work with your automations without extra prompt engineering:
+
+- **Automation description** — a note on what the automation is for and what data it needs. Set it in the app under **Automation Settings → Description**, or via `set_document_settings`. Returned by `list_automations`, so the AI picks the right automation.
+- **Placeholder descriptions** — per-placeholder instructions (for example "Customer VAT number, format NL123456789B01"). Set them via the gear icon next to a mapping, or via `set_placeholder_descriptions`. Returned by `list_placeholders` (also on the REST API), so the AI knows what data belongs in each placeholder.
+- When an AI client generates a template (`generate_word_template`, `create_google_doc_template`), it can pass `placeholderDescriptions` in the same call — the descriptions are saved with the template, so the map fills itself.
+
+**Example prompt:**
+> "Describe the placeholders of automation abc123 so my CRM agent can fill them."
+
+
 ### Document Generation
 
 #### `create_document`
@@ -160,7 +206,7 @@ Generate a document from an automation.
 ### Automation Management
 
 #### `list_automations`
-List all automations in your workspace.
+List all automations in your workspace, including each automation's description when set.
 
 **Example prompt:**
 > "Show me all my DocsAutomator automations"
@@ -205,7 +251,7 @@ Create a copy of an existing automation.
 ### Template Tools
 
 #### `list_placeholders`
-Extract all placeholders from an automation's template.
+Extract all placeholders from an automation's template. Works for Google Doc, Word, and PDF templates. If placeholder descriptions are set, the response includes a `descriptions` map.
 
 **Example prompt:**
 > "What placeholders are in automation abc123?"

@@ -5,6 +5,24 @@ rss: true
 mode: "center"
 ---
 
+<Update label="August 26, 2026">
+  ## MCP server v2: build automations with any AI client
+
+  The DocsAutomator MCP server now exposes the same tool set as the in-app AI Agent — 50+ tools instead of 20. An AI client such as Claude or Cursor can now build a complete automation over MCP: generate a Word or Google Doc template with AI, upload an existing file, map fields against the live data source schema, configure line items, conditions, output, e-signing, and triggers, and debug runs.
+
+  - **AI template generation over MCP**: `generate_word_template`, `edit_word_template`, and `create_google_doc_template` create and edit templates from a prompt.
+  - **Template upload**: `upload_word_template` and `upload_pdf_template` accept an existing .docx or PDF.
+  - **Full configuration**: field mappings, line items, conditional sections, output settings, e-signature, and automatic triggers.
+  - Everything that worked before keeps working: existing MCP connections, tool names, and OAuth logins are unchanged.
+
+  ## Descriptions for AI clients
+
+  - **Automation description**: a note on what an automation is for and what data it needs, editable under Automation Settings. `list_automations` returns it, so an AI client picks the right automation.
+  - **Placeholder descriptions**: per-placeholder instructions, editable via the gear icon next to a mapping. `list_placeholders` returns them (MCP and REST API), so an AI client knows what data belongs in each placeholder — no more maintaining placeholder notes in your own prompts.
+
+  See [DocsAutomator MCP](/integrations-api/docsautomator-mcp) for the updated tool reference.
+</Update>
+
 <Update label="August 25, 2026">
   ## Repeating sections
 

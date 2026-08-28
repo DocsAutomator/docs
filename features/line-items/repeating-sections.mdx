@@ -58,9 +58,21 @@ Nested rows inside a repeating section work in **both** Google Doc and Word temp
 
 Turn on **Page Break Between Sections** on the group's card (Data / Placeholders → Repeating Section) to start every record on a fresh page. DocsAutomator inserts a page break *between* sections — never after the last one, so content following the section flows naturally.
 
+## Keep a section on one page
+
+Turn on **Keep Section On One Page** (directly below the page break toggle) to stop a section from splitting across a page break. A section that does not fit in the remaining space moves whole to the next page; short sections still share pages. This is the middle ground between free-flowing sections and one page per record.
+
+<Note>
+A table inside the section can still split between its rows — page-layout engines have no whole-table keep control. The paragraphs above a table stay attached to it.
+</Note>
+
 ## Skip records conditionally
 
 **Skip Records Conditionally** on the same card adds rules evaluated against each record's own fields — for example, *show records when `condition` does not equal `Good`*. Records that don't match are dropped entirely: their section, page break, auto numbers, and group calculation contributions all disappear. With two or more rules you can require ALL or ANY to match. The same option works on regular line items tables, where it skips rows.
+
+## Conditional styling inside a section
+
+[Conditional styling](/features/advanced-placeholder-options/conditional-styling) rules on a section's fields are evaluated per record, exactly as in line items tables — for example, color `{{category}}` red when the value contains "Critical". Rules can also compare against another field of the same record. Row background colors are the one styling option that does not apply inside repeating sections (they need a table row).
 
 ## Empty lists and empty values
 
@@ -77,3 +89,4 @@ Turn on **Page Break Between Sections** on the group's card (Data / Placeholders
 ## Current limits
 
 - One nested table per section; no level 3; a repeating section cannot contain another repeating section. Conditional sections inside a repeating section are evaluated once, not per record.
+- Conditional styling does not yet apply to fields inside a section's **nested** rows (`{{line_items_1_1}}`).

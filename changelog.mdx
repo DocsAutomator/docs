@@ -6,6 +6,17 @@ mode: "center"
 ---
 
 <Update label="August 28, 2026">
+  ## Repeating sections: keep on one page, and conditional styling
+
+  Two improvements for repeating sections (`{{line_items_1}}` … `{{/line_items_1}}`), in both Google Doc and Word templates.
+
+  - **Keep Section On One Page**: a new toggle below "Page Break Between Sections". A section that does not fit in the remaining page space moves whole to the next page; short sections still share pages. (A table inside a section can still split between its rows.)
+  - **Conditional styling now works inside sections** in Google Doc templates: rules like *color the category red when it contains "Critical"* are evaluated per record and style that record's value, in section paragraphs and in tables inside the section. Word templates already behaved this way.
+
+  Existing documents are unaffected until you turn the new toggle on.
+</Update>
+
+<Update label="August 28, 2026">
   ## E-signing for Google Forms
 
   Documents generated from Google Forms responses can now be routed for signing automatically. The respondent receives an email with a signing link for their document, and the signer defaults to the respondent's email address from the form — a consent form or waiver needs no signer setup at all.

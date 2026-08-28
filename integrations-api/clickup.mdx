@@ -25,7 +25,7 @@ New to DocsAutomator? The fastest way to get started with ClickUp is our [Quicks
 ## Important Limitations
 
 <Warning>
-**PDF Attachments**: Printed PDFs will be added as attachments to your tasks. Currently, new PDFs are added and there is no option to overwrite previous attachments (a ClickUp limitation).
+**PDF Attachments**: Generated PDFs are added to the task — either as task attachments (default) or into a **Files custom field** you pick in the "Save PDF to ClickUp task" action. New PDFs are always added; there is no option to overwrite previous attachments (a ClickUp limitation).
 
 **Workspace Restriction**: Only one team/workspace is allowed currently. If multiple workspaces are selected when connecting ClickUp, only the first one is available for data mapping.
 </Warning>
@@ -72,19 +72,28 @@ New to DocsAutomator? The fastest way to get started with ClickUp is our [Quicks
 | Text Area | Long text content | Unmodified |
 | Website | "https://docsautomator.co/" | Unmodified |
 
-## Unsupported Fields
+## Line Items
+
+ClickUp automations support [line items](/features/line-items). Each `{{line_items_N}}` group pulls its rows from one of two sources, configured in the Data panel:
+
+- **Subtasks**: the task's subtasks. Item rows can use all standard task fields plus the list's custom fields (subtasks share them).
+- **Relationship field**: a Relationship custom field pointing at a dedicated items list (for example an Invoices list related to a Line Items list). Item rows map against the linked list's custom fields and the standard task fields.
 
 <Note>
-The following custom field types are **not currently supported** (coming soon):
-- Relationship
-- Rollup
-- Tasks
+A Relationship field must point at a **specific list** — ClickUp does not allow a list to relate to itself, and generic "Tasks" fields (no fixed list) cannot be used for line items. Nested line-item levels are not available for ClickUp.
+</Note>
+
+## Partially Supported and Unsupported Fields
+
+<Note>
+- **Relationship**: usable as a line-items source (see above). As a regular placeholder it renders the linked task names, comma-separated.
+- **Rollup** and **Tasks** fields are not currently supported.
 </Note>
 
 ## E-Signatures and PDF Templates
 
 <Info>
-DocsAutomator supports [e-signatures](/features/docsautomator-esign) with all data sources, including ClickUp. After generating a document, you can automatically route it for signing. DocsAutomator also supports [PDF templates](/docsautomator-basics/pdf-template-guide) in addition to Google Doc templates.
+DocsAutomator supports [e-signatures](/features/docsautomator-esign) with all data sources, including ClickUp. After generating a document, you can automatically route it for signing; the signed PDF can be saved back to the task's attachments or to a Files custom field. DocsAutomator also supports [PDF templates](/docsautomator-basics/pdf-template-guide) in addition to Google Doc templates.
 </Info>
 
 ## Next Steps

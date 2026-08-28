@@ -1,0 +1,163 @@
+---
+title: "Google Forms"
+description: "Generate a document for every form response, read directly from the form"
+icon: "/icons/google-forms.png"
+keywords: ["Google Forms integration", "Google Forms to PDF", "form response documents", "form automation"]
+---
+
+DocsAutomator reads your Google Form responses directly. You do not need a linked response spreadsheet, an add-on, or Apps Script. Paste a form link, map your questions to a template, and every new response becomes a document.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Direct Form Reading" icon="file-lines">
+    Responses are read from the form itself, no linked sheet required
+  </Card>
+  <Card title="Stable Question Mapping" icon="link">
+    Placeholders bind to questions, so rewording a question breaks nothing
+  </Card>
+  <Card title="Automatic Generation" icon="bolt">
+    New responses are checked every few minutes and turned into documents
+  </Card>
+  <Card title="Respondent Email Delivery" icon="envelope">
+    Email each respondent their own document, no extra question needed
+  </Card>
+</CardGroup>
+
+## Step-by-Step Setup
+
+<Steps>
+  <Step title="Create an Automation">
+    Initialize a new automation in your DocsAutomator account.
+  </Step>
+  <Step title="Choose Your Template">
+    Every automation needs a template. Use a Google Doc, a Word (.docx) file, or a PDF. Create one with AI, browse the template library, start from scratch, or drag your own file in. See the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide), the [Word Template Guide](/docsautomator-basics/word-template-guide), or the [PDF Template Guide](/docsautomator-basics/pdf-template-guide).
+  </Step>
+  <Step title="Connect Google Forms">
+    Open the **Data / Placeholders** panel, click **Connect**, and choose Google Forms. Sign in with the Google account that owns the form.
+  </Step>
+  <Step title="Pick Your Form">
+    Browse your forms in the picker, or paste any form link: the editor link, the published viewform link, or a short **forms.gle** link. DocsAutomator resolves the link to the right form in your account.
+  </Step>
+  <Step title="Choose the Read Surface">
+    By default, DocsAutomator reads responses directly from the form. If the form has a linked response spreadsheet, you can choose to read from that sheet instead. See [Direct read vs. linked sheet](#direct-read-vs-linked-sheet) below.
+  </Step>
+  <Step title="Map Placeholders">
+    The picker shows your real questions with their types and options. Connect template placeholders to questions. AI-assisted mapping is available.
+  </Step>
+  <Step title="Create Previews">
+    Test document generation with existing responses before you enable the trigger.
+  </Step>
+  <Step title="Enable Automatic Generation">
+    Turn on auto-create so every new response becomes a document.
+  </Step>
+</Steps>
+
+## Direct Read vs. Linked Sheet
+
+The Google Forms source has two read surfaces:
+
+- **Form responses (direct)** — the default. DocsAutomator reads responses through the Google Forms API. No spreadsheet is involved.
+- **Linked spreadsheet** — available only when your form already has a linked response sheet. DocsAutomator then behaves like the [Google Sheets integration](/integrations-api/google-sheets), reading rows from that sheet.
+
+Choose the linked sheet when you need what only a spreadsheet gives you:
+
+| | Direct read | Linked sheet |
+|---|---|---|
+| Linked sheet required | No | Yes |
+| Mappings survive question rewording | Yes | No (the header is the question) |
+| Computed / formula columns | No | Yes |
+| Document link written back | No | Yes, into a column |
+| Per-row GENERATE DOC link | No | Yes |
+| Editable data before generation | No | Yes |
+
+<Info>
+The direct read cannot write anything back to the form — the Google Forms API is read-only for responses. This is why the document-link write-back and the per-row generate link exist only on the linked-sheet surface. On the direct read, delivery happens through [email](#email-the-respondent), Google Drive, or a webhook, and the automation's run history is your index of generated documents.
+</Info>
+
+## Question Mapping
+
+Placeholders are bound to the question itself, not to its text.
+
+- **Rewording a question does not break mappings.** Change "Full name" to "Your full name" and the mapping stays intact. On a linked sheet, the same change silently breaks the column mapping — this is the main reliability win of the direct read.
+- **Deleting a question** leaves its mappings without a source. The mapping panel shows the last known question title so you can re-map.
+- **Response fields** are available in addition to your questions: the respondent's email address (see below), the submission time, and the response ID.
+
+### Grids
+
+A grid question (multiple-choice grid or checkbox grid) is one visual question with several rows. Each grid row maps separately: the picker lists them as "Grid title → Row label", and each row gets its own placeholder.
+
+### File Uploads
+
+File-upload answers work with [dynamic images](/features/dynamic-images): an uploaded image can be placed straight into the generated document. Non-image files render as their file names.
+
+### Checkboxes
+
+A checkbox question can carry several answers. They render comma-separated in your document.
+
+## Automatic Generation
+
+Enable auto-create and DocsAutomator checks your form for new responses every few minutes. Each new response is queued and turned into a document.
+
+<Warning>
+**Enabling the trigger does not process old responses.** Auto-create starts from the moment you enable it: responses submitted earlier are left alone. To create documents for existing responses, generate them manually from the automation.
+</Warning>
+
+The same automatic safety shutoff as for Google Sheets applies: after repeated polling or generation failures, auto-create is disabled and the workspace owner is notified by email. Fix the issue and re-enable it.
+
+## Email the Respondent
+
+When your form collects email addresses, the respondent's email is available as a response field. Use it in the [Send Email](/features/actions-after-document-generation/send-email) action to deliver each respondent their own document — no extra "What is your email?" question and no mapping gymnastics.
+
+<Warning>
+The respondent email is only present when the form collects it. In Google Forms, open **Settings → Responses → Collect email addresses** and pick a collection mode. If the form does not collect emails, the field stays empty and emails to the respondent cannot be sent.
+</Warning>
+
+<Tip>
+Name your documents from the answers (for example `Application — {{applicant_name}}`) so the Drive folder indexes itself.
+</Tip>
+
+{/* HOLD: Forms e-sign section. Deploys with feat/forms-esign-signers — un-comment when that branch is live in production.
+
+## E-Signatures
+
+Documents generated from form responses can be routed for e-signing automatically. The respondent receives an email with a signing link for their document; the signer defaults to the respondent's email address from the form, so a consent form or waiver needs no signer configuration at all.
+
+To enable it, open your automation's output settings and toggle on the e-signature option. Add e-signature placeholders such as `{{esign.signature.1}}` and `{{esign.date.1}}` to your template to control where signatures appear.
+
+<Warning>
+Signing requires the form to collect email addresses (see above) or a question that asks for the signer's email. Without an email, DocsAutomator has no one to send the signing request to.
+</Warning>
+
+<Info>
+See the [E-Signature Guide](/features/docsautomator-esign) for the full placeholder reference and options.
+</Info>
+
+*/}
+
+## Troubleshooting
+
+### The respondent email field is empty
+
+Your form does not collect email addresses. In Google Forms, open **Settings → Responses → Collect email addresses** and pick a collection mode. Responses submitted before you enable collection have no email — Google does not add it retroactively.
+
+### Old responses did not generate documents
+
+Auto-create only processes responses that arrive after you enable it. This is by design, so enabling the trigger on a form with hundreds of past responses does not generate hundreds of unexpected documents. Generate documents for existing responses manually from the automation.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Send Email" icon="envelope" href="/features/actions-after-document-generation/send-email">
+    Configure automatic email delivery
+  </Card>
+  <Card title="Save PDFs to Drive" icon="hard-drive" href="/features/actions-after-document-generation/save-pdfs-in-google-drive">
+    Store PDFs in Google Drive folders
+  </Card>
+  <Card title="Dynamic Images" icon="image" href="/features/dynamic-images">
+    Place uploaded images in your documents
+  </Card>
+  <Card title="Template Guide" icon="file-lines" href="/docsautomator-basics/google-doc-template-guide">
+    Master the template syntax
+  </Card>
+</CardGroup>

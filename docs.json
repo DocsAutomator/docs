@@ -91,6 +91,7 @@
                   "integrations-api/airtable",
                   "integrations-api/notion",
                   "integrations-api/google-sheets",
+                  "integrations-api/google-forms",
                   "integrations-api/smartsuite",
                   "integrations-api/clickup",
                   "integrations-api/glide",

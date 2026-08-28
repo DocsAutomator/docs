@@ -6,6 +6,18 @@ mode: "center"
 ---
 
 <Update label="August 28, 2026">
+  ## ClickUp: line items, Files custom fields, and signed-PDF targets
+
+  The ClickUp integration catches up with Airtable and Notion on three fronts.
+
+  - **Line items**: `{{line_items_1}}` tables and repeating sections now work with ClickUp. Each group pulls its rows from the task's **subtasks** or from a **Relationship custom field** pointing at a dedicated items list (for example a Deals list linked to a Line Items list). Configure it in the Data panel; item rows can use the linked list's custom fields plus all standard task fields.
+  - **Save the PDF into a Files custom field**: the "Save PDF to ClickUp task" action gained an **Attach To** picker — keep the default task attachments, or file the generated PDF into any Files custom field on the task.
+  - **Signed PDFs too**: in the E-Signing settings, "Save Signed PDF To" now offers the same choice — task attachments or a Files custom field.
+
+  Existing ClickUp automations are unaffected until you change these settings.
+</Update>
+
+<Update label="August 28, 2026">
   ## Files you send the AI Agent now stay put
 
   A logo, a screenshot or a reference document you attach in the AI Agent chat stays available for the rest of the conversation, including after a page refresh and when you come back to the chat days later.

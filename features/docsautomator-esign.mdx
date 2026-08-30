@@ -70,6 +70,16 @@ Signing has an explicit on/off switch. Open the **E-Signing** card of your autom
 
 E-sign fields placed inside a [conditional section](/features/sections) are automatically excluded from the signing workflow when that section is hidden. If all e-sign fields are in hidden sections, no signing session is created and no charge is billed. This lets you build a single template that supports both e-sign and wet-ink workflows by toggling a section.
 
+### Variable Number of Signers
+
+When a signer's block is hidden, that signer drops out of the signing session entirely — no invitation, no signing link, no charge for their fields. One template can serve documents with a different number of signers per record:
+
+1. Put each optional signer's block (signature, date, name fields) in its own conditional section.
+2. Configure all signers in the E-Signing card. Only signers whose fields appear in the generated document are included in the session.
+3. Toggle each section with a field in your data source (for example, a checkbox per co-signer).
+
+Signer numbers do not have to be consecutive. If a signer must always sign — a countersigning agent, a company representative — give them a number above your highest optional slot and leave their block outside any section. A lease template with tenant blocks `_1` to `_6` in sections and the agent fixed at `{{esign.signature_7}}` generates sessions like 1, 2, 7 — and sequential signing follows the signers that are present, in number order.
+
 ## Review Before Signing (skipEsign)
 
 By default, generating a document from an e-sign-enabled automation starts the signing workflow immediately. To review a document first — for example, have your team check a contract before it goes out — pass `skipEsign: true` in the [createDocument](/api-reference/documents/create-from-api) request:
@@ -111,7 +121,7 @@ This makes two-step approval flows easy to build — e.g. two Airtable buttons t
     All signers receive invitations simultaneously and can complete in any order. Faster for multi-party documents.
   </Card>
   <Card title="Sequential Signing" icon="list-ol">
-    Signers receive invitations one at a time. Ensures specific signing sequence with "Signs first" and "Signs after" labels.
+    Signers receive invitations one at a time, in signer-number order. Each signer's link activates when the previous signer completes. Gaps in the numbering are fine — the order follows the signers present in the document.
   </Card>
 </CardGroup>
 

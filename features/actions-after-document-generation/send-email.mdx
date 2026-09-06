@@ -96,6 +96,10 @@ When you add more than one recipient, everyone receives **one shared email** rat
 - If a placeholder recipient resolves to an empty or invalid address, it is skipped and the email is still sent to the remaining valid recipients.
 - Duplicate addresses are removed automatically, so no one is emailed twice.
 
+<Warning>
+Test Mode does not stop emails. Only the **Preview** button inside the app skips the email action. A run triggered by the API, Airtable, a webhook or polling sends the email, even when the automation is in Test Mode. Turn the email action off, or send to a test address, while you test.
+</Warning>
+
 ### Subject Line
 
 - Static text entered directly

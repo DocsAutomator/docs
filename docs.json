@@ -115,6 +115,7 @@
                       "features/docsautomator-esign",
                       "features/docsautomator-esign/compliance-and-legal-validity",
                       "features/docsautomator-esign/docsautomator-esign-api-reference",
+                      "features/docsautomator-esign/email-delivery-outcomes",
                       "features/docsautomator-esign/e-signing-tutorials-from-data-sources",
                       "features/docsautomator-esign/e-sign-date-format-options"
                     ]

@@ -131,11 +131,13 @@ This makes two-step approval flows easy to build — e.g. two Airtable buttons t
 
 | Option | Details |
 |--------|---------|
-| DocsAutomator | Sent from `esign@docsautomator.co` |
+| DocsAutomator | Sent from `sign@esign.docsautomator.co` |
 | Your Gmail | Sent from a connected Gmail account |
 | Your Outlook | Sent from a connected Microsoft (Outlook) account |
 
 With Gmail or Outlook selected, you can additionally enable **Send from the team member who generates the document**: invitations, reminders, and completion emails are then sent from the generating member's own connected account, with the configured account as the fallback. See [Send Email](/features/actions-after-document-generation/send-email#sending-from-the-team-member-who-generates-the-document) for how matching works.
+
+If the connected Gmail or Outlook mailbox rejects a message, DocsAutomator sends it from its own address instead, and records that it did. Every e-sign email produces a delivery record with the provider, the sending mailbox and the message ID. See [Email Delivery Outcomes](/features/docsautomator-esign/email-delivery-outcomes).
 
 ### Customizable Email Types
 
@@ -421,6 +423,38 @@ Fires when a signing session expires before all signers complete it. An expirati
 <Info>
 `pendingSigners` lists signers who had not yet signed or declined when the session expired. If a session has already been declined, cancelled, or completed before the expiration time, this webhook does **not** fire.
 </Info>
+
+### Email Sent / Email Failed
+
+Fires once per e-sign email (invitation, resend, reminder, completion, progress, decline, expiration) with the outcome reported by the mail provider.
+
+```json
+{
+  "event": "esign.email_sent",
+  "sessionId": "unique-identifier",
+  "documentName": "Document name",
+  "status": "pending",
+  "email": {
+    "kind": "invitation",
+    "to": "signer@example.com",
+    "signerIndex": 1,
+    "outcome": "accepted",
+    "provider": "gmail",
+    "fromAccount": "jane@acme.com",
+    "providerMessageId": "18f3a9c2b4d5e6f7",
+    "providerThreadId": "18f3a9c2b4d5e6f7",
+    "fallbackFrom": null,
+    "fallbackReason": null,
+    "error": null,
+    "sentAt": "ISO date string"
+  },
+  "sourceData": { },
+  "webhookParams": { },
+  "additionalParams": { }
+}
+```
+
+`esign.email_failed` has the same shape with `outcome` set to `failed` or `unknown`. See [Email Delivery Outcomes](/features/docsautomator-esign/email-delivery-outcomes) for what each outcome means and how to integrate.
 
 ## Signer Language
 

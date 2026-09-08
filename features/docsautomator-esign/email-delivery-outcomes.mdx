@@ -1,0 +1,126 @@
+---
+title: "Email Delivery Outcomes"
+description: "What DocsAutomator can and cannot tell you about each e-sign email it sends"
+icon: "envelope-circle-check"
+---
+
+Every e-sign email DocsAutomator sends (invitation, resend, reminder, completion, progress, decline and expiration notice) produces a **delivery record**. The record states which mail provider took the message, from which mailbox, and whether the provider accepted it. Use it when your own system must know that an email was handed to a provider, instead of assuming it from document generation or session creation.
+
+## The delivery record
+
+```json
+{
+  "kind": "invitation",
+  "outcome": "accepted",
+  "provider": "gmail",
+  "fromAccount": "jane@acme.com",
+  "to": "signer@example.com",
+  "providerMessageId": "18f3a9c2b4d5e6f7",
+  "providerThreadId": "18f3a9c2b4d5e6f7",
+  "fallbackFrom": null,
+  "fallbackReason": null,
+  "error": null,
+  "sentAt": "2026-09-08T09:14:22.000Z"
+}
+```
+
+| Field | Meaning |
+|-------|---------|
+| `kind` | `invitation`, `resend`, `reminder`, `completion`, `progress`, `decline` or `expiration` |
+| `outcome` | `accepted`, `failed` or `unknown` (see below) |
+| `provider` | `gmail`, `outlook` or `postmark` (DocsAutomator's own sender) |
+| `fromAccount` | The mailbox that sent the message |
+| `providerMessageId` | Gmail message ID, Outlook message ID, or Postmark message ID |
+| `providerThreadId` | Gmail thread ID. `null` for Outlook and Postmark |
+| `fallbackFrom` | Set to `gmail` or `outlook` when that mailbox rejected the message and DocsAutomator sent it through Postmark instead |
+| `fallbackReason` | The rejection message from the mailbox, when `fallbackFrom` is set |
+| `error` | `{ statusCode, code, message }` from the last provider tried, when `outcome` is not `accepted` |
+| `sentAt` | When the provider accepted the message |
+
+## The three outcomes
+
+| Outcome | What it means | What it does not mean |
+|---------|---------------|-----------------------|
+| `accepted` | The provider's API returned success. The message is in the provider's outgoing queue. For Gmail and Outlook, it is also in that mailbox's Sent folder. | It does not mean the message reached the recipient's inbox. DocsAutomator receives no bounce or delivery reports. |
+| `failed` | The provider answered and refused (an HTTP error status), or a local precondition failed, for example an expired mailbox token with no fallback available. No message exists. | |
+| `unknown` | The request left DocsAutomator and no answer came back (a timeout or a dropped connection). The message may or may not exist at the provider. DocsAutomator does **not** retry an unknown send, because a retry could deliver two copies. | |
+
+<Warning>
+Treat `unknown` as an action item. Resend the invitation from the session page or the API, or copy the signing link and deliver it yourself.
+</Warning>
+
+## Where to read it
+
+### Session detail
+
+`GET /esign/sessions/:sessionId` returns `inviteDelivery` on each signer. It holds the record of the most recent invitation or resend to that signer. Sessions created before delivery tracking existed have no `inviteDelivery`.
+
+`GET /esign/sessions` returns the summary field `inviteOutcome` (`accepted`, `failed`, `unknown` or `null`) on each signer.
+
+### Audit trail
+
+`GET /esign/sessions/:sessionId/audit` includes the record as `metadata.delivery` on these events:
+
+| Event | When |
+|-------|------|
+| `invite_sent` | An invitation was accepted by a provider |
+| `invite_resent` | A resend was accepted by a provider |
+| `reminder_sent` | A reminder was accepted by a provider |
+| `email_sent` | A completion, progress, decline or expiration email was accepted by a provider |
+| `email_send_failed` | Any e-sign email ended with outcome `failed` or `unknown` |
+
+Reminders and completion emails are recorded in the audit trail only. They do not update `inviteDelivery`.
+
+### Webhooks
+
+If the automation has a webhook URL and webhook notifications are on, DocsAutomator posts one event per email:
+
+```json
+{
+  "event": "esign.email_sent",
+  "sessionId": "66f1a2b3c4d5e6f7a8b9c0d1",
+  "documentName": "Mutual NDA",
+  "status": "pending",
+  "email": {
+    "kind": "invitation",
+    "to": "signer@example.com",
+    "signerIndex": 1,
+    "outcome": "accepted",
+    "provider": "gmail",
+    "fromAccount": "jane@acme.com",
+    "providerMessageId": "18f3a9c2b4d5e6f7",
+    "providerThreadId": "18f3a9c2b4d5e6f7",
+    "fallbackFrom": null,
+    "fallbackReason": null,
+    "error": null,
+    "sentAt": "2026-09-08T09:14:22.000Z"
+  },
+  "sourceData": { },
+  "webhookParams": { },
+  "additionalParams": { }
+}
+```
+
+`esign.email_failed` has the same shape with `outcome` set to `failed` or `unknown`. `signerIndex` is `null` for emails to notification recipients who are not signers.
+
+<Info>
+These events go to the same webhook URL as `esign.signer_signed` and the other e-sign events. Branch on the `event` field.
+</Info>
+
+## Recommended integration
+
+To know conclusively what happened to an invitation:
+
+1. Create the document as usual. Do not treat the generation response or the `esign.session_created` webhook as proof that any email was sent.
+2. Listen for `esign.email_sent` and `esign.email_failed` with `email.kind` equal to `invitation` or `resend`. Match on `sessionId` and `email.signerIndex`.
+3. If you poll instead, read `signers[].inviteDelivery.outcome` from `GET /esign/sessions/:sessionId`. A signer whose `inviteDelivery` is missing several minutes after session creation had the send job fail before any provider was reached; check the run in Documents for the error.
+
+## Fallback to DocsAutomator's sender
+
+When an automation sends from a connected Gmail or Outlook mailbox and that mailbox **rejects** the message (for example, the connection expired or Google returned an error), DocsAutomator sends the same email through its own sender, `sign@esign.docsautomator.co`, so the signing request still goes out. The delivery record shows this as `provider: "postmark"` with `fallbackFrom` and `fallbackReason` set. In that case nothing appears in the Gmail or Outlook Sent folder.
+
+A mailbox **timeout** does not fall back. It is recorded as `unknown`, because the mailbox may already have sent the message.
+
+## Bounces and non-delivery
+
+DocsAutomator receives no bounce, rejection or non-delivery information for e-sign emails, whichever provider sent them. For Gmail and Outlook, bounce notices arrive in the sending mailbox as a normal message from the mail system; DocsAutomator does not read that mailbox.

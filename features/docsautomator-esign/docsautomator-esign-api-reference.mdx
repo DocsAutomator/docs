@@ -120,6 +120,19 @@ Per-signer fields include `declinedAt` and `declineReason` for any signer who de
       "status": "signed",
       "accessToken": "a1b2c3...",
       "invitedAt": "2026-04-20T10:00:00.000Z",
+      "inviteDelivery": {
+        "kind": "invitation",
+        "outcome": "accepted",
+        "provider": "gmail",
+        "fromAccount": "jane@acme.com",
+        "to": "alice@example.com",
+        "providerMessageId": "18f3a9c2b4d5e6f7",
+        "providerThreadId": "18f3a9c2b4d5e6f7",
+        "fallbackFrom": null,
+        "fallbackReason": null,
+        "error": null,
+        "sentAt": "2026-04-20T10:00:00.000Z"
+      },
       "openedAt": "2026-04-22T13:55:04.000Z",
       "signedAt": "2026-04-22T14:02:11.000Z",
       "declinedAt": null,
@@ -217,6 +230,10 @@ Returns expiration dates and signer status for each link.
 | `session_expired` | Session expired |
 | `session_voided` | Session voided by admin |
 | `reminder_sent` | Reminder email sent |
+| `email_sent` | Completion, progress, decline or expiration email accepted by a provider |
+| `email_send_failed` | Any e-sign email ended with outcome `failed` or `unknown` |
+
+`invite_sent`, `invite_resent`, `reminder_sent`, `email_sent` and `email_send_failed` carry the delivery record in `metadata.delivery`. See [Email Delivery Outcomes](/features/docsautomator-esign/email-delivery-outcomes).
 
 **Response:**
 
@@ -324,6 +341,8 @@ Cannot cancel completed sessions.
 | `esign.signer_signed` | An individual signer completed all their fields |
 | `esign.session_declined` | A signer declined to sign |
 | `esign.session_expired` | Session expired before all signers completed |
+| `esign.email_sent` | An e-sign email was accepted by a mail provider |
+| `esign.email_failed` | An e-sign email ended with outcome `failed` or `unknown` |
 
 See [eSign overview — Webhook Integration](/features/docsautomator-esign#webhook-integration) for the full payload of each event.
 

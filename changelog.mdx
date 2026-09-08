@@ -5,6 +5,18 @@ rss: true
 mode: "center"
 ---
 
+<Update label="September 8, 2026">
+  ## E-sign email delivery outcomes
+
+  Every e-sign email (invitation, resend, reminder, completion and the notification emails) now produces a delivery record: which provider accepted it, from which mailbox, the provider's message ID (and thread ID for Gmail), and an outcome of `accepted`, `failed` or `unknown`.
+
+  - **Where to read it**: `signers[].inviteDelivery` on `GET /esign/sessions/:id`, `metadata.delivery` on the audit events, and two new webhook events, `esign.email_sent` and `esign.email_failed`. Run history and the session page show the outcome under each signer.
+  - **Fallback is now visible**: when a connected Gmail or Outlook mailbox rejects a message, DocsAutomator sends it from its own address instead. The record shows `fallbackFrom` and the reason.
+  - **Resend uses your sender**: a manual resend previously went out from DocsAutomator's address even when the automation was set to send from your Gmail or Outlook. It now uses the same sender as the original invitation.
+
+  See [Email Delivery Outcomes](/features/docsautomator-esign/email-delivery-outcomes).
+</Update>
+
 <Update label="August 28, 2026">
   ## Repeating sections: keep on one page, and conditional styling
 

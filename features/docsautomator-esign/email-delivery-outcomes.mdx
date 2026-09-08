@@ -43,7 +43,7 @@ Every e-sign email DocsAutomator sends (invitation, resend, reminder, completion
 |---------|---------------|-----------------------|
 | `accepted` | The provider's API returned success. The message is in the provider's outgoing queue. For Gmail and Outlook, it is also in that mailbox's Sent folder. | It does not mean the message reached the recipient's inbox. DocsAutomator receives no bounce or delivery reports. |
 | `failed` | The provider answered and refused (an HTTP error status), or a local precondition failed, for example an expired mailbox token with no fallback available. No message exists. | |
-| `unknown` | The request left DocsAutomator and no answer came back (a timeout or a dropped connection). The message may or may not exist at the provider. DocsAutomator does **not** retry an unknown send, because a retry could deliver two copies. | |
+| `unknown` | The send request itself left DocsAutomator and no answer came back (a timeout or a dropped connection on that one call). The message may or may not exist at the provider. DocsAutomator does **not** retry an unknown send, because a retry could deliver two copies. Failures before the send call, such as an expired mailbox connection, are always `failed`. | |
 
 <Warning>
 Treat `unknown` as an action item. Resend the invitation from the session page or the API, or copy the signing link and deliver it yourself.

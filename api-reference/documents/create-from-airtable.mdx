@@ -102,8 +102,9 @@ print(result["pdfUrl"])
 ```json
 {
   "message": "success",
-  "pdfUrl": "https://files.docsautomator.co/..."
+  "pdfUrl": "https://files.docsautomator.co/...",
+  "documentName": "Invoice #001"
 }
 ```
 
-Additional fields like `googleDocUrl`, `savePdfGoogleDriveUrl`, and e-signature fields are included depending on your automation's configuration. See the [API data source page](/api-reference/documents/create-from-api#response) for the full list.
+`message`, `pdfUrl` and `documentName` are always present. Additional fields like `googleDocUrl`, `savePdfGoogleDriveUrl`, and e-signature fields are included depending on your automation's configuration. See the [API data source page](/api-reference/documents/create-from-api#response) for the full list.

@@ -387,11 +387,12 @@ while True:
 ```json
 {
   "message": "success",
-  "pdfUrl": "https://files.docsautomator.co/..."
+  "pdfUrl": "https://files.docsautomator.co/...",
+  "documentName": "Invoice #001"
 }
 ```
 
-Additional fields are included depending on your automation's configuration:
+`message`, `pdfUrl` and `documentName` are always present. Additional fields are included depending on your automation's configuration:
 
 | Field | Included when |
 |-------|---------------|

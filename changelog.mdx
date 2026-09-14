@@ -5,6 +5,18 @@ rss: true
 mode: "center"
 ---
 
+<Update label="September 14, 2026">
+  ## Digital seal on signed PDFs
+
+  Every completed e-sign PDF now carries a digital signature and a trusted timestamp, so any change to the file after signing is detectable.
+
+  - **Tamper evidence**: Adobe Acrobat and other PDF validators show "document has been modified" if anyone edits, merges, or stamps the signed file afterwards.
+  - **Trusted timestamp**: an RFC 3161 timestamp from DigiCert is embedded in the seal. The signing time no longer depends on our server clock.
+  - **No change to the signing flow**: signers and automations work exactly as before. The seal is invisible on the page.
+
+  See [Compliance and Legal Validity](/features/docsautomator-esign/compliance-and-legal-validity).
+</Update>
+
 <Update label="September 8, 2026">
   ## E-sign email delivery outcomes
 

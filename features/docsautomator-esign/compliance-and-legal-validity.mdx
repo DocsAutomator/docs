@@ -65,7 +65,7 @@ eIDAS establishes legal frameworks for electronic signatures across EU member st
 - Signatures capture digitally and embed into PDFs
 - Each signer accesses unique signing sessions via secure, time-limited tokens
 - All actions record with server timestamps in audit trails
-- Original document hash (SHA-256) stores to detect tampering
+- Original and signed document hashes (SHA-256) are stored, and the signed PDF is digitally sealed and timestamped to detect tampering
 
 ### GDPR
 
@@ -94,8 +94,14 @@ Every e-signature session maintains a tamper-evident audit trail recording:
 
 ### Document Integrity
 
-- **SHA-256 Hashing**: Cryptographic hash of the original document stores for verification
+- **SHA-256 Hashing**: Cryptographic hashes of the original document and of the final signed PDF are stored and returned by the audit endpoint
+- **Digital Seal**: The final signed PDF carries a digital signature from DocsAutomator. Any change to the file after signing shows as "document has been modified" in Adobe Acrobat and other PDF validators
+- **Trusted Timestamp**: The seal embeds an RFC 3161 timestamp from an independent timestamp authority (DigiCert), so the signing time does not depend on our server clock
 - **Certificate of Completion**: Automatically generated page showing all signers, signatures, and completion timestamps
+
+<Note>
+The seal uses a certificate issued by DocsAutomator. Adobe Acrobat shows the signature as valid but lists the certificate issuer as unknown, because it is not on the Adobe Approved Trust List. The tamper evidence and the timestamp are not affected by this.
+</Note>
 
 ### Access Control
 

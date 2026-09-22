@@ -84,8 +84,8 @@ The three closing choices in the app map to these fields: **Signature required**
 1. **The email.** The recipient gets an email from DocsAutomator, or from your Gmail or Outlook account if you set that up, with a button that opens the document. With Links Only, the recipient gets the link from you.
 2. **The document.** The link opens the full document in the browser, on a phone or a computer. The page title is **Review Document**. The header shows who is reviewing. The recipient scrolls through the whole document on the same screen.
 3. **The typed name.** When Require Typed Name is on, a field labeled **Type your full name to sign** sits above the button.
-4. **The consent line.** Directly above the button, the recipient reads: "By clicking Accept, I agree to the terms of the document shown above. I agree to use electronic records and signatures. My name, email address, IP address, device information and the time of acceptance will be recorded in a Certificate of Acceptance and shared with the sender."
-5. **The button.** The recipient clicks **Accept Document**, or **Accept with obligation to pay** when Payment obligation is on. The recipient can also click **Decline** and write a reason. A decline closes the request and notifies you.
+4. **The consent line.** Directly above the button, the recipient reads: "By clicking Accept, I agree to the terms of the document shown above. My click counts as my electronic signature, and this document may be delivered and kept electronically. My name, email address, IP address, device information and the time of acceptance are recorded in a Certificate of Acceptance and shared with the sender."
+5. **The button.** The recipient clicks **Accept**, or **Accept with obligation to pay** when Payment obligation is on. The recipient can also click **Decline** and write a reason. A decline closes the request and notifies you.
 6. **The confirmation.** The recipient sees **Thank You! Your acceptance has been recorded.** and can download the document. When every recipient has accepted, each one receives a copy of the accepted PDF by email.
 
 The page is available in the same languages as the signing page. See [Signer Language](/features/docsautomator-esign#signer-language).
@@ -111,7 +111,7 @@ The accepted PDF is the document the recipient saw, unchanged, with a **Certific
 - A SHA-256 fingerprint of the document, so any later change to the file shows
 - A short statement of the process, so you can attach the certificate to a declaration without technical help
 
-The PDF is sealed with a digital certificate and a timestamp. It is tamper-proof: a PDF reader shows whether the file has changed since it was sealed. The full audit trail is also available as a separate download. See [Get Audit Trail](/features/docsautomator-esign/docsautomator-esign-api-reference#get-audit-trail).
+The PDF is sealed with a digital certificate and an independent timestamp, so it is tamper-evident: a PDF reader shows if the file changed after it was sealed. The full audit trail is also available as a separate download. See [Get Audit Trail](/features/docsautomator-esign/docsautomator-esign-api-reference#get-audit-trail).
 
 <Frame caption="The acceptance record on the document's page in DocsAutomator. The Certificate of Acceptance on the PDF carries the same data.">
   <img src="/images/esign/acceptance-certificate.png" alt="The acceptance record of an accepted quote. It lists the document, its SHA-256 fingerprint, the sender, the recipient, the times the link was sent, opened, and accepted, the IP address and browser at open and at acceptance, the typed name, the button shown, the consent shown, and a plain-language statement of the process. A panel on the right shows the recipient as Accepted." />

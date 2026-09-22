@@ -109,10 +109,11 @@
                 "pages": [
                   "features/docsautomator-ai-agent",
                   {
-                    "group": "DocsAutomator eSign",
+                    "group": "Signing & Acceptance",
                     "icon": "signature",
                     "pages": [
                       "features/docsautomator-esign",
+                      "features/docsautomator-esign/acceptance",
                       "features/docsautomator-esign/compliance-and-legal-validity",
                       "features/docsautomator-esign/docsautomator-esign-api-reference",
                       "features/docsautomator-esign/email-delivery-outcomes",

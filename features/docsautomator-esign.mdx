@@ -1,12 +1,26 @@
 ---
-title: "DocsAutomator eSign"
+title: "Signing & Acceptance"
 sidebarTitle: "Overview"
-description: "Collect legally binding electronic signatures on generated documents"
+description: "Close a generated document with an e-signature, a one-click acceptance, or no closing step"
 icon: "signature"
-keywords: ["electronic signatures", "e-signatures", "document signing", "legally binding", "ESIGN Act", "eIDAS"]
+keywords: ["electronic signatures", "e-signatures", "acceptance", "click to accept", "document signing", "legally binding", "ESIGN Act", "eIDAS"]
 ---
 
-DocsAutomator eSign enables collection of legally binding electronic signatures on generated documents with support for unlimited signers, multiple field types, and comprehensive compliance tracking.
+Every automation has a **closing step**. It decides what happens after DocsAutomator generates the document. You choose one of three options in the **E-Signing** card of the automation, under **Closing**.
+
+| Closing step | What the recipient does | Use it for |
+|--------------|-------------------------|------------|
+| **Signature required** | Opens the document, fills the signature fields from your template, and clicks Complete | Contracts, agreements, and any document where the law or your policy asks for a signature |
+| **Acceptance** | Opens the document, reads it, and clicks **Accept**. No signature fields are needed | Quotes, offers, purchase orders, policy sign-offs, and HR acknowledgments |
+| **None** | Nothing. The document is delivered without a closing step | Invoices, reports, certificates, and any document that needs no reply |
+
+Signature and acceptance run on the same rail. Both send the document by email or by link, both send reminders, both come back as a sealed PDF with a certificate on the last page, and both cost the same. The difference is what the recipient must do. A signature asks for fields in the document. An acceptance asks for one click on the whole document.
+
+<Card title="Get a document accepted with one click" icon="circle-check" href="/features/docsautomator-esign/acceptance">
+  Setup, what the recipient sees, the Certificate of Acceptance, and billing.
+</Card>
+
+The rest of this page describes the **Signature required** option: signature fields, signers, emails, reminders, delivery, and webhooks. Most settings also apply to acceptance. The acceptance page lists the differences.
 
 <Frame>
   <iframe
@@ -58,13 +72,13 @@ Signature, date, and text fields in the finished document scale with the font si
 
 Tags at the standard body text size (11pt) or smaller render at the default size, and each tag is sized independently, so different signature spots in the same document can use different sizes. Checkbox size is fixed.
 
-## Switching Signing On
+## Choosing the Closing Step
 
-Signing has an explicit on/off switch. Open the **E-Signing** card of your automation and turn on **Signing**. While signing is off, the panel shows only the switch, and generated documents are delivered without a signing request.
+Open the **E-Signing** card of your automation. Under **Closing**, pick **Signature required**, **Acceptance**, or **None**. While the closing step is **None**, the card shows only the choice, and generated documents are delivered without a signing or acceptance request.
 
-- Adding `{{esign.*}}` tags to the template does not switch signing on. Removing them does not switch it off.
-- When the template has signing tags and signers are set, but signing is off, the E-Signing card shows **Off · template has signing tags**.
-- Through the API or MCP, set `esignature.enabled` to `true` or `false`. Setting signers for the first time switches it on.
+- Adding `{{esign.*}}` tags to the template does not change the closing step. Removing them does not change it either.
+- When the template has signing tags but the closing step is **Acceptance**, the tags are left blank in the document. The card tells you so.
+- Through the API or MCP, set `esignature.enabled` to `true` or `false`, and `esignature.closeType` to `signature` or `acceptance`. Setting signers for the first time switches signing on. Two more fields apply to acceptance only: `esignature.acceptanceRequireName` (default `true`) and `esignature.acceptancePaymentObligation` (default `false`). The [acceptance page](/features/docsautomator-esign/acceptance#set-it-up-through-the-api-or-mcp) explains them.
 
 ## E-Sign Fields in Conditional Sections
 
@@ -494,6 +508,8 @@ The default language is English. The language setting affects the signing page, 
 | Cancelled | Admin cancelled |
 | Declined | Signer declined |
 
+Acceptance requests use the same statuses. A recipient who accepted shows as **Accepted** in the app and as `signed` in the API.
+
 ## Security Features
 
 DocsAutomator eSign includes:
@@ -505,12 +521,21 @@ DocsAutomator eSign includes:
 
 ## Availability
 
-E-signing is included on all paid plans (Professional, Business, and Scale) at **$0.50 per document sent for signature**. The charge is flat per document, regardless of how many signers are on it, and applies when the document is sent out for signing. No add-on subscription is required.
+E-signing and acceptance are included on all paid plans (Professional, Business, and Scale). No add-on subscription is required.
 
 | Plan | eSign Access |
 |------|--------------|
 | Free (test mode) | Preview/Test signing only |
-| Paid (all plans) | Full production access at $0.50 per document sent for signature |
+| Paid (all plans) | Full production access at $0.50 / doc, charged on first open |
+
+### How e-signing and acceptance are billed
+
+- You pay **$0.50 per document, charged when the recipient first opens it; $0.35 per document above 500 a month**. One document is one signing request or one acceptance request.
+- The charge happens when the first recipient opens the document. It is one charge per document, no matter how many recipients are on it.
+- A request that nobody opens is free.
+- A request that a recipient opens but does not finish still counts, also when it later expires or is declined.
+- The $0.35 rate applies to every document above 500 in a billing month. The count starts again with each billing month.
+- Test and preview requests are never charged.
 
 <Note>
 Legacy Unlimited-plan customers keep their included unlimited signatures until they change plans.
@@ -539,6 +564,9 @@ Legacy Unlimited-plan customers keep their included unlimited signatures until t
 ## Related Pages
 
 <CardGroup cols={2}>
+  <Card title="Acceptance" icon="circle-check" href="/features/docsautomator-esign/acceptance">
+    Get a document accepted with one click
+  </Card>
   <Card title="Compliance & Legal Validity" icon="scale-balanced" href="/features/docsautomator-esign/compliance-and-legal-validity">
     Learn about legal standards and compliance
   </Card>

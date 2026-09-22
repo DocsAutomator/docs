@@ -85,6 +85,8 @@ curl -X GET "https://api.docsautomator.co/esign/sessions?status=pending&page=1&l
 
 Per-signer fields include `declinedAt` and `declineReason` for any signer who declined. When the session `status` is `declined`, the response additionally includes top-level `declinedAt`, `declinedBy` (`email`, `name`, `signerIndex`), and `declineReason` so you can read refusal details without inspecting the signers array.
 
+`closeType` tells you how the session closes: `signature` (the default) or `acceptance`. An [acceptance](/features/docsautomator-esign/acceptance) session has no `esignFields`. A recipient who accepted has the signer status `signed`, and the signer object carries `typedName` when the recipient typed their name before accepting. Both the list and the detail endpoints return `closeType`.
+
 **Response:**
 
 ```json
@@ -92,6 +94,7 @@ Per-signer fields include `declinedAt` and `declineReason` for any signer who de
   "id": "66f1a2b3c4d5e6f7a8b9c0d1",
   "documentName": "Invoice #123",
   "status": "completed",
+  "closeType": "signature",
   "signingOrder": "sequential",
   "deliveryMethod": "email",
   "currentSignerIndex": 2,
@@ -118,6 +121,7 @@ Per-signer fields include `declinedAt` and `declineReason` for any signer who de
       "name": "Alice",
       "role": "buyer",
       "status": "signed",
+      "typedName": null,
       "accessToken": "a1b2c3...",
       "invitedAt": "2026-04-20T10:00:00.000Z",
       "inviteDelivery": {
@@ -224,6 +228,7 @@ Returns expiration dates and signer status for each link.
 | `field_signed` | Field value entered |
 | `field_cleared` | Field value cleared |
 | `signer_completed` | All fields finished |
+| `document_accepted` | Recipient clicked Accept on an acceptance session (`metadata.typedName` holds the typed name) |
 | `signer_declined` | Signer declined to sign |
 | `session_completed` | All signers done, PDF generated |
 | `session_cancelled` | Session cancelled |
@@ -485,8 +490,12 @@ Parameters are returned in all webhook notifications under `webhookParams`, toge
 | `pending` | Invitation not sent |
 | `invited` | Email sent |
 | `opened` | Link opened |
-| `signed` | All fields completed |
-| `declined` | Declined to sign |
+| `signed` | All fields completed, or the document accepted |
+| `declined` | Declined to sign or to accept |
+
+### Acceptance Sessions
+
+Sessions with `closeType: "acceptance"` use the same session and signer statuses. A recipient who clicked Accept has the signer status `signed`. The session is `completed` when every recipient has accepted. The audit trail records the click as a `document_accepted` event, with the typed name in `metadata.typedName` when the recipient typed one.
 
 ---
 

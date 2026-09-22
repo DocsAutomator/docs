@@ -1,0 +1,38 @@
+---
+title: "Is acceptance legally binding?"
+description: "How click acceptance compares to an e-signature, what the Certificate of Acceptance records, and the documents that need a different form"
+icon: "gavel"
+---
+
+Yes, in the same way an electronic signature is. When a recipient opens your link and clicks Accept, the law treats that click as an electronic signature.
+
+## The same legal class as an e-signature
+
+In the United States, the ESIGN Act and UETA define an electronic signature as a sound, symbol or process that a person adopts with the intent to sign. A click is such a process. In the European Union, eIDAS Article 25(1) says a court may not reject an electronic signature only because it is electronic. In the United Kingdom, the Law Commission lists clicking an "I accept" button as a valid way to sign.
+
+A drawn signature, a typed name and a click all sit in the same legal class. What decides a dispute is not the shape of the signature. It is whether the person saw the document, made a clear act of agreement, and whether you can show who did it.
+
+## What DocsAutomator records for you
+
+Every acceptance produces a Certificate of Acceptance, attached to the accepted PDF. It records:
+
+- The document name and its SHA-256 fingerprint.
+- The recipient, the email address the link went to, and the link id.
+- The time the link was sent, first opened and accepted, in UTC.
+- The IP address and browser at the open and at the acceptance.
+- The exact button text and the consent sentence the recipient saw.
+- The typed name, if you asked for one, and the language of the page.
+
+The certificate ends with a short paragraph you can quote directly, for example: "A unique link was sent to anna@example.com on 12 Sep 2026 09:14 UTC. It was opened on 12 Sep 2026 10:02 UTC from 203.0.113.7. The recipient accepted on 12 Sep 2026 10:05 UTC from 203.0.113.7."
+
+## Consumers who take on a payment obligation
+
+If your recipient is a consumer and the document makes them pay, EU and UK law require the button to say so. Turn on "The recipient is a consumer and the document creates a payment obligation" in the automation. The button then reads "Accept with obligation to pay", or the same wording in the recipient's language. Without it, the consumer may not be bound at all.
+
+## Documents that need a different form
+
+Click acceptance is not enough for: wills, family and inheritance papers, property sales and anything a notary must handle. In Germany, also employment terminations, job references, guarantees and debt acknowledgements (paper only), plus leases over one year and consumer loans (qualified signature only). In the United Kingdom, deeds need a witness who is physically present. In the United States, ESIGN excludes wills, court orders, foreclosure and eviction notices, and a few others.
+
+For these, use paper or a qualified electronic signature.
+
+This is not legal advice.

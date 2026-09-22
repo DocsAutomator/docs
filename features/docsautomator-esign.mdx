@@ -78,7 +78,7 @@ Open the **E-Signing** card of your automation. Under **Closing**, pick **Signat
 
 - Adding `{{esign.*}}` tags to the template does not change the closing step. Removing them does not change it either.
 - When the template has signing tags but the closing step is **Acceptance**, the tags are left blank in the document. The card tells you so.
-- Through the API or MCP, set `esignature.enabled` to `true` or `false`, and `esignature.closeType` to `signature` or `acceptance`. Setting signers for the first time switches signing on. Two more fields apply to acceptance only: `esignature.acceptanceRequireName` (default `true`) and `esignature.acceptancePaymentObligation` (default `false`). The [acceptance page](/features/docsautomator-esign/acceptance#set-it-up-through-the-api-or-mcp) explains them.
+- Through the API or MCP, set `esignature.enabled` to `true` or `false`, and `esignature.closeType` to `signature` or `acceptance`. Setting signers for the first time switches signing on. One more field applies to acceptance only: `esignature.acceptanceRequireName` (default `true`). The [acceptance page](/features/docsautomator-esign/acceptance#set-it-up-through-the-api-or-mcp) explains it.
 
 ## E-Sign Fields in Conditional Sections
 

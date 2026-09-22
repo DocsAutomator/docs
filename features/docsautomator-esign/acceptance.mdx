@@ -47,15 +47,12 @@ Use signing when a signature is required. Use acceptance when a yes is enough. I
   <Step title="Choose how the request reaches the recipient">
     Under **Acceptance setup**, choose **Email** or **Links Only**. With Email, DocsAutomator sends the acceptance request to each recipient, with reminders. With Links Only, DocsAutomator sends no emails. You receive the acceptance links and share them yourself. The email settings (sender, subject, body, button color, language) are the same as for signing. See [Email Configuration](/features/docsautomator-esign#email-configuration).
 
-    <Frame caption="The Acceptance setup card: link delivery, recipient order, expiration, Require Typed Name, Payment obligation, and reminders">
-      <img src="/images/esign/acceptance-setup-card.png" alt="The Acceptance setup card in the Settings tab. Send via Email is selected over Links Only. Recipient order is Parallel. Link Expiration is 30 days. Require Typed Name is on. Payment obligation is off. Send Reminders is on." />
+    <Frame caption="The Acceptance setup card: link delivery, recipient order, expiration, Require Typed Name, and reminders">
+      <img src="/images/esign/acceptance-setup-card.png" alt="The Acceptance setup card in the Settings tab. Send via Email is selected over Links Only. Recipient order is Parallel. Link Expiration is 30 days. Require Typed Name is on. Send Reminders is on." />
     </Frame>
   </Step>
   <Step title="Set reminders and expiration">
     Reminders and expiration work as they do for signing. See [Reminder Settings](/features/docsautomator-esign#reminder-settings) and [Expiration Settings](/features/docsautomator-esign#expiration-settings). A recipient who opened the document but did not accept receives the reminders.
-  </Step>
-  <Step title="Turn on Payment obligation when the recipient is a consumer who must pay">
-    The **Payment obligation** setting is off by default. Turn it on when the recipient is a consumer, not a business, and accepting the document creates an obligation to pay, for example a quote for a private customer. The Accept button then reads **Accept with obligation to pay** in the recipient's language, and nothing else. EU and UK consumer law require the button to name the payment obligation (Consumer Rights Directive 2011/83/EU Article 8(2), in Germany §312j BGB, in the UK the Consumer Contracts Regulations 2013 regulation 14). Without the label, the consumer may not be bound by the acceptance. The rule does not apply to business recipients.
   </Step>
   <Step title="Choose where the accepted PDF goes">
     Under **After acceptance**, choose whether to save the accepted PDF to a Google Drive folder, to a field in your data source, or both. See [Write-back of the accepted PDF](#write-back-of-the-accepted-pdf).
@@ -75,7 +72,6 @@ The acceptance settings live in the `esignature` object of the automation. The s
 | `esignature.enabled` | `true`, `false` | `false` | Whether a closing step runs at all |
 | `esignature.closeType` | `signature`, `acceptance` | `signature` | The closing step when `enabled` is `true` |
 | `esignature.acceptanceRequireName` | `true`, `false` | `true` | Acceptance only. The recipient must type their name before accepting |
-| `esignature.acceptancePaymentObligation` | `true`, `false` | `false` | Acceptance only. The Accept button reads "Accept with obligation to pay" |
 
 The three closing choices in the app map to these fields: **Signature required** is `enabled: true` with `closeType: "signature"`, **Acceptance** is `enabled: true` with `closeType: "acceptance"`, and **None** is `enabled: false`.
 
@@ -85,7 +81,7 @@ The three closing choices in the app map to these fields: **Signature required**
 2. **The document.** The link opens the full document in the browser, on a phone or a computer. The page title is **Review Document**. The header shows who is reviewing. The recipient scrolls through the whole document on the same screen.
 3. **The typed name.** When Require Typed Name is on, a field labeled **Type your full name to sign** sits above the button.
 4. **The consent line.** Directly above the button, the recipient reads: "By clicking Accept, I agree to the terms of the document shown above. My click counts as my electronic signature, and this document may be delivered and kept electronically. My name, email address, IP address, device information and the time of acceptance are recorded in a Certificate of Acceptance and shared with the sender."
-5. **The button.** The recipient clicks **Accept**, or **Accept with obligation to pay** when Payment obligation is on. The recipient can also click **Decline** and write a reason. A decline closes the request and notifies you.
+5. **The button.** The recipient clicks **Accept**. The recipient can also click **Decline** and write a reason. A decline closes the request and notifies you.
 6. **The confirmation.** The recipient sees **Thank You! Your acceptance has been recorded.** and can download the document. When every recipient has accepted, each one receives a copy of the accepted PDF by email.
 
 The page is available in the same languages as the signing page. See [Signer Language](/features/docsautomator-esign#signer-language).

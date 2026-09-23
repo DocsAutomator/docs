@@ -1515,7 +1515,12 @@
           },
           "status": {
             "type": "string",
-            "enum": ["pending", "in_progress", "completed", "declined", "cancelled"]
+            "enum": ["pending", "in_progress", "completed", "expired", "declined", "cancelled"]
+          },
+          "closeType": {
+            "type": "string",
+            "enum": ["signature", "acceptance"],
+            "description": "How the session closes. `signature` is the e-sign ceremony with template fields. `acceptance` is a review plus one click on Accept, without fields."
           },
           "signingOrder": {
             "type": "string",
@@ -1577,7 +1582,12 @@
           },
           "status": {
             "type": "string",
-            "enum": ["pending", "in_progress", "completed", "declined", "cancelled"]
+            "enum": ["pending", "in_progress", "completed", "expired", "declined", "cancelled"]
+          },
+          "closeType": {
+            "type": "string",
+            "enum": ["signature", "acceptance"],
+            "description": "How the session closes. `signature` is the e-sign ceremony with template fields. `acceptance` is a review plus one click on Accept, without fields."
           },
           "signingOrder": {
             "type": "string",
@@ -1738,6 +1748,7 @@
               "consent_given",
               "signer_completed",
               "signer_declined",
+              "document_accepted",
               "field_signed",
               "field_cleared",
               "session_voided",

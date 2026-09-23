@@ -308,6 +308,8 @@ Signature images are not mapped to data sources.
 
 If your automation has a webhook URL configured, DocsAutomator will send webhook notifications for e-signature events. The webhook URL and `webhookParams` are the same ones configured in your automation's [output settings](/features/actions-after-document-generation/notify-webhook).
 
+Acceptance sessions fire the same events with the same payload keys. `closeType` is `"signature"` or `"acceptance"` on every session event. On an acceptance session, `esign.signer_signed` fires when a recipient clicks Accept, and the signer entries carry two extra fields: `typedName` (the name the recipient typed, or `null`) and `acceptedAt`.
+
 ### Session Completed
 
 Fires once when all signers complete and the final signed PDF is generated.
@@ -317,13 +319,16 @@ Fires once when all signers complete and the final signed PDF is generated.
   "signedPdfUrl": "https://...",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "completed",
   "completedAt": "ISO date string",
   "signers": [
     {
       "email": "signer@example.com",
       "name": "Signer Name",
-      "signedAt": "ISO date string"
+      "signedAt": "ISO date string",
+      "typedName": null,
+      "acceptedAt": null
     }
   ],
   "fieldValues": {
@@ -360,6 +365,7 @@ Fires when a signer declines to sign the document.
   "event": "esign.session_declined",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "declined",
   "declinedAt": "ISO date string",
   "declinedBy": {
@@ -387,13 +393,16 @@ Fires once every time a signer completes all of their required fields — includ
   "event": "esign.signer_signed",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "in_progress",
   "signer": {
     "email": "signer@example.com",
     "name": "Signer Name",
     "signerIndex": 1,
     "role": "buyer",
-    "signedAt": "ISO date string"
+    "signedAt": "ISO date string",
+    "typedName": null,
+    "acceptedAt": null
   },
   "progress": {
     "completed": 1,
@@ -419,6 +428,7 @@ Fires when a signing session expires before all signers complete it. An expirati
   "event": "esign.session_expired",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "expired",
   "expiredAt": "ISO date string",
   "expiresAt": "ISO date string",
@@ -442,7 +452,7 @@ Fires when a signing session expires before all signers complete it. An expirati
 
 ### Email Sent / Email Failed
 
-Fires once per e-sign email (invitation, resend, reminder, completion, progress, decline, expiration) with the outcome reported by the mail provider.
+Fires once per e-sign email (invitation, resend, reminder, completion, progress, decline, expiry_warning, expiration) with the outcome reported by the mail provider. The `expiry_warning` email goes to the sender two days before a request expires.
 
 ```json
 {

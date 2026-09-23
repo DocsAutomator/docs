@@ -4,14 +4,16 @@ description: "International standards and legal compliance for DocsAutomator eSi
 icon: "scale-balanced"
 ---
 
-DocsAutomator's e-signature solution meets international standards for electronic signatures, ensuring documents are legally binding across jurisdictions.
+DocsAutomator's e-signature solution provides electronic signatures that the US, EU and UK recognise, for documents that need no special form.
 
 | Standard | Region | Status |
 |----------|--------|--------|
-| ESIGN Act | United States | ✅ Compliant |
-| UETA | United States | ✅ Compliant |
-| eIDAS (SES) | European Union | ✅ Compliant |
+| ESIGN Act | United States | ✅ Supported |
+| UETA | United States | ✅ Supported |
+| eIDAS | European Union | ✅ Supported (simple electronic signature) |
 | GDPR | European Union | ✅ Compliant |
+
+Signing and acceptance produce simple electronic signatures. They are valid for documents that need no special form. Some documents need a notary, a witness, handwritten ink or a qualified electronic signature, and neither covers them. Do not use signing or acceptance for disclosures that a US law requires you to give a consumer in writing: ESIGN (15 U.S.C. 7001(c)) asks for a separate consumer consent that these flows do not collect. This is not legal advice.
 
 ---
 
@@ -19,7 +21,7 @@ DocsAutomator's e-signature solution meets international standards for electroni
 
 ### ESIGN Act
 
-The Electronic Signatures in Global and National Commerce Act grants electronic signatures equivalent legal status as handwritten signatures in the U.S.
+The Electronic Signatures in Global and National Commerce Act says a signature, contract or record may not be denied legal effect only because it is electronic. It applies to documents that need no special form.
 
 **Key Requirements:**
 - Parties must demonstrate intent to sign
@@ -131,10 +133,10 @@ Every signed document automatically includes a Certificate of Completion page co
 
 <AccordionGroup>
   <Accordion title="Are electronic signatures legally binding?">
-    Yes. In the United States, the ESIGN Act and UETA grant electronic signatures equivalent legal validity as handwritten signatures for most documents. In the EU, the eIDAS regulation provides a similar legal framework.
+    Yes, for documents that need no special form. In the United States, the ESIGN Act and UETA say a signature may not be denied legal effect only because it is electronic. In the EU, the eIDAS regulation says the same for a simple electronic signature; only a qualified electronic signature has the same standing as a handwritten one. Where the law requires a special form, neither signing nor acceptance is enough. This is not legal advice.
   </Accordion>
   <Accordion title="What documents cannot be signed electronically with DocsAutomator?">
-    DocsAutomator provides Simple Electronic Signatures compliant with standard regulations. Some documents may require Advanced or Qualified Electronic Signatures, wet ink signatures, or notarization. Consult a legal professional regarding your specific use case.
+    DocsAutomator provides simple electronic signatures. Some documents may require Advanced or Qualified Electronic Signatures, wet ink signatures, or notarization. Consult a legal professional regarding your specific use case.
   </Accordion>
   <Accordion title="How long are signed documents stored?">
     Signed documents and audit trails retain indefinitely unless deleted from your workspace.

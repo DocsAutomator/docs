@@ -346,11 +346,13 @@ Cannot cancel completed sessions.
 
 See [eSign overview — Webhook Integration](/features/docsautomator-esign#webhook-integration) for the full payload of each event.
 
+Acceptance sessions fire the same events with the same payload keys. `closeType` is `"signature"` or `"acceptance"` on every session event. On an acceptance session, `esign.signer_signed` fires when a recipient clicks Accept, and the signer entries carry two extra fields: `typedName` (the name the recipient typed, or `null`) and `acceptedAt`.
+
 ### Session Created (Manual Delivery)
 
 Triggered when signing session created with `deliveryMethod: "manual"`. Use to retrieve and distribute signing links manually.
 
-### Signing Completed
+### Session Completed
 
 Triggered when all signers complete signing and final PDF is generated.
 
@@ -361,13 +363,16 @@ Triggered when all signers complete signing and final PDF is generated.
   "signedPdfUrl": "https://...",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "completed",
   "completedAt": "ISO date string",
   "signers": [
     {
       "email": "signer@example.com",
       "name": "Signer Name",
-      "signedAt": "ISO date string"
+      "signedAt": "ISO date string",
+      "typedName": null,
+      "acceptedAt": null
     }
   ],
   "fieldValues": { },
@@ -393,13 +398,16 @@ Fires once per signer as they complete, including the final signer. Use to track
   "event": "esign.signer_signed",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "in_progress",
   "signer": {
     "email": "signer@example.com",
     "name": "Signer Name",
     "signerIndex": 1,
     "role": "buyer",
-    "signedAt": "ISO date string"
+    "signedAt": "ISO date string",
+    "typedName": null,
+    "acceptedAt": null
   },
   "progress": {
     "completed": 1,
@@ -413,7 +421,7 @@ Fires once per signer as they complete, including the final signer. Use to track
 ```
 
 <Note>
-For the final signer, `progress.allSigned` is `true` but the session `status` is still `in_progress`. The separate `Signing Completed` webhook fires afterwards, once the signed PDF is ready.
+For the final signer, `progress.allSigned` is `true` but the session `status` is still `in_progress`. The separate `Session Completed` webhook fires afterwards, once the signed PDF is ready.
 </Note>
 
 ### Session Expired
@@ -425,6 +433,7 @@ Fires when a signing session expires before all signers complete. An expiration 
   "event": "esign.session_expired",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "expired",
   "expiredAt": "ISO date string",
   "expiresAt": "ISO date string",

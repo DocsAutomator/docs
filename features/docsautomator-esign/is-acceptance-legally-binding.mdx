@@ -1,0 +1,62 @@
+---
+title: "Is acceptance legally binding?"
+description: "How click acceptance compares to an e-signature, what the Certificate of Acceptance records, and the documents that need a special form"
+icon: "gavel"
+---
+
+Yes, for documents that need no special form. In the United States (the ESIGN Act and UETA), the European Union (the eIDAS regulation) and the United Kingdom, a click on Accept is a simple electronic signature, the same legal category as a drawn e-signature. A court cannot reject it only because it is electronic. What decides a dispute is whether the person saw the document, clearly agreed, and whether you can show who did it. The Certificate of Acceptance records that. Where the law requires a special form, neither acceptance nor our signing is enough.
+
+This is not legal advice.
+
+## The same legal category as an e-signature
+
+In the United States, the ESIGN Act and UETA define an electronic signature as a sound, symbol or process that a person adopts with the intent to sign. A click is such a process. In the European Union, eIDAS Article 25(1) says a court may not reject an electronic signature only because it is electronic or because it is not a qualified signature. Only a qualified electronic signature has the same effect as a handwritten one. In the United Kingdom, the Law Commission lists clicking an "I accept" button as a valid way to sign.
+
+A drawn signature, a typed name and a click are all simple electronic signatures. DocsAutomator signing is also a simple electronic signature: there is no identity check, no qualified certificate and no witness. So wherever a click is not enough, our signing is not enough either.
+
+## What DocsAutomator records for you
+
+Every acceptance produces a Certificate of Acceptance, attached to the accepted PDF. It records:
+
+- The document name and its SHA-256 fingerprint.
+- The recipient, the email address the link went to, and the link id.
+- The time the link was sent, first opened and accepted, in UTC.
+- The IP address and browser at the open and at the acceptance.
+- The exact button text and the consent sentence the recipient saw.
+- The typed name, if you asked for one, and the language of the page.
+
+The certificate ends with a short paragraph you can quote directly, for example: "A unique link was sent to anna@example.com on 12 Sep 2026 09:14 UTC. It was opened on 12 Sep 2026 10:02 UTC from 203.0.113.7. The recipient accepted on 12 Sep 2026 10:05 UTC from 203.0.113.7."
+
+The PDF is sealed with a digital certificate and an independent timestamp, so it is tamper-evident: a PDF reader shows if the file changed after it was sealed.
+
+## Consumers in the EU and the UK
+
+Acceptance does not yet support documents that oblige a consumer to pay. EU and UK law asks for extra steps before the button. Ask your lawyer which flow fits those documents.
+
+## Consumers in the United States
+
+<Warning>
+Do not use Acceptance, or DocsAutomator signing, to give a consumer a disclosure that a law requires to be given in writing. Examples are credit, lease, insurance and some state consumer notices. US law (15 U.S.C. 7001(c)) requires a specific consent process before such a disclosure can be delivered electronically, and the acceptance page does not run that process.
+</Warning>
+
+For an ordinary quote, order or service agreement, no law requires a written disclosure, and the acceptance is valid.
+
+## Documents that need a special form
+
+Some documents need a notary, a witness, handwritten ink or a qualified electronic signature. Neither signing nor acceptance covers them. Examples are wills, property sales and mortgages, marriage contracts, gifts of property and many powers of attorney. In some countries the list also includes personal guarantees, employment terminations and company share transfers.
+
+The entries below are examples, not a complete list. The rules differ by country and change over time.
+
+| Country | Examples that need a special form |
+|---------|-----------------------------------|
+| United States | Wills and testamentary trusts; adoption, divorce and other family law papers; court documents; notices of utility cut-off, default, foreclosure or eviction for a home; cancellation of health or life insurance; product recalls. Deeds and mortgages for recording need a notary. Many states require a notary or witnesses for a power of attorney, and some require separate initials for specific clauses. Leases, guarantees, consumer loans and employment documents are generally fine. |
+| Germany | Paper only: employment terminations and termination agreements, guarantees by private persons, promises to pay and acknowledgements of debt. Qualified signature: termination of a residential lease, consumer loans, a fixed-term clause in an employment contract, a post-employment non-compete. Notary: real estate sales, GmbH share transfers, marriage contracts, gift promises. Wills must be handwritten or notarial. A residential lease for more than one year without written form stays valid but runs for an indefinite term. Commercial leases need only text form, so signing and acceptance both work. |
+| Austria | Where a statute requires written form, only a qualified signature meets it. Wills cannot be made electronically. Guarantees by private persons and family and inheritance declarations need a qualified signature plus a notary or lawyer. A fixed-term residential lease without a written term runs indefinitely. Share transfers, marriage contracts and gifts without handover need a notarial deed. |
+| United Kingdom | A deed needs a witness who is physically present: transfers of land, mortgages, leases over three years and some powers of attorney. A will needs two witnesses. A lasting power of attorney cannot use a digital signature. A contract for the sale of land must be signed by both parties on one document. Guarantees, consumer credit and short tenancies accept an e-signature. In Scotland, land contracts, wills and gratuitous promises need an advanced electronic signature. |
+| France | Family and inheritance deeds cannot be electronic. Real estate sales, gifts, marriage contracts and mortgages need a notarial deed. A handwritten will must be written, dated and signed by hand. A personal guarantee can be e-signed, but the guarantor must write or type the amount personally. Lease notices and dismissals need registered mail or a bailiff. |
+| Netherlands | Real estate transfers, mortgages, BV share transfers and wills need a notarial deed. Termination of a residential lease needs a bailiff or registered letter. A consumer house purchase and a guarantee by a private person carry risk with a simple signature. |
+| Spain | Rights in real estate and mortgages need a public deed. Gifts of real estate and marriage contracts need a public deed. Wills must be handwritten or notarial. Residential leases are form-free. |
+
+For these, use paper, a notary or a qualified electronic signature.
+
+This is not legal advice.

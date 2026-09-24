@@ -26,7 +26,11 @@ Generate an unlimited amount of previews without wasting credits. Document previ
     - If "Save PDF in Google Drive" is enabled, saves the watermarked PDF to your Drive folder
     - If URL writeback fields are configured, writes Google Doc URL and PDF Drive URL back to your data source
     - Document names are prefixed with `[PREVIEW]` for easy identification
-    - Emails are not sent
+    - Emails are still sent, if the automation has an email action enabled
+
+    <Warning>
+    Test Mode does not stop emails. Only the **Preview** button inside the app skips the email action. A run triggered by the API, Airtable, a webhook or polling sends the configured email, even in Test Mode. Turn the email action off, or send to a test address, while you test.
+    </Warning>
 
     <Tip>
     Use this mode to test your full automation pipeline end-to-end — including Drive saves and data source writebacks — before going live.
@@ -63,7 +67,7 @@ Generate an unlimited amount of previews without wasting credits. Document previ
 | Save PDF to Google Drive | Yes (if configured) | Yes (if configured) |
 | Save Google Doc | Yes (if configured) | Yes (if configured) |
 | URL Writeback to Data Source | Yes (if configured) | Yes (if configured) |
-| Emails Sent | No | Yes (if configured) |
+| Emails Sent | Yes (if configured) | Yes (if configured) |
 
 ## Best Practices
 

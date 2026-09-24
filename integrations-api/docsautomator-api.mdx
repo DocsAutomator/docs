@@ -40,6 +40,43 @@ DocsAutomator offers a REST API to create documents programmatically, manage aut
 
 Send values raw (`1234.5`, `2026-06-30`, `true`) and let DocsAutomator render them — open the gear icon next to a placeholder and pick a **Format**: currency, decimals, percent, date styles, or custom true/false labels. Conditions and calculations keep evaluating the raw value; formatting is display-only. See [Format Values](/features/advanced-placeholder-options/format-values).
 
+## Placeholders & Descriptions
+
+List an automation's placeholders — and the description of each — before you build a `createDocument` payload:
+
+```bash
+curl "https://api.docsautomator.co/listPlaceholdersV2?automationId=YOUR_AUTOMATION_ID" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+```json
+{
+  "placeholders": {
+    "main": ["client_name", "fee", "start_date"],
+    "line_items_1": ["description", "amount"]
+  },
+  "descriptions": {
+    "client_name": "Full legal name of the customer, from the CRM contact record",
+    "fee": "Total contract fee in EUR, numeric, no currency symbol"
+  }
+}
+```
+
+`descriptions` appears when per-placeholder descriptions are set. They tell an API client (or an AI agent) what data belongs in each placeholder. Set them in the app via the gear icon next to a mapping, or via the API:
+
+```bash
+curl -X PUT "https://api.docsautomator.co/updateAutomation?automationId=YOUR_AUTOMATION_ID" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"options": {"placeholderDescriptions": {"fee": "Total contract fee in EUR, numeric"}}}'
+```
+
+<Warning>
+`options.placeholderDescriptions` replaces the whole map: read the current map first and send it back with your changes. Each description is a string of at most 2,000 characters.
+</Warning>
+
+Automations also carry their own `description` — what the automation is for and what data it needs. `GET /automations` and `GET /automation` return it; set it with `{"description": "..."}` on `updateAutomation`, or in the app under **Automation Settings**.
+
 ## Full API Reference
 
 For complete endpoint documentation with an interactive playground, see the **[API Reference](/api-reference/introduction)** tab.

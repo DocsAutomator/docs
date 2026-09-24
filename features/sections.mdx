@@ -144,6 +144,8 @@ E-sign fields (`{{esign.signature_1}}`, `{{esign.date_1}}`, etc.) placed inside 
 
 This lets you use a single template for both e-sign and wet-ink workflows by placing each signature block in its own section and toggling visibility with a field value.
 
+It also enables a **variable number of signers** from one template: wrap each optional signer's block in its own section, and only the signers whose blocks are shown become part of the signing session. Signer numbers need not be consecutive — a signer who always signs (such as a countersigning agent) can keep a fixed high number (`{{esign.signature_7}}`) outside any section, so their block never moves as optional signers come and go. Sequential signing follows the signers present, in number order. See [Variable Number of Signers](/features/docsautomator-esign#variable-number-of-signers).
+
 ## Use Cases
 
 <CardGroup cols={2}>

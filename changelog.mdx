@@ -5,6 +5,247 @@ rss: true
 mode: "center"
 ---
 
+<Update label="September 24, 2026">
+  ## Acceptance, and e-signing charged when the recipient opens the document
+
+  **Acceptance** is a new way to complete a document. The recipient opens the link and clicks Accept instead of signing. DocsAutomator records the acceptance in the audit trail and adds a Certificate of Acceptance to the PDF. Use it for quotes, offers and purchase orders. To turn it on, open the **Signing & Acceptance** card of an automation and choose **Acceptance** under **How it completes**.
+
+  **Billing change for e-signing and acceptance:**
+
+  - Each document costs $0.50, charged when the first recipient opens it. Before, the charge happened when the request was sent.
+  - A request that nobody opens is free. A request that is opened but not finished still counts.
+  - Above 500 documents in a billing month, each document costs $0.35.
+  - Reminders are on by default for new automations. Existing automations keep their current setting.
+  - Two days before a request expires, the sender gets an email that lists who has not finished yet.
+
+  See [How e-signing and acceptance are billed](/features/docsautomator-esign#how-e-signing-and-acceptance-are-billed).
+</Update>
+
+<Update label="September 23, 2026">
+  ## Fewer blank lines around conditional sections
+
+  Section tags (`{{section_NAME}}` and `{{/section_NAME}}`) in Google Doc templates leave less empty space behind.
+
+  - A tag paragraph directly above a table no longer leaves a blank line above the table. Some documents come out a page shorter.
+  - A hidden section leaves no empty lines behind.
+  - A heading or indented line right after a section tag keeps the style from the template.
+  - A tag paragraph that also holds a page break, an image or a horizontal line keeps that element. Only the tag text is removed.
+  - A hidden section that starts outside a table and ends inside a table now fails with a message that names the tag and says how to fix it.
+
+  ## AI Agent: your first document without the last click
+
+  When the AI Agent finishes a new template, it now shows a preview of the finished document right away. It uses a real record when a data source is connected, or realistic sample values when it is not. A preview is free and watermarked. It does not count toward your document quota, and it sends no email, starts no signing request, saves nothing to your cloud storage and writes nothing back to your data. A full test run with emails and signing still asks for your approval first.
+
+  The AI Agent also got three fixes:
+
+  - Notion field mappings no longer fail when the agent writes a property ID in a different form than Notion lists it.
+  - The agent now sees whether automatic polling is on for Google Sheets and Google Forms automations.
+  - The agent warns you about e-sign tags whose label has spaces or other characters that the generator does not accept, and about section tag pairs that are missing the `section_` prefix.
+
+  ## Fixes
+
+  - API and no-code requests: a top-level field called `data` (for example "data" as the Portuguese or Spanish word for date) is now filled into the document like any other field. Before, it replaced all other fields and the document came out empty.
+</Update>
+
+<Update label="September 22, 2026">
+  ## Emails look like the email editor
+
+  Automation emails and e-signing emails with a custom body now keep the spacing you see in the email body editor.
+
+  - A blank line in the editor is one blank line in the email. Before, several blank lines could disappear and paragraphs ran together.
+  - Lines separated by one Enter sit directly under each other, as in the editor. Before, mail clients such as Gmail added a gap between them.
+  - Lists no longer get an extra blank line above and below.
+  - Custom e-signing email bodies follow the same rule.
+
+  ## Fixes
+
+  - **Keep Section On One Page** now also keeps table rows and headings together in Google Doc templates. A table row no longer breaks across a page, and the heading above a table moves to the next page with the table. A table can still split between two rows.
+  - A line item table no longer comes out with only its header row when a top-level placeholder with the same name as a line item column has "delete when empty" turned on.
+  - The AI Agent can now read the fields of SmartSuite tables reliably.
+</Update>
+
+<Update label="September 21, 2026">
+  ## Skipped PDF merges are shown on the run
+
+  **Merge Existing PDFs** is a Business plan feature. On other plans, a run with the merge turned on completed without the extra PDFs and gave no reason.
+
+  - The run now shows a warning in amber on the Logs tab and on the document page: the merge was skipped because it is a Business plan feature.
+  - The AI Agent no longer turns the merge on for a plan that does not include it. It tells you instead, and explains missing pages on existing automations.
+</Update>
+
+<Update label="September 17, 2026">
+  ## AI Agent fixes
+
+  - When you rename a placeholder, every setting for it moves to the new name: the field mapping, formats, descriptions, image options, show and hide rules, conditional styles, section rules, line item grouping, sorting and calculations, and email conditions. Before, only the field mapping moved.
+  - A template edit that fails no longer uses up one of the five undo steps.
+  - The agent now sees placeholder formats, section rules and line item grouping, sorting and skip rules. Before, it could tell you these were not set.
+</Update>
+
+<Update label="September 16, 2026">
+  ## Fixes
+
+  - E-signing emails now fill in their placeholders when you send an already generated Google Doc for signing again through the API (with `docTemplateLink`). Before, the invitation, reminder and completion emails showed raw placeholders such as `{{quote_number}}`.
+</Update>
+
+<Update label="September 15, 2026">
+  ## Fixes
+
+  - Merge PDFs: when an attached PDF cannot be read, DocsAutomator now repairs it and merges it. If the file cannot be repaired, the run fails with a message that names the file ("attached PDF 2 of 3") and says how to fix it. Before, the unreadable file was left out and the run still showed as successful.
+</Update>
+
+<Update label="September 14, 2026">
+  ## AI Agent improvements
+
+  - The AI Agent can now map a line item field through an Airtable linked record (for example `Product.SKU`), the same way the mapping panel does.
+  - For new accounts, the welcome chat asks first whether you need one document or a repeating flow. A one-time document takes the fastest path to a finished file.
+</Update>
+
+<Update label="September 12, 2026">
+  ## Fixes
+
+  - Notion: rollup fields that show the original values ("Show original") are filled in again. For some automations they came out empty since September 1.
+</Update>
+
+<Update label="September 10, 2026">
+  ## Fixes
+
+  - Nested line items with grouping and **Hide Grouping Key Column** turned on no longer delete the whole table from the generated document.
+  - Notion: the relation picker and the Sort by list of a nested line item level no longer load forever when an automation has two or more nested levels.
+  - When the connected Google account cannot save to the output folder, the error now says so and tells you to pick a folder that account can edit or to reconnect with the folder's owner. Before, it showed Google's message "Insufficient permissions for the specified parent."
+  - AI Agent: a chat open in a second browser tab no longer overwrites a conversation, so templates and automations the agent built stay in the chat history.
+</Update>
+
+<Update label="September 9, 2026">
+  ## Fixes
+
+  - A closing section tag (`{{/section_NAME}}`) in the last paragraph of a Google Doc template no longer resets the section's text to the default font size.
+</Update>
+
+<Update label="September 8, 2026">
+  ## E-sign email delivery outcomes
+
+  Every e-sign email (invitation, resend, reminder, completion and the notification emails) now produces a delivery record: which provider accepted it, from which mailbox, the provider's message ID (and thread ID for Gmail), and an outcome of `accepted`, `failed` or `unknown`.
+
+  - **Where to read it**: `signers[].inviteDelivery` on `GET /esign/sessions/:id`, `metadata.delivery` on the audit events, and two new webhook events, `esign.email_sent` and `esign.email_failed`. Run history and the session page show the outcome under each signer.
+  - **Fallback is now visible**: when a connected Gmail or Outlook mailbox rejects a message, DocsAutomator sends it from its own address instead. The record shows `fallbackFrom` and the reason.
+  - **Resend uses your sender**: a manual resend previously went out from DocsAutomator's address even when the automation was set to send from your Gmail or Outlook. It now uses the same sender as the original invitation.
+
+  See [Email Delivery Outcomes](/features/docsautomator-esign/email-delivery-outcomes).
+</Update>
+
+<Update label="September 8, 2026">
+  ## Fixes
+
+  - ClickUp: a date field can now show the date without a time. Open the placeholder's format settings and choose **No time**. Before, ClickUp dates always showed a time such as "04:00", and the format setting had no effect.
+</Update>
+
+<Update label="September 7, 2026">
+  ## Fixes
+
+  - Airtable: a rich text field with a line that holds only `+` or `-` no longer makes the generation fail.
+</Update>
+
+<Update label="September 4, 2026">
+  ## Fixes
+
+  - The template preview of a Google Doc with several tabs now shows only the first tab, the same as the generated document. Before, it could show a page with only "Tab 1" on it.
+</Update>
+
+<Update label="September 2, 2026">
+  ## E-sign fields in table cells
+
+  E-sign tags in narrow table cells no longer leave pieces of the tag visible in the signing page and the signed PDF. The fillable field now sits inside the printed cell, and the table keeps its row heights and page layout.
+</Update>
+
+<Update label="September 1, 2026">
+  ## Fixes
+
+  - Google Docs: the same placeholder in more than one header or footer is now filled in every place. Before, the generation could fail with "Invalid range: must contain a start and end index".
+  - Airtable: lookup fields that pull values through another lookup or linked record no longer come out empty, as `[object Object]`, or make the generation fail.
+  - Notion: Sum and other aggregate rollups now show the value Notion shows. Before, a rollup over more than 25 related pages or over a formula property could be wrong or zero.
+  - AI Agent: after it saves field mappings, the agent now sees which field each placeholder is mapped to, and it warns when a mapping looks crossed with another field.
+</Update>
+
+<Update label="August 31, 2026">
+  ## Fixes
+
+  - E-sign checkboxes now sit exactly where you typed the `{{esign.checkbox_...}}` tag in the template. Before, the box was centered in the space of the whole tag text and could look out of place.
+</Update>
+
+<Update label="August 30, 2026">
+  ## Sequential signing with gaps in signer numbers
+
+  Sequential signing now works when the signer numbers in a template have gaps. For example, a lease template can hold optional co-tenants in conditional sections and a countersigner fixed at `{{esign.signature_7}}`. With one tenant, the signers are 1 and 7. Signers are now invited in the order of their numbers. Before, the chain stopped after signer 1 and signer 7 was never invited.
+
+  Signer labels in the app also use the real signer numbers now. See [Variable Number of Signers](/features/docsautomator-esign#variable-number-of-signers).
+</Update>
+
+<Update label="August 28, 2026">
+  ## Smaller changes and fixes
+
+  - Google Forms automations that read the form directly now check for new responses every minute. Automations that read a linked response sheet still check every 5 minutes.
+  - Automatic generation from Google Sheets and Google Forms no longer skips a row or response when queuing it fails, and no longer creates a duplicate document after a server restart.
+  - Grouped line items with an auto-number column and a conditional row highlight now highlight only the matching row. Before, the number cells of the rows above were highlighted too.
+  - A repeating section tag that shares a paragraph with other text (often because of a soft line break, Shift+Enter) now gives a clear error that says how to fix the template. Before, the error said "Line item row not found".
+  - When a subscription has ended, the message now says so instead of "You are on the trial plan".
+  - The automation name field uses the free width of the top bar, so long names are easier to read.
+  - The back button on the automation page returns to the list with its scroll position and filters kept.
+</Update>
+
+<Update label="August 28, 2026">
+  ## Repeating sections: keep on one page, and conditional styling
+
+  Two improvements for repeating sections (`{{line_items_1}}` … `{{/line_items_1}}`), in both Google Doc and Word templates.
+
+  - **Keep Section On One Page**: a new toggle below "Page Break Between Sections". A section that does not fit in the remaining page space moves whole to the next page; short sections still share pages. (A table inside a section can still split between its rows.)
+  - **Conditional styling now works inside sections** in Google Doc templates: rules like *color the category red when it contains "Critical"* are evaluated per record and style that record's value, in section paragraphs and in tables inside the section. Word templates already behaved this way.
+
+  Existing documents are unaffected until you turn the new toggle on.
+</Update>
+
+<Update label="August 28, 2026">
+  ## E-signing for Google Forms
+
+  Documents generated from Google Forms responses can now be routed for signing automatically. The respondent receives an email with a signing link for their document, and the signer defaults to the respondent's email address from the form — a consent form or waiver needs no signer setup at all.
+
+  Signing requires the form to collect email addresses (or a question asking for the signer's email). See [Google Forms](/integrations-api/google-forms) for details.
+</Update>
+
+<Update label="August 28, 2026">
+  ## Google Forms is now a first-class data source
+
+  DocsAutomator reads Google Forms responses directly — no linked response sheet, no add-on, no Apps Script.
+
+  - **Paste any form link**: the editor link, the published link, or a short forms.gle link. DocsAutomator resolves it to the right form in your account. Browsing your forms in a picker works too.
+  - **Automatic generation**: enable auto-create and every new response becomes a document within minutes. Responses submitted before you enable it are left alone.
+  - **Stable mappings**: placeholders bind to the question itself, so rewording a question breaks nothing. Grids map row by row, file uploads work with dynamic images, and the respondent's email address is available for delivery — email each respondent their own document without an extra question.
+  - **Linked sheets still work**: a form with a linked response sheet can read from the sheet instead, keeping computed columns, the document-link write-back, and the per-row generate link.
+
+  See the new [Google Forms guide](/integrations-api/google-forms).
+</Update>
+
+<Update label="August 28, 2026">
+  ## ClickUp: line items, Files custom fields, and signed-PDF targets
+
+  The ClickUp integration catches up with Airtable and Notion on three fronts.
+
+  - **Line items**: `{{line_items_1}}` tables and repeating sections now work with ClickUp. Each group pulls its rows from the task's **subtasks** or from a **Relationship custom field** pointing at a dedicated items list (for example a Deals list linked to a Line Items list). Configure it in the Data panel; item rows can use the linked list's custom fields plus all standard task fields.
+  - **Save the PDF into a Files custom field**: the "Save PDF to ClickUp task" action gained an **Attach To** picker — keep the default task attachments, or file the generated PDF into any Files custom field on the task.
+  - **Signed PDFs too**: in the E-Signing settings, "Save Signed PDF To" now offers the same choice — task attachments or a Files custom field.
+
+  Existing ClickUp automations are unaffected until you change these settings.
+</Update>
+
+<Update label="August 28, 2026">
+  ## Files you send the AI Agent now stay put
+
+  A logo, a screenshot or a reference document you attach in the AI Agent chat stays available for the rest of the conversation, including after a page refresh and when you come back to the chat days later.
+
+  - Attachments used to last only for the message you sent them with. Reopen the chat and the AI Agent could no longer see the file, so it had to ask you to send it again.
+  - Images now also stay visible in the chat history instead of turning into a placeholder line.
+  - Attachments are deleted 90 days after the last message in that conversation.
+</Update>
+
 <Update label="August 27, 2026">
   ## Notion: map fields from related pages
 

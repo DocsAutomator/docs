@@ -85,6 +85,8 @@ curl -X GET "https://api.docsautomator.co/esign/sessions?status=pending&page=1&l
 
 Per-signer fields include `declinedAt` and `declineReason` for any signer who declined. When the session `status` is `declined`, the response additionally includes top-level `declinedAt`, `declinedBy` (`email`, `name`, `signerIndex`), and `declineReason` so you can read refusal details without inspecting the signers array.
 
+`closeType` tells you how the session closes: `signature` (the default) or `acceptance`. An [acceptance](/features/docsautomator-esign/acceptance) session has no `esignFields`. A recipient who accepted has the signer status `signed`, and the signer object carries `typedName` when the recipient typed their name before accepting. Both the list and the detail endpoints return `closeType`.
+
 **Response:**
 
 ```json
@@ -92,6 +94,7 @@ Per-signer fields include `declinedAt` and `declineReason` for any signer who de
   "id": "66f1a2b3c4d5e6f7a8b9c0d1",
   "documentName": "Invoice #123",
   "status": "completed",
+  "closeType": "signature",
   "signingOrder": "sequential",
   "deliveryMethod": "email",
   "currentSignerIndex": 2,
@@ -118,8 +121,22 @@ Per-signer fields include `declinedAt` and `declineReason` for any signer who de
       "name": "Alice",
       "role": "buyer",
       "status": "signed",
+      "typedName": null,
       "accessToken": "a1b2c3...",
       "invitedAt": "2026-04-20T10:00:00.000Z",
+      "inviteDelivery": {
+        "kind": "invitation",
+        "outcome": "accepted",
+        "provider": "gmail",
+        "fromAccount": "jane@acme.com",
+        "to": "alice@example.com",
+        "providerMessageId": "18f3a9c2b4d5e6f7",
+        "providerThreadId": "18f3a9c2b4d5e6f7",
+        "fallbackFrom": null,
+        "fallbackReason": null,
+        "error": null,
+        "sentAt": "2026-04-20T10:00:00.000Z"
+      },
       "openedAt": "2026-04-22T13:55:04.000Z",
       "signedAt": "2026-04-22T14:02:11.000Z",
       "declinedAt": null,
@@ -211,12 +228,17 @@ Returns expiration dates and signer status for each link.
 | `field_signed` | Field value entered |
 | `field_cleared` | Field value cleared |
 | `signer_completed` | All fields finished |
+| `document_accepted` | Recipient clicked Accept on an acceptance session (`metadata.typedName` holds the typed name) |
 | `signer_declined` | Signer declined to sign |
 | `session_completed` | All signers done, PDF generated |
 | `session_cancelled` | Session cancelled |
 | `session_expired` | Session expired |
 | `session_voided` | Session voided by admin |
 | `reminder_sent` | Reminder email sent |
+| `email_sent` | Completion, progress, decline or expiration email accepted by a provider |
+| `email_send_failed` | Any e-sign email ended with outcome `failed` or `unknown` |
+
+`invite_sent`, `invite_resent`, `reminder_sent`, `email_sent` and `email_send_failed` carry the delivery record in `metadata.delivery`. See [Email Delivery Outcomes](/features/docsautomator-esign/email-delivery-outcomes).
 
 **Response:**
 
@@ -324,14 +346,18 @@ Cannot cancel completed sessions.
 | `esign.signer_signed` | An individual signer completed all their fields |
 | `esign.session_declined` | A signer declined to sign |
 | `esign.session_expired` | Session expired before all signers completed |
+| `esign.email_sent` | An e-sign email was accepted by a mail provider |
+| `esign.email_failed` | An e-sign email ended with outcome `failed` or `unknown` |
 
 See [eSign overview — Webhook Integration](/features/docsautomator-esign#webhook-integration) for the full payload of each event.
+
+Acceptance sessions fire the same events with the same payload keys. `closeType` is `"signature"` or `"acceptance"` on every session event. On an acceptance session, `esign.signer_signed` fires when a recipient clicks Accept, and the signer entries carry two extra fields: `typedName` (the name the recipient typed, or `null`) and `acceptedAt`.
 
 ### Session Created (Manual Delivery)
 
 Triggered when signing session created with `deliveryMethod: "manual"`. Use to retrieve and distribute signing links manually.
 
-### Signing Completed
+### Session Completed
 
 Triggered when all signers complete signing and final PDF is generated.
 
@@ -342,13 +368,16 @@ Triggered when all signers complete signing and final PDF is generated.
   "signedPdfUrl": "https://...",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "completed",
   "completedAt": "ISO date string",
   "signers": [
     {
       "email": "signer@example.com",
       "name": "Signer Name",
-      "signedAt": "ISO date string"
+      "signedAt": "ISO date string",
+      "typedName": null,
+      "acceptedAt": null
     }
   ],
   "fieldValues": { },
@@ -374,13 +403,16 @@ Fires once per signer as they complete, including the final signer. Use to track
   "event": "esign.signer_signed",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "in_progress",
   "signer": {
     "email": "signer@example.com",
     "name": "Signer Name",
     "signerIndex": 1,
     "role": "buyer",
-    "signedAt": "ISO date string"
+    "signedAt": "ISO date string",
+    "typedName": null,
+    "acceptedAt": null
   },
   "progress": {
     "completed": 1,
@@ -394,7 +426,7 @@ Fires once per signer as they complete, including the final signer. Use to track
 ```
 
 <Note>
-For the final signer, `progress.allSigned` is `true` but the session `status` is still `in_progress`. The separate `Signing Completed` webhook fires afterwards, once the signed PDF is ready.
+For the final signer, `progress.allSigned` is `true` but the session `status` is still `in_progress`. The separate `Session Completed` webhook fires afterwards, once the signed PDF is ready.
 </Note>
 
 ### Session Expired
@@ -406,6 +438,7 @@ Fires when a signing session expires before all signers complete. An expiration 
   "event": "esign.session_expired",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
+  "closeType": "signature",
   "status": "expired",
   "expiredAt": "ISO date string",
   "expiresAt": "ISO date string",
@@ -466,8 +499,12 @@ Parameters are returned in all webhook notifications under `webhookParams`, toge
 | `pending` | Invitation not sent |
 | `invited` | Email sent |
 | `opened` | Link opened |
-| `signed` | All fields completed |
-| `declined` | Declined to sign |
+| `signed` | All fields completed, or the document accepted |
+| `declined` | Declined to sign or to accept |
+
+### Acceptance Sessions
+
+Sessions with `closeType: "acceptance"` use the same session and signer statuses. A recipient who clicked Accept has the signer status `signed`. The session is `completed` when every recipient has accepted. The audit trail records the click as a `document_accepted` event, with the typed name in `metadata.typedName` when the recipient typed one.
 
 ---
 

@@ -39,6 +39,23 @@ POST https://api.docsautomator.co/createDocument
   When `true`, skips e-signing for this request even if the automation has e-signing enabled. The document is generated and delivered normally (Drive save, email, webhook), but no signing session is started and no signing invitations are sent. Useful for two-step approval flows: generate a draft for review first, then re-run without `skipEsign` to send the document for signing. Also accepted as a query parameter (`?skipEsign=true`) on GET requests.
 </ParamField>
 
+<ParamField body="recipients" type="object[]">
+  Who signs or accepts this document. Each entry is `{ "signer": 1, "email": "anna@acme.com", "name": "Anna Weber" }`. `signer` is the signer's number in the automation: for signing it matches the number in the template tags (1 in `{{esign.signature_1}}`), for acceptance it is the position in the Recipients list. `name` is optional; without it the name set in the automation is used.
+
+  A listed signer's email and name replace the saved ones for this document only. Signers you leave out keep their saved setup, and nothing is saved on the automation. The automation decides how many signers there are, so `recipients` never adds a signer. You can leave out `signer` when the automation has exactly one signer. With two or more signers, every entry needs it.
+
+  Use it when an AI agent or your own code sends one document to a person it names at send time. The record's data and the write-back of the signing link and signed PDF work as usual. Triggers from your data source (buttons, formula links, webhooks) do not send `recipients`, so they keep working exactly as set up.
+
+  The request fails before anything is generated when a signer number does not exist, the same signer is listed twice, an email is invalid, or the automation has no signing or acceptance step.
+
+  ```json
+  "recipients": [
+    { "signer": 1, "email": "anna@acme.com", "name": "Anna Weber" },
+    { "signer": 2, "email": "cfo@acme.com" }
+  ]
+  ```
+</ParamField>
+
 <ParamField body="actingUserEmail" type="string">
   Email address of the team member generating this document. When the automation's email delivery (or e-signature email settings) has **Send from the team member who generates the document** enabled, the email is sent from this member's own connected Gmail or Outlook account instead of the configured sender. The address must match a mailbox connected to the workspace; otherwise DocsAutomator falls back to the automation's configured sender. Also accepted as a query parameter, which is handy in Airtable button or formula fields: append `&actingUserEmail=member@company.com` to the generation URL. An `X-Acting-User-Email` request header is supported too and takes precedence. The in-app Generate button passes this automatically.
 </ParamField>

@@ -110,6 +110,30 @@
                     "format": "uri",
                     "description": "Override the automation's Google Doc template URL for this request only.",
                     "example": "https://docs.google.com/document/d/your-template-id/edit"
+                  },
+                  "recipients": {
+                    "type": "array",
+                    "description": "Who signs or accepts this document. Each entry names one of the automation's signers by number and gives the person's email and, optionally, name. A listed signer's email and name replace the saved ones for this document only; signers you leave out keep their saved setup. The automation decides how many signers there are, so this never adds a signer. `signer` can be left out when the automation has exactly one signer and is required when it has two or more. Required for each signer whose email source is Given with each request. Works for every data source, including requests with a record ID. The request fails before anything is generated when a signer number does not exist, a signer is listed twice, an email is invalid, or the automation has no signing or acceptance step. Nothing is saved on the automation.",
+                    "items": {
+                      "type": "object",
+                      "required": ["email"],
+                      "properties": {
+                        "signer": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "description": "The signer's number in the automation. For signing it matches the number in the template tags, for example 1 in {{esign.signature_1}}. For acceptance it is the position in the Recipients list."
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Optional. Without it the name set in the automation is used."
+                        }
+                      }
+                    },
+                    "example": [{ "signer": 1, "email": "anna@acme.com", "name": "Anna Weber" }]
                   }
                 }
               },
@@ -1501,6 +1525,33 @@
           "lastPreviewPdf": {
             "type": "string",
             "format": "uri"
+          },
+          "esignature": {
+            "type": "object",
+            "description": "The automation's signing or acceptance step.",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "closeType": { "type": "string", "enum": ["signature", "acceptance"] },
+              "recipientCount": { "type": "integer" },
+              "signers": {
+                "type": "array",
+                "description": "Each signer as saved. `signer` is the number that `recipients[].signer` uses in a document request.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "signer": { "type": "integer" },
+                    "role": { "type": "string", "nullable": true },
+                    "emailSource": {
+                      "type": "string",
+                      "enum": ["static", "placeholder", "request"],
+                      "description": "static: a fixed address. placeholder: read from a field or placeholder. request: given with each request in `recipients`."
+                    },
+                    "email": { "type": "string", "nullable": true, "description": "The fixed address, or the field or placeholder it reads. Null for request." },
+                    "name": { "type": "string", "nullable": true }
+                  }
+                }
+              }
+            }
           }
         }
       },

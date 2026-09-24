@@ -44,7 +44,7 @@ POST https://api.docsautomator.co/createDocument
 
   A listed signer's email and name replace the saved ones for this document only. Signers you leave out keep their saved setup, and nothing is saved on the automation. The automation decides how many signers there are, so `recipients` never adds a signer. You can leave out `signer` when the automation has exactly one signer. With two or more signers, every entry needs it.
 
-  In the automation's Signing & Acceptance settings, a signer's email can be set to **Given with each request**. Every request must then name that signer in `recipients`, or it fails with "Signer 1 needs an email: pass it in recipients".
+  In the automation's Signing & Acceptance settings, a signer's email can be set to **Given with each request**. This option is available for API and MCP automations and automations without a data source. Every request must then name that signer in `recipients`, or it fails with "Signer 1 needs an email: pass it in recipients".
 
   The request fails before anything is generated when a signer number does not exist, the same signer is listed twice, an email is invalid, or the automation has no signing or acceptance step.
 

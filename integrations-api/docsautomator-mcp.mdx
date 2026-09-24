@@ -247,7 +247,8 @@ In-flight signing sessions snapshot their email config at creation time, so edit
 A signer's `emailSource` is `static` (a fixed address), `placeholder` (a field of the record, or a placeholder that exists in the template), or `request` (Given with each request). Every `create_document` call must then name that signer in `recipients`.
 
 When the assistant sets up signing or acceptance, it follows these defaults:
-- On API, MCP, Zapier, Make, n8n, Glide and Noloco automations, every signer is set to `request`.
+- On API and MCP automations, and automations without a data source, every signer is set to `request`.
+- On Zapier, Make, n8n, Glide and Noloco automations, the signer uses a template placeholder. `request` is not available there yet, because their apps do not send recipients with each run.
 - On Airtable, Notion, Google Sheets, SmartSuite, ClickUp and Google Forms automations, the signer points at the record's email field. `request` is not available there, because their triggers run without anyone naming a recipient.
 - Whenever the assistant sends a document with signing or acceptance, it passes `recipients`, on every data source.
 

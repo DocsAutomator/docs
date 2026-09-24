@@ -195,11 +195,20 @@ Generate a document from an automation.
 - `rowNumber` - Row number for Google Sheets data source
 - `documentName` - Custom name for the generated document
 - `async` - If true, returns immediately with a job ID
+- `recipients` - Who signs or accepts this document, for example `[{ "signer": 1, "email": "anna@acme.com", "name": "Anna Weber" }]`
+- `isPreview` - If true, runs in test mode
+- `skipEsign` - If true, generates the document without starting signing or acceptance
 
 **E-Signatures:** If the automation has e-signing enabled, creating a document automatically starts the signing workflow. The response includes signing session details and signing links.
 
-**Example prompt:**
+**Recipients named in chat:** The assistant always passes `recipients` when a document goes out for signing or acceptance. When you tell the assistant who should sign or accept ("send quote 12 to Anna at anna@acme.com"), it passes that person in `recipients`. This works for every data source, including Airtable, Notion, Google Sheets, SmartSuite and ClickUp automations called with a record ID, and you do not need a second automation to send from chat. A listed signer's email and name replace the saved ones for that one document; the automation itself does not change. `signer` is the signer's number from `get_automation`. It can be left out when the automation has exactly one signer and is needed when it has two or more. The automation decides how many signers there are, so `recipients` never adds one.
+
+**Test mode:** The first document of a new setup is sent in test mode. A test-mode signing or acceptance request sends the real email to the real person and is never billed.
+
+**Example prompts:**
 > "Create a document using automation abc123 with the following data: company name is 'Acme Corp', date is 'January 27, 2026'"
+>
+> "Send the quote for record rec123 to Anna Weber at anna@acme.com for acceptance."
 
 ---
 
@@ -212,7 +221,7 @@ List all automations in your workspace, including each automation's description 
 > "Show me all my DocsAutomator automations"
 
 #### `get_automation`
-Get detailed information about a specific automation, including e-signature configuration.
+Get detailed information about a specific automation, including e-signature configuration. Each signer is listed in full: its number, role, email source, the email or field it reads, and name.
 
 **Example prompt:**
 > "Get details for automation abc123"
@@ -234,6 +243,13 @@ Update the e-signature configuration of an automation: enable or disable signing
 Call `get_automation` first to see the current esignature state before editing. Arrays (signers, notificationRecipients) and field maps (fieldConfigs, esignFieldMappings) are full-replace, so send the complete value rather than a delta.
 
 In-flight signing sessions snapshot their email config at creation time, so editing an automation does NOT retroactively change sessions already sent out.
+
+A signer's `emailSource` is `static` (a fixed address), `placeholder` (a field of the record, or a placeholder that exists in the template), or `request` (Given with each request). Every `create_document` call must then name that signer in `recipients`.
+
+When the assistant sets up signing or acceptance, it follows these defaults:
+- On API, MCP, Zapier, Make, n8n, Glide and Noloco automations, every signer is set to `request`.
+- On Airtable, Notion, Google Sheets, SmartSuite, ClickUp and Google Forms automations, the signer points at the record's email field. `request` is not available there, because their triggers run without anyone naming a recipient.
+- Whenever the assistant sends a document with signing or acceptance, it passes `recipients`, on every data source.
 
 **Example prompts:**
 > "Enable e-signing on automation abc123 and set the signing language to German."

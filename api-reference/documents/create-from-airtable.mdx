@@ -20,7 +20,7 @@ POST https://api.docsautomator.co/createDocument
 ## Request Body
 
 <ParamField body="docId" type="string" required>
-  The automation ID. Find it on the automation's settings page or via `GET /automations`.
+  The automation ID. Find it on the automation's settings page or via `GET /automations`. Also accepted as `automationId`, the name the other endpoints use.
 </ParamField>
 
 <ParamField body="recId" type="string" required>
@@ -28,7 +28,7 @@ POST https://api.docsautomator.co/createDocument
 </ParamField>
 
 <ParamField body="async" type="boolean" default="false">
-  When `true`, returns immediately with a `jobId` (HTTP 202). Poll [`GET /job/{jobId}`](/api-reference/documents/get-job-status) for the result.
+  By default the request waits and returns the document (HTTP 200 with `pdfUrl`). When `true`, it returns immediately with a `jobId` (HTTP 202) instead. Poll [`GET /job/{jobId}`](/api-reference/documents/get-job-status) for the result.
 </ParamField>
 
 <ParamField body="webhookParams" type="object">

@@ -14,9 +14,15 @@ The API returns `400 Bad Request` when the request is missing required parameter
 
 **Missing automation ID:**
 ```json
-{ "message": "Please add a valid automation id with key 'docId' to the request." }
+{ "message": "Please add a valid automation id with key 'automationId' (or 'docId') to the request." }
 ```
-Include the `docId` field in your request body with your automation ID.
+Include the `automationId` field in your request body with your automation ID.
+
+**Different automation IDs in one request:**
+```json
+{ "message": "The request has both 'automationId' and 'docId' with different values. Send only 'automationId'." }
+```
+Send the automation ID once, in `automationId`. `docId` is still accepted on its own.
 
 **Invalid template override:**
 ```json
@@ -100,7 +106,7 @@ The API returns `404 Not Found` when trying to create a document or access an au
 
 | Error Message | Cause | Solution |
 |-------|-------------|----------|
-| `"Automation / template id does not exist or is not part of the account with the given API key."` | Wrong `docId` or wrong workspace | Verify the automation ID and API key match the same workspace |
+| `"Automation / template id does not exist or is not part of the account with the given API key."` | Wrong `automationId` or wrong workspace | Verify the automation ID and API key match the same workspace |
 | `"No Google Docs template set for the given document id."` | No template linked | Open the automation in the app and configure a Google Doc template |
 | `"Automation is not active."` | Automation is disabled | Activate the automation in the app or set `isActive: true` via the API |
 

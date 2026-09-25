@@ -56,12 +56,16 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["docId"],
+                "required": ["automationId"],
                 "properties": {
+                  "automationId": {
+                    "type": "string",
+                    "description": "The automation ID to execute.",
+                    "example": "abc123"
+                  },
                   "docId": {
                     "type": "string",
-                    "description": "The automation ID to execute. Also accepted as `automationId`.",
-                    "example": "abc123"
+                    "description": "Also accepted instead of `automationId`, so existing integrations keep working. Send only one of the two: different values in `automationId` and `docId` fail with HTTP 400."
                   },
                   "data": {
                     "type": "object",
@@ -141,7 +145,7 @@
                 "simple": {
                   "summary": "Simple document",
                   "value": {
-                    "docId": "abc123",
+                    "automationId": "abc123",
                     "data": {
                       "customer_name": "Acme Corp",
                       "invoice_date": "2025-01-15",
@@ -152,7 +156,7 @@
                 "withLineItems": {
                   "summary": "With line items",
                   "value": {
-                    "docId": "abc123",
+                    "automationId": "abc123",
                     "documentName": "Invoice #001",
                     "data": {
                       "customer_name": "Acme Corp",
@@ -177,7 +181,7 @@
                 "nestedLineItems": {
                   "summary": "Nested line items",
                   "value": {
-                    "docId": "abc123",
+                    "automationId": "abc123",
                     "data": {
                       "project_name": "Website Redesign",
                       "line_items_1": [
@@ -203,7 +207,7 @@
                 "async": {
                   "summary": "Async mode",
                   "value": {
-                    "docId": "abc123",
+                    "automationId": "abc123",
                     "async": true,
                     "data": {
                       "customer_name": "Acme Corp"
@@ -213,7 +217,7 @@
                 "withWebhook": {
                   "summary": "With webhook params",
                   "value": {
-                    "docId": "abc123",
+                    "automationId": "abc123",
                     "data": {
                       "customer_name": "Acme Corp",
                       "contract_date": "2025-01-15"
@@ -227,7 +231,7 @@
                 "withMergedPdfs": {
                   "summary": "With merged PDFs",
                   "value": {
-                    "docId": "abc123",
+                    "automationId": "abc123",
                     "data": {
                       "customer_name": "Acme Corp",
                       "proposal_date": "2025-01-15"
@@ -241,7 +245,7 @@
                 "withTemplateOverride": {
                   "summary": "With template override",
                   "value": {
-                    "docId": "abc123",
+                    "automationId": "abc123",
                     "data": {
                       "customer_name": "Acme Corp",
                       "total": "$1,500.00"

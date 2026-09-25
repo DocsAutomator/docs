@@ -50,7 +50,7 @@ Create your first document in three steps:
       -H "Authorization: Bearer YOUR_API_KEY" \
       -H "Content-Type: application/json" \
       -d '{
-        "docId": "YOUR_AUTOMATION_ID",
+        "automationId": "YOUR_AUTOMATION_ID",
         "data": {
           "customer_name": "Acme Corp",
           "invoice_date": "2025-01-15",
@@ -67,7 +67,7 @@ Create your first document in three steps:
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        docId: "YOUR_AUTOMATION_ID",
+        automationId: "YOUR_AUTOMATION_ID",
         data: {
           customer_name: "Acme Corp",
           invoice_date: "2025-01-15",
@@ -90,7 +90,7 @@ Create your first document in three steps:
             "Content-Type": "application/json",
         },
         json={
-            "docId": "YOUR_AUTOMATION_ID",
+            "automationId": "YOUR_AUTOMATION_ID",
             "data": {
                 "customer_name": "Acme Corp",
                 "invoice_date": "2025-01-15",
@@ -114,7 +114,7 @@ By default, `POST /createDocument` runs synchronously and waits for the document
 
 ```json
 {
-  "docId": "abc123",
+  "automationId": "abc123",
   "data": { "name": "Acme Corp" }
 }
 ```
@@ -125,7 +125,7 @@ Returns `200` with the PDF URL when complete.
 
 ```json
 {
-  "docId": "abc123",
+  "automationId": "abc123",
   "async": true,
   "data": { "name": "Acme Corp" }
 }

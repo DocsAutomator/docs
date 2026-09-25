@@ -19,8 +19,8 @@ POST https://api.docsautomator.co/createDocument
 
 ## Request Body
 
-<ParamField body="docId" type="string" required>
-  The automation ID. Find it on the automation's settings page or via `GET /automations`. Also accepted as `automationId`, the name the other endpoints use.
+<ParamField body="automationId" type="string" required>
+  The automation ID. Find it on the automation's settings page or via `GET /automations`. `docId` is also accepted, so existing integrations keep working. Send only one of the two: a request with different values in `automationId` and `docId` fails with HTTP 400.
 </ParamField>
 
 <ParamField body="recId" type="string" required>
@@ -72,7 +72,7 @@ curl -X POST https://api.docsautomator.co/createDocument \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "docId": "YOUR_AUTOMATION_ID",
+    "automationId": "YOUR_AUTOMATION_ID",
     "recId": "YOUR_SMARTSUITE_RECORD_ID"
   }'
 ```
@@ -85,7 +85,7 @@ const response = await fetch("https://api.docsautomator.co/createDocument", {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    docId: "YOUR_AUTOMATION_ID",
+    automationId: "YOUR_AUTOMATION_ID",
     recId: "YOUR_SMARTSUITE_RECORD_ID",
   }),
 });
@@ -104,7 +104,7 @@ response = requests.post(
         "Content-Type": "application/json",
     },
     json={
-        "docId": "YOUR_AUTOMATION_ID",
+        "automationId": "YOUR_AUTOMATION_ID",
         "recId": "YOUR_SMARTSUITE_RECORD_ID",
     },
 )

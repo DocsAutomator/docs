@@ -17,11 +17,43 @@ The Model Context Protocol (MCP) is an open standard that allows AI assistants t
 - View and manage e-signature sessions
 - Extract placeholders from templates, with per-placeholder descriptions for AI clients
 
-## Quick Start
+## Quick start: your first quote, accepted
 
-**MCP Server URL:** `https://mcp.docsautomator.co/mcp`
+In about two minutes your AI agent makes a quote in your brand and sends it to you for acceptance. You accept it on your phone and see the accepted PDF in DocsAutomator.
 
-**API Key:** Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api)
+**MCP server URL:** `https://mcp.docsautomator.co/mcp`
+
+<Steps>
+  <Step title="Add DocsAutomator to your AI app">
+    - **Claude:** Settings → Connectors → Add custom connector. Enter the server URL and sign in to DocsAutomator.
+    - **ChatGPT:** turn on developer mode (Settings → Security and login), then add a connector with the server URL and sign in.
+    - **Cursor:** [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9)
+    - **VS Code:** [Add to VS Code](vscode:mcp/install?%7B%22name%22%3A%22docsautomator%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.docsautomator.co%2Fmcp%22%7D)
+    - **Claude Code:** `claude mcp add --transport http docsautomator https://mcp.docsautomator.co/mcp`
+
+    For Claude and Claude Code, the [DocsAutomator skill](https://github.com/DocsAutomator/docsautomator-mcp) gives your agent these steps.
+  </Step>
+  <Step title="Paste this prompt">
+    ```
+    Make a quote in the style of https://your-website.com and send it to me at you@example.com for acceptance. Use DocsAutomator and send it in test mode.
+    ```
+    No website? Use this one. Your agent then starts from a quote in the template gallery:
+    ```
+    Make a quote and send it to me at you@example.com for acceptance. Use DocsAutomator and send it in test mode.
+    ```
+    The first send runs in test mode. It is free and sends the real email.
+  </Step>
+  <Step title="Accept it on your phone">
+    Open the email, check the quote, type your name and tap **Accept**. You are done when the quote shows as accepted under [Documents](https://app.docsautomator.co/documents), with the accepted PDF.
+  </Step>
+</Steps>
+
+**Next steps.** Ask your agent to:
+- send the quote to a real client (the same send without test mode; a real acceptance costs $0.50 per document, charged when the recipient first opens it),
+- make the quote from your Airtable base,
+- use your own Word template.
+
+**API key (optional):** clients that do not support sign-in can use an API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
 
 ---
 

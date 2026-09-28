@@ -9,22 +9,23 @@ DocsAutomator allows you to configure how long generated PDFs are retained in th
 ## Default Behavior
 
 <Note>
-For privacy reasons, DocsAutomator deletes PDFs soon after generation by default. The default setting is "immediate expiry," meaning PDFs are automatically removed shortly after they're created.
+By default, DocsAutomator keeps generated PDFs until you delete them. You can set each automation to delete its PDFs automatically, from about 5 minutes up to 1 year after they are created.
 </Note>
 
 ## When Storage Matters
 
-For most integrations—such as Airtable and Glide—storing PDFs within DocsAutomator is typically unnecessary. The platform automatically places a copy of the generated PDF into your connected data source immediately after creation.
+For most integrations, such as Airtable and Glide, DocsAutomator places a copy of the generated PDF in your connected data source right after it is created. If you only need that copy, you can set a short expiry.
 
 ## Adjusting Retention Settings
 
-If you need to extend PDF retention, you can modify the expiration setting on each automation in the automation settings interface.
+To change how long PDFs are kept, change the expiration setting on each automation in the automation settings.
 
 ### Available Options
 
 | Option | Description |
 |--------|-------------|
-| Immediate | PDFs deleted shortly after generation (default) |
+| No expiration | PDFs kept until you delete them (default) |
+| Immediate | PDFs deleted about 5 minutes after generation |
 | 1 Day | PDFs retained for 24 hours |
 | 3 Days | PDFs retained for three days |
 | 7 Days (1 Week) | PDFs retained for one week |
@@ -33,7 +34,6 @@ If you need to extend PDF retention, you can modify the expiration setting on ea
 | 3 Months | PDFs retained for three months |
 | 6 Months | PDFs retained for six months |
 | 1 Year | PDFs retained for one year |
-| Never | PDFs retained indefinitely |
 
 ## Use Cases for Extended Storage
 
@@ -48,7 +48,7 @@ If you need to extend PDF retention, you can modify the expiration setting on ea
     Compliance or audit requirements necessitating retention
   </Card>
   <Card title="eSign Documents" icon="signature">
-    eSign-enabled automations automatically set to "Never" expire
+    eSign-enabled automations are automatically set to "No expiration"
   </Card>
 </CardGroup>
 
@@ -70,5 +70,5 @@ If you need to extend PDF retention, you can modify the expiration setting on ea
 </Steps>
 
 <Info>
-For [eSign-enabled automations](/features/docsautomator-esign), PDF expiration is automatically set to "Never" to ensure legal validity and compliance.
+For [eSign-enabled automations](/features/docsautomator-esign), PDF expiration is automatically set to "No expiration", so the signed copy stays available as proof. Signing and acceptance records and audit trails are kept for 10 years after the signing session.
 </Info>

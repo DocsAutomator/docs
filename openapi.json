@@ -582,7 +582,7 @@
                     "type": "string",
                     "nullable": true,
                     "enum": ["never", "immediate", "oneday", "threedays", "oneweek", "twoweeks", "onemonth", "threemonths", "sixmonths", "oneyear"],
-                    "description": "PDF expiration period. `never` means PDFs never expire, `immediate` means they expire right away, and other values set the expiration window."
+                    "description": "PDF expiration period. `never` (the default) keeps PDFs until you delete them, `immediate` deletes them about 5 minutes after generation, and other values set the expiration window."
                   },
                   "imageOptions": {
                     "type": "object",

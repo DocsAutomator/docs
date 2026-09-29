@@ -1,20 +1,21 @@
 ---
 title: "Signing & Acceptance"
 sidebarTitle: "Overview"
-description: "Complete a generated document with an e-signature, a one-click acceptance, or nothing"
+description: "Close a generated document with an e-signature or a one-click acceptance"
 icon: "signature"
 keywords: ["electronic signatures", "e-signatures", "acceptance", "click to accept", "document signing", "legally binding", "ESIGN Act", "eIDAS"]
 ---
 
-Every automation decides **how it completes**: what happens after DocsAutomator generates the document. You choose one of three options in the **Signing & Acceptance** card of the automation, under **How it completes**.
+A generated document closes in one of two ways: the recipient signs it, or the recipient accepts it. You choose the closing step in the **Signing & Acceptance** card of the automation, under **How it completes**.
 
 | How it completes | What the recipient does | Use it for |
 |------------------|-------------------------|------------|
 | **Signature required** | Opens the document, fills the signature fields from your template, and clicks Complete | Contracts and agreements where the other side expects to sign |
 | **Acceptance** | Opens the document, reads it, and clicks **Accept**. No signature fields are needed | Quotes, offers, purchase orders, policy sign-offs, and HR acknowledgments |
-| **None** | Nothing. The document is delivered as it is | Invoices, reports, certificates, and any document that needs no reply |
 
 **If the other side expects to sign, use Signing. If you only need their yes, use Acceptance.**
+
+An automation can also have no closing step. Then the document is delivered as it is, with no signing or acceptance request. This suits invoices, reports, certificates, and any document that needs no reply.
 
 Signature and acceptance run on the same rail. Both send the document by email or by link, both send reminders, both come back as a sealed PDF with a certificate on the last page, and both cost the same. The difference is what the recipient must do. A signature asks for fields in the document. An acceptance asks for one click on the whole document.
 
@@ -76,7 +77,7 @@ Tags at the standard body text size (11pt) or smaller render at the default size
 
 ## Choosing How it Completes
 
-Open the **Signing & Acceptance** card of your automation. Under **How it completes**, pick **Signature required**, **Acceptance**, or **None**. While the choice is **None**, the card shows only the choice, and generated documents are delivered without a signing or acceptance request.
+Open the **Signing & Acceptance** card of your automation. Under **How it completes**, pick **Signature required** or **Acceptance**. Pick **No closing step** to turn the closing step off. While no closing step is set, the card shows only the choice, and generated documents are delivered without a signing or acceptance request.
 
 - Adding `{{esign.*}}` tags to the template does not change the choice. Removing them does not change it either.
 - When the template has signing tags but the choice is **Acceptance**, the tags are left blank in the document. The card tells you so.

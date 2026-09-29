@@ -11,7 +11,7 @@ Some documents need a signature. Most quotes, offers, and sign-offs do not. They
 DocsAutomator generates the document from your data and sends it to the recipient. The recipient opens it, reads it, and clicks **Accept**. There is no account to create and no signature to draw. You get the PDF back with a Certificate of Acceptance on the last page, saved where your signed documents go today.
 
 <Frame caption="The How it completes choice in the Signing & Acceptance card, with Acceptance selected">
-  <img src="/images/esign/acceptance-closing-choice.png" alt="The Signing & Acceptance card of an automation. Under How it completes, the three options Signature required, Acceptance, and None are shown, with Acceptance selected." />
+  <img src="/images/esign/acceptance-closing-choice.png" alt="The Signing & Acceptance card of an automation. Under How it completes, the two closing steps Signature required and Acceptance are shown next to No closing step, with Acceptance selected." />
 </Frame>
 
 ## Signature or acceptance?
@@ -73,7 +73,7 @@ The acceptance settings live in the `esignature` object of the automation. The s
 | `esignature.closeType` | `signature`, `acceptance` | `signature` | How the document completes when `enabled` is `true` |
 | `esignature.acceptanceRequireName` | `true`, `false` | `true` | Acceptance only. The recipient must type their name before accepting |
 
-The three **How it completes** choices in the app map to these fields: **Signature required** is `enabled: true` with `closeType: "signature"`, **Acceptance** is `enabled: true` with `closeType: "acceptance"`, and **None** is `enabled: false`.
+The two closing steps in the app map to these fields: **Signature required** is `enabled: true` with `closeType: "signature"`, and **Acceptance** is `enabled: true` with `closeType: "acceptance"`. An automation with no closing step has `enabled: false`.
 
 ## What the recipient sees
 

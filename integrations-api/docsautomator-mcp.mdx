@@ -27,7 +27,7 @@ In about two minutes your AI agent makes a quote in your brand and sends it to y
   <Step title="Add DocsAutomator to your AI app">
     - **Claude:** Settings → Connectors → Add custom connector. Enter the server URL and sign in to DocsAutomator.
     - **ChatGPT:** turn on developer mode (Settings → Security and login), then add a connector with the server URL and sign in.
-    - **Cursor:** [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9)
+    - **Cursor:** click <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9"><img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Add DocsAutomator MCP server to Cursor" height="32" style={{ display: "inline", verticalAlign: "middle" }} /></a>, then Install and Connect, and sign in to DocsAutomator.
     - **VS Code:** [Add to VS Code](vscode:mcp/install?%7B%22name%22%3A%22docsautomator%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.docsautomator.co%2Fmcp%22%7D)
     - **Claude Code:** `claude mcp add --transport http docsautomator https://mcp.docsautomator.co/mcp`
 
@@ -63,7 +63,7 @@ If your DocsAutomator account belongs to more than one workspace and you connect
 
 To change which workspace an existing connection points at, disconnect the integration in your AI client and reconnect. That triggers a fresh OAuth flow and lets you pick a different workspace.
 
-API key connections (Claude Code CLI, Cursor, custom clients) are bound to the workspace of the key itself, so no picker is involved; switch workspaces by using a different API key.
+API key connections (the Claude Code CLI with an API key, custom clients) are bound to the workspace of the key itself, so no picker is involved; switch workspaces by using a different API key.
 
 ---
 
@@ -141,16 +141,27 @@ Once connected, you can ask ChatGPT to generate documents, manage automations, h
 
 ### Cursor
 
-1. Open Cursor Settings (`Cmd/Ctrl + ,`)
-2. Navigate to **Features** → **MCP Servers**
-3. Click **Add Server**
-4. Configure:
-   - **Name:** DocsAutomator
-   - **URL:** `https://mcp.docsautomator.co/mcp`
-   - **Authentication:** Bearer Token
-   - **Token:** Your DocsAutomator API key
+<a href="cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9"><img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Add DocsAutomator MCP server to Cursor" height="32" /></a>
 
-Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
+1. Click **Add to Cursor** above. Cursor opens and shows the DocsAutomator server.
+2. Click **Install**, then **Connect**.
+3. Sign in to DocsAutomator and click **Authorize**. If your account has more than one workspace, pick the workspace here.
+
+#### Alternative: Manual configuration
+
+Add DocsAutomator to `.cursor/mcp.json` in your project, or to `~/.cursor/mcp.json` to use it in every project:
+
+```json
+{
+  "mcpServers": {
+    "docsautomator": {
+      "url": "https://mcp.docsautomator.co/mcp"
+    }
+  }
+}
+```
+
+Cursor asks you to sign in to DocsAutomator the first time it connects. To use an API key instead, add `"headers": { "Authorization": "Bearer YOUR_API_KEY" }` next to `url`, with your key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
 
 ---
 

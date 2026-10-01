@@ -65,13 +65,17 @@ Toggle **Save to OneDrive?** to also upload a copy of the `.docx` to a Microsoft
   </Step>
 </Steps>
 
+### Save to Dropbox
+
+Toggle **Save to Dropbox?** to also upload a copy of the `.docx` to a Dropbox folder. Connect a Dropbox account, browse to the folder, and optionally set a dynamic subfolder, exactly like [Save PDFs in Dropbox](/features/actions-after-document-generation/save-pdfs-in-dropbox).
+
 <Note>
-Google Drive and OneDrive are independent toggles, so you can keep the `.docx` in either, both, or neither.
+Google Drive, OneDrive and Dropbox are independent toggles, so you can keep the `.docx` in any of them, several, or none.
 </Note>
 
 ## API Integration
 
-When you generate via the API, the response includes a `wordFileUrl` key with a link to the generated Word file, alongside the usual `pdfUrl`. If the OneDrive copy is enabled, the response also includes `saveWordOneDriveUrl` (plus `saveWordOneDriveFileId` and `saveWordOneDriveFolderId`).
+When you generate via the API, the response includes a `wordFileUrl` key with a link to the generated Word file, alongside the usual `pdfUrl`. If the OneDrive copy is enabled, the response also includes `saveWordOneDriveUrl` (plus `saveWordOneDriveFileId` and `saveWordOneDriveFolderId`). If the Dropbox copy is enabled, it includes `saveWordDropboxUrl` and `saveWordDropboxPath`.
 
 ```json
 {

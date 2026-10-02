@@ -1,89 +1,129 @@
 ---
 title: "AI Template Generator"
-description: "Generate professional Google Doc and Word templates from a text description using AI"
+description: "Design a Word template from a short description, in one of five document styles"
 icon: "wand-magic-sparkles"
 ---
 
 <Info>
-This feature is currently in **Beta**. We'd love your feedback — use the feedback button in the AI editor to share your thoughts.
+This feature is in **Beta**. Use **Send Feedback** in the AI editor to tell us what works and what does not.
 </Info>
 
-The AI Template Generator creates professional templates from natural language descriptions. Instead of manually building templates, describe what you need and AI generates a fully-formatted, ready-to-use template with the correct DocsAutomator placeholder syntax. It can produce either a **Google Doc** or a native **Word (.docx)** template, and the dialog tells you which format it is about to design.
-
-<iframe
-  width="100%"
-  height="400"
-  src="https://www.youtube.com/embed/TUC8OSFlpJ8"
-  title="AI Template Generator for Google Docs"
-  frameBorder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowFullScreen
-></iframe>
+The AI Template Generator designs a Word (.docx) template from a short description. You describe the document, and the AI builds a finished layout with DocsAutomator placeholders in the right places. You can then refine it in a chat, save it to your automation and map your data to it.
 
 ## How It Works
 
 <Steps>
   <Step title="Select Create template with AI">
-    When your automation has no template yet, the template area shows three cards: **Create template with AI**, **Browse templates**, and **Start from scratch**, plus a drop zone for uploading a file. Select **Create template with AI**.
+    When your automation has no template yet, the template area shows three cards: **Create template with AI**, **Browse templates** and **Start from scratch**, plus a drop zone for uploading a file. Select **Create template with AI**.
 
     <Frame>
-      <img src="/images/ai-template-generator/template-design-step.png" alt="Template area with Create template with AI as the first option" />
+      <img src="/images/ai-template-generator/template-design-step.png" alt="Template area with the cards Create template with AI, Browse templates and Start from scratch above a drop zone for files" />
     </Frame>
   </Step>
   <Step title="Describe your template">
-    Write a description of the template you need. For example: "Professional invoice with company logo, billing details, line items table, tax summary, and payment terms." You can also click one of the example prompts to get started quickly.
+    In **Design a Word template with AI**, describe the document you need. For example: "Quote for a landscaping company with client details, a line items table with quantity and unit price, subtotal, tax, total and a validity date." You can also click one of the example prompts.
 
-    Optionally, set a **document title**, upload your **logo** (brand colors are extracted automatically), and pick a **color theme**.
+    These fields are optional:
+
+    - **Document title:** the AI suggests one from your description.
+    - **Logo:** your logo goes into the header, and its colors become the brand color of the template.
+    - **Recreate a document:** upload a blank or sample version of a document you already use (an image or a PDF). The AI rebuilds it as a template.
+    - **Page:** A4, US Letter or Legal, in portrait or landscape.
 
     <Frame>
-      <img src="/images/ai-template-generator/ai-generator-dialog.png" alt="Design a Word template with AI dialog: a filled-in description, example prompts, document title, logo upload and a design style gallery" />
+      <img src="/images/ai-template-generator/ai-generator-dialog.png" alt="Design a Word template with AI dialog with a description of a landscaping quote, example prompts, document title, logo upload, Recreate a document and the page size" />
     </Frame>
   </Step>
   <Step title="Generate">
-    Click **Generate Template**. AI creates a complete template with proper placeholder syntax, formatting, and layout, in the format shown in the dialog title.
+    Click **Generate Template**. The AI designs the template in the document style that fits your document. It usually takes less than a minute.
   </Step>
-  <Step title="Refine with AI chat">
-    After generation, use the chat editor to make changes. Send instructions like "Make the header blue", "Add a footer with page numbers", or "Add an e-signature block for two signers". Each edit updates the template in real time.
+  <Step title="Refine with the chat">
+    The template opens with a chat on the left and a preview on the right. Send instructions such as "Add a column for the discount", "Move the validity date under the total" or "Add an e-signature block for two signers". Each change updates the preview.
+
+    <Frame>
+      <img src="/images/ai-template-generator/ai-editor.png" alt="AI editor with the chat on the left and the generated landscaping quote template with placeholders on the right" />
+    </Frame>
   </Step>
-  <Step title="Done">
-    Click **Done Editing** to save the template and continue setting up your automation.
+  <Step title="Save">
+    Click **Save & Continue** to save the template to your automation. Then map your data to the placeholders.
   </Step>
 </Steps>
 
+## Document Styles
+
+Every template comes out in one of five document styles. The AI picks the style from the type of document you describe, so you do not choose one.
+
+| Style | Documents |
+|-------|-----------|
+| Ledger | Quotes, estimates, invoices, orders, work orders and change orders |
+| Counsel | Contracts, NDAs, engagement letters, leases, forms and policies |
+| Studio | Proposals, statements of work and reports |
+| Letter | Letters and notices |
+| Certificate | Certificates and awards |
+
+All five styles follow the same rules: one accent color used sparingly, a fixed set of text sizes, quiet headings and a footer on every page.
+
+- **Your brand color** replaces the accent color of the style. Fonts, sizes and spacing stay the same.
+- **A recreated document** keeps the look of the document you uploaded instead of a style.
+- **Templates you made earlier** keep their look, also when you edit them.
+
+<CardGroup cols={2}>
+  <Card title="Ledger" img="/images/ai-template-generator/style-ledger.png">
+    A quote with a line items table and the grand total in the accent color.
+  </Card>
+  <Card title="Counsel" img="/images/ai-template-generator/style-counsel.png">
+    A consulting agreement with the parties, key terms and numbered clauses.
+  </Card>
+  <Card title="Studio" img="/images/ai-template-generator/style-studio.png">
+    A project proposal with a summary, the scope of work and a budget table.
+  </Card>
+  <Card title="Letter" img="/images/ai-template-generator/style-letter.png">
+    A notice to a tenant with the sender, the recipient and the key facts.
+  </Card>
+  <Card title="Certificate" img="/images/ai-template-generator/style-certificate.png">
+    A certificate of completion with the participant's name in large type.
+  </Card>
+</CardGroup>
+
+### A Different Look
+
+The template designer has no style picker. To get another look, tell the [AI Agent](/features/docsautomator-ai-agent), for example "Use the Counsel style for this template". The agent then designs the template again in the style you ask for.
+
+## Templates, Not Filled Documents
+
+The AI designs a template: a document with placeholders such as `{{client_name}}` or `{{total}}`, which DocsAutomator fills with new data on every run. It never fills the template with the data of one client or one record.
+
+- Text that is the same in every document stays in the template, for example your company details, standard terms and your signature block.
+- Everything that changes from one document to the next becomes a placeholder, for example the client, the items, the amounts and the dates.
+- When you paste a finished document into the AI Agent, the agent builds a template from it. The values you pasted become the sample data of the preview.
+- The AI Agent also stores what each placeholder means and how its value prints, for example a currency or a date format. See [Format Values](/features/advanced-placeholder-options/format-values).
+
 ## Features
 
-### Logo & Brand Colors
+### Logo and Brand Colors
 
-Upload your company logo and AI automatically extracts the dominant colors to apply consistent branding throughout the template.
+Upload your company logo, and the AI places it in the header. It reads the colors of the logo and uses the main color as the accent color of the template.
 
-### Color Themes
+### Recreate a Document
 
-Choose a color theme for your template:
-
-| Color Theme | Best for |
-|-------------|----------|
-| Professional | Business documents, invoices, contracts |
-| Modern | Clean, contemporary designs with teal tones |
-| Classic | Traditional documents with neutral, warm accents |
-| Creative | Bold, vibrant designs with purple accents |
-| Minimal | Simple black and gray palette |
+Upload a blank or sample version of a document you already use, as an image or a PDF. The AI copies its layout and look and turns the variable parts into placeholders. Use a blank or sample version, not a document that holds real customer data.
 
 ### AI Chat Editor
 
-After generating your template, refine it with natural language instructions:
+After the AI has generated your template, refine it with plain instructions:
 
-- Change colors, fonts, and layout
+- Change the text, the layout or the colors
 - Add or remove sections
-- Insert placeholder fields, line items, or e-signature blocks
-- Upload additional images to include in the template
+- Add placeholders, line items or e-signature blocks
+- Add images to the template
 
 ### Undo
 
-Made a change you don't like? Click **Undo** in the chat editor to revert to the previous version.
+Do not like a change? Click **Undo this change** under the last message in the chat to go back to the previous version. You can undo several changes in a row.
 
 ## Tips
 
-- **Be specific**: The more detail you provide in your description, the better the result. Mention specific sections, fields, and formatting preferences.
-- **Include field names**: If you know what data fields you'll be mapping, mention them in the prompt. For example, "include fields for client_name, invoice_number, and due_date."
-- **Iterate with chat**: Don't try to get everything perfect in the first prompt. Generate a base template, then refine it with follow-up instructions.
-- **Upload your logo first**: This helps AI apply your brand colors from the start rather than having to restyle later.
+- **Name the document type first:** "Quote for ...", "Contract between ..." or "Certificate of ...". The first words decide the style.
+- **Name your fields:** if you know which data you will map, mention the fields. For example: "include fields for client_name, invoice_number and due_date".
+- **Refine in the chat:** start with a simple description, then add details with follow-up instructions.
+- **Upload your logo first:** the AI then uses your brand color from the start.

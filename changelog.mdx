@@ -5,6 +5,192 @@ rss: true
 mode: "center"
 ---
 
+<Update label="October 2, 2026">
+  ## AI Agent: a template, not a filled document
+
+  When you paste a finished document into the AI Agent, it now builds a template from it. Text that is the same in every document stays in the template, for example your company details, standard terms and your signature block. Everything about one case becomes a placeholder, for example the client, the items, the amounts and the dates. The values you pasted become the sample data of the preview.
+
+  After the preview, the agent asks **Do you need this once, or regularly?**
+
+  - **Regularly:** the setup continues with your data source.
+  - **Once:** the agent tells you that DocsAutomator is built for documents that you make again and again from data, and that a word processor or a chat assistant is faster for a single document. The template stays in your automation.
+
+  Two more AI Agent fixes:
+
+  - In Softr, Zapier, Make, n8n and Noloco you select the automation from a list. The agent and the Softr setup guide now say so and give the real steps. Before, they told you to paste the automation ID.
+  - A reply is no longer lost when a second account signs in to the same browser tab.
+
+  ## MCP server: 18 tools
+
+  The DocsAutomator MCP server now has 18 tools instead of 48. Each tool covers what several old tools did, so AI clients pick the right tool faster, and every tool fits into the ChatGPT desktop app. A client that calls a retired tool gets an answer that names the new tool. See [Available Tools](/integrations-api/docsautomator-mcp#available-tools).
+
+  - ChatGPT can now save placeholder descriptions and field mappings. Before, it received a tool definition that allowed only empty values.
+  - Before an AI client creates an automation, it checks your existing automations and asks whether to use one of them.
+  - When an AI client changes the format of a placeholder, it is told to update the placeholder's description to match.
+
+  ## Fixes
+
+  - Images taller than the page are no longer cut off. DocsAutomator shrinks them to fit the page and keeps their proportions. This works in Google Doc and Word templates, and in Google Doc templates also in line items and repeating sections. Images that fit do not change. See [Dynamic Images](/features/dynamic-images).
+  - PDF templates: on preview documents, e-sign fields now sit where you placed them in the PDF editor. Before, the signature and the date landed about 1 cm lower. Live documents were not affected.
+  - PDF editor: a new field gets a number one higher than the highest field of its type. Before, a gap such as `text_1`, `text_2`, `text_5` could give the new field the name of an existing field, and both fields showed the same value.
+  - PDF editor: new e-sign text fields and checkboxes get a label, for example `field_1`. Before, every signing request from a template with such a field failed. See [E-Signature Fields on PDFs](/docsautomator-basics/pdf-template-guide#e-signature-fields-on-pdfs).
+  - A signer set to **Given with each request** on an automation that reads from a record source, Zapier, Make, n8n, Glide or Noloco is now marked as not ready, and the signer panel says what to change. These sources never send a recipient, so every run failed. The error of such a run now names the setting: "Open the automation's Signing & Acceptance panel and set Signer 1's email to the Airtable field that holds it."
+  - The **Format** panel shows its examples in the automation's locale and currency, for example "1.234,50 €" for a German automation in euros. Before, it always showed US examples.
+  - Airtable: when Airtable's rate limit slows a run down, the run history now shows a warning that says so. Before, these documents took longer with no explanation.
+</Update>
+
+<Update label="October 1, 2026">
+  ## New accounts start on their first automation
+
+  Signing up with an email address now takes one step: enter your email and a password, and the account exists. A confirmation email goes out at once. Every new account lands on its first automation with a welcome message from the founder, instead of a separate welcome screen. When you start from the chat box on the homepage, your request and an attached PDF or Word file come along, and the AI Agent starts with them.
+
+  Until you confirm your email address, you can generate and preview documents, but DocsAutomator holds every email to other people: document emails, test emails, signing and acceptance invitations, reminders and team invites. Switching an automation live also waits for the confirmation. Accounts created with Google or Microsoft, and invited team members, are not affected.
+
+  Welcome emails to people who signed up without a name open with "Hi there," and have no name in the subject.
+
+  ## Word template designer: five document styles
+
+  The AI template designer now picks one of five document styles from the type of document:
+
+  | Style | Documents |
+  |-------|-----------|
+  | Ledger | Quotes, estimates, invoices, orders, work orders and change orders |
+  | Counsel | Contracts, NDAs, engagement letters, leases, forms and policies |
+  | Studio | Proposals, statements of work and reports |
+  | Letter | Letters and notices |
+  | Certificate | Certificates and awards |
+
+  Your brand colour replaces the accent colour of the style. The style gallery and **Surprise me** are gone from the form. The form keeps **Recreate a document**, the brand colours and the paper size. See [AI Template Generator](/features/ai-template-generator).
+
+  Fixes in the designer:
+
+  - The large total on a quote shows the grand total. Before, a quote that ended with a deposit line could show the deposit.
+  - Description columns get the width they need. Before, columns with short values such as row numbers took space from the description.
+  - PDFs from Word templates use real bold and italic fonts for every font family the designer uses, such as Inter, Roboto, Lora and Playfair Display. Before, bold was a thickened regular weight, and Space Grotesk printed too light.
+
+  ## Document and signing cards in ChatGPT and Claude
+
+  When an AI client makes a document through the MCP server, ChatGPT and Claude now show a document card: the first page of the PDF and buttons for the PDF, the Word file and the Google Doc. When the document went out for signing or acceptance, the card says to whom.
+
+  When you ask for the status of signing or acceptance requests, a status card lists each request and the status of every recipient (for example Signed, Accepted, Opened, Not opened or Declined). A **Send reminder** button appears for a recipient who has not finished. Test documents carry a **Test** badge on both cards.
+
+  More MCP changes:
+
+  - The ChatGPT desktop app can now sign in to DocsAutomator.
+  - New templates made through MCP are Word templates. AI clients no longer create or edit Google Docs. They can still use a Google Doc that you already have.
+  - When an AI client sets up a template, it stores what each placeholder means and how its value prints. It then sends raw values (numbers as numbers, dates as ISO dates), and DocsAutomator formats them on every run. See [Format Values](/features/advanced-placeholder-options/format-values).
+  - The tool descriptions no longer state prices. When you ask your AI client about a price, it looks it up in these docs.
+
+  ## Fixes
+
+  - Repeating sections: Airtable rich text fields keep their formatting (bold, italics, lists) in Google Doc templates. Before, they printed "[object Object]". Rich text in the nested rows of a section in Word templates is fixed too. See [Repeating Sections](/features/line-items/repeating-sections).
+  - A date with dots, such as `01.10.2026`, is always read day first. Before, a date with both parts at 12 or lower could print as 10 January. Dates with slashes keep the month-first reading.
+  - A number format no longer reads text such as `1.234` as a decimal number when the automation's locale uses a decimal comma. The value prints as it was sent.
+
+  ## New pages on the website
+
+  Twelve new pages show how to make documents from tools that DocsAutomator has no direct connection to, through Zapier, Make, n8n or an AI assistant such as Claude or ChatGPT. They cover Salesforce, SharePoint, HubSpot, QuickBooks, Smartsheet, Pipedrive, Clio, Procore, monday.com, Xero, Zoho CRM and Jobber. For example, see [Contracts from HubSpot](https://www.docsautomator.co/integrations/hubspot-contracts/).
+</Update>
+
+<Update label="September 30, 2026">
+  ## Fixes
+
+  - MCP: tools that need a connected account now say when the connection is missing. Before, an AI client could report "no bases" or "no tasks" for an Airtable, SmartSuite or ClickUp account that was not connected, and a Google Doc that could not be read gave a technical error.
+</Update>
+
+<Update label="September 29, 2026">
+  ## AI Agent: to a finished preview faster
+
+  - After every new template, the agent shows a preview of the finished document right away, with sample values when no data is connected.
+  - The agent designs a Word template at once. It no longer asks you to pick a style first. When you share a website or a logo, it uses your brand colours.
+  - Attach your logo in the chat and ask for a new template: the logo is in the first version.
+  - Attach an existing document (a PDF or images of its pages) and ask for a template like it: the designer copies the layout and the look from the pages. **Recreate a document** in the Word AI form works with PDF files again.
+  - The agent no longer creates or edits Google Doc templates. It designs new templates as Word templates and still links a Google Doc that you already have. For a change to a linked Google Doc, it tells you the exact text to change.
+  - The agent no longer replaces a Word file you uploaded, unless you ask it to.
+  - Templates for documents that are accepted, or not signed in DocsAutomator, no longer get a signature block with e-sign tags.
+
+  ## Better first drafts from the template designer
+
+  - Every placeholder you name in your request is in the template. Forms, consents, policies and recreated documents now also get a check that adds missing placeholders.
+  - The designer no longer invents terms such as a warranty period, a deadline or delivery terms. It adds a placeholder or leaves them out. It also makes no claims about legal validity.
+  - Nothing comes after the signatures, terms follow the totals, and the acceptance note stays with the text above it.
+  - Requests in German no longer fail, and the agent can now edit placeholders written in any alphabet, such as `{{Straße}}` or `{{prénom}}`.
+
+  ## Signing and acceptance
+
+  - The "Sent via DocsAutomator" line in signing and acceptance emails is translated into all nine signing languages.
+  - On phones, the header of the signing and acceptance pages shows the recipient's full name on its own row. Before, long names were cut off.
+  - After a recipient signs or accepts, the page shows the link "Start signing with DocsAutomator" in place of the old badge. White-label sessions show no link.
+  - A document closes in one of two ways: signing or acceptance. In **How it completes**, the option for an automation without either is now called **No closing step**. See [Choosing How it Completes](/features/docsautomator-esign#choosing-how-it-completes).
+
+  ## Fixes
+
+  - Word templates whose sections restart the page numbering no longer get extra blank pages in the PDF. Blank pages that you make with page breaks stay. See [Word Template Guide](/docsautomator-basics/word-template-guide).
+  - Claude and ChatGPT: when you connect DocsAutomator while you are signed out, you now come back to the consent screen after sign-in. Before, you landed on the dashboard and had to click Connect again.
+</Update>
+
+<Update label="September 28, 2026">
+  ## Signing and acceptance documents are always kept
+
+  The PDF of a document that belongs to a signing or acceptance request is never deleted now, whatever the status of the request.
+
+  - The expiry from your PDF storage settings and the cleanup of preview documents skip it.
+  - Emptying the trash keeps its PDF.
+  - **Delete PDF from storage** is hidden for these documents. **Delete forever** removes the document from the list but keeps its file and link.
+
+  See [PDF Expiration & Storage](/features/pdf-expiration-storage).
+
+  ## Location on the Certificate of Acceptance
+
+  The Certificate of Acceptance now shows the recipient's approximate location (city, region and country) under the IP address, as the signing certificate does. DocsAutomator now looks up these locations on its own servers with the DB-IP database, so signer IP addresses no longer go to an outside service. Where a location is shown, the credit "IP Geolocation by DB-IP" appears. See [The Certificate of Acceptance](/features/docsautomator-esign/acceptance#the-certificate-of-acceptance).
+
+  ## Delete AI Agent conversations
+
+  You can now delete a conversation from the **Conversations** drawer of the AI Agent. The delete removes the messages and the files you attached in that conversation. See [AI Agent](/features/docsautomator-ai-agent).
+
+  ## Word and PDF templates
+
+  - SVG images now work in Word and PDF templates, from a URL or as a data URI. DocsAutomator converts them to PNG and keeps their proportions. Before, an SVG in a Word template printed at 150 x 150 pixels, and PDF templates refused SVG links. The AI Agent's logo tools accept SVG logos too.
+  - When a Word file cannot be built, the error now names the cause. When a **Delete paragraph / row when empty** rule broke the file, the message names the field and tells you how to fix it.
+  - **Delete paragraph / row when empty** now works for a field in a layout table that also holds a nested table. Before, the run failed with a converter error. A blank line right above a deleted line now stays. See [Conditional Paragraph / Row Deletion](/features/advanced-placeholder-options/conditional-paragraph-row-deletion).
+  - The error for the automation limit now names your plan and its limit, for example "Automation limit reached (5 of 5 in use). The Professional plan includes 5 automations."
+
+  ## MCP server
+
+  - The list of automations comes in pages and can be filtered by title, so workspaces with many automations get complete answers.
+  - Signing status results no longer contain signing link tokens or signer IP addresses.
+  - When a tool needs a permission that your sign-in did not grant, the AI client asks you to authorize again.
+
+  ## Fixes
+
+  - AI Agent: undoing a template edit no longer breaks the field mapping.
+  - AI Agent: the agent no longer says that an auto-number column width or an e-sign field mapping "did not take" when the setting was saved.
+</Update>
+
+<Update label="September 25, 2026">
+  ## API: read the whole automation
+
+  `GET /automations` and `GET /automation` now return the configuration of the automation. This includes the email action, the Google Drive and OneDrive destinations, the webhook, the PDF merge and a signing summary. `GET /automation` adds the email subject, body and recipients, the field mappings, the placeholder options, the line item settings and the full signing configuration. Everything you can write with `PUT /updateAutomation`, you can now read back.
+
+  `POST /createDocument` now accepts `automationId`, the name that every other endpoint uses. `docId` still works. A request with both fields and different values is refused. See [Create documents from the API](/api-reference/documents/create-from-api).
+
+  ## AI Agent fixes
+
+  - The agent no longer writes your API key in the chat. Setup steps show `YOUR_API_KEY` and tell you where to copy the key. The **Setup Instructions** panel still shows the real key.
+  - The agent checks every save and tells you when a setting did not take.
+  - **Skip Records Conditionally** rules must name a line item placeholder of the template. The agent can no longer save a rule on a field that the template lacks, which skipped every row. The editor shows such a saved rule in red as `NAME (missing)`.
+  - The agent searches these docs before it answers a how-to question, and it writes API requests with the real field names.
+  - When you open another automation during a chat, the agent knows which automation you mean.
+  - A long reply always ends with a message to you. After two failed edits of a template in a row, the agent stops and tells you what it could not change.
+
+  ## Fixes
+
+  - Signing emails no longer greet signers with "Hello [object Object]" when the name comes from a SmartSuite full name field, an Airtable collaborator field or another field with structured values. Email addresses are read from person fields too.
+  - When no email recipient resolves, for example because the email field is empty, the run history now shows the email as not sent, with the error. Before, it showed "Sent".
+  - New document links on files.docsautomator.co use a random key that cannot be guessed. Existing links keep working.
+  - The lists of documents, runs, automations and templates shorten long values in every column. Before, long values ran into the next column. Tooltips now show above form fields.
+</Update>
+
 <Update label="September 24, 2026">
   ## Acceptance, and e-signing charged when the recipient opens the document
 
@@ -19,6 +205,21 @@ mode: "center"
   - Two days before a request expires, the sender gets an email that lists who has not finished yet.
 
   See [How e-signing and acceptance are billed](/features/docsautomator-esign#how-e-signing-and-acceptance-are-billed).
+
+  ## Italian for signing and acceptance
+
+  Italian is a new language for the signing and acceptance pages, the emails and the Certificate of Acceptance. The document viewer on these pages is now translated into every signing language. Timestamps on the Certificate of Acceptance use the language of the certificate. See [Signer Language](/features/docsautomator-esign#signer-language).
+
+  ## Recipients with each request
+
+  A document request can now name who signs or accepts that one document, with `recipients`. A listed signer's email and name replace the saved ones for this document only. For API and MCP automations and automations without a data source, a signer's email can also be set to **Given with each request** in the **Signing & Acceptance** card. See [Create documents from the API](/api-reference/documents/create-from-api).
+
+  ## Fixes
+
+  - Airtable and Notion triggers and the scheduled Google Sheets and Google Forms checks no longer start runs for automations that are switched off. Before, each such run failed with "Automation is not active".
+  - When you change or remove the data source of an automation, the triggers of the old source are switched off.
+  - Line item groups sort by date when the grouping field is a date. Before, they sorted as text, so "30.8." came after "1.9.".
+  - Signing completion emails now fill in `{{signerName}}` and `{{signerEmail}}` for each signer. Before, a body that started with "Hello {{signerName}}," sent "Hello ,".
 </Update>
 
 <Update label="September 23, 2026">

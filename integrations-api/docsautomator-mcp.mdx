@@ -170,198 +170,104 @@ Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/sett
 
 ## Available Tools
 
-The MCP server exposes the same tool set as the in-app DocsAutomator Agent — 50+ tools. The sections below describe the most used tools. Your AI client sees the full list with detailed instructions after it connects.
+The MCP server gives your AI client 18 tools. Your AI client sees each tool with its full instructions after it connects.
 
-### Build an Automation with AI
+The main path: your AI client is the data source. It reads the placeholders with `get_automation` and sends the values with `create_document`. Record sources such as Airtable or Notion are an optional second setup.
 
-These tools let an AI client build a complete automation from scratch:
+### Automations
 
 | Tool | Purpose |
 |------|---------|
-| `generate_word_template` | Create a new Word template from a prompt, with a style preset and brand colors |
-| `edit_word_template` | Edit the Word template with an instruction (layout, styling, placeholders, logo) |
-| `undo_template_edit` | Revert the last AI template change |
-| `set_google_doc_template` | Link an existing Google Doc as the template |
-| `upload_word_template` / `upload_pdf_template` | Upload an existing .docx or PDF as the template (base64) |
-| `search_template_gallery` / `use_gallery_template` | Find and apply a template from the gallery |
-| `get_data_source_structure` | Browse connected bases, tables, fields, sheets, and forms |
-| `set_data_source` | Wire a data source (including line-item tables) to the automation |
-| `set_field_mappings` | Map placeholders to source fields, validated against the live schema |
-| `get_sample_records` | Read a few sample records to verify the mapping |
-| `configure_line_items` | Grouping, sorting, auto-number column, repeating-section options |
-| `configure_conditional_logic` | Section show/hide rules and conditional rendering |
-| `configure_output` | Email, PDF-to-Drive, OneDrive, PDF merge, webhook, write-back fields |
-| `configure_esignature` | Signers, order, reminders, branding, save-to-Drive |
-| `configure_generation` | Automatic triggers: Notion and Airtable triggers, Sheets auto-polling |
-| `set_document_settings` | Document name field, locale, time zone, date format, automation description |
-| `set_placeholder_descriptions` | Per-placeholder instructions for AI clients (see below) |
-| `get_recent_runs` | Recent generations with real failure messages, for debugging |
-| `search_docs` | Search the DocsAutomator documentation |
+| `list_automations` | List your automations, with each automation's description when set |
+| `get_automation` | Read one automation: template, placeholders with their meaning and print format, data source, field mappings, output and signing settings. On request it adds the exact trigger setup for its data source, or the text of a Google Doc template |
+| `create_automation` | Create an automation, start one from another automation's template, or copy a whole automation |
+| `configure_automation` | Name, description, status (live, test, inactive or trash), document name field, locale, time zone, date format, and automatic triggers for record sources |
+
+### Templates
+
+| Tool | Purpose |
+|------|---------|
+| `generate_word_template` | Design a new Word template with AI, in your brand when you give your website |
+| `edit_word_template` | Change the Word template with an instruction (layout, styling, placeholders, logo), or undo the last AI change |
+| `set_template` | Use a gallery template, your own Word or PDF file, or a Google Doc you already have |
+| `search` | Search the DocsAutomator documentation or the template gallery |
+
+### Placeholders
+
+| Tool | Purpose |
+|------|---------|
+| `configure_placeholders` | Store what each placeholder means and how it prints (currency, decimals, dates), options such as removing an empty line, and show and hide rules for sections and placeholders |
+| `configure_line_items` | Grouping, sorting, an auto-number column, and repeating section options |
+
+### Record sources (optional)
+
+| Tool | Purpose |
+|------|---------|
+| `get_data_source` | Browse the tables and fields of a connected Airtable, Notion, Google Sheets, Google Forms, SmartSuite or ClickUp account |
+| `set_data_source` | Connect a record source (including line item tables) and map placeholders to its fields in one call, checked against the live schema |
+
+### Output and documents
+
+| Tool | Purpose |
+|------|---------|
+| `configure_output` | Email, PDF to Google Drive or OneDrive, Word and Google Doc copies, PDF merge, webhook, and write-back fields |
+| `create_document` | Make a document |
+| `get_recent_runs` | Recent runs with their real error messages, or the status of one queued document |
+
+### Acceptance and signature
+
+| Tool | Purpose |
+|------|---------|
+| `configure_esignature` | Acceptance or signature, signers, order, reminders, email copy, and where the signed PDF goes |
+| `list_esign_sessions` | List requests with their status and who has not signed or accepted yet; one request in full with its signing links and audit trail |
+| `manage_esign_session` | Remind or re-invite one recipient, or cancel a request |
 
 <Note>
-Data source connections (Airtable, Notion, Google, and the others) use OAuth and must be made once in the DocsAutomator app under **Settings → Integrations**. All other setup steps work headlessly through MCP.
+Record source accounts (Airtable, Notion, Google, and the others) use OAuth and are connected once in the DocsAutomator app under **Settings → Integrations**. When an account is not connected, the tools answer with the link to that page. All other setup steps work through MCP.
 </Note>
 
 ### Descriptions for AI Clients
 
 Two description fields help an AI client work with your automations without extra prompt engineering:
 
-- **Automation description** — a note on what the automation is for and what data it needs. Set it in the app under **Automation Settings → Description**, or via `set_document_settings`. Returned by `list_automations`, so the AI picks the right automation.
-- **Placeholder descriptions** — per-placeholder instructions (for example "Customer VAT number, format NL123456789B01"). Set them via the gear icon next to a mapping, or via `set_placeholder_descriptions`. Returned by `list_placeholders` (also on the REST API), so the AI knows what data belongs in each placeholder.
-- When an AI client generates a template with `generate_word_template`, it can pass `placeholderDescriptions` in the same call. The descriptions are saved with the template, so the map fills itself.
+- **Automation description:** a note on what the automation is for and what data it needs. Set it in the app under **Automation Settings → Description**, or with `configure_automation`. `list_automations` returns it, so the AI picks the right automation.
+- **Placeholder descriptions:** what each placeholder means and how it prints (for example "Subtotal before tax, in EUR; prints as 1.234,56 €"). Set them with the gear icon next to a mapping, or with `configure_placeholders`. `get_automation` returns them (the REST API too), so the AI knows what data belongs in each placeholder.
+
+DocsAutomator formats every value itself, so an AI client sends raw values: numbers as numbers and dates as ISO dates (2026-10-01).
 
 **Example prompt:**
 > "Describe the placeholders of automation abc123 so my CRM agent can fill them."
 
+### Make a document
 
-### Document Generation
+`create_document` parameters:
+- `automationId` (required): the automation ID
+- `mode`: `preview` (a watermarked PDF, nothing sent), `test` (outputs run in test mode) or `live` (a real document)
+- `data`: placeholder values, sent raw
+- `recId`: the record ID for Airtable, Notion, SmartSuite and ClickUp automations
+- `rowNumber`: the row number for Google Sheets automations
+- `documentName`: a custom name for the document
+- `async`: if true, answers at once with a job ID; follow it with `get_recent_runs`
+- `recipients`: who signs or accepts this document, for example `[{ "signer": 1, "email": "anna@acme.com", "name": "Anna Weber" }]`
+- `skipEsign`: if true, makes the document without starting signing or acceptance
 
-#### `create_document`
-Generate a document from an automation.
+**Signing and acceptance:** if the automation has signing or acceptance turned on, `create_document` starts it. The answer includes the session and its signing links.
 
-**Parameters:**
-- `automationId` (required) - The automation ID
-- `data` - Placeholder values for API/Zapier data sources
-- `recId` - Record ID for Airtable data source
-- `rowNumber` - Row number for Google Sheets data source
-- `documentName` - Custom name for the generated document
-- `async` - If true, returns immediately with a job ID
-- `recipients` - Who signs or accepts this document, for example `[{ "signer": 1, "email": "anna@acme.com", "name": "Anna Weber" }]`
-- `isPreview` - If true, runs in test mode
-- `skipEsign` - If true, generates the document without starting signing or acceptance
+**Recipients named in chat:** the assistant always passes `recipients` when a document goes out for signing or acceptance. When you tell the assistant who should sign or accept ("send quote 12 to Anna at anna@acme.com"), it passes that person in `recipients`. This works for every data source, including Airtable, Notion, Google Sheets, SmartSuite and ClickUp automations called with a record ID, and you do not need a second automation to send from chat. A listed signer's email and name replace the saved ones for that one document; the automation itself does not change. `signer` is the signer's number from `get_automation`. It can be left out when the automation has exactly one signer and is needed when it has two or more.
 
-**E-Signatures:** If the automation has e-signing enabled, creating a document automatically starts the signing workflow. The response includes signing session details and signing links.
+When the assistant sets up signing or acceptance with `configure_esignature`, it follows these defaults:
+- On API and MCP automations, and automations without a data source, every signer is "given with each request", so each send names the person in `recipients`.
+- On Zapier, Make, n8n, Glide and Noloco automations, the signer uses a template placeholder, because their apps do not send recipients with each run.
+- On Airtable, Notion, Google Sheets, SmartSuite, ClickUp and Google Forms automations, the signer points at the record's email field, because their triggers run without anyone naming a recipient.
 
-**Recipients named in chat:** The assistant always passes `recipients` when a document goes out for signing or acceptance. When you tell the assistant who should sign or accept ("send quote 12 to Anna at anna@acme.com"), it passes that person in `recipients`. This works for every data source, including Airtable, Notion, Google Sheets, SmartSuite and ClickUp automations called with a record ID, and you do not need a second automation to send from chat. A listed signer's email and name replace the saved ones for that one document; the automation itself does not change. `signer` is the signer's number from `get_automation`. It can be left out when the automation has exactly one signer and is needed when it has two or more. The automation decides how many signers there are, so `recipients` never adds one.
-
-**Test mode:** The first document of a new setup is sent in test mode. A test-mode signing or acceptance request sends the real email to the real person and is never billed.
+**Test mode:** the first document of a new setup is sent in test mode. A test mode signing or acceptance request sends the real email to the real person and is never billed.
 
 **Example prompts:**
-> "Create a document using automation abc123 with the following data: company name is 'Acme Corp', date is 'January 27, 2026'"
+> "Create a document using automation abc123 for Acme Corp, dated today."
 >
 > "Send the quote for record rec123 to Anna Weber at anna@acme.com for acceptance."
-
----
-
-### Automation Management
-
-#### `list_automations`
-List all automations in your workspace, including each automation's description when set.
-
-**Example prompt:**
-> "Show me all my DocsAutomator automations"
-
-#### `get_automation`
-Get detailed information about a specific automation, including e-signature configuration. Each signer is listed in full: its number, role, email source, the email or field it reads, and name.
-
-**Example prompt:**
-> "Get details for automation abc123"
-
-#### `create_automation`
-Create a new automation.
-
-**Parameters:**
-- `title` (required) - Name for the automation
-- `dataSourceName` (required) - One of: Airtable, Google Sheets, Notion, API, Zapier, SmartSuite, ClickUp, Glide, Noloco, Softr, n8n, Make
-- `docTemplateLink` - Google Doc template URL
-
-#### `update_automation`
-Update an automation's basic settings (title, template link, active flag, locale, save destination, document-name field). For e-signature configuration, use `update_automation_esignature`.
-
-#### `update_automation_esignature`
-Update the e-signature configuration of an automation: enable or disable signing, set signers, customize invitation/reminder/completion email templates, switch the signing language, set the CTA button color, configure save-to-Drive, and edit field display names and required flags.
-
-Call `get_automation` first to see the current esignature state before editing. Arrays (signers, notificationRecipients) and field maps (fieldConfigs, esignFieldMappings) are full-replace, so send the complete value rather than a delta.
-
-In-flight signing sessions snapshot their email config at creation time, so editing an automation does NOT retroactively change sessions already sent out.
-
-A signer's `emailSource` is `static` (a fixed address), `placeholder` (a field of the record, or a placeholder that exists in the template), or `request` (Given with each request). Every `create_document` call must then name that signer in `recipients`.
-
-When the assistant sets up signing or acceptance, it follows these defaults:
-- On API and MCP automations, and automations without a data source, every signer is set to `request`.
-- On Zapier, Make, n8n, Glide and Noloco automations, the signer uses a template placeholder. `request` is not available there yet, because their apps do not send recipients with each run.
-- On Airtable, Notion, Google Sheets, SmartSuite, ClickUp and Google Forms automations, the signer points at the record's email field. `request` is not available there, because their triggers run without anyone naming a recipient.
-- Whenever the assistant sends a document with signing or acceptance, it passes `recipients`, on every data source.
-
-**Example prompts:**
-> "Enable e-signing on automation abc123 and set the signing language to German."
 >
-> "On automation abc123, make Jana the second signer with email jana@acme.com, and change the invitation subject to 'Please sign your Acme contract'."
-
-#### `delete_automation`
-Permanently delete an automation.
-
-#### `duplicate_automation`
-Create a copy of an existing automation.
-
----
-
-### Template Tools
-
-#### `list_placeholders`
-Extract all placeholders from an automation's template. Works for Google Doc, Word, and PDF templates. If placeholder descriptions are set, the response includes a `descriptions` map.
-
-**Example prompt:**
-> "What placeholders are in automation abc123?"
-
-#### `duplicate_template`
-Create a copy of the Google Doc template.
-
----
-
-### Queue & Job Status
-
-#### `get_job_status`
-Check the status of an async document generation job.
-
-**Example prompt:**
-> "Check the status of job xyz789"
-
-#### `get_queue_stats`
-Get queue statistics for your workspace.
-
-#### `poll_job_until_complete`
-Wait for a job to complete and return the result.
-
----
-
-### E-Signature Tools
-
-#### `list_esign_sessions`
-List e-signature sessions with optional filters.
-
-**Parameters:**
-- `status` - Filter by status: pending, in_progress, completed, expired, cancelled
-- `email` - Filter by signer email
-- `page`, `limit` - Pagination
-
-**Example prompt:**
-> "Show me all pending e-signature sessions"
-
-#### `get_esign_session`
-Get detailed information about a signing session.
-
-#### `get_signing_links`
-Get signing URLs for all signers in a session.
-
-**Example prompt:**
-> "Get the signing links for session abc123"
-
-#### `get_esign_audit`
-Get the audit trail for a signing session.
-
-#### `cancel_esign_session`
-Cancel an active signing session.
-
-#### `resend_esign_invite`
-Resend the signing invitation email to a signer.
-
----
-
-### Email Tools
-
-#### `send_test_email`
-Send a test email for an automation (rate limited to 25 per automation per hour).
+> "Who has not accepted their quote yet? Remind them."
 
 ---
 
@@ -373,7 +279,7 @@ Send a test email for an automation (rate limited to 25 per automation per hour)
 
 **Claude:** "I'll create that document for you. Let me first check what placeholders are needed..."
 
-*[Uses list_placeholders, then create_document]*
+*[Uses get_automation, then create_document]*
 
 **Claude:** "Done! Here's your consulting agreement:
 - PDF: [link]
@@ -404,7 +310,7 @@ Would you like me to resend the invitation?"
 
 **Claude:** "I'll generate those invoices. Since there are multiple documents, I'll use async mode..."
 
-*[Uses create_document with async=true for each row, then polls for completion]*
+*[Uses create_document with async=true for each row, then get_recent_runs for each job]*
 
 ---
 
@@ -427,5 +333,4 @@ Would you like me to resend the invitation?"
 
 ### Rate limiting
 - Document generation: 2000 requests per 15 minutes
-- Test emails: 25 per automation per hour
 - If you hit limits, wait for the reset period

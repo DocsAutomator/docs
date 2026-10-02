@@ -213,15 +213,19 @@ You can always generate a document for any record from inside DocsAutomator: cli
 
 ## E-Signatures
 
-DocsAutomator supports collecting legally binding e-signatures on documents generated from Airtable records. After a document is created, it can be automatically routed to one or more signers for signing.
+Documents generated from Airtable records can go out for signature or one-click acceptance in the same step, and the sealed PDF comes back to the record.
 
-To enable e-signatures, open your automation's output settings and toggle on the e-signature option. You can then configure signers by mapping their email address and name to Airtable fields -- for example, map a "Client Email" field to the signer email and a "Client Name" field to the signer name.
+Open the automation's **Signing & Acceptance** card. Under **How it completes**, pick one of three options:
 
-If your document requires multiple signers, you can choose between **sequential signing** (signers sign in a defined order) and **parallel signing** (all signers receive the request simultaneously). Add e-signature placeholders such as `{{esign.signature.1}}` and `{{esign.date.1}}` to your template to define where signatures and dates appear in the final document.
+- **Signature required**: the recipients sign the document. These are legally binding e-signatures, with an audit trail and a certificate.
+- **Acceptance**: the recipient clicks Accept, for example on a quote or a proposal. See [Acceptance](/features/docsautomator-esign/acceptance).
+- **No closing step**: documents are delivered without a signing or acceptance request.
 
-Signed PDFs can be stored back to an Airtable attachment field automatically once all parties have signed. This keeps your records up to date without any manual steps.
+Map each signer's email address and name to Airtable fields, for example a "Client Email" field to the signer email and a "Client Name" field to the signer name. With more than one signer, choose **Sequential** (signers sign in order) or **Parallel** (all signers get the request at the same time).
 
-If you only need the recipient's yes, for example on a quote or a proposal, use [Acceptance](/features/docsautomator-esign/acceptance) instead of signing. The recipient clicks Accept, and the accepted PDF goes back to the record the same way.
+Place signing tags such as `{{esign.signature_1}}` and `{{esign.date_1}}` in your template where signatures and dates should appear. The number is the signer. The [E-Signature Guide](/features/docsautomator-esign#adding-esign-fields-to-templates) lists every tag, including text and checkbox fields.
+
+Under **After signing**, set **Save Signed PDF To** to an attachment field. When the last person signs or accepts, the sealed PDF lands in that field on the record. With signing, **Save Field Values To** writes the text, checkbox and date values the signers enter into Airtable fields.
 
 E-signing and acceptance are included in every plan. See [How e-signing and acceptance are billed](/features/docsautomator-esign#how-e-signing-and-acceptance-are-billed).
 

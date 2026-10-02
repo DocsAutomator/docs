@@ -119,9 +119,19 @@ Name your documents from the answers (for example `Application — {{applicant_n
 
 ## E-Signatures
 
-Documents generated from form responses can be routed for e-signing automatically. The respondent receives an email with a signing link for their document; the signer defaults to the respondent's email address from the form, so a consent form or waiver needs no signer configuration at all.
+Documents generated from form responses can go out for signature or one-click acceptance. The respondent receives an email with a link to their document. The signer defaults to the respondent's email address from the form, so a consent form or waiver needs no signer configuration at all.
 
-To enable it, open your automation's output settings and toggle on the e-signature option. Add e-signature placeholders such as `{{esign.signature.1}}` and `{{esign.date.1}}` to your template to control where signatures appear.
+Open the automation's **Signing & Acceptance** card. Under **How it completes**, pick one of three options:
+
+- **Signature required**: the recipients sign the document. These are legally binding e-signatures, with an audit trail and a certificate.
+- **Acceptance**: the recipient clicks Accept, for example on a quote or a proposal. See [Acceptance](/features/docsautomator-esign/acceptance).
+- **No closing step**: documents are delivered without a signing or acceptance request.
+
+Place signing tags such as `{{esign.signature_1}}` and `{{esign.date_1}}` in your template where signatures and dates should appear. The number is the signer. The [E-Signature Guide](/features/docsautomator-esign#adding-esign-fields-to-templates) lists every tag, including text and checkbox fields.
+
+Google Forms responses cannot be edited, so DocsAutomator cannot write the sealed PDF back to the form. If the automation reads the form's linked response sheet, **Save Signed PDF To** under **After signing** writes a link to the sealed PDF into a column of that sheet. You can also save the sealed PDF to Google Drive or send it by email.
+
+Signing and acceptance cost $0.50 per document, charged when the recipient first opens it, however many people sign. A request nobody opens is free. See [How e-signing and acceptance are billed](/features/docsautomator-esign#how-e-signing-and-acceptance-are-billed).
 
 <Warning>
 Signing requires the form to collect email addresses (see above) or a question that asks for the signer's email. Without an email, DocsAutomator has no one to send the signing request to.

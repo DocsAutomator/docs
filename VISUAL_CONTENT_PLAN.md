@@ -54,7 +54,7 @@ Record in the DocsAutomator app:
 
 Record:
 
-1. Open a Google Doc template that has e-sign placeholders (`{{esign.signature.1}}`, `{{esign.date.1}}`)
+1. Open a Google Doc template that has e-sign placeholders (`{{esign.signature_1}}`, `{{esign.date_1}}`)
 2. Go to the automation's output settings
 3. Enable "E-Signatures"
 4. **Configure Signer 1** — enter email field mapping, name field mapping
@@ -157,7 +157,7 @@ Take these screenshots in the DocsAutomator app:
 | 2 | `generated-output.png` | The same template after generation — showing the filled-in document | Below the template example (before/after) |
 | 3 | `line-items-template.png` | A Google Doc showing line item syntax (the table with `{{#items}}` and `{{/items}}` tags) | "Line Item Variables" section |
 | 4 | `line-items-output.png` | The generated document with the line item table expanded with real data | Next to the template screenshot |
-| 5 | `esign-placeholders.png` | A Google Doc showing e-sign placeholders at the bottom of a contract (`{{esign.signature.1}}`, `{{esign.date.1}}`) | New "E-Signature Placeholders" section |
+| 5 | `esign-placeholders.png` | A Google Doc showing e-sign placeholders at the bottom of a contract (`{{esign.signature_1}}`, `{{esign.date_1}}`) | New "E-Signature Placeholders" section |
 | 6 | `image-placeholder.png` | A Google Doc showing `{{image_logo}}` placeholder and the resulting image in the output | "Image Variables" section |
 
 ---

@@ -1,11 +1,11 @@
 ---
 title: "Airtable"
-description: "Convert Airtable records into PDF documents and Google Docs"
+description: "Create documents from Airtable records, send them for signing or one-click acceptance, and put the sealed PDF back in an attachment field"
 icon: "/icons/airtable.png"
-keywords: ["Airtable integration", "Airtable document generation", "Airtable PDF", "Airtable automation"]
+keywords: ["Airtable integration", "Airtable document generation", "Airtable PDF", "Airtable automation", "Airtable e-signature", "Airtable contract signing", "Airtable quote acceptance"]
 ---
 
-The DocsAutomator-Airtable integration enables you to convert Airtable records into PDF documents and Google Docs. The system operates on a "primary table and linked tables" model, where documents are generated from records in your main table while data lists ("line items") can be pulled from related tables. Documents can be generated automatically when a field changes to match a condition (Auto Creation), from a button, formula, or script inside Airtable, or manually from DocsAutomator.
+The DocsAutomator-Airtable integration enables you to convert Airtable records into PDF documents and Google Docs, send them for signing or one-click acceptance, and save the sealed PDF back to the record. The system operates on a "primary table and linked tables" model, where documents are generated from records in your main table while data lists ("line items") can be pulled from related tables. Documents can be generated automatically when a field changes to match a condition (Auto Creation), from a button, formula, or script inside Airtable, or manually from DocsAutomator.
 
 <Frame>
   <img src="/images/airtable/overview.png" alt="Automation editor with the Word invoice template on the left and the Data / Placeholders, E-Signing and Actions panels on the right" />
@@ -220,6 +220,10 @@ To enable e-signatures, open your automation's output settings and toggle on the
 If your document requires multiple signers, you can choose between **sequential signing** (signers sign in a defined order) and **parallel signing** (all signers receive the request simultaneously). Add e-signature placeholders such as `{{esign.signature.1}}` and `{{esign.date.1}}` to your template to define where signatures and dates appear in the final document.
 
 Signed PDFs can be stored back to an Airtable attachment field automatically once all parties have signed. This keeps your records up to date without any manual steps.
+
+If you only need the recipient's yes, for example on a quote or a proposal, use [Acceptance](/features/docsautomator-esign/acceptance) instead of signing. The recipient clicks Accept, and the accepted PDF goes back to the record the same way.
+
+Signing and acceptance cost $0.50 per document, charged when the recipient first opens it, however many people sign. A request nobody opens is free. See [How e-signing and acceptance are billed](/features/docsautomator-esign#how-e-signing-and-acceptance-are-billed).
 
 <Info>
 E-signatures work with both Google Doc templates and [PDF templates](/docsautomator-basics/pdf-template-guide). See the [E-Signature Guide](/features/docsautomator-esign) for full configuration details and placeholder reference.

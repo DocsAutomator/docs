@@ -35,7 +35,7 @@ mode: "center"
   ## Fixes
 
   - **Signing URL Field:** the picker now offers only fields that can hold a link: URL and text fields in Airtable, Notion, SmartSuite and ClickUp, and any column in Google Sheets. Before, it also offered fields such as attachments, and every write of the signing link failed. A saved field that cannot hold a link now shows a red note with the field types to choose from. See [Save to Data Source](/features/docsautomator-esign#save-to-data-source).
-  - When we deploy an update, documents that are being generated now finish first in most cases. Before, an update could stop a run, and the document could come out twice or not at all.
+  - Documents that are being generated during an update now finish before the update completes. Very long runs, over about four minutes, start again without creating a duplicate. Before, an update could stop a run, and the document could come out twice or not at all.
   - A run that stops and runs again no longer repeats the steps it already finished: the copy in Google Drive or OneDrive, the attachment write-back, the email, the signing request and the webhook.
   - A run that cannot finish now shows as failed in the run history, with an error notification. Before, it could stay "Queued" with no message.
 

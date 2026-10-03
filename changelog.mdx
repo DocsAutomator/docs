@@ -5,6 +5,41 @@ rss: true
 mode: "center"
 ---
 
+<Update label="October 3, 2026">
+  ## Save documents to Dropbox
+
+  Dropbox is a new place to save your documents, next to Google Drive and OneDrive.
+
+  - **Save PDF in Dropbox:** a new action in the **Actions** card saves the generated PDF to a Dropbox folder you choose. It works with Google Doc, Word and PDF templates.
+  - **Subfolders from your data:** build a subfolder from text and placeholders, for example `Clients/{{client_name}}`. Dropbox creates missing folders, and a file with the same name is never overwritten.
+  - **Word files:** the **Save Word Document** action has a **Save to Dropbox?** toggle that saves the `.docx` file too.
+  - **Signed PDFs:** turn on **Save to Dropbox** under **After signing** to save the signed or accepted PDF when everyone has finished.
+  - **Several accounts:** connect one or more Dropbox accounts per workspace under **Settings → Integrations**, on every plan.
+
+  The AI Agent can set up all of this for you. See [Save PDFs in Dropbox](/features/actions-after-document-generation/save-pdfs-in-dropbox).
+
+  ## A check before a manual run sends anything
+
+  When you create documents by hand and the run starts signing or acceptance, sends an email or writes back to your data source, DocsAutomator now shows one more step before it starts. The step names the action and the count, for example "Send 3 signing requests", and lists the records and the recipients. Click **Back** to stop without sending anything.
+
+  - In test mode, the step says that requests and emails still go to real people, and that test documents are free.
+  - In live mode, the step says that each document counts toward your plan, and that signing and acceptance cost $0.50 per document, charged when the recipient first opens it.
+  - When signing or acceptance is on and the automation sends no email, you can choose **Create documents without signing requests**.
+
+  This covers **Generate manually**, the Generate tab, generating for selected records, and **Rerun**. It replaces the earlier "Send for signature?" question.
+
+  ## Fixes
+
+  - **Signing URL Field:** the picker now offers only fields that can hold a link: URL and text fields in Airtable, Notion, SmartSuite and ClickUp, and any column in Google Sheets. Before, it also offered fields such as attachments, and every write of the signing link failed. A saved field that cannot hold a link now shows a red note with the field types to choose from. See [Save to Data Source](/features/docsautomator-esign#save-to-data-source).
+  - When we deploy an update, documents that are being generated now finish first in most cases. Before, an update could stop a run, and the document could come out twice or not at all.
+  - A run that stops and runs again no longer repeats the steps it already finished: the copy in Google Drive or OneDrive, the attachment write-back, the email, the signing request and the webhook.
+  - A run that cannot finish now shows as failed in the run history, with an error notification. Before, it could stay "Queued" with no message.
+
+  ## On the website
+
+  The [PDF generation page](https://www.docsautomator.co/features/pdf-generation/) now describes every output the app offers today, including Dropbox, Word files, PDF templates, the webhook and the signing or acceptance step.
+</Update>
+
 <Update label="October 2, 2026">
   ## AI Agent: a template, not a filled document
 
@@ -60,7 +95,7 @@ mode: "center"
   | Letter | Letters and notices |
   | Certificate | Certificates and awards |
 
-  Your brand colour replaces the accent colour of the style. The style gallery and **Surprise me** are gone from the form. The form keeps **Recreate a document**, the brand colours and the paper size. See [AI Template Generator](/features/ai-template-generator).
+  Your brand color replaces the accent color of the style. The style gallery and **Surprise me** are gone from the form. The form keeps **Recreate a document**, the brand colors and the paper size. See [AI Template Generator](/features/ai-template-generator).
 
   Fixes in the designer:
 
@@ -102,7 +137,7 @@ mode: "center"
   ## AI Agent: to a finished preview faster
 
   - After every new template, the agent shows a preview of the finished document right away, with sample values when no data is connected.
-  - The agent designs a Word template at once. It no longer asks you to pick a style first. When you share a website or a logo, it uses your brand colours.
+  - The agent designs a Word template at once. It no longer asks you to pick a style first. When you share a website or a logo, it uses your brand colors.
   - Attach your logo in the chat and ask for a new template: the logo is in the first version.
   - Attach an existing document (a PDF or images of its pages) and ask for a template like it: the designer copies the layout and the look from the pages. **Recreate a document** in the Word AI form works with PDF files again.
   - The agent no longer creates or edits Google Doc templates. It designs new templates as Word templates and still links a Google Doc that you already have. For a change to a linked Google Doc, it tells you the exact text to change.
@@ -525,7 +560,7 @@ mode: "center"
   ## AI Agent creates Google Doc templates, and shows you looks before it writes
 
   - **Google Doc templates from scratch**: ask the AI Agent for a template and it can now author a native Google Doc in your Drive, not only a Word file. This is the path to use for nested line items, which Word templates do not support. If a template is already linked, the agent asks before it replaces it, and the old file is never deleted.
-  - **Preview looks first**: for Word templates the agent renders your own document in three looks (restrained, branded, expressive) and shows them as image cards. Pick one and the agent adopts it without a second generation. Brand colours are inferred from what you tell it.
+  - **Preview looks first**: for Word templates the agent renders your own document in three looks (restrained, branded, expressive) and shows them as image cards. Pick one and the agent adopts it without a second generation. Brand colors are inferred from what you tell it.
   - **Keeps your nested line items**: changing the data source from the chat no longer removes level 2 and 3 line item settings made in the Data card.
   - **Plan access up front**: on a plan without e-signing, the agent says so before it sets up signers instead of presenting the automation as ready to go live. Test Mode signing still works.
   - **Email content guard**: the agent refuses to save email subjects or bodies shaped like credential phishing (account threat plus a "verify your account" call to action). This is a platform rule with no override.

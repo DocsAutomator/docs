@@ -1,0 +1,69 @@
+---
+title: "Save PDFs in Dropbox"
+description: "Automatically store generated PDFs in Dropbox folders"
+icon: "dropbox"
+---
+
+Save generated PDFs straight to a Dropbox folder you choose, with optional dynamic subfolders. This works like saving to Google Drive or OneDrive, using a connected Dropbox account.
+
+## Basic Setup
+
+1. Open the **Actions** card of the automation editor.
+2. Click **Add action** and pick "Save PDF in Dropbox".
+3. Choose your connected **Dropbox account**, or connect one.
+4. Click **Browse** and open your target Dropbox folder.
+5. (Optional) Set a dynamic subfolder.
+
+<Note>
+If no folder is selected, PDFs save to the top level of your Dropbox.
+</Note>
+
+## Connecting a Dropbox account
+
+If you have not connected Dropbox yet, click **Connect Dropbox Account** and allow DocsAutomator access. DocsAutomator asks for three permissions: your account name and email, a list of your folders (for the folder picker), and permission to add files. You can connect or disconnect accounts anytime under **Workspace Settings → Integrations**.
+
+## Dynamic Subfolders
+
+Organize PDFs automatically with subfolders made of static text and placeholders.
+
+<Steps>
+  <Step title="Pick a destination">
+    Select your connected Dropbox account and browse to a destination folder.
+  </Step>
+  <Step title="Configure the subfolder">
+    Enter a "Subfolder Name (optional)" using text and placeholders.
+  </Step>
+  <Step title="Create a hierarchy">
+    Use forward slashes (`/`) for nested folders.
+  </Step>
+</Steps>
+
+**Examples:**
+```
+Invoices/2026
+{{client_name}}
+Clients/{{client_name}}/{{year}}
+```
+
+Type `/` in the subfolder field to browse your placeholders, or type `{{placeholder_name}}` yourself. Line item placeholders are excluded.
+
+## How It Works
+
+1. DocsAutomator replaces the placeholders with the values of the document.
+2. Dropbox creates any folder in the path that does not exist yet.
+3. The PDF is saved in the final folder. If a file with the same name already exists, Dropbox keeps both and adds a number to the new one, for example `Invoice 7 (1).pdf`. Nothing is overwritten.
+
+## Word files and signed PDFs
+
+- For Word templates, the **Save Word Document** action has a **Save to Dropbox?** toggle that uploads the `.docx` as well. See [Save Word Document](/features/actions-after-document-generation/save-word-document).
+- For signing and acceptance, turn on **Save to Dropbox** under **After signing** to save the signed PDF. See [Signed PDF Delivery](/features/docsautomator-esign#signed-pdf-delivery).
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| No account to select | Click "Connect Dropbox Account" and allow access. |
+| Account shows "Reconnect needed" | Access was removed in Dropbox. Reconnect the account under Workspace Settings → Integrations. |
+| Folders not created | Check that the placeholder values exist in your data. |
+| Empty placeholders | An empty placeholder is left out of the path, so the PDF saves one level higher. |
+| A team folder of a Dropbox business account is missing in the picker | The picker shows your own folders and the folders shared with you. Team space folders are not supported yet. |

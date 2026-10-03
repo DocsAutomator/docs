@@ -155,6 +155,7 @@
                       "features/actions-after-document-generation/save-word-document",
                       "features/actions-after-document-generation/save-pdfs-in-google-drive",
                       "features/actions-after-document-generation/save-pdfs-in-onedrive",
+                      "features/actions-after-document-generation/save-pdfs-in-dropbox",
                       "features/actions-after-document-generation/send-email",
                       "features/actions-after-document-generation/merge-existing-pdfs",
                       "features/actions-after-document-generation/notify-webhook"

@@ -11,31 +11,42 @@ Find answers to common questions about DocsAutomator. If your question is not li
 
 <AccordionGroup>
   <Accordion title="What data sources does DocsAutomator support?">
-    DocsAutomator supports multiple data sources:
+    You can connect these data sources directly in an automation:
 
-    - **Airtable** -- OAuth connection with field mapping, linked tables, and nested line items
-    - **Notion** -- OAuth connection with database mapping, page body as Markdown, and line items from Relations (including nested line items up to 3 levels)
-    - **Google Sheets** -- Auto-polling, manual trigger, and batch generation
-    - **SmartSuite** -- OAuth connection with solution/table mapping
-    - **ClickUp** -- OAuth connection with task automation
-    - **Zapier** -- Webhook-based integration
-    - **n8n** -- Community node for workflow automation
-    - **Make** -- HTTP module integration
-    - **Glide** -- Native no-code integration
-    - **Noloco** -- Native no-code integration
-    - **Softr** -- No-code integration
-    - **MCP** -- Model Context Protocol integration
+    - **Airtable**: OAuth connection with field mapping, linked tables, and nested line items
+    - **Google Sheets**: automatic creation from new rows, manual trigger, and batch generation
+    - **Google Forms**: a document for each new form response
+    - **Notion**: OAuth connection with database mapping, page body as Markdown, and line items from Relations (including nested line items up to 3 levels)
+    - **SmartSuite**: OAuth connection with solution and table mapping
+    - **ClickUp**: OAuth connection with task automation
 
-    You can also use the [DocsAutomator API](/integrations-api/docsautomator-api) to integrate from any custom application.
+    You can also start document generation from these tools:
+
+    - **Zapier**: the DocsAutomator app with its **Create Document** action
+    - **Make**: the DocsAutomator app with its **Create Document** module
+    - **n8n**: the DocsAutomator community node
+    - **Glide**, **Noloco** and **Softr**: no-code integrations
+    - **MCP**: connect an AI assistant such as Claude or ChatGPT to the [DocsAutomator MCP server](/integrations-api/docsautomator-mcp)
+    - **API**: the [DocsAutomator API](/integrations-api/docsautomator-api) for any custom application
+
+    In the app, the [DocsAutomator AI Agent](/features/docsautomator-ai-agent) can set up an automation for you from a plain-language description.
   </Accordion>
 
   <Accordion title="What output formats are available?">
-    DocsAutomator generates documents as **PDF** by default. You can also optionally save a **Google Doc** copy to a Google Drive folder for further editing. PDFs can be:
+    DocsAutomator always generates a **PDF**. For the PDF you can:
 
-    - Saved to your data source (Airtable attachment, Google Sheets cell, etc.)
-    - Stored in a Google Drive folder
-    - Sent as email attachments
-    - Accessed via the returned PDF URL in the API response
+    - Save it in Google Drive, OneDrive or Dropbox
+    - Attach it to an email (not while signing is on for the automation)
+    - Write it back to your data source: an Airtable, Notion, SmartSuite or ClickUp file field, or its link in an Airtable or Notion field or a Google Sheets column
+    - File it in a folder on your Documents page
+    - Merge existing PDFs into it, or notify a webhook
+    - Use the PDF URL returned in the API response
+
+    With a **Word (.docx) template**, you can also keep the generated **Word file** with the **Save Word document** action. It is downloadable from the run history, and you can save it in Google Drive, OneDrive or Dropbox, or upload it to an Airtable, Notion or SmartSuite file field. You can attach the Word file to an email even if you do not keep it.
+
+    With a **Google Doc template**, the **Save Google Doc** action saves an editable Google Doc in a Google Drive folder, and can write its link to your data source.
+
+    See [Actions after Document Generation](/features/actions-after-document-generation) for every option.
   </Accordion>
 
   <Accordion title="How do I get started?">
@@ -49,7 +60,7 @@ Find answers to common questions about DocsAutomator. If your question is not li
   </Accordion>
 
   <Accordion title="Is there a free plan?">
-    Yes. DocsAutomator offers unlimited free testing so you can fully evaluate the platform before committing to a paid subscription. A subscription is only required to generate production documents (Live mode).
+    No. Testing is free and unlimited, and you need no credit card to sign up. Test documents carry a watermark and do not count against a plan. To generate live documents without a watermark, you need a paid plan: Professional, Business or Scale. See [docsautomator.co/pricing](https://docsautomator.co/pricing).
   </Accordion>
 </AccordionGroup>
 
@@ -57,11 +68,17 @@ Find answers to common questions about DocsAutomator. If your question is not li
 
 <AccordionGroup>
   <Accordion title="What template format does DocsAutomator use?">
-    DocsAutomator uses **Google Docs** as templates. You create your document layout in Google Docs and add placeholders using double curly bracket syntax (`{{placeholder}}`). The platform copies your template and replaces placeholders with your data to generate each document.
+    DocsAutomator supports three template formats:
+
+    - **Google Docs**: pick a Google Doc from your Google Drive
+    - **Word (.docx)**: upload a Word file
+    - **PDF**: upload an existing PDF and place data fields on top of it in the visual editor
+
+    In Google Docs and Word templates, you add placeholders with double curly brackets (`{{placeholder}}`). DocsAutomator replaces them with your data for each document. The [DocsAutomator AI Agent](/features/docsautomator-ai-agent) can also design a new Word template for you. See [Templates Overview](/docsautomator-basics/templates-overview) to choose a format.
   </Accordion>
 
   <Accordion title="Can I use existing Google Doc templates?">
-    Yes. You can use any Google Doc as a template. Simply add placeholders (`{{fieldName}}`) where you want dynamic data inserted, then paste the Google Doc URL into your automation settings. You can also browse the [Template Gallery](https://docsautomator.co/templates/) for pre-built templates.
+    Yes. You can use any Google Doc as a template. Add placeholders (`{{fieldName}}`) where you want data inserted, then pick the Google Doc from your Google Drive when you add the template to the automation. You can also upload an existing Word file, or start from the [Template Gallery](https://docsautomator.co/templates/).
   </Accordion>
 
   <Accordion title="What placeholder syntax is supported?">
@@ -71,15 +88,15 @@ Find answers to common questions about DocsAutomator. If your question is not li
     |------|--------|---------|
     | Text | `{{fieldName}}` | `{{customer_name}}` |
     | Image | `{{image_fieldName}}` | `{{image_logo}}` |
-    | Line items | `{{line_items_1}}{{field}}` | Invoice rows |
-    | Conditional | `{{#if condition}}...{{/if}}` | Show/hide sections |
+    | Line items | `{{line_items_1}}` in a table row, then `{{field}}` in the cells | Invoice rows |
+    | Conditional section | `{{section_NAME}}` ... `{{/section_NAME}}`, each tag in its own paragraph | Show or hide a section with rules you set in the section settings |
     | E-signature | `{{esign.type_signer}}` | `{{esign.signature_1}}` |
 
-    See the [Google Doc Template Guide](/docsautomator-basics/google-doc-template-guide) for the full syntax reference.
+    See the [Placeholder Syntax Reference](/docsautomator-basics/placeholder-syntax-reference) for the full syntax.
   </Accordion>
 
   <Accordion title="Can the same placeholder appear multiple times in a template?">
-    Yes. You can use the same placeholder in multiple places within a template. You only need to map the data once -- DocsAutomator replaces all occurrences automatically.
+    Yes. You can use the same placeholder in multiple places within a template. You only need to map the data once. DocsAutomator replaces all occurrences automatically.
   </Accordion>
 </AccordionGroup>
 
@@ -89,30 +106,37 @@ Find answers to common questions about DocsAutomator. If your question is not li
   <Accordion title="What are the document generation limits per plan?">
     DocsAutomator offers three plans:
 
-    | Plan | Documents/Month | Monthly | Annual (/mo) |
-    |------|-----------------|---------|--------------|
-    | Professional | 100 | $29 | $19 |
-    | Business | 1,000 | $79 | $59 |
-    | Scale | 5,000 | $199 | $149 |
+    | Plan | Documents per month | Automations | Billed monthly | Billed yearly (per month) |
+    |------|---------------------|-------------|----------------|---------------------------|
+    | Professional | 100 | 5 | $29 | $19 |
+    | Business | 1,000 | 20 | $79 | $59 |
+    | Scale | 5,000 | Unlimited | $199 | $149 |
 
-    Free accounts have **unlimited testing** in preview mode, no credit card required. A subscription is only required to generate production (Live mode) documents.
+    Every account can test without limits in **Test Mode**, with no credit card. Test documents carry a watermark and do not count against a plan. You need a paid plan to set an automation to **Active** and generate live documents.
 
-    Existing customers on legacy plans (Starter, Pro, Business, Scale, 5000, Unlimited) stay on their original pricing and document allowance for as long as they wish.
+    Existing customers on legacy plans (Starter, Professional, Business, Scale, 200, 500, 2000, 5000 and Unlimited) stay on their original pricing and document allowance for as long as they wish.
 
     Visit [docsautomator.co/pricing](https://docsautomator.co/pricing) for full details including overage rates and feature comparisons.
   </Accordion>
 
   <Accordion title="What happens when I exceed my document limit?">
-    Paid plans can enable **overage documents** which allow you to continue generating documents beyond your plan limit at a per-document rate. If overage is not enabled or you exceed the overage cap, you receive a `402 Payment Required` error with the message: "You have reached your documents limit. Please upgrade your plan."
+    Overage documents are off by default. Turn on **Enable Overage Documents** in your workspace settings to keep generating documents above your plan's allowance, at a price per document:
+
+    | Plan | Price per extra document | Overage cap (documents per month, plan included) |
+    |------|--------------------------|--------------------------------------------------|
+    | Professional | $0.20 | 250 |
+    | Business | $0.10 | 2,000 |
+    | Scale | $0.06 | 10,000 |
+
+    You can change the setting once per billing period. If overage is off, or you reach the cap, the API returns a `402 Payment Required` error with the message "You have reached your documents limit. Please upgrade your plan" and a link to the subscription page.
   </Accordion>
 
   <Accordion title="What are the API rate limits?">
     | Scope | Limit |
     |-------|-------|
-    | Global | 2000 requests per 15 minutes per API key |
-    | Test email | 25 per hour per automation |
-    | Queue | Max 50 queued jobs per workspace |
-    | Queue concurrency | Max 5 active jobs per workspace |
+    | All API requests | 2,000 requests per 15 minutes per API key (requests to `GET /job/{jobId}` do not count) |
+    | Test emails | 25 per hour per automation, 100 per hour per workspace, and at most 10 different recipients per hour per workspace |
+    | Document generation | 5 documents generated at the same time per workspace; further requests wait in the queue |
 
     Exceeding a rate limit returns a `429 Too Many Requests` response.
   </Accordion>
@@ -126,11 +150,11 @@ Find answers to common questions about DocsAutomator. If your question is not li
   </Accordion>
 
   <Accordion title="Can I use multiple data sources in one automation?">
-    Each automation is connected to a single data source. However, you can create multiple automations -- one for each data source -- and trigger them independently. If you need to combine data from multiple sources, you can use the [API](/integrations-api/docsautomator-api) or an integration tool like Zapier, Make, or n8n to aggregate data before sending it to DocsAutomator.
+    Each automation is connected to a single data source. However, you can create multiple automations, one for each data source, and trigger them independently. If you need to combine data from multiple sources, you can use the [API](/integrations-api/docsautomator-api) or an integration tool like Zapier, Make, or n8n to aggregate data before sending it to DocsAutomator.
   </Accordion>
 
   <Accordion title="How does auto-creation work with Google Sheets?">
-    When auto-creation is enabled, DocsAutomator checks your spreadsheet every 5 minutes for new rows. When a new row is detected that does not yet have a PDF link in the designated column, a document is automatically generated. This is ideal for hands-off automation where documents should be created as soon as data is added.
+    When **Auto creation** is on, DocsAutomator checks your sheet every 5 minutes. It generates a document for each new row below the last row it processed, up to 50 rows per check. Use **Run now** to check at once. This is ideal for hands-off automation where documents should be created as soon as data is added. Google Forms automations check for new responses every minute.
   </Accordion>
 </AccordionGroup>
 
@@ -144,23 +168,23 @@ Find answers to common questions about DocsAutomator. If your question is not li
     |------|-------------|---------|
     | Signature | `{{esign.signature_1}}` | Full signature capture (draw via mouse, trackpad, or touch) |
     | Date | `{{esign.date_1}}` | Date picker with auto-fill |
-    | Text | `{{esign.text_1_name}}` | Free text input (append `_name` for a unique label per field) |
+    | Text | `{{esign.text_1_name}}` | Text input (append `_name` for a unique label per field) |
     | Checkbox | `{{esign.checkbox_1_label}}` | Agreement checkbox (append `_label` for a unique name per field) |
 
-    Increment the signer number for multiple signers (`_1`, `_2`, `_3`, etc.). There is no limit on the number of signers, and numbers need not be consecutive — see [Variable Number of Signers](/features/docsautomator-esign#variable-number-of-signers).
+    Increment the signer number for multiple signers (`_1`, `_2`, `_3`, etc.). There is no limit on the number of signers, and numbers need not be consecutive. See [Variable Number of Signers](/features/docsautomator-esign#variable-number-of-signers).
   </Accordion>
 
   <Accordion title="Is DocsAutomator eSign legally valid?">
-    Yes. DocsAutomator eSign is compliant with the **ESIGN Act** and **UETA** in the United States, and **eIDAS (Simple Electronic Signatures)** in the European Union. Every signed document includes a Certificate of Completion with audit trail, SHA-256 document integrity hashing, and secure access tokens. See [Compliance & Legal Validity](/features/docsautomator-esign/compliance-and-legal-validity) for details.
+    Yes. DocsAutomator eSign is compliant with the **ESIGN Act** and **UETA** in the United States, and **eIDAS (Simple Electronic Signatures)** in the European Union. Every signed document includes a Certificate of Completion with audit trail, SHA-256 document integrity hashing, and secure access tokens. See [Compliance & Legal Validity](/features/docsautomator-esign/compliance-and-legal-validity) for details. For documents that the recipient accepts instead of signs, see [Is acceptance legally binding?](/features/docsautomator-esign/is-acceptance-legally-binding).
   </Accordion>
 
   <Accordion title="What signing workflows are available?">
     Two signing workflows are supported:
 
-    - **Parallel signing (default)** -- All signers receive invitations simultaneously and can sign in any order
-    - **Sequential signing** -- Signers receive invitations one at a time in a defined order
+    - **Parallel signing (default)**: all signers receive invitations at the same time and can sign in any order
+    - **Sequential signing**: signers receive invitations one at a time in a defined order
 
-    You can configure the signing order in the eSign settings of your automation.
+    You set the signing order in the **Signing & Acceptance** panel of your automation.
   </Accordion>
 
   <Accordion title="How long are signing links valid?">
@@ -168,12 +192,13 @@ Find answers to common questions about DocsAutomator. If your question is not li
   </Accordion>
 
   <Accordion title="Which plans include eSign?">
-    E-signing and acceptance are included on all paid plans (Professional, Business, and Scale) at **$0.50 per document, charged when the recipient first opens it; $0.35 per document above 500 a month**. It is one charge per document, no matter how many recipients are on it. A request that nobody opens is free. No add-on subscription is required.
+    Signing and acceptance work on every paid plan (Professional, Business and Scale), with no add-on subscription. In Test Mode you can try both with test documents. See [docsautomator.co/pricing](https://docsautomator.co/pricing) for the current price.
 
-    | Plan | eSign Access |
-    |------|-------------|
-    | Free (test mode) | Preview/Test signing only |
-    | Paid (all plans) | Full production access at $0.50 / doc, charged on first open |
+    In the **Signing & Acceptance** panel of an automation, choose under **How it completes**:
+
+    - **Signature required**: the recipient fills the signature fields from your template and clicks Complete
+    - **Acceptance**: the recipient reads the document and clicks Accept, with no signature fields (see [Acceptance](/features/docsautomator-esign/acceptance))
+    - **No closing step**: the document is generated and delivered without signing or acceptance
 
     <Note>
     Legacy Unlimited-plan customers keep their included unlimited signatures until they change plans.
@@ -185,7 +210,7 @@ Find answers to common questions about DocsAutomator. If your question is not li
 
 <AccordionGroup>
   <Accordion title="What is async mode and when should I use it?">
-    By default, the `POST /createDocument` endpoint runs synchronously and waits up to 5 minutes for the document to be generated. In **async mode**, the API returns immediately with a `jobId` (HTTP 202) and you poll `GET /job/{jobId}` for the result.
+    By default, the `POST /createDocument` endpoint runs synchronously and waits up to 5 minutes for the document to be generated. In **async mode** (send `"async": true` in the request body or `?async=true`), the API returns immediately with a `jobId` (HTTP 202) and you poll `GET /job/{jobId}` for the result.
 
     Use async mode when:
     - Your calling platform has execution time limits (e.g., Airtable's 120-second limit)
@@ -198,7 +223,7 @@ Find answers to common questions about DocsAutomator. If your question is not li
   </Accordion>
 
   <Accordion title="Can I override the template at request time?">
-    Yes. Pass a `docTemplateLink` parameter in your `createDocument` request with either a full Google Docs URL or a document ID. The override template must be accessible by your connected Google account.
+    Yes, for Google Doc templates. Pass a `docTemplateLink` parameter in your `createDocument` request with either a full Google Docs URL or a document ID. The override template must be accessible by your connected Google account. Automations with Word or PDF templates ignore this parameter.
   </Accordion>
 
   <Accordion title="Where are generated PDFs stored?">
@@ -212,9 +237,9 @@ Find answers to common questions about DocsAutomator. If your question is not li
   <Accordion title="Why is my Google auth failing?">
     Google OAuth tokens can expire or become invalid. Common causes:
 
-    - **Token expired** -- Google refresh tokens may become invalid after extended inactivity. Reconnect your Google account under **Settings > Integrations** in the DocsAutomator app.
-    - **Insufficient permissions** -- Ensure the connected Google account has access to the template and destination folder.
-    - **Shared Drive templates** -- You need Manager (Organizer) level permissions on the Shared Drive. See [Google Shared Drive Permissions](/more/troubleshooting-guide/google-shared-drive-template-permissions).
+    - **Token expired**: Google refresh tokens may become invalid after extended inactivity. Reconnect your Google account in the DocsAutomator app under **Settings > Integrations > Google Permissions**.
+    - **Insufficient permissions**: ensure the connected Google account has access to the template and destination folder.
+    - **Shared Drive templates**: you need Manager (Organizer) level permissions on the Shared Drive. See [Google Shared Drive Permissions](/more/troubleshooting-guide/google-shared-drive-template-permissions).
   </Accordion>
 
   <Accordion title="Why are my images not showing in the generated document?">
@@ -222,7 +247,7 @@ Find answers to common questions about DocsAutomator. If your question is not li
 
     - The image URL requires authentication or is behind a firewall
     - The URL has expired (e.g., temporary Airtable attachment URLs)
-    - The image format is not supported (supported: JPG, PNG, GIF, BMP, TIFF, SVG, WebP, and more)
+    - The image format is not supported (supported: JPG, PNG, GIF, WebP, SVG, TIFF, AVIF and HEIC; for a PDF, EPS or AI file, the first page is used)
 
     See [Dynamic Images](/features/dynamic-images) for details and best practices.
   </Accordion>
@@ -243,7 +268,7 @@ Find answers to common questions about DocsAutomator. If your question is not li
 
     - Verify the placeholder name matches exactly (case-sensitive) between your template and data mapping
     - Check that curly brackets are not formatted differently (e.g., smart/curly quotes instead of straight brackets)
-    - Re-type the placeholder directly in Google Docs rather than copy-pasting, which can introduce hidden formatting
+    - Re-type the placeholder directly in your template rather than copy-pasting, which can introduce hidden formatting
     - Ensure the data field is mapped and has a value in the source record
   </Accordion>
 </AccordionGroup>

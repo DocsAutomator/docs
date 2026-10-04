@@ -33,18 +33,18 @@ Find answers to common questions about DocsAutomator. If your question is not li
   </Accordion>
 
   <Accordion title="What output formats are available?">
-    DocsAutomator always generates a **PDF**. Depending on the template, you can also save an editable copy:
+    DocsAutomator always generates a **PDF**. For the PDF you can:
 
-    - A **Google Doc** copy, for Google Doc templates
-    - A **Word (.docx)** file, for Word templates
-
-    You can then:
-
-    - Write the PDF back to your data source (for example an Airtable attachment field or a Google Sheets column)
-    - Save the PDF in Google Drive, OneDrive or Dropbox
-    - Send the PDF as an email attachment
-    - Notify a webhook, or merge existing PDFs into the result
+    - Save it in Google Drive, OneDrive or Dropbox
+    - Attach it to an email (not while signing is on for the automation)
+    - Write it back to your data source: an Airtable, Notion, SmartSuite or ClickUp file field, or its link in an Airtable or Notion field or a Google Sheets column
+    - File it in a folder on your Documents page
+    - Merge existing PDFs into it, or notify a webhook
     - Use the PDF URL returned in the API response
+
+    With a **Word (.docx) template**, you can also keep the generated **Word file** with the **Save Word document** action. It is downloadable from the run history, and you can save it in Google Drive, OneDrive or Dropbox, or upload it to an Airtable, Notion or SmartSuite file field. You can attach the Word file to an email even if you do not keep it.
+
+    With a **Google Doc template**, the **Save Google Doc** action saves an editable Google Doc in a Google Drive folder, and can write its link to your data source.
 
     See [Actions after Document Generation](/features/actions-after-document-generation) for every option.
   </Accordion>

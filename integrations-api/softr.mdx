@@ -35,10 +35,10 @@ First, set up your automation in DocsAutomator:
 
 1. Log in to your [DocsAutomator account](https://app.docsautomator.co)
 2. Click **New**, then **New automation** in your dashboard
-3. Select **Softr** as your data source
-4. Choose or create your template: a Google Doc, a Word (.docx) file, or a PDF
-5. Configure your output settings (PDF, email, Google Drive folder, etc.)
-6. Save the automation
+3. Choose or create your template: a Google Doc, a Word (.docx) file, or a PDF
+4. Configure your output settings (PDF, email, Google Drive folder, etc.)
+
+Softr pushes data to DocsAutomator, so you do not pick a data source here. Leave the automation without one and set the connection up inside Softr in the next steps.
 
 ### Step 2: Get Your API Key
 
@@ -91,12 +91,12 @@ Now you can add document generation to any workflow.
 The Create document action has the following settings:
 
 - **Account** – Select your connected DocsAutomator account
-- **Automation ID** – Choose which DocsAutomator automation to use
+- **Automation ID** – Select your DocsAutomator automation by its name from the list. You do not paste an ID here.
 - **Document Name** – Set a dynamic name for the generated document (optional)
 - **JSON body for placeholders** – Map your data to template placeholders
 
 <Note>
-Only automations with Softr as the data source will appear in the Automation ID dropdown.
+The Automation ID list shows the automations of the connected DocsAutomator account. An automation needs no data source to appear there.
 </Note>
 
 ### Step 4: Map Your Data
@@ -270,7 +270,7 @@ Automatically generate reports on a recurring basis:
 
 ### Automation Not Appearing in Dropdown
 
-- Verify your automation uses **Softr** as the data source in DocsAutomator
+- Verify the API key in Softr belongs to the DocsAutomator workspace that holds the automation
 - Check that your DocsAutomator account is connected in Softr's integration settings
 - Try disconnecting and reconnecting the DocsAutomator integration
 

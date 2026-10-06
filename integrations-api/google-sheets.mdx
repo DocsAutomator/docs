@@ -163,11 +163,21 @@ DocsAutomator's Google Sheets integration enables rapid document generation from
 
 ## E-Signatures
 
-DocsAutomator supports collecting legally binding e-signatures on documents generated from Google Sheets rows. After a document is created, it can be automatically routed to one or more signers.
+Documents generated from Google Sheets rows can go out for signature or one-click acceptance in the same step, and a link to the sealed PDF comes back to the row.
 
-To enable e-signatures, open your automation's output settings and toggle on the e-signature option. Map signer email and name to columns in your spreadsheet using placeholder names like `{{client_email}}` and `{{client_name}}`. Add e-signature placeholders such as `{{esign.signature.1}}` and `{{esign.date.1}}` to your template to control where signatures appear.
+Open the automation's **Signing & Acceptance** card. Under **How it completes**, pick one of three options:
 
-You can configure **sequential signing** (signers sign in order) or **parallel signing** (all signers receive the request at the same time). When all parties have signed, the completed PDF is available via the signing session and can be delivered via email or webhook.
+- **Signature required**: the recipients sign the document. These are legally binding e-signatures, with an audit trail and a certificate.
+- **Acceptance**: the recipient clicks Accept, for example on a quote or a proposal. See [Acceptance](/features/docsautomator-esign/acceptance).
+- **No closing step**: documents are delivered without a signing or acceptance request.
+
+Map each signer's email address and name to columns in your sheet, for example a "Client Email" column and a "Client Name" column. With more than one signer, choose **Sequential** (signers sign in order) or **Parallel** (all signers get the request at the same time).
+
+Place signing tags such as `{{esign.signature_1}}` and `{{esign.date_1}}` in your template where signatures and dates should appear. The number is the signer. The [E-Signature Guide](/features/docsautomator-esign#adding-esign-fields-to-templates) lists every tag, including text and checkbox fields.
+
+Under **After signing**, set **Save Signed PDF To** to a column. When the last person signs or accepts, DocsAutomator writes a link to the sealed PDF into that column of the row. With signing, **Save Field Values To** writes the text, checkbox and date values the signers enter into columns.
+
+E-signing and acceptance are included in every plan. See [How e-signing and acceptance are billed](/features/docsautomator-esign#how-e-signing-and-acceptance-are-billed).
 
 <Info>
 E-signatures work with both Google Doc templates and [PDF templates](/docsautomator-basics/pdf-template-guide). See the [E-Signature Guide](/features/docsautomator-esign) for full configuration details and placeholder reference.

@@ -139,7 +139,6 @@ Existing sections keep working unchanged. A single rule that compares a placehol
 E-sign fields (`{{esign.signature_1}}`, `{{esign.date_1}}`, etc.) placed inside a conditional section are fully excluded from the signing workflow when the section is hidden:
 
 - No signing session is created for fields in hidden sections
-- No $0.50 e-sign charge is billed
 - If all e-sign fields are inside hidden sections, email delivery proceeds normally instead of being held for signing
 
 This lets you use a single template for both e-sign and wet-ink workflows by placing each signature block in its own section and toggling visibility with a field value.

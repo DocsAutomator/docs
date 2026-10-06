@@ -23,7 +23,7 @@ DocsAutomator generates the document from your data and sends it to the recipien
 | Typed name | Part of the signature field | Optional confirmation before the click, on by default |
 | Result | Sealed PDF with the signatures placed and a Certificate of Completion | Sealed PDF, unchanged, with a Certificate of Acceptance |
 | Audit trail | Every field, every click | The open, the acceptance, the typed name, the exact button text |
-| Price | $0.50 per document, charged when the recipient first opens it | Same |
+| Price | Included in every plan | Same |
 | Use it for | Contracts and agreements where the other side expects to sign | Quotes, offers, purchase orders, SOP and policy sign-offs, HR acknowledgments |
 
 **If the other side expects to sign, use Signing. If you only need their yes, use Acceptance.** If you are not sure whether a yes is enough for your document, read [Is acceptance legally binding?](/features/docsautomator-esign/is-acceptance-legally-binding).
@@ -148,7 +148,7 @@ Webhooks fire as they do for signing. The payload carries `closeType: "acceptanc
 
 ## Billing
 
-Signing and acceptance cost **$0.50 per document**. That is one flat charge, however many recipients the document goes to. The charge happens when the recipient first opens the document. A request that nobody opens costs nothing. A request that a recipient opens but does not finish still counts, also when it later expires or is declined. Above 500 documents in a billing month, each document costs $0.35. Test and preview requests are never charged. See [How e-signing and acceptance are billed](/features/docsautomator-esign#how-e-signing-and-acceptance-are-billed).
+E-signing and acceptance are included in every plan. A signed or accepted document counts as one document in your plan, the same as any other document, however many recipients it has. Test documents do not count toward your plan. See [How e-signing and acceptance are billed](/features/docsautomator-esign#how-e-signing-and-acceptance-are-billed).
 
 ## Reading acceptances through the API
 

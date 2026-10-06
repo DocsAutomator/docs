@@ -17,7 +17,7 @@ A generated document closes in one of two ways: the recipient signs it, or the r
 
 An automation can also have no closing step. Then the document is delivered as it is, with no signing or acceptance request. This suits invoices, reports, certificates, and any document that needs no reply.
 
-Signature and acceptance run on the same rail. Both send the document by email or by link, both send reminders, both come back as a sealed PDF with a certificate on the last page, and both cost the same. The difference is what the recipient must do. A signature asks for fields in the document. An acceptance asks for one click on the whole document.
+Signature and acceptance run on the same rail. Both send the document by email or by link, both send reminders, both come back as a sealed PDF with a certificate on the last page, and both are included in every plan. The difference is what the recipient must do. A signature asks for fields in the document. An acceptance asks for one click on the whole document.
 
 <Card title="Get a document accepted with one click" icon="circle-check" href="/features/docsautomator-esign/acceptance">
   Setup, what the recipient sees, the Certificate of Acceptance, and billing.
@@ -85,11 +85,11 @@ Open the **Signing & Acceptance** card of your automation. Under **How it comple
 
 ## E-Sign Fields in Conditional Sections
 
-E-sign fields placed inside a [conditional section](/features/sections) are automatically excluded from the signing workflow when that section is hidden. If all e-sign fields are in hidden sections, no signing session is created and no charge is billed. This lets you build a single template that supports both e-sign and wet-ink workflows by toggling a section.
+E-sign fields placed inside a [conditional section](/features/sections) are automatically excluded from the signing workflow when that section is hidden. If all e-sign fields are in hidden sections, no signing session is created. This lets you build a single template that supports both e-sign and wet-ink workflows by toggling a section.
 
 ### Variable Number of Signers
 
-When a signer's block is hidden, that signer drops out of the signing session entirely — no invitation, no signing link, no charge for their fields. One template can serve documents with a different number of signers per record:
+When a signer's block is hidden, that signer drops out of the signing session entirely, with no invitation and no signing link. One template can serve documents with a different number of signers per record:
 
 1. Put each optional signer's block (signature, date, name fields) in its own conditional section.
 2. Configure all signers in the Signing & Acceptance card. Only signers whose fields appear in the generated document are included in the session.
@@ -109,7 +109,7 @@ By default, generating a document from an e-sign-enabled automation starts the s
 }
 ```
 
-The document is generated and delivered normally (Drive save, email, webhook), but no signing session is created, no signing invitations are sent, and nothing is billed for e-signing. For Google Docs and Word templates, the `{{esign.*}}` tags remain visible in the output so reviewers can see where signature blocks will be placed; PDF templates simply leave those areas blank. Once the document is approved, run the same request again **without** `skipEsign` to send it for signing.
+The document is generated and delivered normally (Drive save, email, webhook), but no signing session is created and no signing invitations are sent. For Google Docs and Word templates, the `{{esign.*}}` tags remain visible in the output so reviewers can see where signature blocks will be placed; PDF templates simply leave those areas blank. Once the document is approved, run the same request again **without** `skipEsign` to send it for signing.
 
 This makes two-step approval flows easy to build — e.g. two Airtable buttons triggering the same automation: "Draft for Review" (with `skipEsign: true`) and "Send for Signing" (without it).
 
@@ -550,16 +550,13 @@ E-signing and acceptance are included on all paid plans (Professional, Business,
 | Plan | eSign Access |
 |------|--------------|
 | Free (test mode) | Preview/Test signing only |
-| Paid (all plans) | Full production access at $0.50 / doc, charged on first open |
+| Professional, Business, Scale | Included |
 
 ### How e-signing and acceptance are billed
 
-- You pay **$0.50 per document, charged when the recipient first opens it; $0.35 per document above 500 a month**. One document is one signing request or one acceptance request.
-- The charge happens when the first recipient opens the document. It is one charge per document, no matter how many recipients are on it.
-- A request that nobody opens is free.
-- A request that a recipient opens but does not finish still counts, also when it later expires or is declined.
-- The $0.35 rate applies to every document above 500 in a billing month. The count starts again with each billing month.
-- Test and preview requests are never charged.
+- E-signing and acceptance are included in every plan.
+- A signed or accepted document counts as one document in your plan, the same as any other document, however many recipients it has.
+- Test documents do not count toward your plan.
 
 <Note>
 Legacy Unlimited-plan customers keep their included unlimited signatures until they change plans.

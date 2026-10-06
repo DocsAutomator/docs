@@ -25,11 +25,21 @@ In about two minutes your AI agent makes a quote in your brand and sends it to y
 
 <Steps>
   <Step title="Add DocsAutomator to your AI app">
-    - **Claude:** Settings → Connectors → Add custom connector. Enter the server URL and sign in to DocsAutomator.
-    - **ChatGPT:** turn on developer mode (Settings → Security and login), then add a connector with the server URL and sign in.
-    - **Cursor:** [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9)
-    - **VS Code:** [Add to VS Code](vscode:mcp/install?%7B%22name%22%3A%22docsautomator%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.docsautomator.co%2Fmcp%22%7D)
-    - **Claude Code:** `claude mcp add --transport http docsautomator https://mcp.docsautomator.co/mcp`
+    One click, then sign in to DocsAutomator. No API key is needed.
+
+    {/* Official install buttons, vendor artwork only: Cursor (cursor.com/docs/mcp/install-links) and LM Studio (lmstudio.ai/docs/app/mcp/deeplink). Dark artwork on the light theme, light artwork on the dark theme. */}
+    <div id="install-buttons" style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
+      <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9" style={{ display: "inline-flex", borderBottom: "none", textDecoration: "none" }}><img className="block dark:hidden" src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Add DocsAutomator to Cursor" style={{ height: "32px", width: "auto", margin: 0 }} /><img className="hidden dark:block" src="https://cursor.com/deeplink/mcp-install-light.svg" alt="Add DocsAutomator to Cursor" style={{ height: "32px", width: "auto", margin: 0 }} /></a>
+      <a href="https://lmstudio.ai/install-mcp?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9" style={{ display: "inline-flex", borderBottom: "none", textDecoration: "none" }}><img className="block dark:hidden" src="https://files.lmstudio.ai/deeplink/mcp-install-dark.svg" alt="Add DocsAutomator to LM Studio" style={{ height: "32px", width: "auto", margin: 0 }} /><img className="hidden dark:block" src="https://files.lmstudio.ai/deeplink/mcp-install-light.svg" alt="Add DocsAutomator to LM Studio" style={{ height: "32px", width: "auto", margin: 0 }} /></a>
+    </div>
+
+    {/* After directory approval, swap in the listing links: Claude https://claude.ai/directory/connectors/<slug>, ChatGPT https://chatgpt.com/plugins/<id>. */}
+    - **Claude:** [Add to Claude](https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=DocsAutomator&connectorUrl=https%3A%2F%2Fmcp.docsautomator.co%2Fmcp). The link opens the "Add custom connector" dialog with DocsAutomator filled in. Click Add, then Connect, and sign in. Claude Code uses the same connector when you are signed in to the same Claude account.
+    - **ChatGPT:** turn on developer mode (Settings, Security and login). Open [ChatGPT plugins](https://chatgpt.com/plugins), click the plus button, enter the server URL and sign in.
+    - **VS Code:** [Install in VS Code](vscode:mcp/install?%7B%22name%22%3A%22docsautomator%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.docsautomator.co%2Fmcp%22%7D) or [VS Code Insiders](vscode-insiders:mcp/install?%7B%22name%22%3A%22docsautomator%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.docsautomator.co%2Fmcp%22%7D), then click Install and sign in.
+    - **Goose:** [Install in Goose](goose://extension?type=streamable_http&url=https%3A%2F%2Fmcp.docsautomator.co%2Fmcp&id=docsautomator&name=DocsAutomator&description=Documents%20from%20your%20data%2C%20sent%20for%20acceptance%20or%20signature), then sign in.
+    - **Claude Code without a Claude account connector:** `claude mcp add --transport http docsautomator https://mcp.docsautomator.co/mcp`
+    - **Windsurf, Zed, JetBrains AI Assistant, Cline and other apps:** add the server URL in the app's MCP settings (see [Setup by Client](#setup-by-client)).
 
     For Claude and Claude Code, the [DocsAutomator skill](https://github.com/DocsAutomator/docsautomator-mcp) gives your agent these steps.
   </Step>
@@ -63,7 +73,7 @@ If your DocsAutomator account belongs to more than one workspace and you connect
 
 To change which workspace an existing connection points at, disconnect the integration in your AI client and reconnect. That triggers a fresh OAuth flow and lets you pick a different workspace.
 
-API key connections (Claude Code CLI, Cursor, custom clients) are bound to the workspace of the key itself, so no picker is involved; switch workspaces by using a different API key.
+API key connections (the Claude Code CLI with an API key, custom clients) are bound to the workspace of the key itself, so no picker is involved; switch workspaces by using a different API key.
 
 ---
 
@@ -141,16 +151,27 @@ Once connected, you can ask ChatGPT to generate documents, manage automations, h
 
 ### Cursor
 
-1. Open Cursor Settings (`Cmd/Ctrl + ,`)
-2. Navigate to **Features** → **MCP Servers**
-3. Click **Add Server**
-4. Configure:
-   - **Name:** DocsAutomator
-   - **URL:** `https://mcp.docsautomator.co/mcp`
-   - **Authentication:** Bearer Token
-   - **Token:** Your DocsAutomator API key
+<a href="cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9"><img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Add DocsAutomator MCP server to Cursor" height="32" /></a>
 
-Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
+1. Click **Add to Cursor** above. Cursor opens and shows the DocsAutomator server.
+2. Click **Install**, then **Connect**.
+3. Sign in to DocsAutomator and click **Authorize**. If your account has more than one workspace, pick the workspace here.
+
+#### Alternative: Manual configuration
+
+Add DocsAutomator to `.cursor/mcp.json` in your project, or to `~/.cursor/mcp.json` to use it in every project:
+
+```json
+{
+  "mcpServers": {
+    "docsautomator": {
+      "url": "https://mcp.docsautomator.co/mcp"
+    }
+  }
+}
+```
+
+Cursor asks you to sign in to DocsAutomator the first time it connects. To use an API key instead, add `"headers": { "Authorization": "Bearer YOUR_API_KEY" }` next to `url`, with your key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
 
 ---
 

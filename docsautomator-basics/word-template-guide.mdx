@@ -41,7 +41,6 @@ Word templates support the **same placeholder syntax and almost all of the same 
   <Card title="Google Doc Templates" icon="file-lines">
     - You prefer to build and edit templates in Google Docs
     - You want the in-app live preview while editing
-    - You need nested (multi-level) line items
     - You collaborate on the template in real time
   </Card>
 </CardGroup>
@@ -159,7 +158,7 @@ To build one in Word:
 At generation time DocsAutomator repeats that row for every item in the list. You can have multiple independent line-item tables in one document by using `{{line_items_2}}`, `{{line_items_3}}`, and so on (up to nine).
 
 <Note>
-**Nested (multi-level) line items are not yet supported in native Word templates.** The `{{line_items_1_1}}` / `{{line_items_1_2}}` syntax for sub-lists currently works only in [Google Doc templates](/features/line-items/nested-line-items). If you need nested line items today, use a Google Doc template. Single-level line items are fully supported in Word.
+**Nested (multi-level) line items work in Word.** Put the child row with `{{line_items_1_1}}` directly below its parent's `{{line_items_1}}` row in the same table, and a level 3 row directly below the child row. A nested row that sits in the same row as its parent, or with another row in between, does not repeat, and the template linter flags it. See [Nested Line Items](/features/line-items/nested-line-items) for Airtable, Notion and API data.
 </Note>
 
 See [Line Items](/features/line-items) for the full feature reference, including [grouping and calculations](/features/line-items/line-items-grouping-+-calculations) and [automatic row numbers](/features/line-items/auto-row-numbers), all of which work in Word.
@@ -199,8 +198,8 @@ Almost everything you can do in a Google Doc template works in a Word template. 
 |---------|:-----------:|-------|
 | Simple text placeholders | Yes | `{{fieldName}}` |
 | [Dynamic images](/features/dynamic-images) | Yes | Any placeholder whose name contains `image`; one image per placeholder (a multi-image field inserts the first), with per-placeholder resizing, file-size optimization, and [clickable links](/features/dynamic-images#clickable-image-links) |
-| [Line items](/features/line-items) (single level) | Yes | `{{line_items_1}}` in the table row, up to 9 tables |
-| [Nested line items](/features/line-items/nested-line-items) | No | Google Doc templates only (for now) |
+| [Line items](/features/line-items) | Yes | `{{line_items_1}}` in the table row, up to 9 tables |
+| [Nested line items](/features/line-items/nested-line-items) | Yes | Child row directly below its parent row in the same table; Airtable, Notion and API data |
 | [Auto row numbers](/features/line-items/auto-row-numbers) | Yes | Inserts a numbered column into the line-item table |
 | [Conditional sections](/features/sections) (show/hide) | Yes | `{{section_x}}…{{/section_x}}` |
 | [Conditional show/hide of placeholders](/features/advanced-placeholder-options/conditional-show-hide) | Yes | Empty/hidden values drop their paragraph or table row |
@@ -298,11 +297,10 @@ The placeholder **name** is what maps to your data source. Field mapping is free
 
 Native Word templates support nearly the full feature set, with a few differences to be aware of:
 
-- **Nested line items** (`{{line_items_1_1}}`) are not yet supported, use a single level, or a Google Doc template for multi-level lists.
 - **Fonts must be embedded** in the `.docx` for non-standard typefaces to render faithfully in the PDF.
 - **Floating/anchored objects** may shift position in the PDF; prefer in-line layout.
 
-For documents that need nested line items or heavy real-time collaboration on the template itself, a [Google Doc template](/docsautomator-basics/google-doc-template-guide) may be the better fit.
+For documents that need heavy real-time collaboration on the template itself, a [Google Doc template](/docsautomator-basics/google-doc-template-guide) may be the better fit.
 
 ---
 

@@ -68,6 +68,14 @@ POST https://api.docsautomator.co/createDocument
   Override the automation's Google Doc template URL for this request only. Pass a full Google Docs URL or just the document ID.
 </ParamField>
 
+<ParamField body="wordTemplateLink" type="string">
+  Word templates only. Use a different Word file for this request only: an https link to a .docx file that our servers can download. The data, mapping, signing and output settings still come from the automation in `docId`. The file can be up to 25 MB. Links to private or internal network addresses are refused.
+</ParamField>
+
+<ParamField body="wordTemplateBase64" type="string">
+  Word templates only. The same as `wordTemplateLink`, but you send the .docx file itself, encoded as base64, in the JSON body. Use this when you cannot host the file. Up to 25 MB before encoding. Send either `wordTemplateLink` or `wordTemplateBase64`, not both.
+</ParamField>
+
 ## Basic Example
 
 <CodeGroup>

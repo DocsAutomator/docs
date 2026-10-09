@@ -219,7 +219,9 @@ Find answers to common questions about DocsAutomator. If your question is not li
   </Accordion>
 
   <Accordion title="Can I override the template at request time?">
-    Yes, for Google Doc templates. Pass a `docTemplateLink` parameter in your `createDocument` request with either a full Google Docs URL or a document ID. The override template must be accessible by your connected Google account. Automations with Word or PDF templates ignore this parameter.
+    Yes, for Google Doc and Word templates. For Google Docs, pass a `docTemplateLink` parameter in your `createDocument` request with either a full Google Docs URL or a document ID. The override template must be accessible by your connected Google account.
+
+    For Word templates, pass `wordTemplateLink` with an https link to a .docx file, or `wordTemplateBase64` with the file itself encoded as base64. The document uses that file, and all other settings come from the automation you call. The file is used for this request only and is not saved as a template. `docTemplateLink` only applies to Google Doc templates; Word automations ignore it. Automations with PDF templates cannot override the template.
   </Accordion>
 
   <Accordion title="Where are generated PDFs stored?">

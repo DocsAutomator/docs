@@ -5,6 +5,12 @@ rss: true
 mode: "center"
 ---
 
+<Update label="October 9, 2026">
+  ## Send a different Word template with an API request
+
+  Automations with a Word template can now use a different Word file for a single request, the same way `docTemplateLink` works for Google Doc templates. Pass `wordTemplateLink` with an https link to the .docx file, or `wordTemplateBase64` with the file itself. The document uses that file, and the data, mapping, signing and output settings still come from the automation you call. The file can be up to 25 MB and is not stored as a template. See [Create document from API](/api-reference/documents/create-from-api).
+</Update>
+
 <Update label="October 6, 2026">
   ## Signing and acceptance included in every plan
 

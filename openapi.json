@@ -115,6 +115,17 @@
                     "description": "Override the automation's Google Doc template URL for this request only.",
                     "example": "https://docs.google.com/document/d/your-template-id/edit"
                   },
+                  "wordTemplateLink": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Word templates only. An https link to a .docx file (up to 25 MB) to use instead of the automation's Word template for this request only. The data, mapping, signing and output settings still come from the automation in docId.",
+                    "example": "https://example.com/templates/proposal.docx"
+                  },
+                  "wordTemplateBase64": {
+                    "type": "string",
+                    "format": "byte",
+                    "description": "Word templates only. The .docx file itself, base64 encoded (up to 25 MB before encoding), to use instead of the automation's Word template for this request only. Send either wordTemplateLink or wordTemplateBase64, not both."
+                  },
                   "recipients": {
                     "type": "array",
                     "description": "Who signs or accepts this document. Each entry names one of the automation's signers by number and gives the person's email and, optionally, name. A listed signer's email and name replace the saved ones for this document only; signers you leave out keep their saved setup. The automation decides how many signers there are, so this never adds a signer. `signer` can be left out when the automation has exactly one signer and is required when it has two or more. Required for each signer whose email source is Given with each request. Works for every data source, including requests with a record ID. The request fails before anything is generated when a signer number does not exist, a signer is listed twice, an email is invalid, or the automation has no signing or acceptance step. Nothing is saved on the automation.",

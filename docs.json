@@ -43,7 +43,9 @@
   "seo": {
     "indexing": "all",
     "metatags": {
-      "og:image": "https://docsautomator.co/og-image.png",
+      "og:image": "https://docsautomator.co/docs/images/og/docs-default.jpg",
+      "og:image:alt": "DocsAutomator documentation",
+      "twitter:image": "https://docsautomator.co/docs/images/og/docs-default.jpg",
       "og:site_name": "DocsAutomator Documentation",
       "twitter:card": "summary_large_image",
       "twitter:site": "@docsautomator"

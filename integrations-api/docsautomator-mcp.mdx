@@ -25,7 +25,7 @@ In about two minutes your AI agent makes a quote in your brand and sends it to y
 
 <Steps>
   <Step title="Add DocsAutomator to your AI app">
-    - **Claude:** Settings → Connectors → Add custom connector. Enter the server URL and sign in to DocsAutomator.
+    - **Claude:** Customize → Connectors → + Add → Add custom connector. Enter the server URL and sign in to DocsAutomator.
     - **ChatGPT:** turn on developer mode (Settings → Security and login), then add a connector with the server URL and sign in.
     - **Cursor:** [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9)
     - **VS Code:** [Add to VS Code](vscode:mcp/install?%7B%22name%22%3A%22docsautomator%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.docsautomator.co%2Fmcp%22%7D)
@@ -63,7 +63,7 @@ If your DocsAutomator account belongs to more than one workspace and you connect
 
 To change which workspace an existing connection points at, disconnect the integration in your AI client and reconnect. That triggers a fresh OAuth flow and lets you pick a different workspace.
 
-API key connections (Claude Code CLI, Cursor, custom clients) are bound to the workspace of the key itself, so no picker is involved; switch workspaces by using a different API key.
+API key connections (Claude Code with an API key, Cursor, custom clients) are bound to the workspace of the key itself, so no picker is involved; switch workspaces by using a different API key.
 
 ---
 
@@ -71,15 +71,17 @@ API key connections (Claude Code CLI, Cursor, custom clients) are bound to the w
 
 ### Claude Desktop
 
-1. Open Claude Desktop
-2. Click the **+** button in the conversation
-3. Select **Connectors** → **Add custom connector**
-4. Enter the MCP server URL:
+1. Open Claude Desktop or claude.ai
+2. Go to **Customize** → **Connectors**
+3. Click **+ Add**, then **Add custom connector**
+4. Enter the name DocsAutomator and the MCP server URL, then click **Continue**:
    ```
    https://mcp.docsautomator.co/mcp
    ```
-5. Click **Connect**
+5. Keep the default sign-in settings and click **Add**
 6. Sign in to DocsAutomator and authorize access
+
+On a Team or Enterprise plan, an owner adds the connector under **Organization settings** → **Connectors**. Members then click **Connect** on it under **Customize** → **Connectors**.
 
 Once connected, you can ask Claude things like:
 - "List my DocsAutomator automations"
@@ -93,19 +95,30 @@ Once connected, you can ask Claude things like:
 Add DocsAutomator to Claude Code with a single command:
 
 ```bash
-claude mcp add docsautomator -t streamable-http -e API_KEY=YOUR_API_KEY -- https://mcp.docsautomator.co/mcp
+claude mcp add --transport http docsautomator https://mcp.docsautomator.co/mcp
+```
+
+Then run `/mcp` in Claude Code, select **docsautomator** and sign in to DocsAutomator. To make DocsAutomator available in every project, add `--scope user` to the command.
+
+#### Alternative: API key
+
+To connect with an API key instead of signing in:
+
+```bash
+claude mcp add --transport http docsautomator https://mcp.docsautomator.co/mcp --header "Authorization: Bearer YOUR_API_KEY"
 ```
 
 Replace `YOUR_API_KEY` with your [DocsAutomator API key](https://app.docsautomator.co/settings/workspace/api).
 
-#### Alternative: Manual Configuration
+#### Alternative: Manual configuration
 
-Add to your `~/.claude/settings.json`:
+Add this to a `.mcp.json` file in your project folder:
 
 ```json
 {
   "mcpServers": {
     "docsautomator": {
+      "type": "http",
       "url": "https://mcp.docsautomator.co/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
@@ -114,6 +127,8 @@ Add to your `~/.claude/settings.json`:
   }
 }
 ```
+
+Leave out `headers` to sign in with `/mcp` instead of an API key.
 
 ---
 

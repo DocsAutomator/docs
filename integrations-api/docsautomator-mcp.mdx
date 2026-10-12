@@ -40,7 +40,7 @@ In about two minutes your AI agent makes a quote in your brand and sends it to y
     ```
     Make a quote and send it to me at you@example.com for acceptance. Use DocsAutomator and send it in test mode.
     ```
-    The first send runs in test mode. It is free and sends the real email.
+    DocsAutomator tells your AI client to send the first document of a new setup in test mode. Test mode is free and sends the real email.
   </Step>
   <Step title="Accept it on your phone">
     Open the email, check the quote, type your name and tap **Accept**. You are done when the quote shows as accepted under [Documents](https://app.docsautomator.co/documents), with the accepted PDF.
@@ -149,6 +149,8 @@ Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/sett
 
 The MCP server gives your AI client 18 tools. Your AI client sees each tool with its full instructions after it connects.
 
+The rules DocsAutomator gives your AI client, including the confirmations before any send, are listed in [How AI clients use DocsAutomator](/integrations-api/how-ai-clients-use-docsautomator).
+
 The main path: your AI client is the data source. It reads the placeholders with `get_automation` and sends the values with `create_document`. Record sources such as Airtable or Notion are an optional second setup.
 
 ### Automations
@@ -237,7 +239,9 @@ When the assistant sets up signing or acceptance with `configure_esignature`, it
 - On Zapier, Make, n8n, Glide and Noloco automations, the signer uses a template placeholder, because their apps do not send recipients with each run.
 - On Airtable, Notion, Google Sheets, SmartSuite, ClickUp and Google Forms automations, the signer points at the record's email field, because their triggers run without anyone naming a recipient.
 
-**Test mode:** the first document of a new setup is sent in test mode. A test mode signing or acceptance request sends the real email to the real person and is never billed.
+**Test mode:** DocsAutomator tells your AI client to send the first document of a new setup in test mode, and it refuses a live document from an automation that has not made a test document yet. A test mode signing or acceptance request sends the real email to the real person and is never billed.
+
+**Confirmation before a send:** before anything goes out by email, DocsAutomator can ask you in a confirmation dialog that names the document and every recipient. Nothing is sent until you confirm, and a preview never asks. [How AI clients use DocsAutomator](/integrations-api/how-ai-clients-use-docsautomator#a-confirmation-dialog-in-your-ai-client) lists when it asks and which AI clients show the dialog.
 
 **Example prompts:**
 > "Create a document using automation abc123 for Acme Corp, dated today."

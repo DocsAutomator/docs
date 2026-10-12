@@ -1,0 +1,108 @@
+---
+title: "How AI clients use DocsAutomator"
+description: "The rules DocsAutomator gives AI clients such as Claude and ChatGPT, and the confirmations that protect every send"
+icon: "shield-check"
+---
+
+When you connect DocsAutomator to an AI client (Claude, ChatGPT, Cursor or another client that supports the Model Context Protocol, MCP), DocsAutomator gives that client a set of working rules. This page lists every rule in plain English, so you know what your AI client is told before it acts for you.
+
+The rules come in three places:
+
+- **Server instructions:** a short text every client receives when it connects.
+- **Session guide:** a short text that DocsAutomator adds to the first answer of each session, because some clients ignore the server instructions.
+- **Tool descriptions:** each of the 18 tools describes itself, and the rules that protect a send are written into the tools that send.
+
+## Safety rules
+
+These rules protect the people who receive your documents.
+
+### Confirm before anything is sent
+
+- Before your AI client sends a document, it shows you the document as a preview and confirms the recipients with you. A preview is a watermarked PDF. Nothing is sent and nothing counts against your plan.
+- Before your AI client sends a reminder, sends an invitation again or cancels a signing or acceptance request, it confirms the recipient and the action with you.
+- Your AI client never moves an automation to the trash without your yes. When it made an automation only for a test, it offers to trash it after the test.
+
+### A confirmation dialog in your AI client
+
+DocsAutomator itself asks you before anything goes out by email. This does not depend on the AI model following a rule.
+
+DocsAutomator shows the dialog in AI clients you signed in to with your DocsAutomator account, such as Claude, ChatGPT or Codex, when the client supports confirmation dialogs (the MCP feature called elicitation). Connections that use an API key, which scripts and agents that run on their own use, are not asked; for them, the rules in the tool descriptions apply.
+
+- The dialog names the document and every recipient. Nothing is sent until you confirm.
+- DocsAutomator asks before:
+  - a document goes out in test or live mode, for signing, acceptance or by email (`create_document`),
+  - a reminder, a new invitation or a cancellation (`manage_esign_session`),
+  - an automation with email recipients goes live (`configure_automation`),
+  - a change to who a live automation emails (`configure_output`).
+- A preview never asks.
+- When you decline, close the dialog or do not answer within 10 minutes, nothing is sent or changed, and your AI client is told so in plain words.
+- AI clients without confirmation dialogs confirm the recipients with you in the chat instead.
+
+Tested with: Claude Code and Codex.
+
+### Test before live
+
+- The first document of a new setup goes out in test mode. Test mode runs the full flow for free: the real signing or acceptance emails go to the real recipients, with a watermark, and nothing counts against your plan.
+- Going live is the last step. It only removes the watermark and counts the documents.
+- DocsAutomator also checks this on the server: it refuses a live document from an automation that has not made a test document yet.
+
+## Templates
+
+- Your AI client uses your own template first: a Word or PDF file you upload, or a Google Doc you already have. Then a ready-made template from the DocsAutomator gallery. It designs a new Word template with AI only when none fits or when you ask for it.
+- Your AI client never creates or edits a Google Doc.
+- A template is reusable: the details of each case become placeholders. Your AI client does not fill in a one-off document.
+
+## Sending documents
+
+- Your AI client sends from the automation you already have.
+- On a record source (Airtable, Notion, Google Sheets, Google Forms, SmartSuite or ClickUp), it passes the record ID. The record fills the document, and the signer emails come from the record's mapped fields. It names other recipients only when you name a different person.
+- It never copies an automation to send from the chat, and it never replaces the automation's data source.
+- The DocsAutomator tools cannot search your records. Your AI client gets the record from you, or from its own connection to that app.
+
+## Values and formats
+
+- Your AI client sends raw values: numbers as numbers and dates as ISO dates (2026-10-01). DocsAutomator formats every value itself, by the automation's placeholder formats and locale.
+- Your AI client reads the automation before it creates a document, so it knows the placeholders and what each one means.
+
+## Choices
+
+When your AI client needs a choice from you, it asks in plain text.
+
+## The texts as your AI client receives them
+
+**Server instructions:**
+
+```text
+Send RAW values: numbers as numbers, dates as ISO dates; never pre-format. Read get_automation, then call create_document with the values and a mode ('test' for a new setup's first document).
+Templates: theirs first (set_template: upload, Google Doc), then gallery (set_template); generate_word_template only if none fits. Never create or edit a Google Doc.
+Ask the user in plain text when you need a choice.
+```
+
+**Session guide:**
+
+```text
+DocsAutomator session guide (shown once per session):
+- Templates, in this order: the user's own (set_template takes their upload or Google Doc), then a ready-made one from our gallery (search with in: "templates", then set_template), and only when none fits or they ask for AI, generate_word_template. Never lead with an AI design. Never create or edit a Google Doc.
+- Build a reusable template: the case details become placeholders. Never fill in a one-off document.
+- Send from the existing automation. On a record source (Airtable, Notion, Google Sheets, Google Forms, SmartSuite, ClickUp), pass the record id; the record fills the document and the signer emails come from its mapped fields. Pass recipients only when the user names a different person.
+- Never copy an automation into an API copy to send from chat, and never replace its data source.
+- These tools cannot search records. Get the record from the user, or from their own connector for that app.
+```
+
+**Safety rules in the tool descriptions:**
+
+| Tool | Rule |
+|------|------|
+| `create_document` | Show it with mode 'preview' and confirm the recipients with the user before you send. |
+| `manage_esign_session` | Each action emails a real person or ends the request, so confirm the recipient and the action with the user before you act. |
+| `configure_automation` | Ask the user first. Test before live; going live is the last step. |
+| `configure_output` | Test before live; going live is the last step. |
+| `create_automation` | After a test, offer to trash an automation you made only for it. |
+
+ChatGPT and Codex read the server instructions and do not receive the session guide, because OpenAI asks that tool answers carry only data.
+
+When these rules change, this page changes with them.
+
+## Related
+
+- [DocsAutomator MCP](/integrations-api/docsautomator-mcp): connect your AI client and see every tool.

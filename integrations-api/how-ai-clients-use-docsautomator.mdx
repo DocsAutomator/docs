@@ -28,6 +28,8 @@ DocsAutomator itself asks you before anything goes out by email. This does not d
 
 DocsAutomator shows the dialog in AI clients you signed in to with your DocsAutomator account, such as Claude, ChatGPT or Codex, when the client supports confirmation dialogs (the MCP feature called elicitation). Connections that use an API key, which scripts and agents that run on their own use, are not asked; for them, the rules in the tool descriptions apply.
 
+An agent that runs on its own but signs in with your DocsAutomator account and supports confirmation dialogs, such as Claude Code in a script or an app built with the Claude Agent SDK, cannot answer the dialog, so DocsAutomator sends nothing. Connect it with an API key instead, or let it answer the dialog automatically with a Claude Code [`Elicitation` hook](https://code.claude.com/docs/en/hooks#elicitation) or the Agent SDK's [`onElicitation` option](https://code.claude.com/docs/en/agent-sdk/typescript) (TypeScript), for example by accepting test sends and asking a person before live ones.
+
 - The dialog names the document and every recipient. Nothing is sent until you confirm.
 - DocsAutomator asks before:
   - a document goes out in test or live mode, for signing, acceptance or by email (`create_document`),

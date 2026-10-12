@@ -443,6 +443,7 @@ while True:
 | `signingLinks` | E-signature is enabled (array of signer objects with `signerIndex`, `email`, `name`, `signingUrl`, `status`) |
 | `signingDeliveryMethod` | E-signature is enabled |
 | `esignSkipped` | E-signature is enabled but skipped for this request via `skipEsign: true` |
+| `eInvoice` | The automation creates an e-invoice: `{ "ok": true, "format": "zugferd" }`, or with XRechnung `{ "ok": true, "format": "xrechnung", "xmlUrl": "..." }` plus `xmlGoogleDriveUrl` when the PDF is saved to Google Drive. See [E-invoices](#e-invoices). |
 
 ### Async mode (202)
 
@@ -453,3 +454,23 @@ while True:
   "logId": "log_xyz789"
 }
 ```
+
+## E-invoices
+
+When the [e-invoice add-on](/features/e-invoices) is on for the workspace and the automation, every document you create through the API is also an e-invoice. You send the same request; nothing in the request changes.
+
+- **Fields:** the e-invoice reads the request keys mapped in the automation's E-invoice section, including the `line_items_1` list. Send amounts in euros, as numbers (`1059`) or as text (`"1.059,00 €"`).
+- **ZUGFeRD:** `pdfUrl` is the e-invoice (a PDF/A-3 file with the data embedded).
+- **XRechnung:** `pdfUrl` is the readable PDF, and `eInvoice.xmlUrl` is the XML file.
+- **Async mode:** the job result carries the same `eInvoice` field.
+- **Test mode:** with `isPreview: true` the e-invoice is valid but marked as a test (`TEST-` invoice number and a test note).
+
+If the data cannot make a valid e-invoice, no document is created and nothing is delivered. The request fails with a `message` that starts with "E-invoice not created" and names each problem; in async mode the job ends with status `failed` and the same text in `error`:
+
+```json
+{
+  "message": "E-invoice not created: Gross total does not match the line items. The record says €1,060.00; the line items give €1,059.00."
+}
+```
+
+If the e-invoice check itself is not reachable, the message is "The e-invoice check is not available right now. Nothing was sent; please try again in a few minutes." Send the request again later.

@@ -84,6 +84,16 @@ POST https://api.docsautomator.co/createDocument
   Word templates only. The same as `wordTemplateLink`, but you send the .docx file itself, encoded as base64, in the JSON body. Use this when you cannot host the file. Up to 25 MB before encoding. Send either `wordTemplateLink` or `wordTemplateBase64`, not both.
 </ParamField>
 
+<ParamField body="pdfTemplateLink" type="string">
+  PDF templates only. Use a different PDF as the background for this request only: an https link to a PDF file that our servers can download. The automation's saved fields are placed on this PDF at their saved positions, for example to fill in a check or a form that another tool created. The data, mapping, signing and output settings still come from the automation in `docId`. The file can be up to 25 MB. Links to private or internal network addresses are refused, and so are password-protected PDFs.
+
+  The PDF must have every page that holds a saved field. If a field is on a page the PDF does not have, the request fails and the error names the fields and pages. If a page has a different size from the page in the saved template, each field keeps its distance from the top-left corner of the page and is not scaled. The response then lists the affected pages in `warnings`.
+</ParamField>
+
+<ParamField body="pdfTemplateBase64" type="string">
+  PDF templates only. The same as `pdfTemplateLink`, but you send the PDF itself, encoded as base64, in the JSON body. Use this when you cannot host the file. Up to 25 MB before encoding. Send either `pdfTemplateLink` or `pdfTemplateBase64`, not both.
+</ParamField>
+
 ## Example
 
 <CodeGroup>

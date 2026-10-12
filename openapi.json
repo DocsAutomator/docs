@@ -126,6 +126,17 @@
                     "format": "byte",
                     "description": "Word templates only. The .docx file itself, base64 encoded (up to 25 MB before encoding), to use instead of the automation's Word template for this request only. Send either wordTemplateLink or wordTemplateBase64, not both."
                   },
+                  "pdfTemplateLink": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "PDF templates only. An https link to a PDF (up to 25 MB) to use as the background for this request only. The automation's saved fields are placed on it at their saved positions; the PDF must have every page that holds a saved field. On a page with a different size, fields keep their distance from the top-left corner and are not scaled, and the response lists the page in warnings.",
+                    "example": "https://example.com/checks/check-1043.pdf"
+                  },
+                  "pdfTemplateBase64": {
+                    "type": "string",
+                    "format": "byte",
+                    "description": "PDF templates only. The PDF itself, base64 encoded (up to 25 MB before encoding), to use as the background for this request only. Send either pdfTemplateLink or pdfTemplateBase64, not both."
+                  },
                   "recipients": {
                     "type": "array",
                     "description": "Who signs or accepts this document. Each entry names one of the automation's signers by number and gives the person's email and, optionally, name. A listed signer's email and name replace the saved ones for this document only; signers you leave out keep their saved setup. The automation decides how many signers there are, so this never adds a signer. `signer` can be left out when the automation has exactly one signer and is required when it has two or more. Required for each signer whose email source is Given with each request. Works for every data source, including requests with a record ID. The request fails before anything is generated when a signer number does not exist, a signer is listed twice, an email is invalid, or the automation has no signing or acceptance step. Nothing is saved on the automation.",

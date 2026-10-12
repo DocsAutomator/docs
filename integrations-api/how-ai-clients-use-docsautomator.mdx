@@ -44,7 +44,7 @@ Tested with: Claude Code and Codex.
 
 - The first document of a new setup goes out in test mode. Test mode runs the full flow for free: the real signing or acceptance emails go to the real recipients, with a watermark, and nothing counts against your plan.
 - Going live is the last step. It only removes the watermark and counts the documents.
-- DocsAutomator also checks this on the server: it refuses a live document from an automation that has not made a test document yet.
+- DocsAutomator also checks this on the server: when your AI client does not ask for a mode, the first document of a new automation goes out in test mode, and a live document from an automation that has not made a test document yet is refused.
 
 ## Templates
 

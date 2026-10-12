@@ -252,6 +252,15 @@ When the assistant sets up signing or acceptance with `configure_esignature`, it
 
 ---
 
+## E-invoices
+
+When the [e-invoice add-on](/features/e-invoices) is on for the workspace and the automation, a document that Claude, ChatGPT or another MCP client creates with `create_document` is also an e-invoice. Nothing changes in the conversation; the automation's E-invoice section decides the format and the fields.
+
+- **Mode `test` or `live`:** with ZUGFeRD, the `pdfUrl` the client gets is the e-invoice. With XRechnung, the XML goes to the automation's XML field, Google Drive and email as set up; the answer to the client carries only the PDF link, not the XML link.
+- **Mode `preview`:** the client gets a watermarked PDF. If the data would not make a valid e-invoice, the preview shows the plain PDF and does not report the problems. Use `test` to check an e-invoice from a chat, or the **Test document** card in the app.
+- **Problems:** if the data cannot make a valid e-invoice, no document is created, and the client receives the message that names each problem (for example "Gross total does not match the line items"), so it can fix the data and try again.
+- **Values:** send amounts as plain euro numbers and dates as ISO dates, as for every document.
+
 ## Example Conversations
 
 ### Generate a Contract

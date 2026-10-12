@@ -6,6 +6,17 @@ mode: "center"
 ---
 
 <Update label="October 12, 2026">
+  ## E-invoices: ZUGFeRD and XRechnung
+
+  Invoice automations can now create a valid e-invoice next to the PDF. Switch on the **E-invoice (ZUGFeRD / XRechnung)** add-on under **Settings**, **Add-ons**, enter your seller details once, and turn on the e-invoice in an automation's **E-invoice** section.
+
+  - **Two formats:** ZUGFeRD, a PDF/A-3 file with the e-invoice data inside, or XRechnung, an XML file next to your PDF.
+  - **Checked before delivery:** every e-invoice passes the official validators before it is sent. If a field is missing or a total does not match the lines, the run stops with a message that names the field.
+  - **Every data source:** Airtable, Google Sheets, Notion, SmartSuite, ClickUp, Google Forms, the API, Glide, Noloco, Softr, Make, n8n, Zapier and MCP clients. The XML file goes to a field of your record where the source has one, and to Google Drive, email and the API response.
+  - **Test documents** show every problem next to the preview and stay free.
+
+  See [E-invoices](/features/e-invoices).
+
   ## DocsAutomator in the Claude directory
 
   DocsAutomator is now an official connector in the Claude directory. Open [DocsAutomator in the Claude directory](https://claude.ai/directory/connectors/docsautomator), click **Connect to Claude** and sign in to DocsAutomator. The connector works in claude.ai, the Claude desktop and mobile apps, and Claude Code when you sign in with the same Claude account. You no longer copy a server URL into Claude.

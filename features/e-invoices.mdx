@@ -1,0 +1,155 @@
+---
+title: "E-invoices (ZUGFeRD and XRechnung)"
+description: "Create invoices and credit notes in a valid e-invoice format, from the same automation that makes your PDF."
+icon: "file-invoice"
+---
+
+The e-invoice add-on turns an invoice automation into one that also creates a valid e-invoice. You choose one of two formats:
+
+- **ZUGFeRD:** a PDF/A-3 file with the e-invoice data (EN 16931 profile) embedded. People read the PDF; accounting software reads the data inside it.
+- **XRechnung:** an XML file (XRechnung 3.0) next to your PDF. Public-sector buyers in Germany usually ask for this format.
+
+Every e-invoice is checked with the official validators (KoSIT for XRechnung, Mustang and veraPDF for ZUGFeRD) before it is delivered. A file that fails the check is never sent; the run stops with a message that names the field to fix.
+
+<Note>
+DocsAutomator creates a valid e-invoice format from your data. It does not check your tax treatment and does not give tax advice. Ask your tax advisor which VAT treatment and format apply to you.
+</Note>
+
+## Turn on the add-on
+
+1. Open **Settings**, then **Add-ons**.
+2. Switch on **E-invoice (ZUGFeRD / XRechnung)**. Only owners and admins can do this.
+3. Click **Settings** next to the add-on and enter your seller details.
+
+The add-on is off until you switch it on. Automations without an e-invoice do not change.
+
+### Seller details
+
+The seller details are the same for every automation in the workspace.
+
+| Field | Required |
+|---|---|
+| Legal name, street and number, postcode, city, country | Always |
+| VAT ID (USt-IdNr.) or tax number (Steuernummer) | Always, at least one of them |
+| Contact name, contact phone, contact email, IBAN | For XRechnung |
+| Trading name, address line 2, commercial register entry, BIC, account holder | Optional |
+
+## Set up an automation
+
+Open an invoice automation and find its **E-invoice** section. Switch on **Create an e-invoice**, then fill in the parts below. Most fields suggest a match from your data by name.
+
+### Format
+
+- **Format:** ZUGFeRD or XRechnung.
+- **Document type:** Invoice or Credit note. A credit note can also carry the original invoice number.
+- **VAT treatment:** one of the treatments below.
+
+| VAT treatment | What changes |
+|---|---|
+| Standard VAT | Each line needs a VAT rate. 19 %, 7 % and 0 % can appear on one invoice. |
+| Reverse charge, domestic (§13b UStG) | No VAT. The buyer's VAT ID is required. |
+| Reverse charge, EU business customer | No VAT. The buyer's VAT ID and your VAT ID are required. |
+| Intra-EU supply of goods | No VAT. Both VAT IDs and the delivery date are required. |
+| Small business, no VAT (§19 UStG) | No VAT on any line. |
+
+### Invoice and buyer fields
+
+Map each field to a field of your data source, or enter a fixed text (for example a fixed buyer country "DE" or fixed payment terms).
+
+| Field | Required |
+|---|---|
+| Invoice number, invoice date | Always |
+| Due date or payment terms | At least one of them |
+| Buyer name, buyer country | Always. The country is a two-letter code such as DE; common country names also work. |
+| Buyer street, postcode, city, email | Postcode, city and email are required for XRechnung |
+| Leitweg-ID or buyer reference | Required for XRechnung |
+| Buyer VAT ID | Required for reverse charge and intra-EU supplies |
+| Delivery date, order reference, note | Optional |
+
+**Leitweg-ID:** public-sector buyers in Germany give you a Leitweg-ID (for example `991-12345-67`). Map it to **Leitweg-ID or buyer reference**. For other buyers of an XRechnung, use the reference they give you.
+
+### Line items
+
+Pick where the lines come from: a linked table or relation (Airtable, Notion, SmartSuite), the subtasks or a relationship field (ClickUp), another sheet (Google Sheets), or the `line_items_1` list of each request (API and the other request-based sources). A Google Forms response has no line items, so the response itself is one line.
+
+| Column | Required |
+|---|---|
+| Item name | Always |
+| Quantity | Always |
+| Net unit price | Always |
+| VAT rate | With standard VAT. `19`, `19 %` and `0.19` all mean 19 %. |
+| Unit | Optional. Values like "Stk", "h" or "Std" are matched to the unit list; empty rows use the default unit. |
+| Line total | Optional. If you map it, each line is checked against quantity × price. |
+
+A discount line can have a negative price; the e-invoice turns "1 × -10.00" into "-1 × 10.00", the same amount.
+
+### Totals
+
+Map the **Gross total** field that your document prints. Net total and VAT total are optional.
+
+DocsAutomator recalculates every total from the lines: each line is quantity × net price, VAT is calculated per VAT rate on the total of those lines, and the gross total is net plus VAT. The run stops when a mapped total differs from the recalculated one by more than 1 cent. Within 1 cent, the e-invoice carries the amount your document prints, so the PDF and the e-invoice show the same numbers.
+
+<Tip>
+Spreadsheets and databases often calculate VAT per line and round each line. On many lines this can drift by more than 1 cent. Calculate VAT once per rate on the summed line totals, as the e-invoice does.
+</Tip>
+
+### Values DocsAutomator reads
+
+- **Amounts:** euros only. German and English notation both work (`1.234,56`, `1,234.56`, `1.234,56 €`). An amount with another currency sign, such as `$4,887.50`, stops the run with "is not in euros".
+- **Dates:** `2026-10-31`, `31.10.2026` and written dates such as `31. Oktober 2026` or `October 31, 2026`. A date that can be read two ways, such as `03/04/2026`, stops the run.
+- **Linked records:** a buyer field mapped to a linked customer (Airtable linked record, Notion relation, SmartSuite linked record) uses the customer's name.
+
+## Test document
+
+The **Test document** card in the E-invoice section creates a test document from your data and shows every problem it finds, field by field, next to the preview. Fix them and create another test document until the card shows no problems.
+
+Test documents are free and do not count against your plan. Their e-invoice is valid, but it is marked as a test: the invoice number starts with `TEST-` and a note says "Testdokument, keine Rechnung. Test document, not an invoice."
+
+## Where the files go
+
+**ZUGFeRD:** the PDF is the e-invoice. It goes wherever your automation sends the PDF: the data source field, Google Drive, email and the API response.
+
+**XRechnung:** the PDF goes where it always goes, and the XML file goes to the places below.
+
+| Data source | XML file |
+|---|---|
+| Airtable | An attachment field you choose under **Save the XML file to**. Earlier files in that field are replaced unless you switch off **Replace earlier files in that field**. |
+| Google Sheets | A column you choose under **Write the XML file link to** gets a link to the file. |
+| Notion | A files property you choose. |
+| SmartSuite | A file field you choose. |
+| ClickUp | A files custom field you choose, or the task attachments together with the PDF. ClickUp allows uploads into files custom fields only on paid plans; on the free plan ClickUp refuses them ("Custom field usages exceeded for your plan"), so choose the task attachments there. |
+| Google Forms, API, Glide, Noloco, Softr, Make, n8n, Zapier, MCP | The API response (`eInvoice.xmlUrl`), plus Google Drive and email when the automation uses them. |
+
+With every data source, the XML is also saved next to the PDF in your Google Drive folder and attached to the automation's email, when the automation uses them. OneDrive and Dropbox receive only the PDF for now.
+
+## Settings that do not combine with an e-invoice
+
+- **Signing and acceptance:** an e-invoice cannot be signed. Turn off signing for the automation first.
+- **Merge PDFs:** a ZUGFeRD PDF cannot include merged PDFs. Turn off Merge PDFs, or choose XRechnung.
+- **PDF templates and fonts:** a ZUGFeRD PDF needs every font embedded. If your PDF template uses fonts that are not embedded, embed them in the template, or choose XRechnung.
+
+## Common messages and fixes
+
+| Message | Fix |
+|---|---|
+| Gross total is not mapped. | Map the field that holds the invoice total. |
+| Gross total does not match the line items. The record says …; the line items give … | Check the lines and the total. Calculate VAT per rate on the total, not per line. |
+| Line 2: line total does not match quantity × price. | Fix the line, or remove the line total mapping. |
+| Line 1: VAT rate is empty. | Map the VAT rate column, or fill in the rate on that line. |
+| … is not in euros. E-invoices are in EUR only. | Use euro amounts without another currency sign. |
+| Invoice date "03/04/2026" can be read two ways. | Use a date like 2026-10-31 or 31.10.2026. |
+| Buyer country "…" is not a country. | Use a two-letter code like DE. |
+| Leitweg-ID or buyer reference is empty. XRechnung requires it. | Map the Leitweg-ID, or the buyer's reference. |
+| Payment terms and due date are both empty. | Map one of them, or enter fixed payment terms. |
+| Seller IBAN is empty. XRechnung requires payment details. | Add the IBAN under Settings, Add-ons. |
+| E-invoices cannot be signed. | Turn off signing for this automation. |
+| The e-invoice check is not available right now. Nothing was sent; please try again in a few minutes. | Run it again later. Nothing was delivered. |
+
+## Archiving
+
+Keep every e-invoice for 8 years in its original file.
+
+## E-invoices from the API and AI clients
+
+- **API:** see [Create document from API](/api-reference/documents/create-from-api#e-invoices).
+- **Claude, ChatGPT and other MCP clients:** see [DocsAutomator MCP](/integrations-api/docsautomator-mcp#e-invoices).

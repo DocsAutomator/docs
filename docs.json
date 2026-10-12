@@ -103,7 +103,8 @@
                   "integrations-api/n8n",
                   "integrations-api/make",
                   "integrations-api/docsautomator-api",
-                  "integrations-api/docsautomator-mcp"
+                  "integrations-api/docsautomator-mcp",
+                  "integrations-api/how-ai-clients-use-docsautomator"
                 ]
               },
               {

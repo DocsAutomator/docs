@@ -85,8 +85,6 @@ On a Team or Enterprise plan, an owner adds DocsAutomator for the organization f
 
 **Claude Code:** sign in to Claude Code with the same Claude account (`/login`). DocsAutomator then shows in `/mcp` as **claude.ai DocsAutomator**, with no extra setup. If you added DocsAutomator to Claude Code by hand before, remove that entry with `claude mcp remove docsautomator`, because a server added by hand hides the connector.
 
-Only if you connect Claude Code with an API key instead of a Claude account: `claude mcp add --transport http docsautomator https://mcp.docsautomator.co/mcp --header "Authorization: Bearer YOUR_API_KEY"`, with your [DocsAutomator API key](https://app.docsautomator.co/settings/workspace/api).
-
 Once connected, you can ask Claude things like:
 - "List my DocsAutomator automations"
 - "Generate a document using automation [ID] with this data..."
@@ -133,15 +131,15 @@ Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/sett
 
 ### Other MCP Clients
 
-For any MCP-compatible client, use these connection details:
+For MCP-compatible clients other than Claude, use these connection details. Claude connects through the [directory connector](#claude), with no server URL or API key.
 
 | Setting | Value |
 |---------|-------|
 | **Server URL** | `https://mcp.docsautomator.co/mcp` |
 | **Transport** | Streamable HTTP |
-| **Auth Header** | `Authorization: Bearer YOUR_API_KEY` |
+| **Authentication** | Sign in to DocsAutomator (OAuth) |
 
-Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
+A client that does not support sign-in sends your API key in the header `Authorization: Bearer YOUR_API_KEY`. Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
 
 ---
 

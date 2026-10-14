@@ -1399,8 +1399,24 @@
           },
           "signingStatus": {
             "type": "string",
-            "enum": ["created", "queued"],
-            "description": "Status of the signing session creation."
+            "enum": ["created", "queued", "awaiting_approval"],
+            "description": "Status of the signing session creation. `awaiting_approval` means the automation needs internal approval: nothing went to the signers yet, and no signing links are returned."
+          },
+          "approval": {
+            "type": "object",
+            "description": "Present when the document waits for approval (see Approvals). For a document run, `message` and `status` are then `awaiting_approval` and `pdfUrl` is null; for a signing run, `signingStatus` is `awaiting_approval`.",
+            "properties": {
+              "status": { "type": "string", "enum": ["pending"] },
+              "rule": { "type": "string", "enum": ["all", "any"] },
+              "condition": { "type": "object", "nullable": true, "description": "The result of the approval condition, or null when every document needs approval." },
+              "approvers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": { "name": { "type": "string" }, "email": { "type": "string" } }
+                }
+              }
+            }
           },
           "signingLinks": {
             "type": "array",

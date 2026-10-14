@@ -125,6 +125,7 @@
                       "features/docsautomator-esign/e-sign-date-format-options"
                     ]
                   },
+                  "features/approvals",
                   "features/e-invoices",
                   {
                     "group": "Line Items",

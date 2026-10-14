@@ -427,7 +427,7 @@ while True:
 }
 ```
 
-`message`, `pdfUrl` and `documentName` are always present. Additional fields are included depending on your automation's configuration:
+`message`, `pdfUrl` and `documentName` are always present. When the automation uses [Approvals](/features/approvals) and the document waits for approval, `message` and `status` are `"awaiting_approval"`, `pdfUrl` and `googleDocUrl` are `null`, and the save fields are left out. The answer also has `logId`, `holdId` and `approval`. The webhook fires after the approval. Additional fields are included depending on your automation's configuration:
 
 | Field | Included when |
 |-------|---------------|
@@ -439,8 +439,9 @@ while True:
 | `saveWordGoogleDriveFolderId` | Save Word document to Google Drive is enabled |
 | `saveWordGoogleDriveFileId` | Save Word document to Google Drive is enabled |
 | `signingSessionId` | E-signature is enabled |
-| `signingStatus` | E-signature is enabled (`"created"` or `"queued"`) |
-| `signingLinks` | E-signature is enabled (array of signer objects with `signerIndex`, `email`, `name`, `signingUrl`, `status`) |
+| `signingStatus` | E-signature is enabled (`"created"`, `"queued"`, or `"awaiting_approval"` when the automation needs [approval](/features/approvals)) |
+| `signingLinks` | E-signature is enabled (array of signer objects with `signerIndex`, `email`, `name`, `signingUrl`, `status`). Absent while the session waits for approval |
+| `approval` | The document waits for [approval](/features/approvals) (`status`, `rule` (`"all"` or `"any"`), `approvers`, each with `name` and `email`, and `condition`) |
 | `signingDeliveryMethod` | E-signature is enabled |
 | `esignSkipped` | E-signature is enabled but skipped for this request via `skipEsign: true` |
 | `eInvoice` | The automation creates an e-invoice: `{ "ok": true, "format": "zugferd" }`, or with XRechnung `{ "ok": true, "format": "xrechnung", "xmlUrl": "..." }` plus `xmlGoogleDriveUrl` when the PDF is saved to Google Drive. See [E-invoices](#e-invoices). |

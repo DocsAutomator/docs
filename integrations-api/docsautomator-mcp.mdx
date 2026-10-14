@@ -26,7 +26,7 @@ In about two minutes your AI agent makes a quote in your brand and sends it to y
 <Steps>
   <Step title="Add DocsAutomator to your AI app">
     - **Claude:** open [DocsAutomator in the Claude directory](https://claude.ai/directory/connectors/docsautomator), click **Connect to Claude** and sign in to DocsAutomator. Claude Code gets it too. See [Claude](#claude).
-    - **ChatGPT:** turn on developer mode (Settings → Security and login), then add a connector with the server URL and sign in.
+    - **ChatGPT:** open **Plugins** in the left sidebar, click **Add**, then **Add custom MCP server**, paste the server URL, choose OAuth and sign in. See [ChatGPT](#chatgpt).
     - **Cursor:** [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9)
     - **VS Code:** [Add to VS Code](vscode:mcp/install?%7B%22name%22%3A%22docsautomator%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.docsautomator.co%2Fmcp%22%7D)
 
@@ -94,21 +94,10 @@ Once connected, you can ask Claude things like:
 
 ### ChatGPT
 
-<Warning>
-A ChatGPT Business or Enterprise subscription is required to use MCP connections with ChatGPT. Additionally, Developer Mode must be enabled in your ChatGPT settings.
-</Warning>
-
-1. Open ChatGPT and go to **Settings**
-2. Navigate to **Apps**
-3. Enable **Developer Mode** if not already enabled
-4. Click **Create App**
-5. Select **MCP Server** as the connection type
-6. Enter the following configuration:
-   - **Name:** DocsAutomator
-   - **Server URL:** `https://mcp.docsautomator.co/mcp`
-   - **Authentication:** OAuth
-   - Leave Client ID and Secret blank
-7. Click **Create**
+1. In ChatGPT, open **Plugins** in the left sidebar ([chatgpt.com/plugins](https://chatgpt.com/plugins)).
+2. Click **Add**, then **Add custom MCP server**.
+3. Name it **DocsAutomator**, paste the server URL `https://mcp.docsautomator.co/mcp` and choose **OAuth**.
+4. Sign in to DocsAutomator when ChatGPT asks.
 
 Once connected, you can ask ChatGPT to generate documents, manage automations, handle e-signatures, and more using natural language.
 

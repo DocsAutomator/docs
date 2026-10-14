@@ -177,7 +177,25 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
 
 ### From DocsAutomator
 
-You can always generate a document for any record from inside DocsAutomator: click **Generate manually** on the automation page and pick the record. This works on every Airtable plan.
+You can always generate documents from inside DocsAutomator. This works on every Airtable plan.
+
+1. Click **Generate manually** on the automation page.
+2. Pick the records. Choose **Record** to pick one or more records, or choose **View** and then a view to generate a document for every record in that view.
+3. Check the line above the generate button. It shows how many documents the run uses, for example "Generates 5 documents (uses 5 of your plan)." Each record counts as one document in your plan. In test mode, test documents are free, and one run makes up to 3 documents.
+4. Click the generate button.
+
+<Frame>
+  <img src="/images/changelog/generate-step-document-count.png" alt="View picker set to the view Open invoices with 5 records, and the line Generates 5 documents (uses 5 of your plan) above the Generate 5 Documents button" />
+</Frame>
+
+When the run has finished, you can download the documents in two ways:
+
+- **Download** with the number of documents saves every PDF in one ZIP file.
+- **Download as one PDF** merges the documents into a single PDF, in the order of your selection or your view. One PDF holds up to 100 documents per download. A document whose signing is complete goes into the PDF as its signed version. Failed documents are left out, and the result names them. The download adds no documents to your plan usage.
+
+<Frame>
+  <img src="/images/changelog/download-as-one-pdf.png" alt="Result of a batch run with the Download 5 Documents button for the ZIP file and the Download as one PDF button below it" />
+</Frame>
 
 ## Field Type Reference
 

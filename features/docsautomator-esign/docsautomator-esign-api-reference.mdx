@@ -39,7 +39,9 @@ https://api.docsautomator.co/esign
 | `limit` | number | No | Results per page (default: 20, max: 100) |
 | `email` | string | No | Search by signer email |
 
-**Valid Status Values:** `pending`, `in_progress`, `completed`, `expired`, `cancelled`, `declined`
+**Valid Status Values:** `pending`, `awaiting_approval`, `in_progress`, `completed`, `expired`, `cancelled`, `declined`
+
+A session that waits for [approval](/features/approvals) has the status `awaiting_approval` and an `approval` summary: `{ "status", "rule", "approvers": [{ "name", "email", "decision" }] }`.
 
 ```bash
 curl -X GET "https://api.docsautomator.co/esign/sessions?status=pending&page=1&limit=20" \
@@ -184,6 +186,8 @@ When `status` is `declined`, the response also includes:
 </ParamField>
 
 Returns expiration dates and signer status for each link.
+
+While a session waits for internal approval (`status: "awaiting_approval"`), no signing links exist yet: `signingLink` is `null` for every signer. The links appear after approval. The same applies to the session details.
 
 **Response:**
 
@@ -348,6 +352,9 @@ Cannot cancel completed sessions.
 | `esign.session_expired` | Session expired before all signers completed |
 | `esign.email_sent` | An e-sign email was accepted by a mail provider |
 | `esign.email_failed` | An e-sign email ended with outcome `failed` or `unknown` |
+| `esign.approval_requested` | A session waits for internal approval; the approvers were asked |
+| `esign.approval_approved` | The approval rule is met; the request goes out now |
+| `esign.approval_rejected` | An approver rejected the document; the session is cancelled |
 
 See [eSign overview — Webhook Integration](/features/docsautomator-esign#webhook-integration) for the full payload of each event.
 
@@ -355,7 +362,7 @@ Acceptance sessions fire the same events with the same payload keys. `closeType`
 
 ### Session Created (Manual Delivery)
 
-Triggered when signing session created with `deliveryMethod: "manual"`. Use to retrieve and distribute signing links manually.
+Triggered when signing session created with `deliveryMethod: "manual"`. Use to retrieve and distribute signing links manually. With internal approval on, it fires after approval, when the links exist.
 
 ### Session Completed
 
@@ -460,6 +467,96 @@ Fires when a signing session expires before all signers complete. An expiration 
 If a session is already declined, cancelled, or completed before its expiration time, this webhook does not fire.
 </Note>
 
+### Approval Events
+
+Fire for automations with [approval](/features/approvals) switched on.
+
+`esign.approval_requested` fires when the session is created and the approvers are asked:
+
+```json
+{
+  "event": "esign.approval_requested",
+  "sessionId": "unique-identifier",
+  "documentName": "Quote Q-1042",
+  "closeType": "signature",
+  "status": "awaiting_approval",
+  "approval": {
+    "status": "pending",
+    "rule": "all",
+    "requestedAt": "ISO date string",
+    "requestedBy": { "email": "jonas@example.com", "name": "Jonas Weber" },
+    "approvers": [
+      { "email": "priya@example.com", "name": "Priya Nair", "decision": "pending", "decidedAt": null },
+      { "email": "leo@example.com", "name": "Leo Rossi", "decision": "pending", "decidedAt": null }
+    ]
+  },
+  "sourceData": { },
+  "webhookParams": { },
+  "additionalParams": { }
+}
+```
+
+`approval.requestedBy` names the team member who created the document in the app. It is `null` when the document came from the API, a trigger or another integration, and its `name` is `null` when the email is not a team member. `sourceData`, `webhookParams` and `additionalParams` are included when set, as in the other e-sign events.
+
+`esign.approval_approved` fires once, when the approval completes the rule and the request goes out. `status` is `pending`, `approval.status` is `approved`, and `approval.decidedBy` names the approver whose decision completed the rule. When an owner or admin decided on behalf of an approver, `decidedBy` names the owner or admin and `forApprover` names the approver.
+
+```json
+{
+  "event": "esign.approval_approved",
+  "sessionId": "unique-identifier",
+  "documentName": "Quote Q-1042",
+  "closeType": "signature",
+  "status": "pending",
+  "approval": {
+    "status": "approved",
+    "rule": "all",
+    "requestedAt": "ISO date string",
+    "requestedBy": { "email": "jonas@example.com", "name": "Jonas Weber" },
+    "decidedAt": "ISO date string",
+    "decidedBy": { "email": "leo@example.com", "name": "Leo Rossi", "forApprover": null },
+    "approvers": [
+      { "email": "priya@example.com", "name": "Priya Nair", "decision": "approved", "decidedAt": "ISO date string" },
+      { "email": "leo@example.com", "name": "Leo Rossi", "decision": "approved", "decidedAt": "ISO date string" }
+    ]
+  },
+  "sourceData": { },
+  "webhookParams": { },
+  "additionalParams": { }
+}
+```
+
+`esign.approval_rejected` fires when an approver rejects the document. The session is cancelled, and `approval.reason` holds the reason the approver gave:
+
+```json
+{
+  "event": "esign.approval_rejected",
+  "sessionId": "unique-identifier",
+  "documentName": "Quote Q-1042",
+  "closeType": "signature",
+  "status": "cancelled",
+  "approval": {
+    "status": "rejected",
+    "rule": "all",
+    "requestedAt": "ISO date string",
+    "requestedBy": { "email": "jonas@example.com", "name": "Jonas Weber" },
+    "decidedAt": "ISO date string",
+    "decidedBy": { "email": "priya@example.com", "name": "Priya Nair", "forApprover": null },
+    "reason": "Discount too high, please use 10%.",
+    "approvers": [
+      { "email": "priya@example.com", "name": "Priya Nair", "decision": "rejected", "decidedAt": "ISO date string" },
+      { "email": "leo@example.com", "name": "Leo Rossi", "decision": "pending", "decidedAt": null }
+    ]
+  },
+  "sourceData": { },
+  "webhookParams": { },
+  "additionalParams": { }
+}
+```
+
+<Note>
+An approval that does not complete the rule (for example the first of two approvals under "all must approve") sends no webhook. An approval that expires fires the existing `esign.session_expired` event.
+</Note>
+
 ### Passing Additional Parameters
 
 Include `webhookParams` in document creation requests to receive custom data in webhook notifications:
@@ -489,7 +586,8 @@ Parameters are returned in all webhook notifications under `webhookParams`, toge
 | `in_progress` | At least one signer started |
 | `completed` | All signers finished |
 | `expired` | Expired before completion |
-| `cancelled` | Cancelled by admin |
+| `awaiting_approval` | Waiting for internal approval; nothing went to the signers yet |
+| `cancelled` | Cancelled by admin, or rejected by an approver (`approval.status: "rejected"`) |
 | `declined` | Signer declined |
 
 ### Signer Statuses

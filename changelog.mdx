@@ -15,6 +15,10 @@ mode: "center"
 <Update label="October 13, 2026">
   ## Documents is the home page
 
+  <Frame>
+    <img src="/images/changelog/documents-home.png" alt="Documents home page with the cards Waiting for signature or acceptance, Signed or accepted this month, Documents this month and Needs attention above the documents list" />
+  </Frame>
+
   The app now opens on your documents. The home page shows the Documents list with four cards at the top: **Waiting for signature or acceptance**, **Signed or accepted this month**, **Documents this month** with your plan usage, and **Needs attention**. Old links to `/documents` and `/runhistory` open the home page.
 
   - **Needs attention** counts failed runs, expired signing requests and invitations that were not delivered in the last 7 days.
@@ -25,6 +29,10 @@ mode: "center"
   The floating agent button is gone. An **AI Agent** button now sits under the workspace box in the sidebar. It opens and closes the agent panel. On phones, the button is in the menu.
 
   ## Connect from your own AI agent
+
+  <Frame>
+    <img src="/images/changelog/connect-ai-agent.png" alt="Connect Claude or ChatGPT dialog with the Add to Claude button, the four ChatGPT setup steps and the MCP server address for other MCP clients" />
+  </Frame>
 
   You can use DocsAutomator from Claude, ChatGPT or any other tool that supports MCP (Model Context Protocol, the standard that lets AI assistants use other apps).
 
@@ -83,10 +91,6 @@ mode: "center"
   - **Outside changes:** when the template changes outside the editor while it is open, for example through an upload or the AI Agent, the editor says "This template changed outside the editor. Your last changes were not saved." and offers **Reopen**.
 
   See [Word template guide](/docsautomator-basics/word-template-guide).
-
-  ## Start from an Airtable table
-
-  The app can now start the AI Agent from a base and a table that the DocsAutomator Airtable extension hands over. The agent uses that table as the data source, reads its fields and asks which document you need and whether you already have a template. You do not pick the base again. See [Airtable](/integrations-api/airtable).
 
   ## MCP server: test mode for a first document
 

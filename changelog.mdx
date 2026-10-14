@@ -5,6 +5,47 @@ rss: true
 mode: "center"
 ---
 
+<Update label="October 14, 2026">
+  ## Fixes
+
+  - Notion signing: the signer pickers in the **Signing & Acceptance** panel now show property names. Before, they could show raw property ids for databases with several data sources.
+  - Notion signing: when a signer's name comes from a relation property, the signer is now named with the title of the related page. Before, the invitation could greet the signer with a page id. See [Signing & Acceptance](/features/docsautomator-esign).
+</Update>
+
+<Update label="October 13, 2026">
+  ## Documents is the home page
+
+  The app now opens on your documents. The home page shows the Documents list with four cards at the top: **Waiting for signature or acceptance**, **Signed or accepted this month**, **Documents this month** with your plan usage, and **Needs attention**. Old links to `/documents` and `/runhistory` open the home page.
+
+  - **Needs attention** counts failed runs, expired signing requests and invitations that were not delivered in the last 7 days.
+  - **New document** lets you pick an automation and opens it with its generate dialog.
+
+  ## AI Agent button in the sidebar
+
+  The floating agent button is gone. An **AI Agent** button now sits under the workspace box in the sidebar. It opens and closes the agent panel. On phones, the button is in the menu.
+
+  ## Connect from your own AI agent
+
+  You can use DocsAutomator from Claude, ChatGPT or any other tool that supports MCP (Model Context Protocol, the standard that lets AI assistants use other apps).
+
+  - **In the agent panel:** a new, empty chat shows the line "Prefer your own AI? Use DocsAutomator from Claude, ChatGPT or any MCP tool". A click opens the connect steps.
+  - **In the Setup Guide:** every automation's Setup Guide has a **From your AI agent** card. It shows the connect steps and the automation's id.
+  - **Connect steps:** Claude connects through the Claude directory, ChatGPT has four setup steps, and other MCP tools get the server address with a copy button.
+
+  See [DocsAutomator MCP](/integrations-api/docsautomator-mcp).
+
+  ## Fixes
+
+  - The watermark on test documents now sits on top of the page. Before, it shrank the page content, and designs that run to the page edge got a white border.
+  - **Edit Sample Data:** your sample data is saved when you click **Save and Close**, also after **Clear All**. Before, a cleared set was not saved, and the old values came back.
+
+  ## On the website
+
+  - **Done-for-you setup:** a new [setup service page](https://www.docsautomator.co/done-for-you/) describes our paid setup service. You book a free call in the page, and we set up your documents from your template and your data. The header, the homepage, the pricing page and the template pages link to it. Trial workspaces see the offer in the founder welcome, and the AI Agent can offer it once when you ask for help with the setup.
+  - **Free invoice generator:** the [invoice generator](https://www.docsautomator.co/invoice-generator/) makes a PDF invoice in your browser, with your logo, line items, discount and tax. It is free, and nothing you type goes to our servers.
+  - **Free German e-invoice tool:** the [E-Rechnung tool](https://www.docsautomator.co/de/e-rechnung-erstellen-kostenlos/) creates a ZUGFeRD PDF or an XRechnung file in your browser, without an account. ZUGFeRD and XRechnung are the German e-invoice formats.
+</Update>
+
 <Update label="October 12, 2026">
   ## E-invoices: ZUGFeRD and XRechnung
 
@@ -25,6 +66,43 @@ mode: "center"
   - **New accounts:** when you choose Claude on the DocsAutomator homepage and sign up, the agent chat shows the same button and a first prompt to copy into Claude. **Skip for now** goes straight to your first document.
 
   See [Claude setup](/integrations-api/docsautomator-mcp#claude).
+
+  ## AI Agent: your own template first
+
+  When an automation needs a template, the AI Agent now asks for your own template first: a Word file, a PDF or a Google Doc. If you have none, it shows matching templates from the gallery. It designs a new template with AI only when you choose **None of these fit** or ask for it. The agent edits Word templates only and never changes a Google Doc template.
+
+  ## Word editor works like Google Docs
+
+  The Word template editor has a new toolbar and a new right-click menu.
+
+  - **Toolbar:** line and paragraph spacing, paint format, formatting marks, one **Table** button for every table edit, a page menu with page breaks and page numbers, and a tooltip with the name and shortcut on every button. Buttons that do not fit move into a **More** menu.
+  - **Right-click menu:** cut, copy, paste, paste without formatting, links and **Insert dynamic field...**. In a table, it adds rows, columns and table edits.
+  - **Faster:** the editor opens in under a second and at its final size, without a jump.
+  - **Saves on a pause:** the editor saves about 2 seconds after you stop typing. When a save fails, the header says "Not saved, retrying".
+  - **Your file stays yours:** a save changes only the parts of the file that you edited and keeps the rest of your Word file as it was.
+  - **Outside changes:** when the template changes outside the editor while it is open, for example through an upload or the AI Agent, the editor says "This template changed outside the editor. Your last changes were not saved." and offers **Reopen**.
+
+  See [Word template guide](/docsautomator-basics/word-template-guide).
+
+  ## Start from an Airtable table
+
+  The app can now start the AI Agent from a base and a table that the DocsAutomator Airtable extension hands over. The agent uses that table as the data source, reads its fields and asks which document you need and whether you already have a template. You do not pick the base again. See [Airtable](/integrations-api/airtable).
+
+  ## MCP server: test mode for a first document
+
+  - When an AI client creates the first document of a new automation and gives no mode, the document runs in test mode. Test documents are free and have a watermark. The result tells the client to send again with mode "live" for a real document.
+  - AI clients that support it now show the DocsAutomator name, logo and website next to the server.
+
+  See [DocsAutomator MCP](/integrations-api/docsautomator-mcp).
+
+  ## Fixes
+
+  - Links in a document now work on the signing and acceptance pages. External links open in a new tab.
+  - A preview of an acceptance automation whose recipient is given with each request no longer fails with "Recipient 1 has no email".
+  - A warning in a Google Docs repeating section, for example a table inside a table, no longer fails the run.
+  - Google Docs runs that hit a Google server error because of a placeholder in a cell hidden under merged cells now try again without that cell and finish, with a warning.
+  - When a Word template file is missing, the preview, the editor and the download now say "The template file was not found. Upload the template again."
+  - The AI Agent now sees every SmartSuite workspace, also when one account is very large.
 </Update>
 
 <Update label="October 9, 2026">
@@ -35,6 +113,20 @@ mode: "center"
   ## Send a different Word template with an API request
 
   Automations with a Word template can now use a different Word file for a single request, the same way `docTemplateLink` works for Google Doc templates. Pass `wordTemplateLink` with an https link to the .docx file, or `wordTemplateBase64` with the file itself. The document uses that file, and the data, mapping, signing and output settings still come from the automation you call. The file can be up to 25 MB and is not stored as a template. See [Create document from API](/api-reference/documents/create-from-api).
+
+  ## On the website
+
+  The homepage now starts with your own template. Upload a Word file or a PDF, or pick a Google Doc, and sign up. The AI Agent then opens on that template. **Connect your tools** starts from your data source instead.
+</Update>
+
+<Update label="October 7, 2026">
+  ## Filter signing sessions by record
+
+  The signing sessions list in the API now takes `recordId`, with up to 100 record ids, and `automationId`. Each signer in the list shows when they opened, signed or declined. See [Signing API reference](/features/docsautomator-esign/docsautomator-esign-api-reference).
+
+  ## Fixes
+
+  - Notion rollups that show text, titles or people keep their values again. Since September 1, they could come out empty.
 </Update>
 
 <Update label="October 6, 2026">

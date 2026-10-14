@@ -6,6 +6,22 @@ mode: "center"
 ---
 
 <Update label="October 14, 2026">
+  ## Download a batch as one PDF
+
+  <Frame>
+    <img src="/images/changelog/download-as-one-pdf.png" alt="Result of a batch run with the Download 5 Documents button for the ZIP file and the Download as one PDF button below it" />
+  </Frame>
+
+  When you generate documents for several records with **Generate manually**, for example for every record in an Airtable view, the result now offers **Download as one PDF** next to the ZIP download. The PDF holds every document of the run in the order of your selection or your view.
+
+  - **Plan usage:** each record counts as one document in your plan, as before. The download adds no documents.
+  - **Before the run:** the generate step now shows how many documents the run uses, for example "Generates 23 documents (uses 23 of your plan)." In test mode, it says that test documents are free.
+  - **Signed documents:** a document whose signing is complete goes into the PDF as its signed version.
+  - **Failed documents:** they are left out of the PDF, and the result names them.
+  - **Limit:** one PDF holds up to 100 documents per download. For a larger run, use the ZIP download.
+
+  See [Generate from DocsAutomator](/integrations-api/airtable#from-docsautomator).
+
   ## Fixes
 
   - Notion signing: the signer pickers in the **Signing & Acceptance** panel now show property names. Before, they could show raw property ids for databases with several data sources.

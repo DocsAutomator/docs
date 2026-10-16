@@ -24,7 +24,7 @@ POST https://api.docsautomator.co/createDocument
 </ParamField>
 
 <ParamField body="approverEmails" type="string | string[]">
-  Emails of people who must approve this document before it goes out: one email, several separated by commas, semicolons or line breaks, or a list of up to 10. Send it at the top level of the request, not inside `data`. The document waits for approval even when approval is off for the automation. Team members always count; other people can join only on the allowed domains set in the Approvals card. Fails with an error on a plan without Approvals. See [Approvers in an API call](/features/approvals#approvers-in-an-api-call).
+  Emails of people who must approve this document before it goes out: one email, several separated by commas, semicolons or line breaks, or a list of up to 10. Send it at the top level of the request, not inside `data`. The document waits for approval even when approval is off for the automation. Anyone named can join as an approver, from any email domain. Fails with an error on a plan without Approvals. See [Approvers in an API call](/features/approvals#approvers-in-an-api-call).
 </ParamField>
 
 <ParamField body="documentName" type="string">

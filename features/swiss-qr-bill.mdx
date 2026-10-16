@@ -1,0 +1,82 @@
+---
+title: "Swiss QR-bill"
+description: "Add the Swiss QR payment part to your invoices, from the same data that fills your document."
+icon: "qrcode"
+---
+
+The Swiss QR-bill add-on adds the Swiss payment part, with the QR code that your customers scan in their banking app, to every document an automation creates. The payment part goes on an extra last A4 page, at the bottom as the standard describes, so your template needs no blank space for it.
+
+It works with every template type (Google Docs, Word and PDF) and every way you create documents. You can use it alone or together with the [e-invoice add-on](/features/e-invoices). With both add-ons on, one PDF carries the e-invoice data and the QR-bill page.
+
+Before a document is created, DocsAutomator checks the QR-bill against the Swiss QR-bill standard (IBAN, reference check digits, amount, field lengths and allowed characters). When something is wrong, nothing is created or sent, and the run names what to fix.
+
+## Turn on the add-on
+
+1. Open **Settings**, then **Add-ons**.
+2. Switch on **Swiss QR-bill**. Only owners and admins can do this.
+3. Click **Settings** next to the add-on and enter your seller details.
+
+The add-on is off until you switch it on. Automations without a QR-bill do not change.
+
+### Seller details
+
+The seller details are the account holder on every payment part. They are shared with the e-invoice add-on, so you enter them once.
+
+| Field | Required |
+|---|---|
+| Legal name, postcode, city | Always |
+| Street and number, country | Recommended. An empty country means the country of your IBAN. |
+| IBAN | A Swiss or Liechtenstein IBAN (starting with CH or LI), unless you use a QR reference |
+
+### QR-IBAN
+
+A QR-IBAN is a separate account number that your bank gives you with its QR reference service. You need it only for the QR reference type. Enter it under **QR-IBAN** on the same settings page.
+
+## Set up an automation
+
+Open an automation and find its **Swiss QR-bill** section. Fill in the parts below, then switch on **Add a QR-bill**. Most fields suggest a match from your data by name, or from the automation's e-invoice setup.
+
+### Payment
+
+- **Currency:** CHF or EUR.
+- **Amount:** the field that holds the invoice total. When it is empty, the amount box on the payment part stays blank for the payer to fill in. When the automation also creates an e-invoice and the amount is not set, the e-invoice gross total is used.
+
+### Reference
+
+| Reference type | Account | What you map |
+|---|---|---|
+| No reference | Your IBAN | Nothing. Use the message to identify the payment. |
+| Creditor reference (RF) | Your IBAN | Up to 21 letters and digits, for example the invoice number. DocsAutomator adds "RF" and the check digits. A value that already starts with RF is checked as it is. |
+| QR reference | Your QR-IBAN | Up to 26 digits, for example the invoice number. DocsAutomator adds leading zeros and the check digit. A 27-digit value is checked as it is. |
+
+The **message** is optional free text of up to 140 characters, for example the invoice number. Your customer sees it in the banking app.
+
+### Payer
+
+The payer's name, street and number, postcode, city and country are optional. Without them, the "Payable by" box stays empty for the payer to fill in. When you map any of them, the name, postcode and city are needed. An empty country means Switzerland (CH).
+
+### Language
+
+The payment part uses the language of the automation's locale: German, French, Italian or English. Other locales use English.
+
+## Test document
+
+Create a test document from the section. The result of the checks shows in the section, and nothing is sent. Scan the QR code with your banking app to see what your customer sees. In test mode the QR-bill page carries the test watermark, like the rest of the document.
+
+## Common messages and fixes
+
+| Message | Fix |
+|---|---|
+| A QR-bill needs a Swiss or Liechtenstein IBAN | Enter an IBAN that starts with CH or LI in the seller details. |
+| A QR reference needs a QR-IBAN | Enter your QR-IBAN in the add-on settings, or choose another reference type. |
+| Seller IBAN is a QR-IBAN, which works only with a QR reference | Choose QR reference as the reference type, or enter your normal IBAN. |
+| QR reference "..." has a wrong check digit | Map the reference without its check digit (up to 26 digits), or correct the 27-digit value. |
+| Amount ... is outside the QR-bill range | The amount must be between 0.01 and 999,999,999.99. |
+| ... contains "...", which a QR-bill does not allow | The standard allows Latin letters, digits and common punctuation. Remove other characters, such as Chinese or Cyrillic letters or emoji. |
+| ... is longer than ... characters | Shorten the value: names and streets up to 70 characters, cities up to 35, the message up to 140. |
+
+## Settings that combine with the QR-bill
+
+- **E-invoice:** the QR-bill page is added first, then the e-invoice data. The ZUGFeRD PDF stays valid with the extra page.
+- **Merge PDFs:** the QR-bill page is the last page, after the merged PDFs.
+- **Signing and acceptance:** the QR-bill page is part of the document your recipient signs or accepts.

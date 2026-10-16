@@ -63,20 +63,73 @@ The payment part uses the language of the automation's locale: German, French, I
 
 Create a test document from the section. The result of the checks shows in the section, and nothing is sent. Scan the QR code with your banking app to see what your customer sees. In test mode the QR-bill page carries the test watermark, like the rest of the document.
 
-## Common messages and fixes
+## Checks and messages
 
-| Message | Fix |
-|---|---|
-| A QR-bill needs a Swiss or Liechtenstein IBAN | Enter an IBAN that starts with CH or LI in the seller details. |
-| A QR reference needs a QR-IBAN | Enter your QR-IBAN in the add-on settings, or choose another reference type. |
-| Seller IBAN is a QR-IBAN, which works only with a QR reference | Choose QR reference as the reference type, or enter your normal IBAN. |
-| QR reference "..." has a wrong check digit | Map the reference without its check digit (up to 26 digits), or correct the 27-digit value. |
-| Amount ... is outside the QR-bill range | The amount must be between 0.01 and 999,999,999.99. |
-| ... contains "...", which a QR-bill does not allow | The standard allows Latin letters, digits and common punctuation. Remove other characters, such as Chinese or Cyrillic letters or emoji. |
-| ... is longer than ... characters | Shorten the value: names and streets up to 70 characters, cities up to 35, the message up to 140. |
+Every check runs before the document is created. When one fails, no file is created, stored or sent, and the run fails with the message `QR-bill not created:` followed by the first problem, plus the number and text of any further problems. In the text below, `...` stands for the value from your data.
+
+### Seller details and account
+
+| Check | Message | Fix |
+|---|---|---|
+| Legal name, postcode and city are set | `Seller name is empty. Add it in Settings, Add-ons.` (the same for `Seller postcode` and `Seller city`) | Enter the value in the seller details. |
+| The IBAN is set (no reference and creditor reference) | `Seller IBAN is empty. Add it in Settings, Add-ons.` | Enter your IBAN. |
+| The IBAN checksum is correct | `Seller IBAN "..." is not a valid IBAN.` | Check the IBAN for typos. |
+| The IBAN is Swiss or from Liechtenstein | `A QR-bill needs a Swiss or Liechtenstein IBAN (starting with CH or LI).` | Use an account that starts with CH or LI. |
+| A QR-IBAN is used only with a QR reference | `Seller IBAN is a QR-IBAN, which works only with a QR reference. Choose QR reference as the reference type.` | Choose QR reference, or enter your normal IBAN. |
+| A QR reference has a QR-IBAN | `A QR reference needs a QR-IBAN. Add it in Settings, Add-ons, or choose another reference type.` | Enter the QR-IBAN, or choose another reference type. |
+| The QR-IBAN is valid | `QR-IBAN "..." is not a valid QR-IBAN.` | Check it for typos. A QR-IBAN has a bank number from 30000 to 31999 (digits 5 to 9). |
+| The seller country is a country | `Seller country "..." is not a country. Use a two-letter code like CH.` | Pick the country again in the seller details. |
+| A reference type is chosen | `Reference type is not set.` | Choose a reference type in the automation. |
+
+### Amount and currency
+
+| Check | Message | Fix |
+|---|---|---|
+| A mapped amount has a value | `Amount is empty.` | Fill the amount field, or remove the mapping to leave the amount box blank. |
+| The amount is a number | `Amount "..." is not a number.` | Map a number field. "1234.50", "1'234.50", "CHF 1234.50" and "1.234,50" are read correctly. |
+| The amount is in range | `Amount ... is outside the QR-bill range of 0.01 to 999999999.99.` | Use an amount from 0.01 to 999,999,999.99. Zero and negative amounts are not allowed. |
+| The currency is CHF or EUR | `Currency "..." is not allowed. A QR-bill is in CHF or EUR.` | Choose CHF or EUR. A mapped currency field may contain CHF, Fr., EUR or the euro sign. |
+| A mapped currency has a value | `Currency is empty.` | Fill the currency field, or use the fixed choice. |
+
+### Reference and message
+
+| Check | Message | Fix |
+|---|---|---|
+| A reference is mapped and filled (QR reference and creditor reference) | `Reference is empty. The reference type QR reference needs one.` (or `Creditor reference`) | Map the reference field and fill it. |
+| The QR reference has the right form | `QR reference "..." is not valid. Use up to 26 digits, or 27 digits with the check digit.` | Map a field with digits only. |
+| The QR reference check digit is correct (mod 10, recursive) | `QR reference "..." has a wrong check digit.` | Map the reference without its check digit, or correct it. |
+| The creditor reference has the right form | `Creditor reference "..." is not valid. Use up to 21 letters and digits, or a reference starting with RF.` | Remove spaces, dashes and other signs from the value. |
+| The creditor reference check digits are correct (ISO 11649) | `Creditor reference "..." has a wrong check digit.` | Map the reference without "RF" and the check digits, or correct them. |
+| The message has at most 140 characters | `Message is longer than 140 characters, the QR-bill limit.` | Shorten the message. |
+
+### Payer
+
+| Check | Message | Fix |
+|---|---|---|
+| A payer has a name, postcode and city | `Payer name is empty. A payer address needs a name, postcode and city.` (the same for `Payer postcode` and `Payer city`) | Fill the fields, or remove all payer mappings. |
+| The payer country is a country | `Payer country "..." is not a country. Use a two-letter code like CH.` | Use a two-letter code or a country name such as Schweiz or Switzerland. |
+
+### Every text field
+
+| Check | Message | Fix |
+|---|---|---|
+| Length limits: names and streets 70, postcodes 16, cities 35 characters | `... is longer than 70 characters, the QR-bill limit.` (with the field name and its limit) | Shorten the value. |
+| Allowed characters: Latin letters with their accents, digits, common punctuation and the euro sign | `... contains "...", which a QR-bill does not allow.` | Remove the character, for example a Chinese or Cyrillic letter or an emoji. |
+| A field has one value | `... has more than one value. Pick a field with one value.` | Map a field that holds one value, not a lookup with several. |
+
+Line breaks and repeated spaces in your data become one space, so they never fail a check.
+
+### Rare messages
+
+- `The QR-bill could not be built from this data (...).` The data passed our checks but not the library that draws the payment part. Contact support with the message.
+- `The QR-bill page cannot be added to this PDF (...).` The finished PDF could not be read, for example a merged PDF that is damaged. Check the merged files, or contact support.
+
+## API and integrations
+
+The QR-bill needs no extra request fields: it reads the fields you map in the automation, also from API, Zapier, Make and n8n requests. A successful response carries `"qrBill": { "ok": true }`, and the PDF at `pdfUrl` has the payment part on its last page. A failed check answers with status 400, the message above and `"code": "QR_BILL_INVALID"`.
 
 ## Settings that combine with the QR-bill
 
-- **E-invoice:** the QR-bill page is added first, then the e-invoice data. The ZUGFeRD PDF stays valid with the extra page.
+- **E-invoice (ZUGFeRD):** the QR-bill page is added first, then the e-invoice data and the PDF/A-3 conversion. One PDF carries both, and it passes the official ZUGFeRD and PDF/A checks with the extra page. With XRechnung, the PDF gets the QR-bill page and the XML file is unchanged. When the amount is not mapped, the e-invoice gross total is used.
 - **Merge PDFs:** the QR-bill page is the last page, after the merged PDFs.
 - **Signing and acceptance:** the QR-bill page is part of the document your recipient signs or accepts.

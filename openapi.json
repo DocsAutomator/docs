@@ -480,7 +480,7 @@
         "operationId": "createAutomation",
         "tags": ["Automations"],
         "summary": "Create automation",
-        "description": "Creates a new automation with the specified data source and optional Google Doc template. PDF templates are uploaded through the DocsAutomator app.",
+        "description": "Creates a new automation with the specified data source and optional Google Doc template. PDF templates are uploaded through the DocsAutomator app. A new automation starts in test mode (`isPreview: true`): its documents are watermarked and free. To make live documents, switch it to live with `updateAutomation` and `{\"isPreview\": false}`.",
         "requestBody": {
           "required": true,
           "content": {
@@ -582,6 +582,10 @@
                   "isActive": {
                     "type": "boolean",
                     "description": "Whether the automation is active."
+                  },
+                  "isPreview": {
+                    "type": "boolean",
+                    "description": "Test mode. `true` makes watermarked test documents, `false` makes live documents. New automations and copies start with `true`. Going live needs a confirmed account email."
                   },
                   "saveGoogleDoc": {
                     "type": "boolean",
@@ -703,7 +707,7 @@
         "operationId": "duplicateAutomation",
         "tags": ["Automations"],
         "summary": "Duplicate automation",
-        "description": "Creates a copy of an existing automation with ' COPY' appended to the title.",
+        "description": "Creates a copy of an existing automation with ' COPY' appended to the title. The copy starts in test mode (`isPreview: true`).",
         "parameters": [
           {
             "name": "automationId",
@@ -1546,6 +1550,10 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "isPreview": {
+            "type": "boolean",
+            "description": "Test mode. New automations and copies start with `true`."
           },
           "saveGoogleDoc": {
             "type": "boolean"

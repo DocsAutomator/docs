@@ -20,7 +20,11 @@ POST https://api.docsautomator.co/createDocument
 </ParamField>
 
 <ParamField body="data" type="object" required>
-  Key-value pairs for template placeholders. Keys must match the placeholder names in your template (e.g., `{{customer_name}}` in your template → `"customer_name"` in the data object). Line items are also included inside this object as `line_items_1`, `line_items_2`, etc. — see [Example with Line Items](#example-with-line-items) below.
+  Key-value pairs for template placeholders. Keys must match the placeholder names in your template (e.g., `{{customer_name}}` in your template → `"customer_name"` in the data object). Line items are also included inside this object as `line_items_1`, `line_items_2`, etc. See [Example with Line Items](#example-with-line-items) below.
+</ParamField>
+
+<ParamField body="approverEmails" type="string | string[]">
+  Emails of people who must approve this document before it goes out: one email, several separated by commas, semicolons or line breaks, or a list of up to 10. Send it at the top level of the request, not inside `data`. The document waits for approval even when approval is off for the automation. Team members always count; other people can join only on the allowed domains set in the Approvals card. Fails with an error on a plan without Approvals. See [Approvers in an API call](/features/approvals#approvers-in-an-api-call).
 </ParamField>
 
 <ParamField body="documentName" type="string">
@@ -156,7 +160,7 @@ print(result["pdfUrl"])
 
 ## Example with Line Items
 
-Pass line items as arrays inside the `data` object. Use `line_items_1` for the first group, `line_items_2` for a second group, and so on — there is no limit on the number of line item groups. Each object's keys must match the line item placeholder names in your template.
+Pass line items as arrays inside the `data` object. Use `line_items_1` for the first group, `line_items_2` for a second group, and so on. There is no limit on the number of line item groups. Each object's keys must match the line item placeholder names in your template.
 
 <CodeGroup>
 ```bash cURL
@@ -441,7 +445,7 @@ while True:
 | `signingSessionId` | E-signature is enabled |
 | `signingStatus` | E-signature is enabled (`"created"`, `"queued"`, or `"awaiting_approval"` when the automation needs [approval](/features/approvals)) |
 | `signingLinks` | E-signature is enabled (array of signer objects with `signerIndex`, `email`, `name`, `signingUrl`, `status`). Absent while the session waits for approval |
-| `approval` | The document waits for [approval](/features/approvals) (`status`, `rule` (`"all"` or `"any"`), `approvers`, each with `name` and `email`, and `condition`) |
+| `approval` | The document waits for [approval](/features/approvals) (`status`, `rule` (`"all"` or `"any"`), `approvers`, each with `name`, `email` and, when set, `source` (`"fixed"`, `"field"` or `"request"`) and `invited`, `condition`, and `fieldApprovers` when the approvers came from your data or the request) |
 | `signingDeliveryMethod` | E-signature is enabled |
 | `esignSkipped` | E-signature is enabled but skipped for this request via `skipEsign: true` |
 | `eInvoice` | The automation creates an e-invoice: `{ "ok": true, "format": "zugferd" }`, or with XRechnung `{ "ok": true, "format": "xrechnung", "xmlUrl": "..." }` plus `xmlGoogleDriveUrl` when the PDF is saved to Google Drive. See [E-invoices](#e-invoices). |

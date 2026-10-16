@@ -59,8 +59,7 @@ The review page shows why a document needs approval, for example "Needs approval
 Often the right approver changes from record to record, for example the person who requested a contract. For Airtable, Notion, Google Sheets, SmartSuite, ClickUp and Google Forms, add one or more fields under **Approvers**, in **From your data**, whose value holds the email of the approver. Each document then also asks the people in these fields. For the API and other tools that send data, see [Approvers in an API call](#approvers-in-an-api-call).
 
 1. Under **From your data**, click **Add a field** and pick the field, for example **Requested by**. Click **Add another field** for a second field, for example **Legal reviewer**.
-2. Under **Allowed email domains**, check the domains. The list starts with the domain of your email.
-3. Tick **Let people on these domains join to approve**. Without the tick, the owners approve instead of people who are not on your team.
+2. Under **Allowed email domains**, add the domains of the people who may join to approve, for example `acme.com`. While the list is empty, nobody outside your team joins, and the owners approve instead of people who are not on your team.
 
 A field can hold one email or several, separated by commas, semicolons or line breaks. People fields, collaborator fields and lookups of email fields work too. Each document can have up to 10 approvers from your data.
 
@@ -71,11 +70,19 @@ The **Rule** applies to all approvers together: the team members you selected pl
 A person who is not on your team can approve only when both of these are true:
 
 - Their email is on one of the **Allowed email domains** in the Approvals card. Team members can always approve, whatever their domain.
-- An owner or admin ticked **Let people on these domains join to approve**.
+- The person joins your workspace as an approver.
 
-The approval email asks the person to join your workspace. Before they join, the review link shows only your workspace name, the automation, who created the document and a **Join** box. It shows no document and no record data. The person sets a password, or uses Google or Microsoft, and joins as a member. A person who already has a DocsAutomator account logs in and joins with one click. Then the same page shows the document, and they approve or reject.
+The list of allowed email domains is your consent. Under the list, the card says **People on these domains can join as approvers**, with who added the last domain and when. Only owners and admins can change the fields and the domains.
 
-Only owners and admins can change the fields, the domains and the tick. When the approver fields or the domains change, the tick clears, because a tick never covers a field or domain that was not there when it was given. The card then says **You changed the fields: tick again to let these people join.** Until someone ticks the box again, the owners approve instead of people who are not on your team.
+The approval email asks the person to join your workspace. Before they join, the review link shows only your workspace name, the automation, who created the document and a **Join** box. It shows no document and no record data. The person sets a password, or uses Google or Microsoft, and joins as an approver. A person who already has a DocsAutomator account logs in and joins with one click. Then the same page shows the document, and they approve or reject.
+
+### The Approver role
+
+A person who joins from an approval email gets the **Approver** role. An approver sees only the **Approvals** page with the documents they approve, and their own account settings. They cannot see automations, documents, signing sessions, templates, the team, billing, data sources or the API key, and they cannot use the AI agent or connect Claude or ChatGPT to the workspace. A link to any other page opens the Approvals page with a note.
+
+Approvers do not cost anything. DocsAutomator charges for documents, not for people.
+
+Owners and admins can change an approver to a member, and a member back to an approver, on **Settings**, **Team**.
 
 ### When DocsAutomator cannot use a field
 
@@ -85,7 +92,7 @@ The owners see the reason on the review page, on the **Approvals** page, on the 
 
 | Case | What the owners see |
 |---|---|
-| The person is not on your team, and nobody ticked **Let people on these domains join to approve** | Owners approve: jane@acme.com is not on the team, and joining is off for this automation. |
+| The person is not on your team, and **Allowed email domains** is empty | Owners approve: jane@acme.com is not on the team, and no allowed email domain is set. |
 | The person is not on your team, and their domain is not under **Allowed email domains** | Owners approve: jane@gmail.com is not on the team and not on an allowed domain. |
 | A value in the field is not an email | Owners approve: "Requested by" has no valid email. |
 | The fields or the request hold more than 10 emails | Owners approve: "Requested by" holds more than 10 emails (12). |
@@ -111,7 +118,7 @@ For the API and other tools that send data, such as Zapier, Make, n8n and Glide,
 - DocsAutomator reads `approverEmails` only at the top level of the request. Inside `data` it is an ordinary value and asks nobody. In Zapier and Make, add it as its own field next to the data, not as a placeholder value.
 - A request with `approverEmails` waits for approval, even when approval is off for the automation. When approval is on, the approvers you selected in the Approvals card approve too, with the rule you chose. When approval is off, only the people in the request approve, and all of them must approve.
 - An empty `approverEmails` still holds the document. The workspace owners approve it.
-- Members of your team always count as approvers. Other people can join only when an owner or admin has set the allowed email domains and ticked the box in the Approvals card. Otherwise the owners approve instead.
+- Members of your team always count as approvers. Other people can join, as approvers, only when their domain is under the allowed email domains in the Approvals card. Otherwise the owners approve instead.
 - On a plan without Approvals, a request with `approverEmails` fails with an error, so a document never goes out without the approval you asked for.
 
 You cannot change the approval settings through the API or an AI agent. The automation's settings in the API and in the [MCP server](/integrations-api/docsautomator-mcp) show them read-only.

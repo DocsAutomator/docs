@@ -39,7 +39,7 @@ Open an automation and find its **Swiss QR-bill** section. Fill in the parts bel
 ### Payment
 
 - **Currency:** CHF or EUR.
-- **Amount:** the field that holds the invoice total. When it is empty, the amount box on the payment part stays blank for the payer to fill in. When the automation also creates an e-invoice and the amount is not set, the e-invoice gross total is used.
+- **Amount:** the field that holds the invoice total. Leave it empty to let the payer enter the amount, for example for donations. When the automation also creates an e-invoice and the amount is not set, the e-invoice gross total is used.
 
 ### Reference
 
@@ -53,7 +53,7 @@ The **message** is optional free text of up to 140 characters, for example the i
 
 ### Payer
 
-The payer's name, street and number, postcode, city and country are optional. Without them, the "Payable by" box stays empty for the payer to fill in. When you map any of them, the name, postcode and city are needed. An empty country means Switzerland (CH).
+The payer's name, street and number, postcode, city and country are optional. Leave them empty to let the payer enter their name and address. When you map any of them, the name, postcode and city are needed. An empty country means Switzerland (CH).
 
 ### Language
 
@@ -85,7 +85,7 @@ Every check runs before the document is created. When one fails, no file is crea
 
 | Check | Message | Fix |
 |---|---|---|
-| A mapped amount has a value | `Amount is empty.` | Fill the amount field, or remove the mapping to leave the amount box blank. |
+| A mapped amount has a value | `Amount is empty.` | Fill the amount field, or remove the mapping to let the payer enter the amount. |
 | The amount is a number | `Amount "..." is not a number.` | Map a number field. "1234.50", "1'234.50", "CHF 1234.50" and "1.234,50" are read correctly. |
 | The amount is in range | `Amount ... is outside the QR-bill range of 0.01 to 999999999.99.` | Use an amount from 0.01 to 999,999,999.99. Zero and negative amounts are not allowed. |
 | The currency is CHF or EUR | `Currency "..." is not allowed. A QR-bill is in CHF or EUR.` | Choose CHF or EUR. A mapped currency field may contain CHF, Fr., EUR or the euro sign. |

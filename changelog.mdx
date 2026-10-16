@@ -5,6 +5,14 @@ rss: true
 mode: "center"
 ---
 
+<Update label="October 21, 2026">
+  ## New automations start in test mode
+
+  Every new automation now starts in test mode, however you create it: in the app, with the AI assistant, through MCP, or with the API `createAutomation` call. A copy of an automation starts in test mode too. Test documents are watermarked and free, so nothing goes out live before you have checked the result.
+
+  Switch an automation to live in the app when it is ready. With the API, send `{"isPreview": false}` to `updateAutomation`. See [the DocsAutomator API](/integrations-api/docsautomator-api#new-automations-start-in-test-mode).
+</Update>
+
 <Update label="October 14, 2026">
   ## Approvals
 

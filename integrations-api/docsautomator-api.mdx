@@ -77,6 +77,19 @@ curl -X PUT "https://api.docsautomator.co/updateAutomation?automationId=YOUR_AUT
 
 Automations also carry their own `description` — what the automation is for and what data it needs. `GET /automations` and `GET /automation` return it; set it with `{"description": "..."}` on `updateAutomation`, or in the app under **Automation Settings**.
 
+## New automations start in test mode
+
+Every automation you create with `createAutomation`, and every copy made with `duplicateAutomation`, starts in test mode (`isPreview: true`). Test documents are watermarked and free. When the automation is ready, switch it to live:
+
+```bash
+curl -X PUT "https://api.docsautomator.co/updateAutomation?automationId=YOUR_AUTOMATION_ID" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"isPreview": false}'
+```
+
+From then on, `createDocument` makes live documents that count in your plan. Going live needs a confirmed account email. You can also switch an automation to live in the app.
+
 ## Full API Reference
 
 For complete endpoint documentation with an interactive playground, see the **[API Reference](/api-reference/introduction)** tab.

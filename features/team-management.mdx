@@ -17,6 +17,9 @@ Team Management in DocsAutomator enables you to invite collaborators to your wor
 | **Owner** | Full access to all features including workspace deletion | Full |
 | **Admin** | Create/edit automations, invite members, manage settings | Limited to team folder (if set) |
 | **Member** | Create/edit automations | Limited to team folder (if set) |
+| **Approver** | Sees only the Approvals page with their own approvals, and their account settings | None |
+
+People who join from an approval email get the **Approver** role. See [Approvals](/features/approvals#the-approver-role).
 
 ## Inviting Team Members
 
@@ -44,7 +47,7 @@ Team Management in DocsAutomator enables you to invite collaborators to your wor
 ## Managing Members
 
 - View member names, emails, and roles
-- Change member roles (owners only)
+- Change member roles (owners only; admins can switch a person between member and approver)
 - Remove members from workspace (owners/admins only)
 
 ## Security Features
@@ -63,14 +66,15 @@ Restricts Google Drive access to a designated folder for team members:
 
 ### Permissions Summary
 
-| Action | Owner | Admin | Member |
-|--------|-------|-------|--------|
-| Invite members | ✅ | ✅ | ❌ |
-| Change roles | ✅ | ❌ | ❌ |
-| Remove members | ✅ | ✅ | ❌ |
-| Create automations | ✅ | ✅ | ✅ |
-| Edit automations | ✅ | ✅ | ✅ |
-| Delete workspace | ✅ | ❌ | ❌ |
+| Action | Owner | Admin | Member | Approver |
+|--------|-------|-------|--------|----------|
+| Invite members | ✅ | ✅ | ❌ | ❌ |
+| Change roles | ✅ | Member and approver only | ❌ | ❌ |
+| Remove members | ✅ | ✅ | ❌ | ❌ |
+| Create automations | ✅ | ✅ | ✅ | ❌ |
+| Edit automations | ✅ | ✅ | ✅ | ❌ |
+| Approve their own approvals | ✅ | ✅ | ✅ | ✅ |
+| Delete workspace | ✅ | ❌ | ❌ | ❌ |
 
 ## Best Practices
 

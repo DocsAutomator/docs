@@ -75,7 +75,7 @@ Each document can have up to 10 approvers from your data or the request. Each on
 
 ## The Approver role
 
-Anyone named in an approver field or in `approverEmails` can join your workspace as an approver, from any email domain. The approval email asks them to join. Before they join, the link shows no document and no record data.
+Anyone named in an approver field or in `approverEmails` can join your workspace as an approver, from any email domain. By default, the approval email asks them to join. Before they join, the link shows no document and no record data.
 
 A person who joins this way gets the **Approver** role. An approver sees and approves only the documents assigned to them. They do not see your automations, the API key, the team or the settings.
 
@@ -83,9 +83,17 @@ Owners and admins can also invite someone as an approver directly. Go to **Setti
 
 Approvers cost nothing. DocsAutomator charges for documents, not for people.
 
+### Approve without an account
+
+Some approvers should not need a DocsAutomator account, for example a client who approves a quote. Open the automation, open the **Approvals** card and turn off **Approvers need an account**. The switch shows when the automation has an approver field or takes approvers from the request. Owners and admins can change it.
+
+With the switch off, a person who is not on your team approves or rejects from the link in their own approval email. They do not sign up and do not join the workspace. The link works only for that person and only for that document. It stops working when the approval closes or expires. DocsAutomator keeps the approver's email, the time and the IP address of each decision.
+
+Team members still log in to decide. The switch is on by default.
+
 ## Approve or reject
 
-Each approver gets an email with a **Review document** link. The approver logs in with the account the email was sent to. The document also waits on the **Approvals** page in the app.
+Each approver gets an email with a **Review document** link. The approver logs in with the account the email was sent to. An approver from outside the team decides without a login when **Approvers need an account** is off. The document also waits on the **Approvals** page in the app.
 
 <Frame>
   <img src="/images/approvals/approvals-review.png" alt="The review page for an invoice. The PDF is shown on the left. On the right, a note says the invoice needs approval because the amount is 7,400. Goes to lists Email and Webhook. Two approvers are both Waiting. Approve and Reject buttons are at the bottom." />

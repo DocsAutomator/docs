@@ -236,6 +236,16 @@ Sessions using link delivery only ever offer **Copy link**, since DocsAutomator 
 - **Location**: Top of signing page
 - **Default**: DocsAutomator logo if not provided
 
+## Require a Drawn Signature
+
+In some countries, only a handwritten signature is legally recognised. For these documents, open the **Signing & Acceptance** card of your automation and switch on **Require Drawn Signature**.
+
+- Signers then see only the **Draw** option. The option to type a signature is not shown, for signatures and for initials.
+- DocsAutomator also refuses a typed signature on the server, so the rule holds even outside the signing page.
+- The setting is off by default. It applies to signing requests sent after you change it. Requests already sent keep the setting they were sent with.
+- The setting applies to **Signature required** only. Acceptance has no drawn signature.
+- Through the API, set `esignature.requireDrawnSignature` to `true` or `false`. DocsAutomator Agent can also set it for you.
+
 ## Expiration Settings
 
 | Setting | Default | Range |
@@ -256,7 +266,7 @@ Two days before a request expires, DocsAutomator sends the same recipients an **
 
 ### Field Completion
 
-- **Signature**: Draw via mouse, trackpad, or touch
+- **Signature**: Draw via mouse, trackpad, or touch, or type your name. When the automation requires a drawn signature, only drawing is offered.
 - **Date**: Calendar picker or manual selection
 - **Text**: Type required information
 - **Checkbox**: Toggle to select

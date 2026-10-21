@@ -1,0 +1,86 @@
+---
+title: "ChatGPT"
+description: "Add the DocsAutomator plugin to ChatGPT, then create documents, send them for signing or acceptance and check their status from a chat"
+icon: "/icons/chatgpt.webp"
+keywords: ["ChatGPT integration", "DocsAutomator ChatGPT plugin", "ChatGPT Plugins", "ChatGPT document generation", "ChatGPT e-signature"]
+---
+
+DocsAutomator is an official plugin in ChatGPT Plugins (called Apps before July 2026). Add it once, and ChatGPT can create documents from your templates, send them for signing or one-click acceptance, and tell you who has signed. It works in ChatGPT on the web, on desktop and on mobile.
+
+You need no server URL, no API key and no developer mode. ChatGPT signs in to your DocsAutomator account.
+
+<Card title="Add DocsAutomator to ChatGPT" icon="plug" href="https://chatgpt.com/plugins/plugin_asdk_app_6abc8c22ec94819186aac8114b0e24b3">
+  Opens DocsAutomator in ChatGPT Plugins.
+</Card>
+
+## Install and connect
+
+<Steps>
+  <Step title="Open DocsAutomator in ChatGPT Plugins">
+    Open the [DocsAutomator plugin](https://chatgpt.com/plugins/plugin_asdk_app_6abc8c22ec94819186aac8114b0e24b3). You can also open **Plugins** in the ChatGPT sidebar and search for DocsAutomator.
+  </Step>
+  <Step title="Click Install plugin">
+    ChatGPT adds the plugin to your account.
+  </Step>
+  <Step title="Click Connect">
+    Click **Connect** when ChatGPT asks. ChatGPT opens the DocsAutomator sign-in.
+  </Step>
+  <Step title="Sign in and allow access">
+    Sign in to DocsAutomator, choose your workspace if you have more than one, and allow access.
+  </Step>
+</Steps>
+
+**Use it in a chat:** ChatGPT uses DocsAutomator when your request needs it. To pick it yourself, type **@DocsAutomator**, or click **+** and type its name.
+
+**Enterprise or Edu plan:** an admin may have to enable DocsAutomator for the workspace first. If ChatGPT shows **Disabled by admin**, ask your admin.
+
+**Added by hand before?** If you added DocsAutomator to ChatGPT as a custom MCP server, remove that entry, so that ChatGPT uses the plugin.
+
+**More than one workspace:** the connection is bound to the workspace you choose when you sign in. To switch, disconnect DocsAutomator in ChatGPT and connect again.
+
+## What you can do
+
+- **Create documents from a chat.** ChatGPT reads the placeholders of an automation and fills them with the data you give it. The document uses your template, so the wording and layout stay the same every time.
+- **Send for signing or acceptance.** Name the person in your message ("send it to Anna at anna@example.com for acceptance"). ChatGPT passes the recipient with the document, and DocsAutomator sends the request. See [Signing & Acceptance](/features/docsautomator-esign).
+- **Check status and remind.** Ask who has not signed or accepted yet. ChatGPT can send a reminder, send an invitation again or cancel a request.
+- **Create e-invoices.** When the [e-invoice add-on](/features/e-invoices) is on, a document that ChatGPT creates is also an e-invoice (ZUGFeRD or XRechnung).
+- **Build the automation.** ChatGPT can design a Word template in your brand, use a template from the gallery or a Google Doc you already have, connect a record source such as Airtable or Notion, map the fields and set up delivery.
+
+ChatGPT shows a document card with the first page of the PDF and buttons for the PDF, the Word file and the Google Doc. A status card lists each signing or acceptance request and the status of every recipient, with a **Send reminder** button for a recipient who has not finished.
+
+## Safe by default
+
+- The first document of a new automation goes out in test mode, unless you ask for live. A test mode request sends the real email to the real person and is never billed.
+- Before anything goes out by email, DocsAutomator asks you in a confirmation dialog that names the document and every recipient, when ChatGPT shows such dialogs. Nothing is sent until you confirm. Otherwise ChatGPT confirms the recipients with you in the chat.
+- Before a send, ChatGPT shows you the document as a preview. A preview is a watermarked PDF; nothing is sent and nothing counts against your plan.
+
+[How AI clients use DocsAutomator](/integrations-api/how-ai-clients-use-docsautomator) lists every rule and confirmation.
+
+## Example conversation
+
+**You:** "Make a quote in the style of https://your-website.com and send it to me at you@example.com for acceptance. Use DocsAutomator and send it in test mode."
+
+**ChatGPT:** designs a quote template in your brand, creates the automation and makes a preview. DocsAutomator asks you to confirm the recipient, then sends the quote in test mode.
+
+**You:** "Has it been accepted yet?"
+
+**ChatGPT:** shows the status card: the quote is waiting for acceptance by you@example.com, with a **Send reminder** button.
+
+Open the email, check the quote, type your name and tap **Accept**. The quote then shows as accepted under [Documents](https://app.docsautomator.co/documents), with the accepted PDF.
+
+More prompts to try:
+- "List my DocsAutomator automations."
+- "Send the quote for record rec123 to Anna Weber at anna@example.com for acceptance."
+- "Who has not accepted their quote yet? Remind them."
+- "Describe the placeholders of my invoice automation so you can fill them."
+
+## Tips
+
+- Give each automation a description under **Automation Settings → Description**. ChatGPT reads it and picks the right automation.
+- Record source accounts (Airtable, Notion, Google and the others) are connected once in the DocsAutomator app under **Settings → Integrations**. ChatGPT sends you the link when one is missing.
+
+## Related
+
+- [Claude](/integrations-api/claude): add DocsAutomator to Claude.
+- [DocsAutomator MCP](/integrations-api/docsautomator-mcp): every tool, and setup for Cursor, VS Code and other AI tools.
+- [How AI clients use DocsAutomator](/integrations-api/how-ai-clients-use-docsautomator): the rules and confirmations.

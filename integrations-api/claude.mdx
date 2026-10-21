@@ -1,0 +1,85 @@
+---
+title: "Claude"
+description: "Add DocsAutomator to Claude from the Claude directory, then create documents, send them for signing or acceptance and check their status from a chat"
+icon: "/icons/claude.webp"
+keywords: ["Claude integration", "DocsAutomator Claude connector", "Claude directory", "Claude document generation", "Claude e-signature", "Claude Code"]
+---
+
+DocsAutomator is an official connector in the Claude directory. Add it once, and Claude can create documents from your templates, send them for signing or one-click acceptance, and tell you who has signed. It works in claude.ai, the Claude desktop app, the Claude mobile app and Claude Code.
+
+You need no server URL and no API key. Claude signs in to your DocsAutomator account.
+
+<Card title="Add DocsAutomator to Claude" icon="plug" href="https://claude.ai/directory/connectors/docsautomator">
+  Opens the DocsAutomator listing in the Claude directory.
+</Card>
+
+## Install and connect
+
+<Steps>
+  <Step title="Open DocsAutomator in the Claude directory">
+    Open [claude.ai/directory/connectors/docsautomator](https://claude.ai/directory/connectors/docsautomator). You can also go to **Customize** → **Connectors** → **Discover** in Claude and search for DocsAutomator.
+  </Step>
+  <Step title="Click Connect to Claude">
+    Claude opens the DocsAutomator sign-in.
+  </Step>
+  <Step title="Sign in and authorize">
+    Sign in to DocsAutomator, choose your workspace if you have more than one, and click **Authorize**.
+  </Step>
+  <Step title="Check the connection">
+    Back in Claude, DocsAutomator shows as **Connected** under **Your connectors**.
+  </Step>
+</Steps>
+
+**Team or Enterprise plan:** an owner adds DocsAutomator for the organization first with **Connect for your team**. Members then click **Connect to Claude** on the listing and sign in with their own DocsAutomator account.
+
+**Claude Code:** sign in to Claude Code with the same Claude account (`/login`). DocsAutomator then shows in `/mcp` as **claude.ai DocsAutomator**, with no extra setup. If you added DocsAutomator to Claude Code by hand before, remove that entry with `claude mcp remove docsautomator`, because a server added by hand hides the connector.
+
+**More than one workspace:** the connection is bound to the workspace you choose when you sign in. To switch, disconnect DocsAutomator in Claude and connect again.
+
+## What you can do
+
+- **Create documents from a chat.** Claude reads the placeholders of an automation and fills them with the data you give it. The document uses your template, so the wording and layout stay the same every time.
+- **Send for signing or acceptance.** Name the person in your message ("send it to Anna at anna@example.com for acceptance"). Claude passes the recipient with the document, and DocsAutomator sends the request. See [Signing & Acceptance](/features/docsautomator-esign).
+- **Check status and remind.** Ask who has not signed or accepted yet. Claude can send a reminder, send an invitation again or cancel a request.
+- **Create e-invoices.** When the [e-invoice add-on](/features/e-invoices) is on, a document that Claude creates is also an e-invoice (ZUGFeRD or XRechnung).
+- **Build the automation.** Claude can design a Word template in your brand, use a template from the gallery or a Google Doc you already have, connect a record source such as Airtable or Notion, map the fields and set up delivery.
+
+Claude shows a document card with the first page of the PDF and buttons for the PDF, the Word file and the Google Doc. A status card lists each signing or acceptance request and the status of every recipient, with a **Send reminder** button for a recipient who has not finished.
+
+## Safe by default
+
+- The first document of a new automation goes out in test mode, unless you ask for live. A test mode request sends the real email to the real person and is never billed.
+- Before anything goes out by email, DocsAutomator asks you in a confirmation dialog that names the document and every recipient, when Claude shows such dialogs. Nothing is sent until you confirm. Otherwise Claude confirms the recipients with you in the chat.
+- Before a send, Claude shows you the document as a preview. A preview is a watermarked PDF; nothing is sent and nothing counts against your plan.
+
+[How AI clients use DocsAutomator](/integrations-api/how-ai-clients-use-docsautomator) lists every rule and confirmation.
+
+## Example conversation
+
+**You:** "Make a quote in the style of https://your-website.com and send it to me at you@example.com for acceptance. Use DocsAutomator and send it in test mode."
+
+**Claude:** designs a quote template in your brand, creates the automation and makes a preview. DocsAutomator asks you to confirm the recipient, then sends the quote in test mode.
+
+**You:** "Has it been accepted yet?"
+
+**Claude:** shows the status card: the quote is waiting for acceptance by you@example.com, with a **Send reminder** button.
+
+Open the email, check the quote, type your name and tap **Accept**. The quote then shows as accepted under [Documents](https://app.docsautomator.co/documents), with the accepted PDF.
+
+More prompts to try:
+- "List my DocsAutomator automations."
+- "Send the quote for record rec123 to Anna Weber at anna@example.com for acceptance."
+- "Who has not accepted their quote yet? Remind them."
+- "Describe the placeholders of my invoice automation so you can fill them."
+
+## Tips
+
+- Give each automation a description under **Automation Settings → Description**. Claude reads it and picks the right automation.
+- Record source accounts (Airtable, Notion, Google and the others) are connected once in the DocsAutomator app under **Settings → Integrations**. Claude sends you the link when one is missing.
+- The [DocsAutomator skill](https://github.com/DocsAutomator/docsautomator-mcp) gives Claude and Claude Code the steps for your first quote.
+
+## Related
+
+- [ChatGPT](/integrations-api/chatgpt): add DocsAutomator to ChatGPT.
+- [DocsAutomator MCP](/integrations-api/docsautomator-mcp): every tool, and setup for Cursor, VS Code and other AI tools.
+- [How AI clients use DocsAutomator](/integrations-api/how-ai-clients-use-docsautomator): the rules and confirmations.

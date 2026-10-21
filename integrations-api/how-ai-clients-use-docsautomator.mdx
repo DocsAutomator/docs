@@ -59,6 +59,8 @@ Tested with: Claude Code and Codex.
 - Your AI client sends from the automation you already have.
 - On a record source (Airtable, Notion, Google Sheets, Google Forms, SmartSuite or ClickUp), it passes the record ID. The record fills the document, and the signer emails come from the record's mapped fields. It names other recipients only when you name a different person.
 - It never copies an automation to send from the chat, and it never replaces the automation's data source.
+- When you ask for an approval, your AI client names the approvers for that one document. The document waits until they approve, even when approval is off for the automation. See [Approvals](/features/approvals).
+- Your AI client can give each document its own key. When it sends the same request again with the same key within 7 days, DocsAutomator returns the first result and creates nothing new, so a retry after a timeout never sends a document twice.
 - The DocsAutomator tools cannot search your records. Your AI client gets the record from you, or from its own connection to that app.
 - If the automation creates an e-invoice, the document your AI client creates is an e-invoice too, and a problem in the data stops it with a message that names the field. See [E-invoices from MCP clients](/integrations-api/docsautomator-mcp#e-invoices).
 
@@ -76,9 +78,9 @@ When your AI client needs a choice from you, it asks in plain text.
 **Server instructions:**
 
 ```text
-Send RAW values: numbers as numbers, dates as ISO dates; never pre-format. Read get_automation, then call create_document with the values and a mode ('test' for a new setup's first document).
+Send RAW values: numbers as numbers, dates as ISO dates. Read get_automation before create_document; pass a mode ('test' for a new setup's first document).
 Templates: theirs first (set_template: upload, Google Doc), then gallery (set_template); generate_word_template only if none fits. Never create or edit a Google Doc.
-Ask the user in plain text when you need a choice.
+Ask in plain text when you need a choice.
 ```
 
 **Session guide:**

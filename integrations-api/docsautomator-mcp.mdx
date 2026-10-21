@@ -145,7 +145,7 @@ The main path: your AI client is the data source. It reads the placeholders with
 | Tool | Purpose |
 |------|---------|
 | `list_automations` | List your automations, with each automation's description when set |
-| `get_automation` | Read one automation: template, placeholders with their meaning and print format, data source, field mappings, output and signing settings. On request it adds the exact trigger setup for its data source, or the text of a Google Doc template |
+| `get_automation` | Read one automation: template, placeholders with their meaning and print format, data source, field mappings, output and signing settings. On request it adds the exact trigger setup for its data source, or the text of a Google Doc or Word template |
 | `create_automation` | Create an automation, start one from another automation's template, or copy a whole automation |
 | `configure_automation` | Name, description, status (live, test, inactive or trash), document name field, locale, time zone, date format, and automatic triggers for record sources |
 
@@ -154,7 +154,7 @@ The main path: your AI client is the data source. It reads the placeholders with
 | Tool | Purpose |
 |------|---------|
 | `generate_word_template` | Design a new Word template with AI, in your brand when you give your website |
-| `edit_word_template` | Change the Word template with an instruction (layout, styling, placeholders, logo), or undo the last AI change |
+| `edit_word_template` | Change the Word template with an instruction (layout, styling, text, also in tables inside tables, placeholders, logo), or undo the last AI change |
 | `set_template` | Use a gallery template, your own Word or PDF file, or a Google Doc you already have |
 | `search` | Search the DocsAutomator documentation or the template gallery |
 
@@ -184,7 +184,7 @@ The main path: your AI client is the data source. It reads the placeholders with
 
 | Tool | Purpose |
 |------|---------|
-| `configure_esignature` | Acceptance or signature, signers, order, reminders, email copy, and where the signed PDF goes |
+| `configure_esignature` | Acceptance or signature, signers, order, reminders, email copy, a required drawn signature, and where the signed PDF goes |
 | `list_esign_sessions` | List requests with their status and who has not signed or accepted yet; one request in full with its signing links and audit trail |
 | `manage_esign_session` | Remind or re-invite one recipient, or cancel a request |
 
@@ -216,6 +216,8 @@ DocsAutomator formats every value itself, so an AI client sends raw values: numb
 - `async`: if true, answers at once with a job ID; follow it with `get_recent_runs`
 - `recipients`: who signs or accepts this document, for example `[{ "signer": 1, "email": "anna@acme.com", "name": "Anna Weber" }]`
 - `skipEsign`: if true, makes the document without starting signing or acceptance
+- `approverEmails`: who must approve this document before it goes out, for example `["dana@acme.com"]`. The document waits even when approval is off for the automation. Business plan and up. See [Approvals](/features/approvals).
+- `idempotencyKey`: your own key for this document, up to 255 characters. The same key within 7 days returns the first result and creates no second document. See [Safe retries](/api-reference/documents/create-from-api#safe-retries-with-an-idempotency-key).
 
 **Signing and acceptance:** if the automation has signing or acceptance turned on, `create_document` starts it. The answer includes the session and its signing links.
 

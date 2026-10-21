@@ -35,6 +35,10 @@ POST https://api.docsautomator.co/createDocument
   By default the request waits and returns the document (HTTP 200 with `pdfUrl`). When `true`, it returns immediately with a `jobId` (HTTP 202) instead. Poll [`GET /job/{jobId}`](/api-reference/documents/get-job-status) for the result.
 </ParamField>
 
+<ParamField body="idempotencyKey" type="string">
+  Your own key for this document, up to 255 characters, for example `"proposal-1042-v2"`. When you send the same request again with the same key within 7 days, no new document is created and you get the result of the first request. Also accepted as an `Idempotency-Key` request header; when both are sent, the body value is used. See [Safe retries with an idempotency key](#safe-retries-with-an-idempotency-key).
+</ParamField>
+
 <ParamField body="webhookParams" type="object">
   Custom parameters passed through to webhook notifications under both `webhookParams` and `additionalParams` (identical content; the latter is kept for backward compatibility).
 </ParamField>
@@ -418,6 +422,63 @@ while True:
     delay = min(delay * 2, 30)  # Max 30s between polls
 ```
 </CodeGroup>
+
+## Safe retries with an idempotency key
+
+A network error or a timeout can leave you unsure whether a document was created. Send an idempotency key with the request, and you can send the same request again without creating a second document, a second signing session or a second approval request.
+
+Choose one key per document you want, for example the record id plus a version: `"proposal-1042-v2"`. Keys belong to your workspace, so another workspace can use the same key. A key is kept for 7 days after the first request. After that, the same key creates a new document.
+
+| Situation | Answer |
+|-----------|--------|
+| First request with this key | The document is created as usual. |
+| Same key and same request, first request finished | HTTP 200 with the first request's result: the same `logId`, `pdfUrl` and file links, `signingSessionId` and `signingLinks`, `holdId` for [approvals](/features/approvals), and `jobId` when the first request was queued. The answer also has `"idempotentReplay": true`. This is the same in sync and async mode. |
+| Same key and same request, first request still running, async mode | HTTP 202 with the running request's `logId` and, once it is queued, its `jobId`. Poll [`GET /job/{jobId}`](/api-reference/documents/get-job-status) or send the request again later. |
+| Same key and same request, first request still running, sync mode | HTTP 409 with `"code": "IDEMPOTENCY_KEY_IN_PROGRESS"`, the `logId` and, once it is queued, the `jobId`. Send the request again in a few seconds to get the result. |
+| Same key, different request | HTTP 409 with `"code": "IDEMPOTENCY_KEY_REUSED"`. Nothing is created. Use a new key for a new document. |
+| Same key, first request failed | The request runs again. A failed request does not use up its key. |
+| Key that is not a string, is empty or is longer than 255 characters | HTTP 400 with `"code": "IDEMPOTENCY_KEY_INVALID"`. |
+
+**Why sync mode answers 409 while the first request runs:** a second request that waits for the first one can hit your own timeout and leave you where you started. The 409 answer comes back at once, names the running job, and the next retry with the same key returns the finished result.
+
+**What counts as the same request:** we compare the automation id and everything else you send in the body and the query string, in any key order. `async`, the key itself and your API key are not compared. For an automation with a record source such as Airtable, the request holds the record id, not the record's values, so a change to the record does not make it a different request. Use a new key when you want a new document from the changed record.
+
+Requests without a key work as before: every request creates a new document.
+
+### Airtable script example
+
+This script runs in an Airtable automation ("Run a script" action). It uses the record id and a version field as the key, so running it again for the same record never creates a second proposal, and raising the version creates a new one.
+
+```javascript
+const { recordId, version } = input.config();
+
+const response = await fetch("https://api.docsautomator.co/createDocument", {
+  method: "POST",
+  headers: {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    automationId: "YOUR_AUTOMATION_ID",
+    recId: recordId,
+    idempotencyKey: `proposal-${recordId}-v${version}`,
+  }),
+});
+const result = await response.json();
+
+if (result.code === "IDEMPOTENCY_KEY_IN_PROGRESS") {
+  // The first run is still creating this document. Run the automation again
+  // later: the same key then returns the finished result.
+  throw new Error("Document is still being created. Try again in a minute.");
+}
+if (response.status !== 200) {
+  throw new Error(result.message || result.error || `HTTP ${response.status}`);
+}
+
+output.set("logId", result.logId || "");
+output.set("signingSessionId", result.signingSessionId || "");
+output.set("holdId", result.holdId || "");
+```
 
 ## Response
 

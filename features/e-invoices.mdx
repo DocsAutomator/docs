@@ -77,7 +77,7 @@ Pick where the lines come from: a linked table or relation (Airtable, Notion, Sm
 | Item name | Always |
 | Quantity | Always |
 | Net unit price | Always |
-| VAT rate | With standard VAT. `19`, `19 %` and `0.19` all mean 19 %. |
+| VAT rate | With standard VAT, unless you set a fixed VAT rate. `19`, `19 %` and `0.19` all mean 19 %. A fixed VAT rate applies to every line without a rate of its own, so a line's own rate always wins. |
 | Unit | Optional. Values like "Stk", "h" or "Std" are matched to the unit list; empty rows use the default unit. |
 | Line total | Optional. If you map it, each line is checked against quantity × price. |
 
@@ -135,7 +135,7 @@ With every data source, the XML is also saved next to the PDF in your Google Dri
 | Gross total is not mapped. | Map the field that holds the invoice total. |
 | Gross total does not match the line items. The record says …; the line items give … | Check the lines and the total. Calculate VAT per rate on the total, not per line. |
 | Line 2: line total does not match quantity × price. | Fix the line, or remove the line total mapping. |
-| Line 1: VAT rate is empty. | Map the VAT rate column, or fill in the rate on that line. |
+| Line 1: VAT rate is empty. | Fill in the rate on that line, or set a fixed VAT rate. |
 | … is not in euros. E-invoices are in EUR only. | Use euro amounts without another currency sign. |
 | Invoice date "03/04/2026" can be read two ways. | Use a date like 2026-10-31 or 31.10.2026. |
 | Buyer country "…" is not a country. | Use a two-letter code like DE. |

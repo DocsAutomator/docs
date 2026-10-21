@@ -25,8 +25,8 @@ In about two minutes your AI agent makes a quote in your brand and sends it to y
 
 <Steps>
   <Step title="Add DocsAutomator to your AI app">
-    - **Claude:** open [DocsAutomator in the Claude directory](https://claude.ai/directory/connectors/docsautomator), click **Connect to Claude** and sign in to DocsAutomator. Claude Code gets it too. See [Claude](#claude).
-    - **ChatGPT:** open [DocsAutomator in ChatGPT Plugins](https://chatgpt.com/plugins/plugin_asdk_app_6abc8c22ec94819186aac8114b0e24b3), click **Install plugin**, then **Connect**, and sign in to DocsAutomator. See [ChatGPT](#chatgpt).
+    - **Claude:** open [DocsAutomator in the Claude directory](https://claude.ai/directory/connectors/docsautomator), click **Connect to Claude** and sign in to DocsAutomator. Claude Code gets it too. See [Claude](/integrations-api/claude).
+    - **ChatGPT:** open [DocsAutomator in ChatGPT Plugins](https://chatgpt.com/plugins/plugin_asdk_app_6abc8c22ec94819186aac8114b0e24b3), click **Install plugin**, then **Connect**, and sign in to DocsAutomator. See [ChatGPT](/integrations-api/chatgpt).
     - **Cursor:** [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=DocsAutomator&config=eyJ1cmwiOiJodHRwczovL21jcC5kb2NzYXV0b21hdG9yLmNvL21jcCJ9)
     - **VS Code:** [Add to VS Code](vscode:mcp/install?%7B%22name%22%3A%22docsautomator%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.docsautomator.co%2Fmcp%22%7D)
 
@@ -70,48 +70,13 @@ API key connections (Cursor, custom clients) are bound to the workspace of the k
 
 ### Claude
 
-DocsAutomator is an official connector in the Claude directory. It works in claude.ai, the Claude desktop app, the Claude mobile app and Claude Code.
-
-<Card title="Add DocsAutomator to Claude" icon="plug" href="https://claude.ai/directory/connectors/docsautomator">
-  Opens the DocsAutomator listing in the Claude directory.
-</Card>
-
-1. Open DocsAutomator in the Claude directory: [claude.ai/directory/connectors/docsautomator](https://claude.ai/directory/connectors/docsautomator). You can also go to **Customize** → **Connectors** → **Discover** in Claude and search for DocsAutomator.
-2. Click **Connect to Claude**.
-3. Sign in to DocsAutomator, choose your workspace if you have more than one, and click **Authorize**.
-4. Back in Claude, DocsAutomator shows as **Connected** under **Your connectors**.
-
-On a Team or Enterprise plan, an owner adds DocsAutomator for the organization first with **Connect for your team**. Members then click **Connect to Claude** on the listing and sign in with their own DocsAutomator account.
-
-**Claude Code:** sign in to Claude Code with the same Claude account (`/login`). DocsAutomator then shows in `/mcp` as **claude.ai DocsAutomator**, with no extra setup. If you added DocsAutomator to Claude Code by hand before, remove that entry with `claude mcp remove docsautomator`, because a server added by hand hides the connector.
-
-Once connected, you can ask Claude things like:
-- "List my DocsAutomator automations"
-- "Generate a document using automation [ID] with this data..."
-- "Check the status of my e-signature sessions"
+DocsAutomator is an official connector in the Claude directory. The [Claude page](/integrations-api/claude) has the install steps, Claude Code and examples.
 
 ---
 
 ### ChatGPT
 
-DocsAutomator is an official plugin in ChatGPT Plugins (called Apps before July 2026). It works in ChatGPT on the web, on desktop and on mobile. You need no server URL and no developer mode.
-
-<Card title="Add DocsAutomator to ChatGPT" icon="plug" href="https://chatgpt.com/plugins/plugin_asdk_app_6abc8c22ec94819186aac8114b0e24b3">
-  Opens DocsAutomator in ChatGPT Plugins.
-</Card>
-
-1. Open DocsAutomator in ChatGPT Plugins: [Add to ChatGPT](https://chatgpt.com/plugins/plugin_asdk_app_6abc8c22ec94819186aac8114b0e24b3). You can also open **Plugins** in the ChatGPT sidebar and search for DocsAutomator.
-2. Click **Install plugin**.
-3. Click **Connect** when ChatGPT asks.
-4. Sign in to DocsAutomator, choose your workspace if you have more than one, and allow access.
-
-In a chat, ChatGPT uses DocsAutomator when your request needs it. To pick it yourself, type **@DocsAutomator**, or click **+** and type its name.
-
-On a ChatGPT Enterprise or Edu plan, an admin may have to enable DocsAutomator for the workspace first. If ChatGPT shows **Disabled by admin**, ask your admin.
-
-If you added DocsAutomator to ChatGPT as a custom MCP server before, remove that entry, so that ChatGPT uses the plugin.
-
-Once connected, you can ask ChatGPT to generate documents, manage automations, handle e-signatures, and more using natural language.
+DocsAutomator is an official plugin in ChatGPT Plugins. The [ChatGPT page](/integrations-api/chatgpt) has the install steps and examples.
 
 ---
 
@@ -132,7 +97,7 @@ Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/sett
 
 ### Other MCP Clients
 
-For MCP-compatible clients other than Claude and ChatGPT, use these connection details. Claude connects through the [directory connector](#claude) and ChatGPT through the [ChatGPT plugin](#chatgpt), with no server URL or API key.
+For MCP-compatible clients other than Claude and ChatGPT, use these connection details. Claude connects through the [directory connector](/integrations-api/claude) and ChatGPT through the [ChatGPT plugin](/integrations-api/chatgpt), with no server URL or API key.
 
 | Setting | Value |
 |---------|-------|

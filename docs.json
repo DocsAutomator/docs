@@ -90,6 +90,8 @@
               {
                 "group": "Integrations",
                 "pages": [
+                  "integrations-api/claude",
+                  "integrations-api/chatgpt",
                   "integrations-api/airtable",
                   "integrations-api/notion",
                   "integrations-api/google-sheets",

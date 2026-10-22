@@ -335,6 +335,8 @@ Signature images are not mapped to data sources.
 
 If your automation has a webhook URL configured, DocsAutomator will send webhook notifications for e-signature events. The webhook URL and `webhookParams` are the same ones configured in your automation's [output settings](/features/actions-after-document-generation/notify-webhook).
 
+Every webhook names its event in the `event` field: `esign.session_created`, `esign.signer_signed`, `esign.session_completed`, `esign.session_declined`, `esign.session_expired`, `esign.email_sent`, `esign.email_failed` and the approval events below. The same URL also receives `document.created` when the document is generated. Use `event` to tell them apart.
+
 Acceptance sessions fire the same events with the same payload keys. `closeType` is `"signature"` or `"acceptance"` on every session event. On an acceptance session, `esign.signer_signed` fires when a recipient clicks Accept, and the signer entries carry two extra fields: `typedName` (the name the recipient typed, or `null`) and `acceptedAt`.
 
 ### Approval Requested, Approved and Rejected
@@ -347,6 +349,7 @@ Fires once when all signers complete and the final signed PDF is generated.
 
 ```json
 {
+  "event": "esign.session_completed",
   "signedPdfUrl": "https://...",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
@@ -479,6 +482,8 @@ Fires when a signing session expires before all signers complete it. An expirati
 
 <Info>
 `pendingSigners` lists signers who had not yet signed or declined when the session expired. If a session has already been declined, cancelled, or completed before the expiration time, this webhook does **not** fire.
+
+A session usually expires on time. If that expiry was missed, an hourly check expires the session later and sends the same webhook. A session that expired more than 7 days earlier expires without an email and without a webhook. Its status still changes to `expired`.
 </Info>
 
 ### Email Sent / Email Failed

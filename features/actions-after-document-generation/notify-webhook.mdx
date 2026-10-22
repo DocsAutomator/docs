@@ -54,6 +54,7 @@ These parameters appear in the webhook payload sent to your endpoint under two k
 
 ```json
 {
+  "event": "document.created",
   "pdfUrl": "https://...",
   "googleDocUrl": "https://docs.google.com/document/d/...",
   "documentName": "Invoice #123",
@@ -67,6 +68,41 @@ These parameters appear in the webhook payload sent to your endpoint under two k
     "orderId": "ORD-12345",
     "customerId": "CUST-789",
     "recId": "recAbC123XyZ"
+  }
+}
+```
+
+## Webhook Events
+
+Every webhook names its event in the `event` field. Use it to tell the events apart, because one webhook URL receives all of them.
+
+| Event | When it fires |
+|-------|---------------|
+| `document.created` | A document was generated. With [Approvals](/features/approvals) on, it fires after the approval. |
+| `document.approval_rejected` | An approver rejected a held document. Nothing was delivered. |
+| `esign.*` | Signing and acceptance events. See the [e-sign webhook events](/features/docsautomator-esign/docsautomator-esign-api-reference#webhook-events). |
+
+The `document.created` payload is shown above. A document released after an approval also carries an `approval` object.
+
+The `document.approval_rejected` payload:
+
+```json
+{
+  "event": "document.approval_rejected",
+  "status": "approval_rejected",
+  "logId": "unique-run-identifier",
+  "documentName": "Invoice #123",
+  "approval": {
+    "status": "rejected",
+    "rule": "all",
+    "requestedAt": "ISO date string",
+    "requestedBy": { "email": "jonas@example.com", "name": "Jonas Weber" },
+    "decidedAt": "ISO date string",
+    "decidedBy": { "email": "priya@example.com", "name": "Priya Nair", "forApprover": null },
+    "reason": "Wrong amount, please check the quantity.",
+    "approvers": [
+      { "email": "priya@example.com", "name": "Priya Nair", "decision": "rejected", "decidedAt": "ISO date string" }
+    ]
   }
 }
 ```

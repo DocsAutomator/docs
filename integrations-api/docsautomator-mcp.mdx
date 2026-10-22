@@ -111,7 +111,7 @@ A client that does not support sign-in sends your API key in the header `Authori
 
 ## Available Tools
 
-The MCP server gives your AI client 18 tools. Your AI client sees each tool with its full instructions after it connects.
+The MCP server gives your AI client 22 tools. Your AI client sees each tool with its full instructions after it connects.
 
 The rules DocsAutomator gives your AI client, including the confirmations before any send, are listed in [How AI clients use DocsAutomator](/integrations-api/how-ai-clients-use-docsautomator).
 
@@ -121,6 +121,7 @@ The main path: your AI client is the data source. It reads the placeholders with
 
 | Tool | Purpose |
 |------|---------|
+| `get_profile` | Show which DocsAutomator workspace and account the connection uses |
 | `list_automations` | List your automations, with each automation's description when set |
 | `get_automation` | Read one automation: template, placeholders with their meaning and print format, data source, field mappings, output and signing settings. On request it adds the exact trigger setup for its data source, or the text of a Google Doc or Word template |
 | `create_automation` | Create an automation, start one from another automation's template, or copy a whole automation |

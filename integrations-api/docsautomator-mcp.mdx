@@ -131,7 +131,8 @@ The main path: your AI client is the data source. It reads the placeholders with
 | Tool | Purpose |
 |------|---------|
 | `generate_word_template` | Design a new Word template with AI, in your brand when you give your website |
-| `edit_word_template` | Change the Word template with an instruction (layout, styling, text, also in tables inside tables, placeholders, logo), or undo the last AI change |
+| `edit_word_template` | Change the Word template with an instruction (layout, styling, text, also in tables inside tables, placeholders, logo) |
+| `undo_template_edit` | Undo the last AI change to the Word template, up to 5 steps back |
 | `set_template` | Use a gallery template, your own Word or PDF file, or a Google Doc you already have |
 | `search` | Search the DocsAutomator documentation or the template gallery |
 
@@ -163,7 +164,9 @@ The main path: your AI client is the data source. It reads the placeholders with
 |------|---------|
 | `configure_esignature` | Acceptance or signature, signers, order, reminders, email copy, a required drawn signature, and where the signed PDF goes |
 | `list_esign_sessions` | List requests with their status and who has not signed or accepted yet; one request in full with its signing links and audit trail |
-| `manage_esign_session` | Remind or re-invite one recipient, or cancel a request |
+| `send_esign_reminder` | Send a reminder to one recipient who has not signed or accepted yet |
+| `resend_esign_invite` | Send the invitation to one recipient again |
+| `cancel_esign_session` | Cancel an open request |
 
 <Note>
 Record source accounts (Airtable, Notion, Google, and the others) use OAuth and are connected once in the DocsAutomator app under **Settings → Integrations**. When an account is not connected, the tools answer with the link to that page. All other setup steps work through MCP.

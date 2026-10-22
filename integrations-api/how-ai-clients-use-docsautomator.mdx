@@ -33,7 +33,7 @@ An agent that runs on its own but signs in with your DocsAutomator account and s
 - The dialog names the document and every recipient. Nothing is sent until you confirm.
 - DocsAutomator asks before:
   - a document goes out in test or live mode, for signing, acceptance or by email (`create_document`),
-  - a reminder, a new invitation or a cancellation (`manage_esign_session`),
+  - a reminder (`send_esign_reminder`), a new invitation (`resend_esign_invite`) or a cancellation (`cancel_esign_session`),
   - an automation with email recipients goes live (`configure_automation`),
   - a change to who a live automation emails (`configure_output`).
 - A preview never asks.
@@ -99,7 +99,9 @@ DocsAutomator session guide (shown once per session):
 | Tool | Rule |
 |------|------|
 | `create_document` | Show it with mode 'preview' and confirm the recipients with the user before you send. |
-| `manage_esign_session` | Each action emails a real person or ends the request, so confirm the recipient and the action with the user before you act. |
+| `send_esign_reminder` | Confirm the recipient with the user first. |
+| `resend_esign_invite` | Confirm the recipient with the user first. |
+| `cancel_esign_session` | Confirm with the user first. |
 | `configure_automation` | Ask the user first. Test before live; going live is the last step. |
 | `configure_output` | Test before live; going live is the last step. |
 | `create_automation` | After a test, offer to trash an automation you made only for it. |

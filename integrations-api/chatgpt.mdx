@@ -36,7 +36,7 @@ You need no server URL, no API key and no developer mode. ChatGPT signs in to yo
 
 **Added by hand before?** If you added DocsAutomator to ChatGPT as a custom MCP server, remove that entry, so that ChatGPT uses the plugin.
 
-**More than one workspace:** the connection is bound to the workspace you choose when you sign in. To switch, disconnect DocsAutomator in ChatGPT and connect again.
+**More than one workspace:** the connection is bound to the workspace you choose when you sign in. To switch, open the DocsAutomator plugin settings (steps 1 to 3 in [Tools do not show up](#tools-do-not-show-up)). Click **Disconnect** on the account, then click **Connect another account** and choose the other workspace.
 
 ## What you can do
 
@@ -78,6 +78,25 @@ More prompts to try:
 
 - Give each automation a description under **Automation Settings → Description**. ChatGPT reads it and picks the right automation.
 - Record source accounts (Airtable, Notion, Google and the others) are connected once in the DocsAutomator app under **Settings → Integrations**. ChatGPT sends you the link when one is missing.
+
+## Tools do not show up
+
+If ChatGPT does not show the DocsAutomator tools, or uses an old tool list, reconnect the plugin.
+
+<Warning>
+  Do not use **Uninstall** to fix missing tools. Uninstall removes the plugin and every connected account.
+</Warning>
+
+1. Click your name at the bottom left to open the profile menu, then click **Settings**.
+2. In the left column, under **Integrations**, click **Plugins**.
+3. Click the **DocsAutomator** row.
+4. Under **Connected accounts**, click the **...** button at the right of your DocsAutomator account.
+5. Click **Reconnect**, then sign in to DocsAutomator again. ChatGPT loads the current tool list.
+6. Start a new chat and type **@DocsAutomator** in the message box. An old chat keeps the tool list it started with.
+
+**Several connected accounts:** each row under **Connected accounts** is a separate connection, and ChatGPT can use any of them. Keep one account for each workspace you use, and click **Disconnect** on the others.
+
+**Several @DocsAutomator entries:** pick the entry with the purple DocsAutomator logo and the text "Documents, signed or accepted". The other entries are older connections with a fixed tool list.
 
 ## Related
 

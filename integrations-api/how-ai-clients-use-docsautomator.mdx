@@ -10,17 +10,18 @@ The rules come in three places:
 
 - **Server instructions:** a short text every client receives when it connects.
 - **Session guide:** a short text that DocsAutomator adds to the first answer of each session, because some clients ignore the server instructions.
-- **Tool descriptions:** each of the 18 tools describes itself, and the rules that protect a send are written into the tools that send.
+- **Tool descriptions:** each of the 22 tools describes what it does, what each input means and what it changes.
 
 ## Safety rules
 
 These rules protect the people who receive your documents.
 
-### Confirm before anything is sent
+### What protects a send
 
-- Before your AI client sends a document, it shows you the document as a preview and confirms the recipients with you. A preview is a watermarked PDF. Nothing is sent and nothing counts against your plan.
-- Before your AI client sends a reminder, sends an invitation again or cancels a signing or acceptance request, it confirms the recipient and the action with you.
-- Your AI client never moves an automation to the trash without your yes. When it made an automation only for a test, it offers to trash it after the test.
+- Every tool that sends email or changes your setup is marked as such for your AI client (MCP tool annotations). AI clients that ask before such actions, such as ChatGPT with its Allow card, ask you first.
+- DocsAutomator refuses a live document while the automation is in test mode, and before the automation has made its first test document.
+- A preview is a watermarked PDF. Nothing is sent and nothing counts against your plan.
+- An automation moved to the trash can be restored from the Trash in the DocsAutomator app.
 
 ### A confirmation dialog in your AI client
 
@@ -93,18 +94,6 @@ DocsAutomator session guide (shown once per session):
 - Never copy an automation into an API copy to send from chat, and never replace its data source.
 - These tools cannot search records. Get the record from the user, or from their own connector for that app.
 ```
-
-**Safety rules in the tool descriptions:**
-
-| Tool | Rule |
-|------|------|
-| `create_document` | Show it with mode 'preview' and confirm the recipients with the user before you send. |
-| `send_esign_reminder` | Confirm the recipient with the user first. |
-| `resend_esign_invite` | Confirm the recipient with the user first. |
-| `cancel_esign_session` | Confirm with the user first. |
-| `configure_automation` | Ask the user first. Test before live; going live is the last step. |
-| `configure_output` | Test before live; going live is the last step. |
-| `create_automation` | After a test, offer to trash an automation you made only for it. |
 
 ChatGPT and Codex read the server instructions and do not receive the session guide, because OpenAI asks that tool answers carry only data.
 

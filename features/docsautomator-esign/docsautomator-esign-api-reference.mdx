@@ -345,7 +345,7 @@ Cannot cancel completed sessions.
 
 | Event | When it fires |
 |-------|---------------|
-| *(no `event` field)* | All signers completed — signed PDF ready |
+| `esign.session_completed` | All signers completed and the signed PDF is ready |
 | `esign.session_created` | Session created with `deliveryMethod: "manual"` |
 | `esign.signer_signed` | An individual signer completed all their fields |
 | `esign.session_declined` | A signer declined to sign |
@@ -358,11 +358,37 @@ Cannot cancel completed sessions.
 
 See [eSign overview — Webhook Integration](/features/docsautomator-esign#webhook-integration) for the full payload of each event.
 
+Every webhook to the automation's webhook URL names its event in the `event` field. The same URL also receives the document events `document.created` (a document was generated) and `document.approval_rejected` (an approver rejected a held document). Their payloads are on the [Notify Webhook](/features/actions-after-document-generation/notify-webhook#webhook-events) page. Use `event` to tell the events apart.
+
 Acceptance sessions fire the same events with the same payload keys. `closeType` is `"signature"` or `"acceptance"` on every session event. On an acceptance session, `esign.signer_signed` fires when a recipient clicks Accept, and the signer entries carry two extra fields: `typedName` (the name the recipient typed, or `null`) and `acceptedAt`.
 
 ### Session Created (Manual Delivery)
 
 Triggered when signing session created with `deliveryMethod: "manual"`. Use to retrieve and distribute signing links manually. With internal approval on, it fires after approval, when the links exist.
+
+```json
+{
+  "event": "esign.session_created",
+  "sessionId": "unique-identifier",
+  "documentName": "Document name",
+  "closeType": "signature",
+  "deliveryMethod": "manual",
+  "status": "pending",
+  "signingLinks": [
+    {
+      "signerIndex": 1,
+      "email": "signer@example.com",
+      "name": "Signer Name",
+      "signingLink": "https://app.docsautomator.co/sign/...",
+      "expiresAt": "ISO date string"
+    }
+  ],
+  "expiresAt": "ISO date string",
+  "sourceData": { },
+  "webhookParams": { },
+  "additionalParams": { }
+}
+```
 
 ### Session Completed
 
@@ -372,6 +398,7 @@ Triggered when all signers complete signing and final PDF is generated.
 
 ```json
 {
+  "event": "esign.session_completed",
   "signedPdfUrl": "https://...",
   "sessionId": "unique-identifier",
   "documentName": "Document name",
@@ -465,6 +492,8 @@ Fires when a signing session expires before all signers complete. An expiration 
 
 <Note>
 If a session is already declined, cancelled, or completed before its expiration time, this webhook does not fire.
+
+A session usually expires on time. If that expiry was missed, an hourly check expires the session later and sends the same webhook. A session that expired more than 7 days earlier expires without an email and without a webhook. Its status still changes to `expired`.
 </Note>
 
 ### Approval Events
@@ -689,7 +718,7 @@ def handle_esign_webhook():
                 signing_link=signer['signingLink']
             )
 
-    elif payload.get('status') == 'completed':
+    elif payload.get('event') == 'esign.session_completed':
         signed_pdf_url = payload['signedPdfUrl']
         order_id = payload.get('webhookParams', {}).get('orderId')
         drive_url = payload.get('googleDriveUrl')  # Present if Save to Drive is enabled

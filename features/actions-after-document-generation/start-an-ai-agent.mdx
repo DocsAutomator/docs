@@ -12,10 +12,10 @@ Two agents are built in:
 - **ChatGPT agent**: a ChatGPT workspace agent with an API channel. Workspace agents are available on ChatGPT Business and Enterprise.
 
 <Frame>
-  <img src="/images/webhooks/add-action-picker.png" alt="Add action dialog with the Notify Webhook tile and the Start an AI agent tile with the Claude and ChatGPT logos" />
+  <img src="/images/webhooks/add-action-picker.png" alt="Add action dialog with the Webhook or AI agent tile, showing the webhook icon and the Claude and ChatGPT logos" />
 </Frame>
 
-An automation has one webhook. **Start an AI agent** and **Notify Webhook** use the same one, so you add one of them. To change where it goes, pick another option under **Send to** in the card. Nothing changes until you enter the new URL (and token), so a click alone loses nothing.
+An automation has one webhook. **Send to** in the card decides where it goes: **Webhook**, **Claude routine** or **ChatGPT agent**. To change it, pick another option. Nothing changes until you enter the new URL (and token), so a click alone loses nothing.
 
 ## Start a Claude routine
 
@@ -27,15 +27,15 @@ An automation has one webhook. **Start an AI agent** and **Notify Webhook** use 
     In the **Trigger** row, choose **API** and click **Create**. Claude shows the trigger URL and the token. Copy both now, because Claude shows the token only once.
   </Step>
   <Step title="Connect the routine in DocsAutomator">
-    In the automation editor, open **Actions**, click **Add action** and pick **Start an AI agent**. **Send to** shows **Claude routine**. Paste the URL and the access token. Each field saves when you leave it.
+    In the automation editor, open **Actions**, click **Add action** and pick **Webhook or AI agent**. Under **Send to**, choose **Claude routine**. Paste the URL and the access token. Each field saves when you leave it.
   </Step>
   <Step title="Send a test event">
-    Click **Send test**. DocsAutomator sends a sample event, like a real one, and shows whether the routine accepted it. "Received." means that the routine started once. You find the run in Claude under your routines.
+    Click **Send test**. DocsAutomator sends a sample document and shows whether the routine accepted it. "Received." means that the routine started once. You find the run in Claude under your routines.
   </Step>
 </Steps>
 
 <Frame>
-  <img src="/images/webhooks/claude-routine-preset.png" alt="Notify Webhook action with Send to set to Claude routine, the trigger URL, and the saved access token shown as its last 4 characters, and the line Starts when a document is signed or accepted" />
+  <img src="/images/webhooks/claude-routine-preset.png" alt="Notify Webhook action with Send to set to Claude routine, the trigger URL, and the saved access token shown as dots ending in its last 4 characters, and the line Starts when a document is signed or accepted" />
 </Frame>
 
 ## Start a ChatGPT workspace agent
@@ -48,7 +48,7 @@ An automation has one webhook. **Start an AI agent** and **Notify Webhook** use 
     Open your workspace agent in ChatGPT, add an **API** channel and save the agent. Copy the trigger URL and the access token.
   </Step>
   <Step title="Connect the agent in DocsAutomator">
-    Add **Start an AI agent** and choose **ChatGPT agent** in **Send to**. Paste the URL and the access token. Each field saves when you leave it.
+    Add **Webhook or AI agent** and choose **ChatGPT agent** under **Send to**. Paste the URL and the access token. Each field saves when you leave it.
   </Step>
   <Step title="Send a test event">
     Click **Send test**. The agent's answer appears in the agent's ChatGPT conversation.
@@ -56,7 +56,7 @@ An automation has one webhook. **Start an AI agent** and **Notify Webhook** use 
 </Steps>
 
 <Frame>
-  <img src="/images/webhooks/chatgpt-agent-preset.png" alt="Start an AI agent card with Send to set to ChatGPT agent, the URL field and the access token field" />
+  <img src="/images/webhooks/chatgpt-agent-preset.png" alt="Webhook or AI agent card with Send to set to ChatGPT agent, the URL field and the access token field" />
 </Frame>
 
 ## When the agent starts
@@ -85,7 +85,7 @@ All fields of each event are on the [Notify Webhook](/features/actions-after-doc
 
 ## Your token stays with DocsAutomator
 
-- The token is stored encrypted. DocsAutomator never shows it again; the editor shows only its last 4 characters.
+- The token is stored encrypted. The card shows it only as dots ending in its last 4 characters.
 - You enter the token only in the DocsAutomator app.
 - The token is sent only to the address it was saved for. If the trigger URL changes to another address, paste the token again and save.
 - To replace the token, paste a new one and save. To stop, remove the Notify Webhook action.

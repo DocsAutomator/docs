@@ -21,7 +21,7 @@ Register a webhook address that will receive notifications once documents are cr
     In the automation editor, open the **Actions** card in the right rail and click **Add action**
   </Step>
   <Step title="Add the webhook action">
-    Pick **Notify Webhook** from the action list
+    Pick **Webhook or AI agent** from the action list and keep **Webhook** under **Send to**
   </Step>
   <Step title="Enter URL">
     Enter your webhook endpoint URL
@@ -33,14 +33,14 @@ Register a webhook address that will receive notifications once documents are cr
 
 ## Headers
 
-Open **Headers (optional)** in the card to add request headers, for example an API key. Each value is stored encrypted, shown afterwards only by its last 4 characters, and sent only to the address it was saved for. After you change the webhook URL to another address, enter the header values again. Each field saves when you leave it.
+Open **Headers** in the card to add request headers, for example an API key. Each value is stored encrypted, shown afterwards as dots ending in its last 4 characters, and sent only to the address it was saved for. After you change the webhook URL to another address, enter the header values again. Each field saves when you leave it.
 
-Click **Send test** to send a sample event, like a real one, with the saved settings and see whether your endpoint accepted it.
+Click **Send test** to send a sample document with the saved settings and see whether your endpoint accepted it.
 
 The webhook sends the DocsAutomator JSON shown below. To start a Claude routine or a ChatGPT agent instead, see [Start a Claude or ChatGPT Agent](/features/actions-after-document-generation/start-an-ai-agent).
 
 <Frame>
-  <img src="/images/webhooks/custom-headers.png" alt="Notify Webhook card with Send to set to Webhook, the webhook URL and one saved header under Headers (optional)" />
+  <img src="/images/webhooks/custom-headers.png" alt="Webhook or AI agent card with Send to set to Webhook, the webhook URL and one saved header under Headers" />
 </Frame>
 
 ## Additional Parameters via API

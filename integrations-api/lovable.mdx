@@ -1,0 +1,53 @@
+---
+title: "Lovable"
+description: "Build a Lovable app that sends documents for signing or one-click acceptance"
+keywords: ["Lovable", "MCP", "AI app builder", "Supabase", "acceptance", "quote"]
+---
+
+Lovable uses DocsAutomator in two ways. The DocsAutomator connector lets Lovable create the template and the automation while it builds. A Supabase Edge Function calls the DocsAutomator API in the published app, because Lovable apps run their server code on Supabase. The [Supabase guide](/integrations-api/supabase) explains that function in detail.
+
+## Add the DocsAutomator connector
+
+1. In Lovable, open **Connectors**. Select **+** in the top right, then **MCP server**.
+2. Enter `DocsAutomator` as the server name and `https://mcp.docsautomator.co/mcp` as the server URL.
+3. Keep OAuth and click **Add & authorize**.
+4. Sign in to DocsAutomator and choose a workspace.
+
+Custom MCP servers work on every Lovable plan. The connector works in the Lovable chat only, not in the published app.
+
+## Build the quote app with one prompt
+
+[Open this prompt in Lovable](https://lovable.dev/#prompt=Build%20a%20quote%20app.%20A%20user%20enters%20their%20company%20name%2C%20the%20client's%20name%2C%20email%20and%20company%2C%20line%20items%20(item%2C%20quantity%2C%20unit%20price)%20and%20notes%2C%20then%20clicks%20%22Send%20for%20acceptance%22.%20DocsAutomator%20turns%20it%20into%20a%20PDF%20quote%20and%20emails%20it%20to%20the%20client%2C%20who%20accepts%20it%20with%20one%20click.%0A%0AFirst%2C%20set%20up%20DocsAutomator%20with%20the%20DocsAutomator%20connector%3A%0A1.%20Create%20an%20automation%20called%20%22Quote%20acceptance%22.%0A2.%20Generate%20a%20Word%20template%20for%20a%20clean%20one-page%20quote.%20Use%20exactly%20these%20placeholders%3A%20company_name%2C%20quote_number%2C%20quote_date%2C%20valid_until%2C%20client_name%2C%20client_company%2C%20notes%2C%20total%2C%20and%20a%20line%20items%20table%20line_items_1%20with%20the%20columns%20item%2C%20quantity%2C%20unit_price%20and%20amount.%0A3.%20Set%20how%20it%20completes%20to%20Acceptance.%20Signer%201's%20email%20is%20given%20with%20each%20request.%0A4.%20Set%20the%20automation%20status%20to%20test.%0A5.%20List%20the%20placeholders%20to%20confirm%20them%2C%20and%20tell%20me%20the%20automation%20ID.%0A%0AThen%20build%20the%20app%20with%20Supabase%3A%0A-%20Ask%20me%20for%20my%20DocsAutomator%20API%20key.%20Store%20it%20as%20the%20secret%20DOCSAUTOMATOR_API_KEY%2C%20and%20the%20automation%20ID%20as%20DOCSAUTOMATOR_AUTOMATION_ID.%0A-%20Create%20an%20Edge%20Function%20%22send-quote%22.%20It%20calls%20POST%20https%3A%2F%2Fapi.docsautomator.co%2FcreateDocument%20with%20the%20header%20%22Authorization%3A%20Bearer%20DOCSAUTOMATOR_API_KEY%22%20and%20the%20JSON%20body%20%7B%20automationId%2C%20data%2C%20recipients%20%7D.%20data%20holds%20the%20placeholders%20above%2C%20with%20line_items_1%20as%20an%20array%20of%20%7B%20item%2C%20quantity%2C%20unit_price%2C%20amount%20%7D.%20The%20function%20computes%20each%20amount%20and%20the%20total.%20recipients%20is%20%5B%7B%20signer%3A%201%2C%20email%3A%20client%20email%2C%20name%3A%20client%20name%20%7D%5D.%0A-%20Never%20call%20the%20DocsAutomator%20API%20from%20the%20browser.%0A-%20After%20sending%2C%20show%20the%20returned%20pdfUrl%20and%20signingLinks%5B0%5D.signingUrl.%0A%0AFinally%2C%20ask%20me%20for%20my%20email%20address%20and%20send%20a%20test%20quote%20to%20it.), or paste it into a new project. Lovable opens the prompt without sending it, so click send to start the build.
+
+```text wrap
+Build a quote app. A user enters their company name, the client's name, email and company, line items (item, quantity, unit price) and notes, then clicks "Send for acceptance". DocsAutomator turns it into a PDF quote and emails it to the client, who accepts it with one click.
+
+First, set up DocsAutomator with the DocsAutomator connector:
+1. Create an automation called "Quote acceptance".
+2. Generate a Word template for a clean one-page quote. Use exactly these placeholders: company_name, quote_number, quote_date, valid_until, client_name, client_company, notes, total, and a line items table line_items_1 with the columns item, quantity, unit_price and amount.
+3. Set how it completes to Acceptance. Signer 1's email is given with each request.
+4. Set the automation status to test.
+5. List the placeholders to confirm them, and tell me the automation ID.
+
+Then build the app with Supabase:
+- Ask me for my DocsAutomator API key. Store it as the secret DOCSAUTOMATOR_API_KEY, and the automation ID as DOCSAUTOMATOR_AUTOMATION_ID.
+- Create an Edge Function "send-quote". It calls POST https://api.docsautomator.co/createDocument with the header "Authorization: Bearer DOCSAUTOMATOR_API_KEY" and the JSON body { automationId, data, recipients }. data holds the placeholders above, with line_items_1 as an array of { item, quantity, unit_price, amount }. The function computes each amount and the total. recipients is [{ signer: 1, email: client email, name: client name }].
+- Never call the DocsAutomator API from the browser.
+- After sending, show the returned pdfUrl and signingLinks[0].signingUrl.
+
+Finally, ask me for my email address and send a test quote to it.
+```
+
+Lovable creates a **Quote acceptance** automation in test mode, builds the form and the Edge Function, and sends a test quote to you. The email has a **Review & Accept** button. Test documents have a watermark, and test acceptances are never billed.
+
+## How it works
+
+- The Edge Function sends the quote data and the client's email to `POST https://api.docsautomator.co/createDocument`.
+- DocsAutomator fills the template, makes the PDF, and emails the client a link to accept.
+- The response contains the PDF link and the acceptance link.
+
+The API key stays in a Supabase secret. To send a quote automatically when a row is added, follow [Send a document when a row changes](/integrations-api/supabase#send-a-document-when-a-row-changes) in the Supabase guide. See [Create Document via API](/api-reference/documents/create-from-api) for all options.
+
+## Go live
+
+Open the automation in DocsAutomator and set its status in the top bar from **Test mode** to **Live**. Signing and acceptance are included in every paid plan. A signed or accepted document counts as one document in your plan.

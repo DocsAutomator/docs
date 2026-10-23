@@ -1,0 +1,96 @@
+---
+title: "Start a Claude or ChatGPT Agent"
+description: "Start a Claude routine or a ChatGPT workspace agent when a document is signed, accepted or created"
+icon: "robot"
+---
+
+The Notify Webhook action can start an AI agent. When a client signs or accepts a document, DocsAutomator sends the event to your agent, and the agent continues the work. For example, it updates your CRM, writes a note or files the signed PDF. You do not need to open a chat.
+
+Two agents are built in:
+
+- **Claude routine**: a Claude Code routine with an API trigger. Routines are available on the Claude Pro, Max, Team and Enterprise plans.
+- **ChatGPT agent**: a ChatGPT workspace agent with an API channel. Workspace agents are available on ChatGPT Business and Enterprise.
+
+<Frame>
+  <img src="/images/webhooks/add-action-picker.png" alt="Add action dialog with the Webhook or AI agent tile, showing the webhook icon and the Claude and ChatGPT logos" />
+</Frame>
+
+An automation has one webhook. **Send to** in the card decides where it goes: **Webhook**, **Claude routine** or **ChatGPT agent**. To change it, pick another option. Nothing changes until you enter the new URL (and token), so a click alone loses nothing.
+
+## Start a Claude routine
+
+<Steps>
+  <Step title="Create the routine in Claude">
+    Open [claude.ai/code/routines](https://claude.ai/code/routines) and click **New task**, then **Set up manually**. Enter a name and the instructions for the agent. Tell it what to do with the event, for example: "The routine-fire-payload block holds a DocsAutomator event. When its event is esign.session_completed, write a short note with the signer, the date and the signed PDF link."
+  </Step>
+  <Step title="Add the API trigger">
+    In the **Trigger** row, choose **API** and click **Create**. Claude shows the trigger URL and the token. Copy both now, because Claude shows the token only once.
+  </Step>
+  <Step title="Connect the routine in DocsAutomator">
+    In the automation editor, open **Actions**, click **Add action** and pick **Webhook or AI agent**. Under **Send to**, choose **Claude routine**. Paste the URL and the access token. Each field saves when you leave it.
+  </Step>
+  <Step title="Send a test event">
+    Click **Send test**. DocsAutomator sends a sample document and shows whether the routine accepted it. "Received." means that the routine started once. You find the run in Claude under your routines.
+  </Step>
+</Steps>
+
+<Frame>
+  <img src="/images/webhooks/claude-routine-preset.png" alt="Notify Webhook action with Send to set to Claude routine, the trigger URL, and the saved access token shown as dots ending in its last 4 characters, and the line Starts when a document is signed or accepted" />
+</Frame>
+
+## Start a ChatGPT workspace agent
+
+<Steps>
+  <Step title="Allow agent tokens">
+    A ChatGPT workspace admin must allow workspace agent access tokens in the workspace settings.
+  </Step>
+  <Step title="Add an API channel to the agent">
+    Open your workspace agent in ChatGPT, add an **API** channel and save the agent. Copy the trigger URL and the access token.
+  </Step>
+  <Step title="Connect the agent in DocsAutomator">
+    Add **Webhook or AI agent** and choose **ChatGPT agent** under **Send to**. Paste the URL and the access token. Each field saves when you leave it.
+  </Step>
+  <Step title="Send a test event">
+    Click **Send test**. The agent's answer appears in the agent's ChatGPT conversation.
+  </Step>
+</Steps>
+
+<Frame>
+  <img src="/images/webhooks/chatgpt-agent-preset.png" alt="Webhook or AI agent card with Send to set to ChatGPT agent, the URL field and the access token field" />
+</Frame>
+
+## When the agent starts
+
+The agent starts once per document:
+
+- **With signing or acceptance on:** when the document is signed or accepted. Each signer step, reminder, decline or expiry does not start it.
+- **Without signing or acceptance:** when the document is created.
+
+The card shows which one applies, for example "Starts when a document is signed or accepted." If you switch signing on or off later, the agent follows the new setting. An API request that skips signing for one document starts the agent when that document is created.
+
+## What the agent receives
+
+DocsAutomator sends the token as the `Authorization` header (`Bearer <token>`). For a Claude routine it also sends the `anthropic-version` header. The agent receives the event as one text value: `{"text": "..."}` for a Claude routine and `{"input": "..."}` for a ChatGPT agent. The text is the event as JSON:
+
+| Field | Meaning |
+|-------|---------|
+| `event` | `esign.session_completed` (signed or accepted) or `document.created` |
+| `closeType` | `signature` or `acceptance` |
+| `signedPdfUrl` | Link to the signed PDF |
+| `completedAt` | When the document was signed or accepted |
+| `signers` | Name, email and signing time of each signer |
+| `webhookParams` | Your own parameters and the record id (for example `recId` for Airtable) |
+
+All fields of each event are on the [Notify Webhook](/features/actions-after-document-generation/notify-webhook#webhook-events) page.
+
+## Your token stays with DocsAutomator
+
+- The token is stored encrypted. The card shows it only as dots ending in its last 4 characters.
+- You enter the token only in the DocsAutomator app.
+- The token is sent only to the address it was saved for. If the trigger URL changes to another address, paste the token again and save.
+- To replace the token, paste a new one and save. To stop, remove the Notify Webhook action.
+
+## Limits
+
+- A Claude routine accepts up to 30 runs an hour, and a Claude account up to 100 API runs an hour. Each run uses your Claude plan's usage.
+- DocsAutomator sends the event once and does not retry. One document starts one run.

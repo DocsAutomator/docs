@@ -82,7 +82,7 @@ The agent starts once per document:
 
 The card shows which one applies, for example "Starts when a document is signed or accepted." If you switch signing on or off later, the agent follows the new setting. An API request that skips signing for one document starts the agent when that document is created.
 
-## What the agent receives
+## What is sent to your agent
 
 DocsAutomator sends the token as the `Authorization` header (`Bearer <token>`). For a Claude routine it also sends the `anthropic-version` header. The agent receives the event as one text value: `{"text": "..."}` for a Claude routine and `{"input": "..."}` for a ChatGPT agent. The text is the event as JSON:
 
@@ -93,7 +93,13 @@ DocsAutomator sends the token as the `Authorization` header (`Bearer <token>`). 
 | `signedPdfUrl` | Link to the signed PDF |
 | `completedAt` | When the document was signed or accepted |
 | `signers` | Name, email and signing time of each signer |
-| `webhookParams` | Your own parameters and the record id (for example `recId` for Airtable) |
+| `fieldValues` | What the signers filled in while signing (text, checkboxes, dates) |
+| `sourceData` | The data the document was made from |
+| `webhookParams` | Your own parameters and the record id |
+
+An Airtable, Notion or SmartSuite run adds the record id as `recId`, a ClickUp run as `taskId` and a Google Sheets run as `rowNumber`. With the API you add your own keys in `webhookParams`.
+
+The signed event includes signer names and emails, the values signers entered, and the data the document was made from. Your Claude or ChatGPT account receives all of it, so the agent works with the same personal data as the document. Start an agent only where your team may use these AI tools for this data.
 
 All fields of each event are on the [Notify Webhook](/features/actions-after-document-generation/notify-webhook#webhook-events) page.
 

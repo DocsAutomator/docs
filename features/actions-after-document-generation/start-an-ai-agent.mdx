@@ -11,6 +11,12 @@ Two agents are built in:
 - **Claude routine**: a Claude Code routine with an API trigger. Routines are available on the Claude Pro, Max, Team and Enterprise plans.
 - **ChatGPT agent**: a ChatGPT workspace agent with an API channel. Workspace agents are available on ChatGPT Business and Enterprise.
 
+<Frame>
+  <img src="/images/webhooks/add-action-picker.png" alt="Add action dialog with the Notify Webhook tile and the Start an AI agent tile with the Claude and ChatGPT logos" />
+</Frame>
+
+An automation has one webhook. **Start an AI agent** and **Notify Webhook** use the same one, so you add one of them. To change where it goes, pick another option under **Send to** in the card. Nothing changes until you enter the new URL (and token), so a click alone loses nothing.
+
 ## Start a Claude routine
 
 <Steps>
@@ -21,15 +27,15 @@ Two agents are built in:
     In the **Trigger** row, choose **API** and click **Create**. Claude shows the trigger URL and the token. Copy both now, because Claude shows the token only once.
   </Step>
   <Step title="Connect the routine in DocsAutomator">
-    In the automation editor, open **Actions** and add **Notify Webhook**. In **Send to**, choose **Claude routine**. Paste the trigger URL and the token, then click **Save Claude routine**.
+    In the automation editor, open **Actions**, click **Add action** and pick **Start an AI agent**. **Send to** shows **Claude routine**. Paste the URL and the access token. Each field saves when you leave it.
   </Step>
   <Step title="Send a test event">
-    Click **Send test event**. DocsAutomator sends a sample signed document and shows whether the routine accepted it. "Received (200)" means that the routine started. You find the run in Claude under your routines.
+    Click **Send test**. DocsAutomator sends a sample event, like a real one, and shows whether the routine accepted it. "Received." means that the routine started once. You find the run in Claude under your routines.
   </Step>
 </Steps>
 
 <Frame>
-  <img src="/images/webhooks/claude-routine-preset.png" alt="Notify Webhook action with Send to set to Claude routine, the trigger URL, and a masked routine token field, and the line Starts when a document is signed or accepted" />
+  <img src="/images/webhooks/claude-routine-preset.png" alt="Notify Webhook action with Send to set to Claude routine, the trigger URL, and the saved access token shown as its last 4 characters, and the line Starts when a document is signed or accepted" />
 </Frame>
 
 ## Start a ChatGPT workspace agent
@@ -42,15 +48,15 @@ Two agents are built in:
     Open your workspace agent in ChatGPT, add an **API** channel and save the agent. Copy the trigger URL and the access token.
   </Step>
   <Step title="Connect the agent in DocsAutomator">
-    In the Notify Webhook action, choose **ChatGPT agent** in **Send to**. Paste the trigger URL and the token, then click **Save ChatGPT agent**.
+    Add **Start an AI agent** and choose **ChatGPT agent** in **Send to**. Paste the URL and the access token. Each field saves when you leave it.
   </Step>
   <Step title="Send a test event">
-    Click **Send test event**. The agent's answer appears in the agent's ChatGPT conversation.
+    Click **Send test**. The agent's answer appears in the agent's ChatGPT conversation.
   </Step>
 </Steps>
 
 <Frame>
-  <img src="/images/webhooks/chatgpt-agent-preset.png" alt="Notify Webhook action with Send to set to ChatGPT agent and the agent access token field" />
+  <img src="/images/webhooks/chatgpt-agent-preset.png" alt="Start an AI agent card with Send to set to ChatGPT agent, the URL field and the access token field" />
 </Frame>
 
 ## When the agent starts

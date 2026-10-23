@@ -27,24 +27,20 @@ Register a webhook address that will receive notifications once documents are cr
     Enter your webhook endpoint URL
   </Step>
   <Step title="Test">
-    Click **Send test event**, or generate a preview document
+    Click **Send test**, or generate a preview document
   </Step>
 </Steps>
 
-## Headers and Body Format
+## Headers
 
-In **Send to**, choose **Any URL** to send to your own endpoint. You can add request headers, for example an API key. Turn on **Secret** for a header value that must stay private: DocsAutomator stores it encrypted, shows only its last 4 characters afterwards, and sends it only to the address it was saved for. After you change the webhook URL to another address, enter the secret again.
+Open **Headers (optional)** in the card to add request headers, for example an API key. Each value is stored encrypted, shown afterwards only by its last 4 characters, and sent only to the address it was saved for. After you change the webhook URL to another address, enter the header values again. Each field saves when you leave it.
 
-**Body format** sets the shape of the request body:
+Click **Send test** to send a sample event, like a real one, with the saved settings and see whether your endpoint accepted it.
 
-- **DocsAutomator JSON** (default): the event as shown below.
-- **Text wrapped**: `{"text": "<the event as JSON>"}`.
-- **Input wrapped**: `{"input": "<the event as JSON>"}`.
-
-Click **Send test event** to send a sample signed event with the saved settings and see whether your endpoint accepted it. To start a Claude routine or a ChatGPT agent, see [Start a Claude or ChatGPT Agent](/features/actions-after-document-generation/start-an-ai-agent).
+The webhook sends the DocsAutomator JSON shown below. To start a Claude routine or a ChatGPT agent instead, see [Start a Claude or ChatGPT Agent](/features/actions-after-document-generation/start-an-ai-agent).
 
 <Frame>
-  <img src="/images/webhooks/custom-headers.png" alt="Notify Webhook action with Send to set to Any URL, the body format Text wrapped, and one secret header" />
+  <img src="/images/webhooks/custom-headers.png" alt="Notify Webhook card with Send to set to Webhook, the webhook URL and one saved header under Headers (optional)" />
 </Frame>
 
 ## Additional Parameters via API

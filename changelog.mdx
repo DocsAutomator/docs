@@ -56,6 +56,14 @@ mode: "center"
 
   The webhooks for a created document now carry `"event": "document.created"`, like the signing webhooks already do. All other fields stay the same.
 
+  ## More from Claude and ChatGPT
+
+  - Claude and ChatGPT now ask before an automation goes live, and the ChatGPT card names the document.
+  - A send confirmation that nobody answers no longer hangs; repeating the same request confirms it.
+  - `create_document` and `generate_document` accept `webhookParams`, so your own values come back in the webhook.
+  - Searching a data source from the chat now finds records by id and name.
+  - From the chat, ClickUp subtasks can become line items, and a Google Sheets automation adds a missing PDF column by itself.
+
   ## Fixes
 
   - Signing date format: when nobody picked a date format, signing now uses the format of the signing language, and the signing certificate follows that language. The date format field shows which format signing uses.
@@ -72,6 +80,11 @@ mode: "center"
   - The badges on Documents and Run history now clear once you have looked.
   - The Email Service buttons in the signing settings now stack on phones, a signer's email source saves while another signer is still empty, and a document no longer shows a 0/0 signer chip when its signing session is gone.
   - Claude and ChatGPT: undo works in ChatGPT again and reverts only the changes from the same chat, "delete when empty" runs only when you ask for it, and the document language follows the language you write in.
+  - Airtable, SmartSuite and ClickUp dates in Word templates are now read in the order of your locale, and checkboxes show Yes or No.
+  - Section tags whose name starts with line_items_ no longer switch a template to the old line item mode.
+  - Text that the AI recolours in a Word template stays readable on its background.
+  - A Word or PDF template no longer waits on a Google Doc read before the template page loads.
+  - The API now refuses a `docTemplateLink` that is not a Google Doc.
 </Update>
 
 <Update label="October 21, 2026">

@@ -110,6 +110,15 @@
                 ]
               },
               {
+                "group": "AI app builders",
+                "pages": [
+                  "integrations-api/replit",
+                  "integrations-api/lovable",
+                  "integrations-api/bolt",
+                  "integrations-api/supabase"
+                ]
+              },
+              {
                 "group": "Features",
                 "pages": [
                   "features/docsautomator-ai-agent",

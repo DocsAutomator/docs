@@ -1,0 +1,25 @@
+---
+title: "Bolt"
+description: "Build a Bolt app that sends documents for signing or one-click acceptance"
+keywords: ["Bolt", "bolt.new", "MCP", "AI app builder", "Supabase", "acceptance"]
+---
+
+Bolt uses DocsAutomator the same way as Lovable. The DocsAutomator connector sets up the automation while you build, and a Supabase Edge Function calls the API in the running app.
+
+<Warning>
+Bolt runs Node in the browser, and the DocsAutomator API does not accept requests from browser origins. Call the API from a Supabase Edge Function, not from the server Bolt runs while you build.
+</Warning>
+
+## Add the DocsAutomator connector
+
+1. In Bolt, open **Settings**, then **Connectors**, and add a custom MCP server.
+2. Enter the URL `https://mcp.docsautomator.co/mcp` and choose MCP OAuth as the sign-in method.
+3. Sign in to DocsAutomator and choose a workspace.
+
+## Start from the quote app
+
+1. Open https://bolt.new/~/github.com/DocsAutomator/app-starter. The starter includes the Edge Function in `supabase/functions/send-quote`.
+2. Connect Supabase in Bolt.
+3. Give Bolt the prompt from the [Lovable guide](/integrations-api/lovable#build-the-quote-app-with-one-prompt). Bolt reuses the Edge Function from the starter.
+
+You receive a test quote with a **Review & Accept** button. Test documents have a watermark, and test acceptances are never billed.

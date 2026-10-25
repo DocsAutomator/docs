@@ -1,0 +1,46 @@
+---
+title: "Replit"
+description: "Send documents for signing or one-click acceptance from an app you build in Replit"
+keywords: ["Replit", "Replit Agent", "MCP", "AI app builder", "acceptance", "quote"]
+---
+
+Add DocsAutomator to a Replit app in two ways. The MCP connector lets Replit Agent set up automations while you build. The REST API creates the documents in your running app.
+
+## Add the DocsAutomator connector
+
+Click the button to add the DocsAutomator MCP server to your Replit account. Replit asks you to sign in to DocsAutomator and choose a workspace.
+
+<Card title="Add DocsAutomator to Replit" icon="plug" href="https://replit.com/integrations?mcp=eyJkaXNwbGF5TmFtZSI6IkRvY3NBdXRvbWF0b3IiLCJiYXNlVXJsIjoiaHR0cHM6Ly9tY3AuZG9jc2F1dG9tYXRvci5jby9tY3AifQ%3D%3D">
+  Opens Replit with the DocsAutomator MCP server filled in.
+</Card>
+
+To add it by hand, open **Integrations**, add a custom MCP server, and enter `https://mcp.docsautomator.co/mcp`.
+
+## Start from the quote app
+
+The starter app sends a quote as a PDF to a client, who accepts it with one click.
+
+1. Open https://replit.com/github.com/DocsAutomator/app-starter to import the starter.
+2. Give Replit Agent this prompt:
+
+```text wrap
+Set up this DocsAutomator quote app. Read AGENTS.md first.
+1. Ask me for my DocsAutomator API key and store it as the secret DOCSAUTOMATOR_API_KEY.
+2. Run "npm run setup". Store the automation ID it prints as the secret DOCSAUTOMATOR_AUTOMATION_ID.
+3. Start the app with "npm start".
+4. Ask me for my email address. Send a test quote to it with a POST to /api/send-quote, and show me the pdfUrl and acceptUrl from the response.
+```
+
+The agent creates a **Quote acceptance** automation in your workspace, in test mode. You receive an email with a **Review & Accept** button. Test documents have a watermark, and test acceptances are never billed.
+
+## Use DocsAutomator in your own app
+
+Call `POST https://api.docsautomator.co/createDocument` from server code, with your API key stored as a Replit secret. Pass `recipients` to name who accepts or signs. See [Create Document via API](/api-reference/documents/create-from-api) and the [AGENTS.md guide](https://github.com/DocsAutomator/app-starter/blob/main/AGENTS.md) that you can give to Replit Agent.
+
+<Warning>
+Keep the API key on the server. Never call the API from browser code.
+</Warning>
+
+## Go live
+
+Open the automation in DocsAutomator and set its status in the top bar from **Test mode** to **Live**. Signing and acceptance are included in every paid plan. A signed or accepted document counts as one document in your plan.

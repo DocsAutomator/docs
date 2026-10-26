@@ -5,6 +5,103 @@ rss: true
 mode: "center"
 ---
 
+<Update label="October 23, 2026">
+  ## Moving a document to the trash cancels its open requests
+
+  <Frame>
+    <img src="/images/changelog/trash-cancels-requests.png" alt="The documents list with one document selected and the Cancel signing request action in the selection bar" />
+  </Frame>
+
+  When you move a document to the trash, its open signing, acceptance and approval requests are now cancelled, so signers stop getting reminders. If a document has an open request, the app asks first. Restoring the document later keeps the request cancelled.
+
+  You can also cancel a request from the documents list: select one document with an open request and choose **Cancel signing request** or **Cancel acceptance request** in the selection bar. This works in All documents and in the Trash tab.
+
+  ## Sign out of all other devices
+
+  A password change or a password reset now signs your account out on every other browser and device. Account settings also has a new **Sign out of all other devices** button. The browser you use for the change stays signed in.
+
+  ## Your own sender name for signing emails
+
+  <Frame>
+    <img src="/images/changelog/signing-sender-name.png" alt="The Sender Name field in the signing email settings with a preview of the From line" />
+  </Frame>
+
+  Signing and acceptance emails sent through the DocsAutomator sender can now show your own name, for example your company name. Set it in **Signing & Acceptance**, **Settings**, **Edit Emails**, under **Sender Name**. A preview shows the From line your recipients see. You can also set it from Claude or ChatGPT.
+
+  ## Outside approvers no longer need an account
+
+  An approver from outside your team now approves or rejects straight from the email link, without a DocsAutomator account. If you want every approver to sign in first, switch on **Approvers need an account** in the Approvals card. See [Approvals](/features/approvals).
+
+  ## Fixed VAT rate for e-invoices
+
+  Most invoices use one VAT rate. You can now enter a **Fixed VAT rate** in the Line items card of the e-invoice settings, so you no longer need a VAT rate column in your data. A line with its own rate still uses that rate. E-invoices also accept common unit abbreviations such as "Pausch." See [E-invoices](/features/e-invoices).
+
+  ## Safe retries for the API
+
+  `createDocument` now accepts an idempotency key, either as the `Idempotency-Key` header or as the `idempotencyKey` field. If you send the same request again with the same key within 7 days, no second document is created and you get the first result back. A failed run does not lock the key, so a retry runs again. See [Create from API](/api-reference/documents/create-from-api).
+
+  ## Word files in the Agent chat
+
+  You can now attach your own Word file in the DocsAutomator Agent chat, with the paperclip, by drag and drop or by pasting. The Agent uses it as your template. If the automation already has a template, it asks before it replaces it. The Agent can now also read the text of your Word templates.
+
+  ## Signing PDFs without hidden tags
+
+  The signing tags in your template are now removed from the PDF text instead of being covered with white boxes. Shaded table cells and coloured pages keep their colour, and copying or searching the text of a signed document finds no tags.
+
+  ## Warning for signers without signing fields
+
+  When the template has no signing fields for a signer, that signer is not invited. The signer card now says so and offers **Remove**. The run also shows a warning instead of failing. The quick signing panel no longer removes such signers without asking.
+
+  ## Webhook or AI agent
+
+  <Frame>
+    <img src="/images/webhooks/add-action-picker.png" alt="Add action dialog with the Webhook or AI agent tile, showing the webhook icon and the Claude and ChatGPT logos" />
+  </Frame>
+
+  The webhook action is now called **Webhook or AI agent**, and it can start an AI agent. When a client signs or accepts a document, a Claude routine or a ChatGPT workspace agent gets the event and continues the work, for example it updates your CRM or files the signed PDF. Pick **Send to** in the card: **Webhook**, **Claude routine** or **ChatGPT agent**, then paste the URL and the access token.
+
+  - **One start per document:** an agent starts once, when the document is signed or accepted. Without signing, it starts when the document is created.
+  - **Headers:** a plain webhook can now send your own headers, for example an API key. Every header value is stored encrypted and shows as dots ending in its last 4 characters.
+  - **Saves on leaving a field:** there are no save buttons. Nothing changes until you enter the new URL and token, so a click on another **Send to** option loses nothing.
+  - **Send test:** sends a sample document like the real one and shows "Received." or why it was not accepted.
+  - **Existing webhooks** keep working exactly as before.
+
+  See [Start a Claude or ChatGPT agent](/features/actions-after-document-generation/start-an-ai-agent) and [Notify Webhook](/features/actions-after-document-generation/notify-webhook#headers).
+
+  ## Webhooks name their event
+
+  The webhooks for a created document now carry `"event": "document.created"`, like the signing webhooks already do. All other fields stay the same.
+
+  ## More from Claude and ChatGPT
+
+  - Claude and ChatGPT now ask before an automation goes live, and the ChatGPT card names the document.
+  - A send confirmation that nobody answers no longer hangs; repeating the same request confirms it.
+  - Searching a data source from the chat now finds records by id and name.
+  - From the chat, ClickUp subtasks can become line items, and a Google Sheets automation adds a missing PDF column by itself.
+
+  ## Fixes
+
+  - Signing date format: when nobody picked a date format, signing now uses the format of the signing language, and the signing certificate follows that language. The date format field shows which format signing uses.
+  - Expired signing sessions now show as expired in every list, and a resend or reminder on an expired session is refused.
+  - Signing sends in test mode are now labelled [TEST] instead of [PREVIEW].
+  - WebP logos and images now work in generated templates. They are converted to PNG.
+  - Google Doc templates with an empty table no longer stop the run.
+  - A Word template no longer loses a whole table when one line of a party block is empty.
+  - Line item groups named after months, and Notion date groups, are now sorted by date.
+  - PDF templates uploaded through the API or MCP now start from the form fields of the PDF, like uploads in the app.
+  - Error messages that used to say "null" now say what went wrong.
+  - Acceptance automations now report their acceptance email subjects correctly.
+  - Automations made from Claude or ChatGPT now say that their data is sent with each request.
+  - The badges on Documents and Run history now clear once you have looked.
+  - The Email Service buttons in the signing settings now stack on phones, a signer's email source saves while another signer is still empty, and a document no longer shows a 0/0 signer chip when its signing session is gone.
+  - Claude and ChatGPT: undo works in ChatGPT again and reverts only the changes from the same chat, "delete when empty" runs only when you ask for it, and the document language follows the language you write in.
+  - Airtable, SmartSuite and ClickUp dates in Word templates are now read in the order of your locale, and checkboxes show Yes or No.
+  - Section tags whose name starts with line_items_ no longer switch a template to the old line item mode.
+  - Text that the AI recolours in a Word template stays readable on its background.
+  - A Word or PDF template no longer waits on a Google Doc read before the template page loads.
+  - The API now refuses a `docTemplateLink` that is not a Google Doc.
+</Update>
+
 <Update label="October 21, 2026">
   ## New automations start in test mode
 

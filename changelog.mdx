@@ -52,6 +52,22 @@ mode: "center"
 
   When the template has no signing fields for a signer, that signer is not invited. The signer card now says so and offers **Remove**. The run also shows a warning instead of failing. The quick signing panel no longer removes such signers without asking.
 
+  ## Webhook or AI agent
+
+  <Frame>
+    <img src="/images/webhooks/add-action-picker.png" alt="Add action dialog with the Webhook or AI agent tile, showing the webhook icon and the Claude and ChatGPT logos" />
+  </Frame>
+
+  The webhook action is now called **Webhook or AI agent**, and it can start an AI agent. When a client signs or accepts a document, a Claude routine or a ChatGPT workspace agent gets the event and continues the work, for example it updates your CRM or files the signed PDF. Pick **Send to** in the card: **Webhook**, **Claude routine** or **ChatGPT agent**, then paste the URL and the access token.
+
+  - **One start per document:** an agent starts once, when the document is signed or accepted. Without signing, it starts when the document is created.
+  - **Headers:** a plain webhook can now send your own headers, for example an API key. Every header value is stored encrypted and shows as dots ending in its last 4 characters.
+  - **Saves on leaving a field:** there are no save buttons. Nothing changes until you enter the new URL and token, so a click on another **Send to** option loses nothing.
+  - **Send test:** sends a sample document like the real one and shows "Received." or why it was not accepted.
+  - **Existing webhooks** keep working exactly as before.
+
+  See [Start a Claude or ChatGPT agent](/features/actions-after-document-generation/start-an-ai-agent) and [Notify Webhook](/features/actions-after-document-generation/notify-webhook#headers).
+
   ## Webhooks name their event
 
   The webhooks for a created document now carry `"event": "document.created"`, like the signing webhooks already do. All other fields stay the same.

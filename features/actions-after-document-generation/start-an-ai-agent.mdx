@@ -19,6 +19,10 @@ An automation has one webhook. **Send to** in the card decides where it goes: **
 
 ## Start a Claude routine
 
+<Note>
+  A Claude routine runs as a Claude Code task. Open [claude.ai/code](https://claude.ai/code) once and finish its setup before you create the routine.
+</Note>
+
 <Steps>
   <Step title="Create the routine in Claude">
     Open [claude.ai/code/routines](https://claude.ai/code/routines) and click **New task**, then **Set up manually**. Enter a name and the instructions for the agent. Tell it what to do with the event, for example: "The routine-fire-payload block holds a DocsAutomator event. When its event is esign.session_completed, write a short note with the signer, the date and the signed PDF link."
@@ -30,7 +34,7 @@ An automation has one webhook. **Send to** in the card decides where it goes: **
     In the automation editor, open **Actions**, click **Add action** and pick **Webhook or AI agent**. Under **Send to**, choose **Claude routine**. Paste the URL and the access token. Each field saves when you leave it.
   </Step>
   <Step title="Send a test event">
-    Click **Send test**. DocsAutomator sends a sample document and shows whether the routine accepted it. "Received." means that the routine started once. You find the run in Claude under your routines.
+    Click **Send test**. DocsAutomator sends a sample document and shows whether the routine accepted it. "Received. The routine started." means that the routine started once. You find the run in Claude under your routines.
   </Step>
 </Steps>
 
@@ -41,11 +45,17 @@ An automation has one webhook. **Send to** in the card decides where it goes: **
 ## Start a ChatGPT workspace agent
 
 <Steps>
-  <Step title="Allow agent tokens">
-    A ChatGPT workspace admin must allow workspace agent access tokens in the workspace settings.
+  <Step title="Turn on agents and access tokens">
+    A workspace admin opens **Workspace settings**, then **Permissions & roles**. Turn on workspace agents and **Allow users to create personal access tokens**. Both are off by default.
   </Step>
-  <Step title="Add an API channel to the agent">
-    Open your workspace agent in ChatGPT, add an **API** channel and save the agent. Copy the trigger URL and the access token.
+  <Step title="Give the agent its apps">
+    In the agent, add the apps it needs under **Tools**, for example Airtable. Set the app's write actions to **Never ask**: a run that DocsAutomator starts has nobody to approve a write, so with **Always ask** it stops and waits. On ChatGPT Business, an admin may first need to set the workspace's plugin permissions to **Allow low-risk**.
+  </Step>
+  <Step title="Add an API channel">
+    Add an **API** channel to the agent and save it. Copy the trigger URL.
+  </Step>
+  <Step title="Create the access token">
+    Open **Access tokens**, click **Create**, choose the **Workspace Agents** scope and a validity period, and copy the token. ChatGPT shows it only once.
   </Step>
   <Step title="Connect the agent in DocsAutomator">
     Add **Webhook or AI agent** and choose **ChatGPT agent** under **Send to**. Paste the URL and the access token. Each field saves when you leave it.
@@ -54,6 +64,10 @@ An automation has one webhook. **Send to** in the card decides where it goes: **
     Click **Send test**. The agent's answer appears in the agent's ChatGPT conversation.
   </Step>
 </Steps>
+
+<Note>
+  Every ChatGPT access token expires. When it does, the agent stops starting. Create a new token in ChatGPT and paste it into the card. Agent runs also use your ChatGPT workspace's credits, so keep credits available.
+</Note>
 
 <Frame>
   <img src="/images/webhooks/chatgpt-agent-preset.png" alt="Webhook or AI agent card with Send to set to ChatGPT agent, the URL field and the access token field" />
@@ -68,7 +82,7 @@ The agent starts once per document:
 
 The card shows which one applies, for example "Starts when a document is signed or accepted." If you switch signing on or off later, the agent follows the new setting. An API request that skips signing for one document starts the agent when that document is created.
 
-## What the agent receives
+## What is sent to your agent
 
 DocsAutomator sends the token as the `Authorization` header (`Bearer <token>`). For a Claude routine it also sends the `anthropic-version` header. The agent receives the event as one text value: `{"text": "..."}` for a Claude routine and `{"input": "..."}` for a ChatGPT agent. The text is the event as JSON:
 
@@ -79,7 +93,13 @@ DocsAutomator sends the token as the `Authorization` header (`Bearer <token>`). 
 | `signedPdfUrl` | Link to the signed PDF |
 | `completedAt` | When the document was signed or accepted |
 | `signers` | Name, email and signing time of each signer |
-| `webhookParams` | Your own parameters and the record id (for example `recId` for Airtable) |
+| `fieldValues` | What the signers filled in while signing (text, checkboxes, dates) |
+| `sourceData` | The data the document was made from |
+| `webhookParams` | Your own parameters and the record id |
+
+An Airtable, Notion or SmartSuite run adds the record id as `recId`, a ClickUp run as `taskId` and a Google Sheets run as `rowNumber`. With the API you add your own keys in `webhookParams`.
+
+The signed event includes signer names and emails, the values signers entered, and the data the document was made from. Your Claude or ChatGPT account receives all of it, so the agent works with the same personal data as the document. Start an agent only where your team may use these AI tools for this data.
 
 All fields of each event are on the [Notify Webhook](/features/actions-after-document-generation/notify-webhook#webhook-events) page.
 
@@ -89,6 +109,18 @@ All fields of each event are on the [Notify Webhook](/features/actions-after-doc
 - You enter the token only in the DocsAutomator app.
 - The token is sent only to the address it was saved for. If the trigger URL changes to another address, paste the token again and save.
 - To replace the token, paste a new one and save. To stop, remove the Notify Webhook action.
+
+## When Send test fails
+
+| Message | What to do |
+|---------|------------|
+| Not accepted. Check the URL and the token. | Copy the URL and the token again and paste them. Each field saves a moment after you paste. |
+| Not accepted. The token may have expired. | Create a new access token in ChatGPT and paste it into the card. |
+| Not found. Check the URL. | Copy the trigger URL again from Claude or ChatGPT and paste it. |
+| The agent could not start. | In ChatGPT, turn on workspace agents, save the agent, and make sure the workspace has credits. |
+| The routine could not start. | In Claude, open the routine and resume it. |
+| The other service had a problem. | Wait a few minutes and try again. |
+| Too many runs right now. | Wait a few minutes. A Claude routine accepts up to 30 runs an hour. |
 
 ## Limits
 

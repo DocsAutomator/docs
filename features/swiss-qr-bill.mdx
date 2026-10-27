@@ -20,7 +20,7 @@ The add-on is off until you switch it on. Automations without a QR-bill do not c
 
 ### Seller details
 
-The seller details are the account holder on every payment part. They are shared with the e-invoice add-on, so you enter them once.
+The seller details are the account holder on every payment part. They are shared with the e-invoice add-on, so you enter them once. When the automation also creates an e-invoice, the QR-bill uses the e-invoice's seller and IBAN, including a [different seller for that automation](/features/e-invoices#seller-for-one-automation).
 
 | Field | Required |
 |---|---|
@@ -32,14 +32,21 @@ The seller details are the account holder on every payment part. They are shared
 
 A QR-IBAN is a separate account number that your bank gives you with its QR reference service. You need it only for the QR reference type. Enter it under **QR-IBAN** on the same settings page.
 
+The QR-IBAN belongs to the workspace. An automation that uses a [different seller](/features/e-invoices#seller-for-one-automation) for its e-invoice therefore cannot use the QR reference type, because the QR-IBAN may belong to another company. Choose another reference type for it.
+
 ## Set up an automation
 
 Open an automation and find its **Swiss QR-bill** section. Fill in the parts below, then switch on **Add a QR-bill**. Most fields suggest a match from your data by name, or from the automation's e-invoice setup.
 
 ### Payment
 
-- **Currency:** CHF or EUR.
-- **Amount:** the field that holds the invoice total. Leave it empty to let the payer enter the amount, for example for donations. When the automation also creates an e-invoice and the amount is not set, the e-invoice gross total is used.
+- **Currency:** CHF or EUR. When the automation also creates an e-invoice, the currency is EUR, the currency of the e-invoice.
+- **Amount:** the field that holds the invoice total. Leave it empty to let the payer enter the amount, for example for donations. When the automation also creates an e-invoice, leave it empty: the QR-bill then uses the e-invoice amount due, which is the gross total minus any [amount already paid](/features/e-invoices#final-invoices). A mapped amount must equal that amount due.
+- **Fully paid invoices:** when the e-invoice amount due is 0, there is nothing to pay, so the document gets no QR-bill page. The document is still created.
+
+<Frame>
+  <img src="/images/e-invoices/qr-bill-with-e-invoice.png" alt="Swiss QR-bill section of an automation with an e-invoice: the QR-bill uses the e-invoice seller and IBAN, the currency is EUR and an empty amount uses the e-invoice amount due" />
+</Frame>
 
 ### Reference
 
@@ -80,6 +87,7 @@ Every check runs before the document is created. When one fails, no file is crea
 | The QR-IBAN is valid | `QR-IBAN "..." is not a valid QR-IBAN.` | Check it for typos. A QR-IBAN has a bank number from 30000 to 31999 (digits 5 to 9). |
 | The seller country is a country | `Seller country "..." is not a country. Use a two-letter code like CH.` | Pick the country again in the seller details. |
 | A reference type is chosen | `Reference type is not set.` | Choose a reference type in the automation. |
+| A QR reference is not combined with a different e-invoice seller | `A QR reference needs the workspace QR-IBAN. Choose another reference type, or clear the seller fields in the E-invoice panel.` | Choose no reference or a creditor reference, or remove the different seller. |
 
 ### Amount and currency
 
@@ -90,6 +98,7 @@ Every check runs before the document is created. When one fails, no file is crea
 | The amount is in range | `Amount ... is outside the QR-bill range of 0.01 to 999999999.99.` | Use an amount from 0.01 to 999,999,999.99. Zero and negative amounts are not allowed. |
 | The currency is CHF or EUR | `Currency "..." is not allowed. A QR-bill is in CHF or EUR.` | Choose CHF or EUR. A mapped currency field may contain CHF, Fr., EUR or the euro sign. |
 | A mapped currency has a value | `Currency is empty.` | Fill the currency field, or use the fixed choice. |
+| With an e-invoice, a mapped amount equals the amount due | `QR-bill amount must match the e-invoice amount due.` | Remove the amount mapping, so the e-invoice amount due is used. |
 
 ### Reference and message
 
@@ -130,6 +139,6 @@ The QR-bill needs no extra request fields: it reads the fields you map in the au
 
 ## Settings that combine with the QR-bill
 
-- **E-invoice (ZUGFeRD):** the QR-bill page is added first, then the e-invoice data and the PDF/A-3 conversion. One PDF carries both, and it passes the official ZUGFeRD and PDF/A checks with the extra page. With XRechnung, the PDF gets the QR-bill page and the XML file is unchanged. When the amount is not mapped, the e-invoice gross total is used.
+- **E-invoice (ZUGFeRD):** the QR-bill page is added first, then the e-invoice data and the PDF/A-3 conversion. One PDF carries both, and it passes the official ZUGFeRD and PDF/A checks with the extra page. With XRechnung, the PDF gets the QR-bill page and the XML file is unchanged. The QR-bill uses the e-invoice seller, its amount due and EUR. A fully paid invoice gets no QR-bill page.
 - **Merge PDFs:** the QR-bill page is the last page, after the merged PDFs.
 - **Signing and acceptance:** the QR-bill page is part of the document your recipient signs or accepts.

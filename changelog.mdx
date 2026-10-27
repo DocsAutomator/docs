@@ -35,6 +35,22 @@ mode: "center"
   Ask Claude or ChatGPT which plan you are on or how many documents you have left. The answer shows your plan, the documents made this period, the documents included and when the period ends. Questions about prices get the current plans from the pricing page. Before Claude or ChatGPT makes a live document, it tells you that the document counts toward your plan.
 </Update>
 
+<Update label="October 26, 2026">
+  ## Signers you enter when you generate by hand
+
+  When a signer's email is set to **Given with each request**, the **Generate manually** dialog and one-off runs now show an **Email** and a **Name** field for that signer. You no longer need the API to send such a document. A rerun keeps the signers of the original request. In the signing settings, one combined example now shows how to name every such signer in an API request.
+
+  The send confirmation also has a cleaner layout: **Back** on the left, and **Create without sending** and the main button on the right. On phones the buttons stack, with the main button on top.
+
+  ## Fixes
+
+  - A Word or PDF template you upload now shows at the top of **My Templates**, and its **Uploaded** date is the real upload date.
+  - In the Word editor, the signer menu offers the next signer right after you insert a signing field, without a second insert.
+  - Google Sheets and Google Forms automations no longer show automatic creation as off while it runs.
+  - Word template edits with AI can now delete paragraphs that hold only an image or a horizontal line.
+  - Line item tables in generated Word templates now have one row marker instead of two.
+</Update>
+
 <Update label="October 23, 2026">
   ## Moving a document to the trash cancels its open requests
 

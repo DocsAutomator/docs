@@ -40,10 +40,10 @@ A QR-IBAN is a separate account number that your bank gives you with its QR refe
 
 ### Seller for one automation
 
-An automation can use a different seller for its QR-bill. Open **Use a different seller for this automation** in the automation's **Account** card. Each field takes a fixed text or a field of your data source, and shows the value from Settings in grey.
+An automation can use a different seller for its QR-bill. Open **Use a different seller for this automation** in the automation's **Account** card. Each field takes a fixed text or a field of your data source.
 
-- **With a legal name:** the automation uses another company, and nothing comes from Settings. Fill in its postcode, city and IBAN. With the QR reference type, also enter its **QR-IBAN** (the row appears when QR reference is chosen). The workspace QR-IBAN is never used for another company, because it belongs to your account. Without one, the run stops with "Add the QR-IBAN for this seller, or choose another reference type."
-- **Without a legal name:** the automation keeps your company and changes single fields only. Empty fields use the value from Settings, including the workspace QR-IBAN, unless you change the IBAN.
+- **With a legal name:** the automation uses another company, and nothing comes from Settings. Fill in its postcode and city, and its IBAN. With the QR reference type, enter its **QR-IBAN** instead (the row appears when QR reference is chosen). The workspace QR-IBAN is never used for another company, because it belongs to your account. Without one, the run stops with "Add the QR-IBAN for this seller, or choose another reference type."
+- **Without a legal name:** the automation keeps your company and changes single fields only. Empty fields show the value from Settings in grey and use it, including the workspace QR-IBAN, unless you change the IBAN.
 
 <Frame>
   <img src="/images/e-invoices/qr-bill-seller-one-field.png" alt="Account card of an automation with one changed field: the city Bern, while the other fields show the Settings values in grey" />
@@ -64,7 +64,6 @@ Open an automation and find its **Swiss QR-bill** section. Fill in the parts bel
 - **Currency:** CHF or EUR. When the automation also creates an e-invoice, the currency is EUR, the currency of the e-invoice.
 - **Amount:** the field that holds the invoice total. Leave it empty to let the payer enter the amount, for example for donations. When the automation also creates an e-invoice, leave it empty: the QR-bill then uses the e-invoice amount due, which is the gross total minus any [amount already paid](/features/e-invoices#final-invoices). A mapped amount must equal that amount due.
 - **Fully paid invoices:** when the e-invoice amount due is 0, there is nothing to pay, so the document gets no QR-bill page. The document is still created.
-
 
 ### Reference
 

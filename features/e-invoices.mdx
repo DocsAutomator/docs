@@ -54,7 +54,7 @@ Open an invoice automation and find its **E-invoice** section. Switch on **Creat
 
 ### Seller for one automation
 
-When one workspace invoices for several companies, an automation can use a different seller. Open **Use a different seller for this automation** in the automation's **Seller** card. It lists every seller field, and each field shows the value from Settings in grey.
+When one workspace invoices for several companies, an automation can use a different seller. Open **Use a different seller for this automation** in the automation's **Seller** card. It lists every seller field.
 
 <Frame>
   <img src="/images/e-invoices/seller-card.png" alt="Seller card with the seller details from Settings and the closed section Use a different seller for this automation" />
@@ -62,7 +62,7 @@ When one workspace invoices for several companies, an automation can use a diffe
 
 Each field takes a fixed text, or a field of your data source, so each record can name its own company. Which fields come from Settings depends on the legal name:
 
-- **With a legal name:** the automation uses another company. Nothing comes from Settings, so the invoice never mixes your company's details, such as your IBAN, with the other company's. Fill in every field this company needs. An empty required field stops the run, for example with "Seller IBAN is empty for this automation's seller." Empty fields read "Not set for this seller", and the Settings values are not used.
+- **With a legal name:** the automation uses another company. Nothing comes from Settings, so the invoice never mixes your company's details, such as your IBAN, with the other company's. Fill in every field this company needs. An empty required field stops the run, for example with "Seller IBAN is empty for this automation's seller."
 - **Without a legal name:** the automation keeps your company and changes single fields only, for example another city or another bank account. Empty fields use the value from Settings, and they follow when you change Settings later.
 
 When a field is picked from your data and is empty in a record, the run stops with "Seller name is empty in the mapped field." (with that field's name). It does not fall back to the seller in Settings, so an invoice never goes out under the wrong company.

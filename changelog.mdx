@@ -5,30 +5,34 @@ rss: true
 mode: "center"
 ---
 
-<Update label="October 26, 2026">
-  ## Signers you enter when you generate by hand
+<Update label="October 27, 2026">
+  ## DocsAutomator in Claude and ChatGPT
 
-  When a signer's email is set to **Given with each request**, the **Generate manually** dialog and one-off runs now show an **Email** and a **Name** field for that signer. You no longer need the API to send such a document. A rerun keeps the signers of the original request. In the signing settings, one combined example now shows how to name every such signer in an API request.
+  DocsAutomator is now in the Claude directory and in ChatGPT Plugins. Ask Claude or ChatGPT for your documents, and it sets up the automation for you.
 
-  The send confirmation also has a cleaner layout: **Back** on the left, and **Create without sending** and the main button on the right. On phones the buttons stack, with the main button on top.
+  - [Add DocsAutomator to Claude](https://claude.ai/directory/docsautomator). See [Claude](/integrations-api/claude).
+  - [Add DocsAutomator to ChatGPT](https://chatgpt.com/plugins/plugin_asdk_app_6abc8c22ec94819186aac8114b0e24b3). See [ChatGPT](/integrations-api/chatgpt).
 
-  ## Set up from Claude and ChatGPT with your own data source
+  New setups start in test mode, with a watermark. Test documents are free.
 
-  When you set up an automation from Claude or ChatGPT, the assistant now starts with where your data lives. For Airtable, Google Sheets, Notion, SmartSuite, ClickUp and Google Forms it connects that source directly and makes a test document from a real record. If the source is not connected yet, the assistant gives you a one-click link to connect it.
+  ## The native integration, or your AI agent
 
-  More changes in Claude and ChatGPT:
+  When your data is in Airtable, Google Sheets, Notion, SmartSuite or ClickUp, Claude and ChatGPT set up the automation on the native integration, the same way you would in the app. From then on, the integration makes the document from the record: the same document for the same data, every time, with or without the chat. If the tool is not connected yet, the assistant gives you a link, and one click connects it to the right workspace.
 
-  - Signing setups say clearly when a signed copy cannot be saved back to your data, because no field for the signed PDF is set.
-  - Template requests accept only the signing fields DocsAutomator supports, and signatures can be drawn or typed.
-  - A template upload with an empty file no longer stops the setup.
+  - **Zapier, Make, n8n, Glide, Softr or Noloco:** the assistant creates the automation and gives you the steps for that tool.
+  - **A tool without a DocsAutomator integration:** your AI agent brings the data. It reads the deal from your CRM, for example, and sends it with the request. DocsAutomator fills the same template the same way.
 
-  ## Fixes
+  ## Pick the right record
 
-  - A Word or PDF template you upload now shows at the top of **My Templates**, and its **Uploaded** date is the real upload date.
-  - In the Word editor, the signer menu offers the next signer right after you insert a signing field, without a second insert.
-  - Google Sheets and Google Forms automations no longer show automatic creation as off while it runs.
-  - Word template edits with AI can now delete paragraphs that hold only an image or a horizontal line.
-  - Line item tables in generated Word templates now have one row marker instead of two.
+  Name a record, for example "the quote for Example Studio", and the assistant finds it. When several records match, it shows their names and asks which one you mean. Before it makes a live document or sends one to signers, it shows the record and asks you to confirm.
+
+  ## Your own template file from the chat
+
+  Attach a Word file or a PDF in ChatGPT, or paste a link to one in Claude, and ask to use it as your template. The assistant uploads the exact file, so your layout stays as it is. Links from Dropbox, OneDrive, Google Drive or any public address work, up to 25 MB.
+
+  ## Your plan and usage in the chat
+
+  Ask Claude or ChatGPT which plan you are on or how many documents you have left. The answer shows your plan, the documents made this period, the documents included and when the period ends. Questions about prices get the current plans from the pricing page. Before Claude or ChatGPT makes a live document, it tells you that the document counts toward your plan.
 </Update>
 
 <Update label="October 23, 2026">

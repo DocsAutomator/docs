@@ -25,7 +25,7 @@ The add-on is off until you switch it on. Automations without an e-invoice do no
 
 ### Seller details
 
-The seller details are the same for every automation in the workspace.
+You enter the seller details once. Every automation uses them, unless you give one automation a different seller (see [Seller for one automation](#seller-for-one-automation)).
 
 | Field | Required |
 |---|---|
@@ -52,6 +52,25 @@ Open an invoice automation and find its **E-invoice** section. Switch on **Creat
 | Intra-EU supply of goods | No VAT. Both VAT IDs and the delivery date are required. |
 | Small business, no VAT (§19 UStG) | No VAT on any line. |
 
+### Seller for one automation
+
+When one workspace invoices for several companies, an automation can use a different seller. Open **Use a different seller for this automation** in the automation's **Seller** card. It lists every seller field, and each field shows the value from Settings in grey.
+
+<Frame>
+  <img src="/images/e-invoices/seller-card.png" alt="Seller card with the seller details from Settings and the closed section Use a different seller for this automation" />
+</Frame>
+
+- **Empty field:** the automation uses the value from Settings, and it follows when you change Settings later.
+- **Filled field:** the automation uses this value instead. Enter a fixed text, or pick a field of your data source, so each record can name its own company.
+
+You only fill in what differs. Fields you leave empty still come from Settings. When a field is picked from your data and is empty in a record, the run stops with "Seller name is empty in the mapped field." (with that field's name). It does not fall back to the seller in Settings, so an invoice never goes out under the wrong company.
+
+Automations that do not use a different seller work as before.
+
+<Frame>
+  <img src="/images/e-invoices/seller-different-seller.png" alt="Open section Use a different seller for this automation, with the legal name taken from the request key seller_name and the other fields showing the Settings values in grey" />
+</Frame>
+
 ### Invoice and buyer fields
 
 Map each field to a field of your data source, or enter a fixed text (for example a fixed buyer country "DE" or fixed payment terms).
@@ -65,6 +84,7 @@ Map each field to a field of your data source, or enter a fixed text (for exampl
 | Leitweg-ID or buyer reference | Required for XRechnung |
 | Buyer VAT ID | Required for reverse charge and intra-EU supplies |
 | Delivery date, order reference, note | Optional |
+| Amount already paid | Optional. For final invoices, see [Final invoices](#final-invoices). |
 
 **Leitweg-ID:** public-sector buyers in Germany give you a Leitweg-ID (for example `991-12345-67`). Map it to **Leitweg-ID or buyer reference**. For other buyers of an XRechnung, use the reference they give you.
 
@@ -92,6 +112,21 @@ DocsAutomator recalculates every total from the lines: each line is quantity × 
 <Tip>
 Spreadsheets and databases often calculate VAT per line and round each line. On many lines this can drift by more than 1 cent. Calculate VAT once per rate on the summed line totals, as the e-invoice does.
 </Tip>
+
+### Final invoices
+
+A final invoice (Schlussrechnung) lists all the work and then deducts the partial invoices the buyer has already paid (Abschlagsrechnungen). Map **Amount already paid** in the **Invoice** card to the field that holds the paid amount.
+
+<Frame>
+  <img src="/images/e-invoices/amount-already-paid.png" alt="Invoice card with Amount already paid mapped to the request key paid" />
+</Frame>
+
+- Map **Gross total** to the full gross total of all lines, as before, not to the amount still to pay.
+- The e-invoice carries the amount already paid, and the amount due is the gross total minus the amount already paid.
+- When the amount already paid equals the gross total, the amount due is 0.
+- The run stops when the amount already paid is negative ("Amount already paid cannot be negative.") or larger than the gross total ("Amount already paid cannot be larger than the gross total.").
+
+List the numbers of the paid partial invoices in the **Note** field. A retention (Sicherheitseinbehalt) is not a payment, so it does not go into the amount already paid. Write it in the **Note** field, for example "Sicherheitseinbehalt 5 % (595,00 EUR) bis zur Abnahme."
 
 ### Values DocsAutomator reads
 
@@ -141,6 +176,9 @@ With every data source, the XML is also saved next to the PDF in your Google Dri
 | Buyer country "…" is not a country. | Use a two-letter code like DE. |
 | Leitweg-ID or buyer reference is empty. XRechnung requires it. | Map the Leitweg-ID, or the buyer's reference. |
 | Payment terms and due date are both empty. | Map one of them, or enter fixed payment terms. |
+| Amount already paid cannot be larger than the gross total. | Map the full gross total to **Gross total**, and the paid partial invoices to **Amount already paid**. |
+| Seller name is empty in the mapped field. | Fill that field in the record, or clear the field under **Use a different seller for this automation**. |
+| Seller name has more than one value. Pick a field with one value. | Pick a field that holds one company, not a list. |
 | Seller IBAN is empty. XRechnung requires payment details. | Add the IBAN under Settings, Add-ons. |
 | E-invoices cannot be signed. | Turn off signing for this automation. |
 | The e-invoice check is not available right now. Nothing was sent; please try again in a few minutes. | Run it again later. Nothing was delivered. |

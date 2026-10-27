@@ -25,7 +25,7 @@ The add-on is off until you switch it on. Automations without an e-invoice do no
 
 ### Seller details
 
-You enter the seller details once. Every automation uses them, unless you give one automation a different seller (see [Seller for one automation](#seller-for-one-automation)).
+You enter the seller details once. Every e-invoice automation uses them, unless you give one automation a different seller (see [Seller for one automation](#seller-for-one-automation)). The [Swiss QR-bill](/features/swiss-qr-bill) has its own seller details.
 
 | Field | Required |
 |---|---|
@@ -60,15 +60,17 @@ When one workspace invoices for several companies, an automation can use a diffe
   <img src="/images/e-invoices/seller-card.png" alt="Seller card with the seller details from Settings and the closed section Use a different seller for this automation" />
 </Frame>
 
-- **Empty field:** the automation uses the value from Settings, and it follows when you change Settings later.
-- **Filled field:** the automation uses this value instead. Enter a fixed text, or pick a field of your data source, so each record can name its own company.
+Each field takes a fixed text, or a field of your data source, so each record can name its own company. Which fields come from Settings depends on the legal name:
 
-You only fill in what differs. Fields you leave empty still come from Settings. When a field is picked from your data and is empty in a record, the run stops with "Seller name is empty in the mapped field." (with that field's name). It does not fall back to the seller in Settings, so an invoice never goes out under the wrong company.
+- **With a legal name:** the automation uses another company. Nothing comes from Settings, so the invoice never mixes your company's details, such as your IBAN, with the other company's. Fill in every field this company needs. An empty required field stops the run, for example with "Seller IBAN is empty for this automation's seller." Empty fields read "Not set for this seller", and the Settings values are not used.
+- **Without a legal name:** the automation keeps your company and changes single fields only, for example another city or another bank account. Empty fields use the value from Settings, and they follow when you change Settings later.
+
+When a field is picked from your data and is empty in a record, the run stops with "Seller name is empty in the mapped field." (with that field's name). It does not fall back to the seller in Settings, so an invoice never goes out under the wrong company.
 
 Automations that do not use a different seller work as before.
 
 <Frame>
-  <img src="/images/e-invoices/seller-different-seller.png" alt="Open section Use a different seller for this automation, with the legal name taken from the request key seller_name and the other fields showing the Settings values in grey" />
+  <img src="/images/e-invoices/seller-different-seller.png" alt="Open section Use a different seller for this automation with the legal name Lumen GmbH: nothing comes from Settings, and the empty required fields are marked Required" />
 </Frame>
 
 ### Invoice and buyer fields
@@ -178,6 +180,7 @@ With every data source, the XML is also saved next to the PDF in your Google Dri
 | Payment terms and due date are both empty. | Map one of them, or enter fixed payment terms. |
 | Amount already paid cannot be larger than the gross total. | Map the full gross total to **Gross total**, and the paid partial invoices to **Amount already paid**. |
 | Seller name is empty in the mapped field. | Fill that field in the record, or clear the field under **Use a different seller for this automation**. |
+| Seller IBAN is empty for this automation's seller. | The automation uses another company: enter its IBAN under **Use a different seller for this automation**. |
 | Seller name has more than one value. Pick a field with one value. | Pick a field that holds one company, not a list. |
 | Seller IBAN is empty. XRechnung requires payment details. | Add the IBAN under Settings, Add-ons. |
 | E-invoices cannot be signed. | Turn off signing for this automation. |

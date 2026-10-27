@@ -20,7 +20,13 @@ The add-on is off until you switch it on. Automations without a QR-bill do not c
 
 ### Seller details
 
-The seller details are the account holder on every payment part. They are shared with the e-invoice add-on, so you enter them once. When the automation also creates an e-invoice, the QR-bill uses the e-invoice's seller and IBAN, including a [different seller for that automation](/features/e-invoices#seller-for-one-automation).
+The seller details are the account holder on every payment part. The QR-bill has its own seller details, separate from the [e-invoice](/features/e-invoices) seller, so a change in one never changes the other.
+
+If you used the e-invoice before, the QR-bill page shows your e-invoice seller with the note "Copied from your e-invoice seller. Until you save, changes there also change the QR-bill." Click **Save seller details** to keep them as the QR-bill's own. Until then, your QR-bills keep using the e-invoice seller.
+
+<Frame>
+  <img src="/images/e-invoices/qr-bill-settings-copied.png" alt="QR-bill seller details in Settings, filled in from the e-invoice seller, with the note Copied from your e-invoice seller and the Save seller details button" />
+</Frame>
 
 | Field | Required |
 |---|---|
@@ -32,7 +38,22 @@ The seller details are the account holder on every payment part. They are shared
 
 A QR-IBAN is a separate account number that your bank gives you with its QR reference service. You need it only for the QR reference type. Enter it under **QR-IBAN** on the same settings page.
 
-The QR-IBAN belongs to the workspace. An automation that uses a [different seller](/features/e-invoices#seller-for-one-automation) for its e-invoice therefore cannot use the QR reference type, because the QR-IBAN may belong to another company. Choose another reference type for it.
+### Seller for one automation
+
+An automation can use a different seller for its QR-bill. Open **Use a different seller for this automation** in the automation's **Account** card. Each field takes a fixed text or a field of your data source, and shows the value from Settings in grey.
+
+- **With a legal name:** the automation uses another company, and nothing comes from Settings. Fill in its postcode, city and IBAN. With the QR reference type, also enter its **QR-IBAN** (the row appears when QR reference is chosen). The workspace QR-IBAN is never used for another company, because it belongs to your account. Without one, the run stops with "Add the QR-IBAN for this seller, or choose another reference type."
+- **Without a legal name:** the automation keeps your company and changes single fields only. Empty fields use the value from Settings, including the workspace QR-IBAN, unless you change the IBAN.
+
+<Frame>
+  <img src="/images/e-invoices/qr-bill-seller-one-field.png" alt="Account card of an automation with one changed field: the city Bern, while the other fields show the Settings values in grey" />
+</Frame>
+
+<Frame>
+  <img src="/images/e-invoices/qr-bill-seller-other-company.png" alt="Account card with another company, Tenant AG, and the QR reference type: empty fields read Not set for this seller, and the QR-IBAN row asks for this seller's QR-IBAN" />
+</Frame>
+
+The e-invoice seller of the same automation does not change the QR-bill.
 
 ## Set up an automation
 
@@ -44,9 +65,6 @@ Open an automation and find its **Swiss QR-bill** section. Fill in the parts bel
 - **Amount:** the field that holds the invoice total. Leave it empty to let the payer enter the amount, for example for donations. When the automation also creates an e-invoice, leave it empty: the QR-bill then uses the e-invoice amount due, which is the gross total minus any [amount already paid](/features/e-invoices#final-invoices). A mapped amount must equal that amount due.
 - **Fully paid invoices:** when the e-invoice amount due is 0, there is nothing to pay, so the document gets no QR-bill page. The document is still created.
 
-<Frame>
-  <img src="/images/e-invoices/qr-bill-with-e-invoice.png" alt="Swiss QR-bill section of an automation with an e-invoice: the QR-bill uses the e-invoice seller and IBAN, the currency is EUR and an empty amount uses the e-invoice amount due" />
-</Frame>
 
 ### Reference
 
@@ -87,7 +105,8 @@ Every check runs before the document is created. When one fails, no file is crea
 | The QR-IBAN is valid | `QR-IBAN "..." is not a valid QR-IBAN.` | Check it for typos. A QR-IBAN has a bank number from 30000 to 31999 (digits 5 to 9). |
 | The seller country is a country | `Seller country "..." is not a country. Use a two-letter code like CH.` | Pick the country again in the seller details. |
 | A reference type is chosen | `Reference type is not set.` | Choose a reference type in the automation. |
-| A QR reference is not combined with a different e-invoice seller | `A QR reference needs the workspace QR-IBAN. Choose another reference type, or clear the seller fields in the E-invoice panel.` | Choose no reference or a creditor reference, or remove the different seller. |
+| Another company has its own QR-IBAN for a QR reference | `Add the QR-IBAN for this seller, or choose another reference type.` | Enter the QR-IBAN under **Use a different seller for this automation**, or choose another reference type. |
+| Another company has its own details | `Seller IBAN is empty for this automation's seller.` (the same for the postcode and the city) | Enter the value under **Use a different seller for this automation**. |
 
 ### Amount and currency
 
@@ -139,6 +158,6 @@ The QR-bill needs no extra request fields: it reads the fields you map in the au
 
 ## Settings that combine with the QR-bill
 
-- **E-invoice (ZUGFeRD):** the QR-bill page is added first, then the e-invoice data and the PDF/A-3 conversion. One PDF carries both, and it passes the official ZUGFeRD and PDF/A checks with the extra page. With XRechnung, the PDF gets the QR-bill page and the XML file is unchanged. The QR-bill uses the e-invoice seller, its amount due and EUR. A fully paid invoice gets no QR-bill page.
+- **E-invoice (ZUGFeRD):** the QR-bill page is added first, then the e-invoice data and the PDF/A-3 conversion. One PDF carries both, and it passes the official ZUGFeRD and PDF/A checks with the extra page. With XRechnung, the PDF gets the QR-bill page and the XML file is unchanged. The QR-bill uses its own seller, and the e-invoice's amount due and EUR. A fully paid invoice gets no QR-bill page.
 - **Merge PDFs:** the QR-bill page is the last page, after the merged PDFs.
 - **Signing and acceptance:** the QR-bill page is part of the document your recipient signs or accepts.

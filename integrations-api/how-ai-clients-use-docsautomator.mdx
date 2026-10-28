@@ -59,10 +59,10 @@ Tested with: Claude Code and Codex.
 
 - Your AI client sends from the automation you already have.
 - On a record source (Airtable, Notion, Google Sheets, Google Forms, SmartSuite or ClickUp), it passes the record ID. The record fills the document, and the signer emails come from the record's mapped fields. It names other recipients only when you name a different person.
+- On Airtable, Notion, Google Sheets, SmartSuite or ClickUp, your AI client can find the record by its name. The DocsAutomator search returns up to five matching records, with only the ID and name of each. When several records match, your AI client asks which one you mean.
 - It never copies an automation to send from the chat, and it never replaces the automation's data source.
 - When you ask for an approval, your AI client names the approvers for that one document. The document waits until they approve, even when approval is off for the automation. See [Approvals](/features/approvals).
 - Your AI client can give each document its own key. When it sends the same request again with the same key within 7 days, DocsAutomator returns the first result and creates nothing new, so a retry after a timeout never sends a document twice.
-- The DocsAutomator tools cannot search your records. Your AI client gets the record from you, or from its own connection to that app.
 - If the automation creates an e-invoice, the document your AI client creates is an e-invoice too, and a problem in the data stops it with a message that names the field. See [E-invoices from MCP clients](/integrations-api/docsautomator-mcp#e-invoices).
 
 ## Values and formats

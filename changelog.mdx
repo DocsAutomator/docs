@@ -33,6 +33,19 @@ mode: "center"
   ## Your plan and usage in the chat
 
   Ask Claude or ChatGPT which plan you are on or how many documents you have left. The answer shows your plan, the documents made this period, the documents included and when the period ends. Questions about prices get the current plans from the pricing page. Before Claude or ChatGPT makes a live document, it tells you that the document counts toward your plan.
+
+  ## Final invoices and a different seller per automation
+
+  E-invoices now support final invoices: map the full gross total as before, and enter the **Amount already paid** in the Invoice section. The e-invoice subtracts it to get the amount due.
+
+  If your workspace invoices for more than one company, an automation can use its own seller. Open **Use a different seller for this automation** in the e-invoice panel. When you enter a different legal name, the whole seller comes from this automation, so two companies never mix on one document. Fields you leave empty follow your Settings.
+
+  The Swiss QR-bill now has its own seller in Settings and per automation, separate from the e-invoice seller. A workspace that never saved a QR-bill seller keeps using its e-invoice seller, so existing QR-bills do not change.
+
+  ## Fixes
+
+  - With sequential signing, the result now says that only the first signer gets the email at once, and each next signer gets it after the previous signature. Before, it said "Email sent" for every signer.
+  - In Claude and ChatGPT, a confirmation that nobody answers now keeps harmless settings and points live changes to the app.
 </Update>
 
 <Update label="October 26, 2026">

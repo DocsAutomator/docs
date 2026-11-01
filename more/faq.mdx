@@ -134,7 +134,8 @@ Find answers to common questions about DocsAutomator. If your question is not li
   <Accordion title="What are the API rate limits?">
     | Scope | Limit |
     |-------|-------|
-    | All API requests | 2,000 requests per 15 minutes per API key (requests to `GET /job/{jobId}` do not count) |
+    | All API requests | 2,000 requests per 15 minutes per API key (requests to `GET /job/{jobId}` and document requests to `/createDocument` do not count) |
+    | Document requests | Never limited under 20 open requests. See [Rate Limits](/api-reference/introduction#rate-limits) |
     | Test emails | 25 per hour per automation, 100 per hour per workspace, and at most 10 different recipients per hour per workspace |
     | Document generation | 5 documents generated at the same time per workspace; further requests wait in the queue |
 

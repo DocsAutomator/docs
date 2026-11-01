@@ -126,7 +126,8 @@ The API returns `429 Too Many Requests`, indicating you've exceeded the rate lim
 
 | Scope | Limit |
 |-------|-------|
-| Global | 2000 requests per 15 minutes per API key |
+| Global | 2000 requests per 15 minutes per API key, except document requests |
+| Document requests | Never limited under 20 open requests. See [Rate Limits](/api-reference/introduction#rate-limits) |
 | Queue | Max 50 queued jobs per workspace |
 | Queue concurrency | Max 5 active jobs per workspace |
 | Test email | 5 per hour per workspace |

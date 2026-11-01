@@ -169,8 +169,27 @@ The `POST /createDocument` endpoint works differently depending on your automati
 | Global | 2000 requests per 15 minutes per API key |
 | Test email | 25 per hour per automation |
 | Queue concurrency | Max 5 active jobs per workspace |
+| Document creation | Never limited under 20 open requests, see below |
 
 When you exceed a rate limit, the API returns `429 Too Many Requests`.
+
+### Document creation requests
+
+Most workspaces never meet this limit. It only protects the API when one workspace sends a very large number of requests at once. It applies to every request to `/createDocument`, including requests from the API, Zapier, Make, n8n, MCP and the in-app assistant. These requests do not count toward the global limit.
+
+An open request is one that we have received and not yet answered.
+
+- **Fewer than 20 open requests:** your request is always accepted, even when the API is busy.
+- **20 or more open requests:** your workspace has an allowance of 120 requests, which refills by 5 a second. When the allowance is used up, the next request gets a `429`.
+- **The API is busy:** when the API holds 100 open document requests in total, only the workspace with the most open requests gets a `429`.
+
+### How to retry
+
+A `429` on a document request means that no document was created, so it is safe to send the same request again.
+
+1. Read the `Retry-After` header of the response. It gives the wait in seconds.
+2. Wait that long, then send the same request again.
+3. If you send many documents, wait for some answers before you send more, or send `"async": true` so that each answer comes back at once.
 
 ## Error Codes
 

@@ -9,6 +9,10 @@ mode: "center"
   ## A clear limit for very large bursts of document requests
 
   A workspace with fewer than 20 open document requests is never limited. Above that, an allowance of 120 requests that refills by 5 a second protects the API, and a `429` response tells you when to retry. See [Rate Limits](/api-reference/introduction#rate-limits).
+
+  ## Fixes
+
+  - In Claude and ChatGPT, a refused document request now shows the API's own message and when to try again, instead of a fixed limit text.
 </Update>
 
 <Update label="October 28, 2026">

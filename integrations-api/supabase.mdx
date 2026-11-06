@@ -1,0 +1,59 @@
+---
+title: "Supabase"
+description: "Send documents for signing or one-click acceptance from a Supabase Edge Function"
+keywords: ["Supabase", "Edge Function", "database webhook", "acceptance", "e-signature", "PDF"]
+---
+
+Call DocsAutomator from a Supabase Edge Function to make a PDF and send it for acceptance or signing. Apps built with Lovable, Bolt and Replit often run on Supabase, so the same function works there. If you build with Lovable, the [Lovable guide](/integrations-api/lovable) has one prompt that creates the template, the automation and this function for you.
+
+## Before you start
+
+- A DocsAutomator automation with the data source **API**. Set **How it completes** to **Acceptance** or **Signature required**, set signer 1's email to **Given with each request**, and set the automation status to **Test mode**.
+- Your API key from **Settings**, then **API** ([app.docsautomator.co/settings/workspace/api](https://app.docsautomator.co/settings/workspace/api)).
+
+The [starter repository](https://github.com/DocsAutomator/app-starter) creates such an automation for you with `npm run setup`.
+
+## Deploy the function
+
+1. Copy `supabase/functions/send-quote` and `supabase/functions/_shared` from the starter into your project.
+2. Store the secrets:
+   ```bash
+   supabase secrets set DOCSAUTOMATOR_API_KEY=your_key DOCSAUTOMATOR_AUTOMATION_ID=your_automation_id
+   ```
+3. Deploy:
+   ```bash
+   supabase functions deploy send-quote
+   ```
+4. Send a test quote to yourself:
+   ```bash
+   curl -X POST "https://YOUR_PROJECT.supabase.co/functions/v1/send-quote" \
+     -H "Authorization: Bearer YOUR_SUPABASE_ANON_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{"client_name":"Anna Weber","client_email":"you@example.com","items":[{"item":"Website design","quantity":1,"unit_price":2400}]}'
+   ```
+
+The response contains `pdfUrl` and `acceptUrl`. You also receive an email with a **Review & Accept** button. Test documents have a watermark, and test acceptances are never billed.
+
+## The request the function sends
+
+```json
+{
+  "automationId": "your_automation_id",
+  "data": {
+    "client_name": "Anna Weber",
+    "total": "2400.00",
+    "line_items_1": [{ "item": "Website design", "quantity": 1, "unit_price": "2400.00", "amount": "2400.00" }]
+  },
+  "recipients": [{ "signer": 1, "email": "you@example.com", "name": "Anna Weber" }]
+}
+```
+
+Keys in `data` must match the placeholders in your template. See [Create Document via API](/api-reference/documents/create-from-api) for all options.
+
+## Send a document when a row changes
+
+To send a quote when a row is inserted, add a database webhook in Supabase (**Database**, then **Webhooks**) that calls the function. Map the row's columns to the request body in the function.
+
+<Warning>
+Keep the API key in Supabase secrets. Never call the DocsAutomator API from browser code.
+</Warning>

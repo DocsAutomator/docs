@@ -1,0 +1,64 @@
+---
+title: "Append Word Documents"
+description: "Join several generated Word documents into one document"
+icon: "layer-group"
+---
+
+Build a document from modular parts. Generate each part with its own Word template, then append the parts to the document of your last request. The result is one Word document, and one PDF made from it.
+
+<Note>
+**Availability**: Requires the Business plan or above. Works for automations with a Word template, through the API.
+</Note>
+
+## How it works
+
+1. Generate each part with its own automation. Turn on saving the Word file in each part's automation, so the response includes a link to the part's .docx file (`wordFileUrl`). You can also send a file you keep yourself.
+2. Send the request for the main document with `existingWordDocs`: the parts to append, in order.
+3. DocsAutomator generates the main document, appends the parts, and makes the PDF from the joined document.
+
+```json
+{
+  "docId": "your-automation-id",
+  "data": {
+    "customer_name": "Acme Corp"
+  },
+  "existingWordDocs": [
+    "https://example.com/part-scope.docx",
+    { "url": "https://example.com/part-pricing.docx", "newPage": false },
+    { "base64": "UEsDBBQABgAIAAAAIQ..." }
+  ]
+}
+```
+
+Each entry is one of these:
+
+| Entry | Meaning |
+|-------|---------|
+| An https link | The .docx file at that address. It must be downloadable without signing in. |
+| `{ "url": "..." }` | The same, as an object. |
+| `{ "base64": "..." }` | The .docx file itself, encoded as base64. Use this when you cannot host the file. |
+
+Add `"newPage": false` to an entry to start it on the same page as the content before it. By default each part starts on a new page.
+
+## What each part keeps
+
+- Its own page size, orientation and margins.
+- Its own headers and footers. A part without headers or footers shows the ones of the part before it.
+- Its images, links and tables.
+- Its own lists: numbered lists in each part start again at 1.
+- Its fonts, including fonts embedded in the file.
+
+## Styles
+
+When a part uses a style with the same name as the main document, for example "Normal" or "Heading 1", the main document's style applies. This is the same as pasting with "Use destination styles" in Word. The default text size and line spacing also come from the main document. A part can therefore take more or less space than on its own. Styles that only a part uses are kept.
+
+## Signing
+
+Signing fields such as `{{esign.signature_1}}` can sit in the main document or in any part. One signing session covers the whole document, with each field placed where it appears in the final PDF. Checkboxes (`{{esign.checkbox_...}}`) work in the main template only. A signing request with a checkbox in an appended part fails with a clear message.
+
+## Limits
+
+- Up to 20 parts per request, up to 25 MB per file, and up to 50 MB for all parts together.
+- Placeholders in appended parts are not filled. Fill each part when you generate it. The run history shows a warning for each part that still has placeholders.
+- Comments, footnotes and endnotes in appended parts are removed. The run history shows a warning for each part that had them.
+- Links must use https and point to a public address.

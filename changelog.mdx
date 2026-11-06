@@ -5,10 +5,31 @@ rss: true
 mode: "center"
 ---
 
+<Update label="November 4, 2026">
+  ## Disconnect Claude or ChatGPT from your workspace
+
+  The Claude and ChatGPT cards in Settings, Integrations now have a Disconnect button for workspace owners and admins. Access ends at once, for everyone on your team. Under "Connected", the card now shows when the assistant last used your workspace, or "Not used yet".
+
+  ## Fixes
+
+  - When an AI assistant sorts a line-item table through the connector, the document now uses that order. Before, the setting was saved but the table kept its original order.
+  - For Word and Google Doc templates with signing tags, the document fingerprint on the signing audit page now matches the PDF the signer receives.
+</Update>
+
+<Update label="November 3, 2026">
+  ## Fixes
+
+  - The in-app preview of a ClickUp automation works again. Before, every preview failed with the message "Cannot access 'd' before initialization".
+</Update>
+
 <Update label="November 1, 2026">
   ## A clear limit for very large bursts of document requests
 
   A workspace with fewer than 20 open document requests is never limited. Above that, an allowance of 120 requests that refills by 5 a second protects the API, and a `429` response tells you when to retry. See [Rate Limits](/api-reference/introduction#rate-limits).
+
+  ## Fixes
+
+  - In Claude and ChatGPT, a refused document request now shows the API's own message and when to try again, instead of a fixed limit text.
 </Update>
 
 <Update label="October 28, 2026">

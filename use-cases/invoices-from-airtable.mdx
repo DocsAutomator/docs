@@ -142,15 +142,14 @@ By the end of this guide, you will have an automation that:
     Choose how invoices are generated:
 
     <Tabs>
+      <Tab title="Auto Create (All Plans)">
+        No script needed. Open **Auto Create** on the automation page and turn on **Auto creation**. Then pick the field, the condition and the value (e.g., Status = "Ready to Send").
+      </Tab>
       <Tab title="Button Field (Free Plan)">
         Copy the webhook URL from DocsAutomator and paste it into a Button field in your Invoices table. Clicking the button generates the invoice instantly.
       </Tab>
       <Tab title="Automation Script (Paid Plan)">
         Copy the automation script from DocsAutomator and paste it into an Airtable Automation. Set the trigger to "When record matches conditions" (e.g., Status = "Ready to Send").
-
-        <Tip>
-        No script needed: open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value (e.g., Status = "Ready to Send"). This works on every Airtable plan.
-        </Tip>
       </Tab>
     </Tabs>
   </Step>

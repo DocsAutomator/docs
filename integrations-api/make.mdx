@@ -138,7 +138,7 @@ Use Make's built-in functions to format your data:
 
 ### Working with Large Documents
 
-For documents that take longer to generate, DocsAutomator processes them asynchronously. The module does not wait for slow documents: after a time limit, it stops with a timeout error. DocsAutomator still creates the document, and you find it on the [Documents](https://app.docsautomator.co/documents) page.
+For documents that take longer to generate, DocsAutomator processes them asynchronously. The module waits only for a limited time. If a document takes longer, the module stops with a timeout error. DocsAutomator still creates the document, and you find it on the [Documents](https://app.docsautomator.co/documents) page.
 
 ## FAQs
 

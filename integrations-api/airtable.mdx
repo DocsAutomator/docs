@@ -130,13 +130,13 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
 
 <Tabs>
   <Tab title="Automation Script">
-    Documents are generated when records are created or updated, using an Airtable Automation Script with a trigger you define in Airtable (for example, when a record meets a condition).
-
-    Copy the provided script into Airtable's automation action. Define the Record ID parameter to pass the triggering record's identifier.
-
     <Tip>
     No script needed: open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value. DocsAutomator then creates the document when a record changes to match, on every Airtable plan.
     </Tip>
+
+    Documents are generated when records are created or updated, using an Airtable Automation Script with a trigger you define in Airtable (for example, when a record meets a condition).
+
+    Copy the provided script into Airtable's automation action. Define the Record ID parameter to pass the triggering record's identifier.
 
     <Frame>
       <img src="/images/airtable/automation-script.png" alt="Trigger from Airtable dialog showing the automation script to copy, with the API key and document id replaced by placeholders" />
@@ -169,13 +169,13 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
     3. Select your automation and generate documents from any record
   </Tab>
   <Tab title="Interface Button">
+    <Tip>
+    No script needed: let the button update a field, such as Status. Then open **Auto Create** on the automation page, turn on **Auto creation**, and pick that field, the condition and the value.
+    </Tip>
+
     Add a button to an Airtable Interface that triggers document generation via an automation script.
 
     Copy the provided script into an Airtable automation triggered by an Interface button. The Record ID is passed automatically from the button click.
-
-    <Tip>
-    No script needed: open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value. DocsAutomator then creates the document when a record changes to match, on every Airtable plan.
-    </Tip>
 
     <Info>
     Interface buttons require a paid Airtable account.

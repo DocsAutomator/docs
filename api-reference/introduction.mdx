@@ -108,7 +108,7 @@ Create your first document in three steps:
 
 ## Sync vs Async Mode
 
-By default, `POST /createDocument` runs synchronously and waits for the document to be generated (up to 5 minutes). For high-volume or latency-sensitive workflows, use **async mode**.
+By default, `POST /createDocument` runs synchronously and waits for the document to be generated (up to 5 minutes). Most callers need nothing else. Async mode is an advanced option for high-volume workflows and for callers with a time limit.
 
 ### Sync mode (default)
 
@@ -121,7 +121,9 @@ By default, `POST /createDocument` runs synchronously and waits for the document
 
 Returns `200` with the PDF URL when complete.
 
-### Async mode
+### Async mode (advanced)
+
+Some callers stop waiting after a time limit, often about 30 seconds, for example Glide and many serverless functions. DocsAutomator still creates the document, but the caller never gets the link. If your documents can take more than 25 seconds, send `"async": true`:
 
 ```json
 {
@@ -140,12 +142,7 @@ curl https://api.docsautomator.co/job/YOUR_JOB_ID \
 
 **Polling pattern:** Use exponential backoff starting at 2 seconds. Jobs typically complete in 5-30 seconds. `status` is `waiting`, `active`, `completed` (with `result.pdfUrl`) or `failed` (with `error`).
 
-### Advanced: async mode for callers with a time limit
-
-Most callers can use the default call above. Async mode is an advanced option. Some callers stop waiting after a time limit, often about 30 seconds: Glide, browsers and many serverless functions. The document is still created, but the caller never gets the link. If your documents can take more than 25 seconds, send `"async": true` and get the link in one of two ways:
-
-- Poll `GET /job/{jobId}` as shown above.
-- Add a [Notify Webhook](/features/actions-after-document-generation/notify-webhook) action. DocsAutomator posts `pdfUrl` to your URL when the document is ready, so you do not need to poll.
+If you would rather not poll, add a [Notify Webhook](/features/actions-after-document-generation/notify-webhook) action. DocsAutomator posts `pdfUrl` to your URL when the document is ready.
 
 For Airtable, use [Auto Create](/integrations-api/airtable#triggering-methods) instead of a script. No script runs in Airtable, so no time limit applies.
 

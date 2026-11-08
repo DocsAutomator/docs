@@ -312,7 +312,7 @@ See [Dynamic Images](/features/dynamic-images) for supported formats, resizing, 
 
 ## Async Mode
 
-Async mode is an advanced option. Most callers can use the basic call above. Use async mode for high-volume or latency-sensitive workflows, or when your caller stops waiting after about 30 seconds and your documents can take more than 25 seconds. The API returns a `jobId` immediately, and you poll for the result. If you would rather not poll, add a [Notify Webhook](/features/actions-after-document-generation/notify-webhook) action: DocsAutomator posts `pdfUrl` to your URL when the document is ready.
+Async mode is an advanced option. Most callers can use the basic call above. Use async mode for high-volume or latency-sensitive workflows. Also use it when your caller stops waiting after about 30 seconds and your documents can take more than 25 seconds. The API returns a `jobId` immediately, and you poll for the result. If you would rather not poll, add a [Notify Webhook](/features/actions-after-document-generation/notify-webhook) action: DocsAutomator posts `pdfUrl` to your URL when the document is ready.
 
 <CodeGroup>
 ```bash cURL
@@ -446,6 +446,8 @@ Choose one key per document you want, for example the record id plus a version: 
 Requests without a key work as before: every request creates a new document.
 
 ### Airtable script example
+
+To create a document when a record changes, you do not need a script: use [Auto Create](/integrations-api/airtable#triggering-methods). The script below is for cases where you need your own key.
 
 This script runs in an Airtable automation ("Run a script" action). It uses the record id and a version field as the key, so running it again for the same record never creates a second proposal, and raising the version creates a new one.
 

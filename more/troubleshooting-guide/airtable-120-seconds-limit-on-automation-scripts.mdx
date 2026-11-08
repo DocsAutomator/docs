@@ -30,7 +30,7 @@ Use Auto Create instead of a script. Auto Create runs in DocsAutomator, not in A
 
 ### Advanced: keep your script and send `async: true`
 
-If you need to keep the script, add `async: true` to the request body. DocsAutomator then answers at once with HTTP 202 and a `jobId`, and the script ends long before the limit.
+If you need to keep the script, add `async: true` to the request body. DocsAutomator then answers at once, and the script ends long before the limit.
 
 ```javascript
 body: JSON.stringify({
@@ -40,7 +40,7 @@ body: JSON.stringify({
 })
 ```
 
-The script no longer gets the link. DocsAutomator saves the PDF to the record when it is ready, in the attachment field or the PDF URL field set in your automation. Errors show on the [Documents](https://app.docsautomator.co/documents) page, because the script no longer sees them.
+The script no longer gets the link. DocsAutomator saves the PDF to the record when it is ready. It goes to the attachment field or the PDF URL field set in your automation. Errors show on the [Documents](https://app.docsautomator.co/documents) page, because the script no longer sees them.
 
 ## How It Works
 

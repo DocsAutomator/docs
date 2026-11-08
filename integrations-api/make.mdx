@@ -138,10 +138,7 @@ Use Make's built-in functions to format your data:
 
 ### Working with Large Documents
 
-The Create Document module does not wait for slow documents. It waits only a limited time, then stops with a timeout error. DocsAutomator still creates the document. To get the link in that case:
-
-- Add a [Notify Webhook](/features/actions-after-document-generation/notify-webhook) action in DocsAutomator with the URL of a scenario that starts with Make's **Custom webhook** trigger. It gets `pdfUrl` when the document is ready.
-- Or find the document on the [Documents](https://app.docsautomator.co/documents) page.
+For documents that take longer to generate, DocsAutomator processes them asynchronously. The module does not wait for slow documents: after a time limit, it stops with a timeout error. DocsAutomator still creates the document, and you find it on the [Documents](https://app.docsautomator.co/documents) page.
 
 ## FAQs
 

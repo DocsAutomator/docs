@@ -134,7 +134,9 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
 
     Copy the provided script into Airtable's automation action. Define the Record ID parameter to pass the triggering record's identifier.
 
-    The script sends `async: true`, so DocsAutomator answers at once and the script ends well before Airtable's time limit. When the document is ready, the PDF appears on the record, in the attachment or PDF URL field set in your DocsAutomator automation. See [Airtable: 120 Seconds Limit](/more/troubleshooting-guide/airtable-120-seconds-limit-on-automation-scripts).
+    <Tip>
+    No script needed: open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value. DocsAutomator then creates the document when a record changes to match, on every Airtable plan.
+    </Tip>
 
     <Frame>
       <img src="/images/airtable/automation-script.png" alt="Trigger from Airtable dialog showing the automation script to copy, with the API key and document id replaced by placeholders" />
@@ -170,6 +172,10 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
     Add a button to an Airtable Interface that triggers document generation via an automation script.
 
     Copy the provided script into an Airtable automation triggered by an Interface button. The Record ID is passed automatically from the button click.
+
+    <Tip>
+    No script needed: open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value. DocsAutomator then creates the document when a record changes to match, on every Airtable plan.
+    </Tip>
 
     <Info>
     Interface buttons require a paid Airtable account.

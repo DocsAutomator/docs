@@ -14,23 +14,23 @@ Airtable enforces a 120-second (2 minute) execution limit on all automation scri
 
 ## Solution
 
-Send `async: true` in the request. DocsAutomator then answers at once, and the script ends long before the limit. DocsAutomator keeps creating the document and saves the PDF to the record when it is ready.
-
-The script in DocsAutomator already does this. Copy it again, or add one line to your own script.
+Use Auto Create instead of a script. Auto Create runs in DocsAutomator, not in Airtable, so the script time limit does not apply.
 
 <Steps>
-  <Step title="Open the setup guide">
-    In DocsAutomator, open your automation and click **Trigger from Airtable**. Pick the Airtable Automation script option, or the Airtable Interface button option.
+  <Step title="Open Auto Create">
+    Open **Auto Create** on the automation page.
   </Step>
-  <Step title="Copy the script">
-    Copy the script from the code box. It sends `async: true`.
+  <Step title="Turn on Auto creation">
+    Turn on **Auto creation**, then pick the field, the condition and the value, for example Status equals Approved.
   </Step>
-  <Step title="Update Airtable">
-    Paste the script into your Airtable automation in place of the old one.
+  <Step title="Turn off the Airtable automation">
+    Turn off the Airtable automation that runs the script, so a record does not create two documents.
   </Step>
 </Steps>
 
-If you keep your own script, add `async: true` to the body:
+### Advanced: keep your script and send `async: true`
+
+If you need to keep the script, add `async: true` to the request body. DocsAutomator then answers at once with HTTP 202 and a `jobId`, and the script ends long before the limit.
 
 ```javascript
 body: JSON.stringify({
@@ -40,12 +40,14 @@ body: JSON.stringify({
 })
 ```
 
+The script no longer gets the link. DocsAutomator saves the PDF to the record when it is ready, in the attachment field or the PDF URL field set in your automation. Errors show on the [Documents](https://app.docsautomator.co/documents) page, because the script no longer sees them.
+
 ## How It Works
 
-With `async: true`, the request returns right away with HTTP 202 and a `jobId`. The script does not wait for the document, so it does not need to check the job.
+With Auto Create, when a record changes to match your condition, Airtable tells DocsAutomator, and DocsAutomator creates the document. No script waits for the document, so there is no time limit to hit.
 
 <Info>
-The PDF link appears on the record, in the attachment field or the PDF URL field you set in your DocsAutomator automation. If no such field is set, find the document on the [Documents](https://app.docsautomator.co/documents) page. Errors show there too, because the script no longer sees them.
+Auto Creation works on every Airtable plan, including Free. See the [Airtable integration guide](/integrations-api/airtable) for the fields and conditions you can use.
 </Info>
 
 ## Related

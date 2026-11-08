@@ -221,7 +221,7 @@ Common n8n expressions for DocsAutomator:
     - Check error output for detailed messages
   </Accordion>
   <Accordion title="Async Processing for Large Documents" icon="clock">
-    If the DocsAutomator node times out on documents that can take more than 25 seconds, turn on **Async Processing**. The node then returns a `jobId` at once. The node has no operation to check a job, so check it with an **HTTP Request** node:
+    This is an advanced option. Most workflows do not need it. If the DocsAutomator node times out on documents that can take more than 25 seconds, turn on **Async Processing**. The node then returns a `jobId` at once. The node has no operation to check a job, so check it with an **HTTP Request** node:
 
     1. Add a **Wait** node of 10 seconds after the DocsAutomator node.
     2. Add an **HTTP Request** node: method `GET`, URL `https://api.docsautomator.co/job/{{ $('DocsAutomator').item.json.jobId }}`, and a header `Authorization` with the value `Bearer YOUR_API_KEY`. Use your DocsAutomator node's name in `$('...')`.

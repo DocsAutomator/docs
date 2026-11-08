@@ -65,6 +65,33 @@ DocsAutomator integrates seamlessly with Glide through a native integration, ena
   </Step>
 </Steps>
 
+## Documents That Take More Than 25 Seconds
+
+Glide stops waiting after about 30 seconds. The document is still created, but the PDF column stays empty. For slow documents, let DocsAutomator call Glide back when the document is ready:
+
+<Steps>
+  <Step title="Add a Glide webhook workflow">
+    Create a Glide workflow with a **Webhook** trigger and copy its URL. Have the workflow write `pdfUrl` to the row whose Row ID matches `webhookParams.rowId`.
+  </Step>
+  <Step title="Add a Notify Webhook action">
+    In DocsAutomator, add a [Notify Webhook](/features/actions-after-document-generation/notify-webhook) action with that URL.
+  </Step>
+  <Step title="Call DocsAutomator with Call API">
+    In place of the DocsAutomator action, use Glide's **Call API** action: `POST https://api.docsautomator.co/createDocument` with the header `Authorization: Bearer YOUR_API_KEY` and this body:
+
+    ```json
+    {
+      "docId": "YOUR_AUTOMATION_ID",
+      "async": true,
+      "webhookParams": { "rowId": "<your Row ID column>" },
+      "data": { "customer_name": "<a column>" }
+    }
+    ```
+  </Step>
+</Steps>
+
+DocsAutomator answers at once. When the document is ready, it sends `pdfUrl` and `webhookParams` to your Glide workflow.
+
 ## Line Items Implementation
 
 For documents containing lists (invoices, staff rosters, etc.), configure line items using a three-level structure:

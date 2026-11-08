@@ -138,7 +138,14 @@ curl https://api.docsautomator.co/job/YOUR_JOB_ID \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
-**Polling pattern:** Use exponential backoff starting at 2 seconds. Jobs typically complete in 5-30 seconds.
+**Polling pattern:** Use exponential backoff starting at 2 seconds. Jobs typically complete in 5-30 seconds. `status` is `waiting`, `active`, `completed` (with `result.pdfUrl`) or `failed` (with `error`).
+
+### When to use async mode
+
+Many callers stop waiting after a time limit, often about 30 seconds: Airtable scripts, Glide, browsers and many serverless functions. The document is still created, but the caller never gets the link. If your documents can take more than 25 seconds, send `"async": true` and get the link in one of two ways:
+
+- Poll `GET /job/{jobId}` as shown above.
+- Add a [Notify Webhook](/features/actions-after-document-generation/notify-webhook) action. DocsAutomator posts `pdfUrl` to your URL when the document is ready, so you do not need to poll.
 
 ## Data Source Guides
 

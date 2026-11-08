@@ -312,7 +312,7 @@ See [Dynamic Images](/features/dynamic-images) for supported formats, resizing, 
 
 ## Async Mode
 
-For high-volume or latency-sensitive workflows, use async mode. The API returns a `jobId` immediately, and you poll for the result.
+For high-volume or latency-sensitive workflows, use async mode. The API returns a `jobId` immediately, and you poll for the result. Also use it when your caller stops waiting after about 30 seconds and your documents can take more than 25 seconds. If you would rather not poll, add a [Notify Webhook](/features/actions-after-document-generation/notify-webhook) action: DocsAutomator posts `pdfUrl` to your URL when the document is ready.
 
 <CodeGroup>
 ```bash cURL

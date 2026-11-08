@@ -221,10 +221,13 @@ Common n8n expressions for DocsAutomator:
     - Check error output for detailed messages
   </Accordion>
   <Accordion title="Async Processing for Large Documents" icon="clock">
-    For documents that take longer to generate:
-    1. Enable **Async Processing** to receive a job ID immediately
-    2. Use a **Wait** node to pause for processing
-    3. Check the job status using the DocsAutomator API
+    If the DocsAutomator node times out on documents that can take more than 25 seconds, turn on **Async Processing**. The node then returns a `jobId` at once. The node has no operation to check a job, so check it with an **HTTP Request** node:
+
+    1. Add a **Wait** node of 10 seconds after the DocsAutomator node.
+    2. Add an **HTTP Request** node: method `GET`, URL `https://api.docsautomator.co/job/{{ $('DocsAutomator').item.json.jobId }}`, and a header `Authorization` with the value `Bearer YOUR_API_KEY`. Use your DocsAutomator node's name in `$('...')`.
+    3. Add an **If** node that checks whether `{{ $json.status }}` is `waiting` or `active`. Connect true back to the Wait node. On false, the job is done: the link is `{{ $json.result.pdfUrl }}`, or the reason it failed is in `{{ $json.error }}`.
+
+    Or skip the checks: add a [Notify Webhook](/features/actions-after-document-generation/notify-webhook) action in DocsAutomator with the URL of an n8n **Webhook** trigger. It gets `pdfUrl` when the document is ready.
   </Accordion>
 </AccordionGroup>
 

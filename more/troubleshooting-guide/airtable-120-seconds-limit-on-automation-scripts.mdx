@@ -14,31 +14,38 @@ Airtable enforces a 120-second (2 minute) execution limit on all automation scri
 
 ## Solution
 
-Add `async: true` to your automation script. This allows the script to execute asynchronously without blocking on the DocsAutomator request.
+Send `async: true` in the request. DocsAutomator then answers at once, and the script ends long before the limit. DocsAutomator keeps creating the document and saves the PDF to the record when it is ready.
 
-### Implementation Steps
+The script in DocsAutomator already does this. Copy it again, or add one line to your own script.
 
 <Steps>
-  <Step title="Open Automation Settings">
-    Navigate to the bottom of your DocsAutomator automation configuration page
+  <Step title="Open the setup guide">
+    In DocsAutomator, open your automation and click **Trigger from Airtable**. Pick the Airtable Automation script option, or the Airtable Interface button option.
   </Step>
-  <Step title="Enable Async Mode">
-    Locate the toggle to enable async mode and turn it on
-  </Step>
-  <Step title="Copy the Script">
-    When enabled, a code snippet with `async: true` becomes available. Copy this adjusted script from the code area.
+  <Step title="Copy the script">
+    Copy the script from the code box. It sends `async: true`.
   </Step>
   <Step title="Update Airtable">
-    Paste the updated script into your Airtable automation
+    Paste the script into your Airtable automation in place of the old one.
   </Step>
 </Steps>
 
+If you keep your own script, add `async: true` to the body:
+
+```javascript
+body: JSON.stringify({
+    recId: input.config().recId,
+    docId: 'YOUR_AUTOMATION_ID',
+    async: true
+})
+```
+
 ## How It Works
 
-The asynchronous approach prevents the 120-second timeout by allowing Airtable to process the script without waiting for the complete response from DocsAutomator. This enables longer document generation processes to complete successfully.
+With `async: true`, the request returns right away with HTTP 202 and a `jobId`. The script does not wait for the document, so it does not need to check the job.
 
 <Info>
-With async mode enabled, the script returns immediately and DocsAutomator continues processing in the background. The generated PDF will still be saved to your specified attachment field.
+The PDF link appears on the record, in the attachment field or the PDF URL field you set in your DocsAutomator automation. If no such field is set, find the document on the [Documents](https://app.docsautomator.co/documents) page. Errors show there too, because the script no longer sees them.
 </Info>
 
 ## Related

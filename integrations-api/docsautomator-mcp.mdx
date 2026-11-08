@@ -189,7 +189,7 @@ DocsAutomator formats every value itself, so an AI client sends raw values: numb
 
 `create_document` parameters:
 - `automationId` (required unless you pass `templateId`): the automation ID
-- `templateId`: in place of `automationId`, sends one document from a template for signature, with `fields` that place the signature fields. See [Send a document for signature](/features/docsautomator-esign/send-for-signature#from-docsautomator-agent-claude-or-chatgpt).
+- `templateId`: in place of `automationId`, sends one document from a template for signature. For a Word file or a Google Doc, the signing tags in the document are the fields. For a PDF, `fields` places them. See [Send a document for signature](/features/docsautomator-esign/send-for-signature#from-docsautomator-agent-claude-or-chatgpt).
 - `mode`: `preview` (a watermarked PDF, nothing sent), `test` (outputs run in test mode) or `live` (a real document)
 - `data`: placeholder values, sent raw
 - `recId`: the record ID for Airtable, Notion, SmartSuite and ClickUp automations

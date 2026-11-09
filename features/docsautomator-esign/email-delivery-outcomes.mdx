@@ -46,7 +46,7 @@ Every e-sign email DocsAutomator sends (invitation, resend, reminder, completion
 | `unknown` | The send request itself left DocsAutomator and no answer came back (a timeout or a dropped connection on that one call). The message may or may not exist at the provider. DocsAutomator does **not** retry an unknown send, because a retry could deliver two copies. Failures before the send call, such as an expired mailbox connection, are always `failed`. | |
 
 <Warning>
-Treat `unknown` as an action item. Resend the invitation from the session page or the API, or copy the signing link and deliver it yourself.
+Treat `unknown` as an action item. Resend the invitation from the document's page in Documents or from the API, or copy the signing link and deliver it yourself.
 </Warning>
 
 ## Where to read it

@@ -166,6 +166,8 @@ With Gmail or Outlook selected, you can additionally enable **Send from the team
 
 If the connected Gmail or Outlook mailbox rejects a message, DocsAutomator sends it from its own address instead, and records that it did. Every e-sign email produces a delivery record with the provider, the sending mailbox and the message ID. See [Email Delivery Outcomes](/features/docsautomator-esign/email-delivery-outcomes).
 
+If a recipient on Microsoft 365 does not get the email, their IT admin may need to release it from quarantine. Send the admin [Allow DocsAutomator emails in Microsoft 365](/features/docsautomator-esign/allow-emails-in-microsoft-365).
+
 ### Customizable Email Types
 
 1. **Invitation Email** - Initial signature request
@@ -620,5 +622,8 @@ E-signing and acceptance are included in every paid plan.
   </Card>
   <Card title="eSign API Reference" icon="code" href="/features/docsautomator-esign/docsautomator-esign-api-reference">
     Programmatic control of signing sessions
+  </Card>
+  <Card title="Allow Emails in Microsoft 365" icon="shield-check" href="/features/docsautomator-esign/allow-emails-in-microsoft-365">
+    For IT admins whose tenant quarantines signing emails
   </Card>
 </CardGroup>

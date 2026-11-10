@@ -8,12 +8,12 @@ The **Documents** page lists every document you created, whether an automation, 
 
 ## What the list shows
 
-| Information | Description |
-|-------------|-------------|
-| Document name | The name of the generated document. |
+| Column | Description |
+|--------|-------------|
+| Name | The name of the generated document. |
+| Created | When the document was created. |
 | Automation | The automation that created the document. A one-off send shows "Sent for signature". |
-| Status | The state of the document, for example Created, Signed or Failed. A run that never reached the queue shows as Interrupted after 60 minutes. Trigger the record again. |
-| Date | When the document was created. |
+| Signing & Acceptance | Where a signing or acceptance request stands, for example "1/1" for signatures or "Accepted". A document without a request shows nothing here. A failed run shows "Failed". |
 
 <Note>
 Documents created in Test Mode appear in the list too.
@@ -25,19 +25,19 @@ Double-click a document to open its page. You can also select it and click **Ope
 
 - The document itself, with links to download the PDF and other files.
 - The automation that created it.
-- For a signing or acceptance request: each signer with their status, and the buttons **Resend**, **Copy signing link** and **Cancel**.
-- The audit trail of the request: when it was sent, opened, signed or accepted.
+- For a signing or acceptance request: each signer with their status. While a request is open, the three-dot menu next to a signer who has not signed yet has **Copy signing link** and, for requests sent by email, **Resend invitation**.
+- The three-dot menu of the signing card has **View audit trail** and, while the request is open, **Cancel session**. The audit trail opens in a dialog and shows when the request was sent, opened, signed or accepted.
 - For a failed run: the error message.
 
 ## Needs attention
 
 Choose the **Needs attention** filter on the Documents page to see what needs your action. It lists:
 
-- Runs that failed in the last 30 days, with the error message.
+- Runs that failed in the last 30 days. Each one shows a red "Failed" badge.
 - Signing and acceptance requests that expired in the last 7 days.
 - Invitations that could not be delivered.
 
-The **Needs attention** card at the top of the page counts the same items. Click a failed run to open its page. Fix the cause, then create the document again.
+The **Needs attention** card at the top of the page counts the same items. Click a failed run to open its page and read the error message. Fix the cause, then create the document again.
 
 <Tip>
 Turn on [error notifications](/features/error-notifications) to get an email when a run fails.

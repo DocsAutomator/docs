@@ -38,7 +38,7 @@ Each entry is one of these:
 | `{ "url": "..." }` | The same, as an object. |
 | `{ "base64": "..." }` | The .docx file itself, encoded as base64. Use this when you cannot host the file. |
 
-Add `"newPage": false` to an entry to start it on the same page as the content before it. By default each part starts on a new page.
+Add `"newPage": false` to an entry to start it on the same page as the content before it. By default each part starts on a new page. A part with a different page size or orientation always starts on a new page.
 
 ## What each part keeps
 
@@ -50,11 +50,13 @@ Add `"newPage": false` to an entry to start it on the same page as the content b
 
 ## Styles
 
-When a part uses a style with the same name as the main document, for example "Normal" or "Heading 1", the main document's style applies. This is the same as pasting with "Use destination styles" in Word. The default text size and line spacing also come from the main document. A part can therefore take more or less space than on its own. Styles that only a part uses are kept.
+Each part keeps its own look: its styles, its default font, text size and line spacing, and its table styles. When a part and the main document both have a style with the same name, for example "Normal" or "Heading 1", but the two differ, the part keeps its own version. In Word, that copy shows with the part's number, for example "Normal (appended document 1)". This is the same as pasting with "Keep source formatting" in Word.
 
 ## Signing
 
 Signing fields such as `{{esign.signature_1}}` can sit in the main document or in any part. One signing session covers the whole document, with each field placed where it appears in the final PDF. Checkboxes (`{{esign.checkbox_...}}`) work in the main template only. A signing request with a checkbox in an appended part fails with a clear message.
+
+When no signing follows (signing is off, or the automation closes with acceptance), signing fields in appended parts are removed, as in the main document. With `skipEsign` on an automation with signing on, they stay in the document, so you can review it before you send it for signature.
 
 ## Limits
 

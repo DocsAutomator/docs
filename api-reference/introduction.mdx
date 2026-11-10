@@ -195,24 +195,47 @@ A `429` on a document request means that no document was created, so it is safe 
 
 | Code | Description |
 |------|-------------|
-| `400` | Bad request — missing or invalid parameters |
-| `401` | Unauthorized — incorrect or missing API key |
-| `402` | Payment required — document limit exceeded |
-| `404` | Not found — automation, template, or resource doesn't exist |
-| `429` | Rate limited — too many requests |
-| `500` | Server error — try again or contact support |
+| `400` | Bad request. A parameter is missing or invalid, or a connected account must be reconnected (code `SOURCE_ACCOUNT_DISCONNECTED`, see below). |
+| `401` | Unauthorized. The API key is missing or incorrect. |
+| `402` | Payment required. The document limit is reached. |
+| `403` | Forbidden. The connected Google or Airtable account has no access to the file or base, the Google Drive is full, or e-signatures are not in your plan. |
+| `404` | Not found. The automation, template, or record does not exist. |
+| `429` | Too many requests. No document was created. Wait the number of seconds in the `Retry-After` header, then send the request again. |
+| `500` | Server error. Try again, or contact support if it keeps happening. |
+| `502` | Bad gateway. Google could not fetch an image for the document. Check that the image URL is public, then try again. |
+| `503` | Service unavailable. A connected service, such as Airtable, did not answer. Try again in a few minutes. |
+
+Error responses are JSON with a `message`. Some also have a `code`.
+
+### Common 400 Causes
+
+- A required parameter is missing or invalid.
+- `SOURCE_ACCOUNT_DISCONNECTED`: the Google, Notion or Airtable account connected to your workspace no longer works, for example because its access expired or was removed. The message says which account. Reconnect it in the DocsAutomator app under [Settings, Integrations](https://app.docsautomator.co/settings/workspace/integrations), then send the request again. Your API key is fine.
+
+```json
+{
+  "message": "No Google access permissions. Please add your Google account under settings in your DocsAutomator account",
+  "code": "SOURCE_ACCOUNT_DISCONNECTED"
+}
+```
 
 ### Common 401 Causes
 
 - Missing `Authorization` or `X-API-Key` header
 - Incorrect API key
-- Expired Google refresh token (reconnect Google account in the app)
 
 ### Common 404 Causes
 
 - Automation ID doesn't exist or belongs to another workspace
 - No template configured on the automation
 - Automation is inactive (set `isActive: true` via the API or app)
+
+### Common 429 Causes
+
+- Your workspace sent too many document requests at once (see [Rate Limits](#rate-limits)).
+- Google, Notion or SmartSuite limited the requests of your connected account.
+
+Every `429` has a `Retry-After` header with the wait in seconds.
 
 ## Webhooks
 

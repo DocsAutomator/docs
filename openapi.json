@@ -315,7 +315,18 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/BadRequest"
+            "description": "Invalid request parameters, or a connected account must be reconnected (code `SOURCE_ACCOUNT_DISCONNECTED`). The message says which account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "No Google access permissions. Please add your Google account under settings in your DocsAutomator account",
+                  "code": "SOURCE_ACCOUNT_DISCONNECTED"
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -333,8 +344,82 @@
               }
             }
           },
+          "403": {
+            "description": "The connected Google or Airtable account has no access to the file or base, the Google Drive is full, or e-signatures are not in your plan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "The user's Drive storage quota has been exceeded."
+                }
+              }
+            }
+          },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "description": "Too many requests. No document was created. Wait the number of seconds in the `Retry-After` header, then send the same request again.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before you send the request again.",
+                "schema": {
+                  "type": "integer",
+                  "example": 10
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "This workspace has too many document requests open at once. No document was created. Please retry after 10 seconds."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error. Try again, or contact support if it keeps happening.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "An unexpected error occurred"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Google could not fetch an image for the document. Check that the image URL is public, then try again.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "Invalid requests[0].insertInlineImage: There was a problem retrieving the image. The provided image should be publicly accessible, within size limit, and in supported formats."
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "A connected service, such as Airtable, did not answer. Try again in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "Error refreshing Airtable access token. Please visit https://app.docsautomator.co/settings/workspace/integrations and reconnect your Airtable integration. This will not remove any of your data mappings."
+                }
+              }
+            }
           }
         }
       }
@@ -1380,6 +1465,28 @@
       }
     },
     "schemas": {
+      "DocumentError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "What went wrong and what to do."
+          },
+          "code": {
+            "type": "string",
+            "description": "Set for some errors, for example `SOURCE_ACCOUNT_DISCONNECTED`: a connected Google, Notion or Airtable account must be reconnected.",
+            "example": "SOURCE_ACCOUNT_DISCONNECTED"
+          },
+          "knowledgeBaseLink": {
+            "type": "string",
+            "description": "A help article about this error, when there is one."
+          },
+          "jobId": {
+            "type": "string",
+            "description": "The job that failed, when the request ran in the queue."
+          }
+        }
+      },
       "Error": {
         "type": "object",
         "properties": {

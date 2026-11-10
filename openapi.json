@@ -622,6 +622,28 @@
                         "description": "Maximum image width in pixels."
                       }
                     }
+                  },
+                  "options": {
+                    "type": "object",
+                    "description": "Settings for single placeholders. Send only the keys you want to change; options you leave out keep their stored values. Each list replaces the stored list, so send the full list every time. `GET /automation` returns the current values in `options`.",
+                    "properties": {
+                      "lineDeletions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Placeholders that delete their paragraph or table row when the value is empty. Use the placeholder name without curly braces. For a line item column, use the full name, for example `line_items_1_discount`. Send `[]` to switch it off for every placeholder.",
+                        "example": ["client_vat_id", "line_items_1_discount"]
+                      },
+                      "markdownPlaceholders": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Placeholders whose value is rendered as Markdown (for example bold text, lists and links). Use the placeholder name without curly braces. Send `[]` to switch it off for every placeholder.",
+                        "example": ["project_summary"]
+                      }
+                    }
                   }
                 }
               },

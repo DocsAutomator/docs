@@ -547,7 +547,7 @@
         "operationId": "updateAutomation",
         "tags": ["Automations"],
         "summary": "Update automation",
-        "description": "Updates an existing automation's settings. Send only the settings you want to change. Settings you leave out keep their values. A text, number, true-or-false or list setting is replaced by the value you send. An object setting is merged: keys you send change, and keys you leave out stay. Some settings inside an object are always replaced whole; their descriptions say so. `GET /automation` returns every setting with its current value.",
+        "description": "Updates an existing automation's settings. Send only the settings you want to change. Settings you leave out keep their values. A text, number, true-or-false or list setting is replaced by the value you send. An object setting is merged: keys you send change, and keys you leave out stay. Some settings inside an object are always replaced whole; their descriptions say so. `GET /automation` returns every setting with its current value. The response field `ignoredKeys` lists every key that was not saved. If you send `null` for an object setting, the request fails with a 400 error and nothing is saved. To keep an object setting, leave it out.",
         "parameters": [
           {
             "name": "docId",
@@ -921,6 +921,14 @@
                     },
                     "updatedAutomation": {
                       "$ref": "#/components/schemas/Automation"
+                    },
+                    "ignoredKeys": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "The keys in your request that were not saved, because the key is misspelled or cannot be changed through the API. An empty list means every key was saved. `docId` and `automationId` in the body are never listed.",
+                      "example": ["webhookUrl"]
                     }
                   }
                 }

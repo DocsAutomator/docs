@@ -8,7 +8,7 @@ The Notify Webhook action can start an AI agent. When a client signs or accepts 
 
 Two agents are built in:
 
-- **Claude routine**: a Claude Code routine with an API trigger. Routines are available on the Claude Pro, Max, Team and Enterprise plans.
+- **Claude routine**: a Claude Code routine with an API trigger. Claude now calls routines scheduled tasks. They are available on the Claude Pro, Max, Ultra, Team and Enterprise plans.
 - **ChatGPT agent**: a ChatGPT workspace agent with an API channel. Workspace agents are available on ChatGPT Business and Enterprise.
 
 <Frame>
@@ -28,7 +28,7 @@ An automation has one webhook. **Send to** in the card decides where it goes: **
     Open [claude.ai/code/routines](https://claude.ai/code/routines) and click **New task**, then **Set up manually**. Enter a name and the instructions for the agent. Tell it what to do with the event, for example: "The routine-fire-payload block holds a DocsAutomator event. When its event is esign.session_completed, write a short note with the signer, the date and the signed PDF link."
   </Step>
   <Step title="Add the API trigger">
-    In the **Trigger** row, choose **API** and click **Create**. Claude shows the trigger URL and the token. Copy both now, because Claude shows the token only once.
+    In the **Trigger** row, click **+** and select **API**. Copy the **Fire URL**. Click **Generate token** and copy the token now, because Claude shows it only once.
   </Step>
   <Step title="Connect the routine in DocsAutomator">
     In the automation editor, open **Actions**, click **Add action** and pick **Webhook or AI agent**. Under **Send to**, choose **Claude routine**. Paste the URL and the access token. Each field saves when you leave it.
@@ -46,13 +46,13 @@ An automation has one webhook. **Send to** in the card decides where it goes: **
 
 <Steps>
   <Step title="Turn on agents and access tokens">
-    A workspace admin opens **Workspace settings**, then **Permissions & roles**. Turn on workspace agents and **Allow users to create personal access tokens**. Both are off by default.
+    A workspace admin opens **Workspace settings**, then **Permissions & roles**. Turn on workspace agents and **Allow users to create personal access tokens**.
   </Step>
   <Step title="Give the agent its apps">
     In the agent, add the apps it needs under **Tools**, for example Airtable. Set the app's write actions to **Never ask**: a run that DocsAutomator starts has nobody to approve a write, so with **Always ask** it stops and waits. On ChatGPT Business, an admin may first need to set the workspace's plugin permissions to **Allow low-risk**.
   </Step>
   <Step title="Add an API channel">
-    Add an **API** channel to the agent and save it. Copy the trigger URL.
+    Add an **API** channel to the agent and save it. Copy the trigger ID; it starts with `agtch_`. The URL for DocsAutomator is `https://api.chatgpt.com/v1/workspace_agents/<trigger ID>/trigger`.
   </Step>
   <Step title="Create the access token">
     Open **Access tokens**, click **Create**, choose the **Workspace Agents** scope and a validity period, and copy the token. ChatGPT shows it only once.
@@ -116,7 +116,7 @@ All fields of each event are on the [Notify Webhook](/features/actions-after-doc
 |---------|------------|
 | Not accepted. Check the URL and the token. | Copy the URL and the token again and paste them. Each field saves a moment after you paste. |
 | Not accepted. The token may have expired. | Create a new access token in ChatGPT and paste it into the card. |
-| Not found. Check the URL. | Copy the trigger URL again from Claude or ChatGPT and paste it. |
+| Not found. Check the URL. | Copy the Fire URL again from Claude, or build the ChatGPT URL again from the trigger ID, and paste it. |
 | The agent could not start. | In ChatGPT, turn on workspace agents, save the agent, and make sure the workspace has credits. |
 | The routine could not start. | In Claude, open the routine and resume it. |
 | The other service had a problem. | Wait a few minutes and try again. |

@@ -3,10 +3,10 @@ title: "Allow DocsAutomator emails in Microsoft 365"
 sidebarTitle: "Allow emails in Microsoft 365"
 description: "For IT admins: find, release and allow signing, acceptance and approval emails that Microsoft 365 quarantined"
 icon: "shield-check"
-keywords: ["Microsoft 365", "Exchange Online", "quarantine", "Microsoft Defender", "Tenant Allow/Block List", "mail flow rule", "transport rule", "allow list", "email not received", "IT admin"]
+keywords: ["Microsoft 365", "Exchange Online", "quarantine", "Microsoft Defender", "Tenant Allow/Block List", "spoofed senders", "anti-phishing", "allow list", "email not received", "IT admin"]
 ---
 
-Microsoft 365 sometimes quarantines signing, acceptance and approval emails from DocsAutomator. This can happen even though the emails pass SPF, DKIM and DMARC. Only an admin of the recipient's Microsoft 365 tenant can release these emails and allow future ones.
+Microsoft 365 sometimes quarantines signing, acceptance and approval emails from DocsAutomator. This can happen even though the emails pass SPF, DKIM and DMARC. Usually only an admin of the recipient's Microsoft 365 tenant can release these emails and allow future ones.
 
 ## The emails to allow
 
@@ -16,15 +16,14 @@ Microsoft 365 sometimes quarantines signing, acceptance and approval emails from
 | Sender domain | `esign.docsautomator.co` |
 | Return-Path domain | `pm-bounces.esign.docsautomator.co` |
 | DKIM signing domain | `esign.docsautomator.co` |
-| Links in the email | `app.docsautomator.co` |
+| Links in the email | `app.docsautomator.co` and `docsautomator.co` |
 
 - Our DMARC policy is `reject`.
-- We send these emails through Postmark, our email delivery service.
-- Postmark sends from a shared pool of IP addresses. Allow by domain, not by IP address.
-- Other DocsAutomator product emails come from `docsautomator.co`.
+- Our email delivery service sends from a shared pool of IP addresses. Allow by domain, not by IP address.
+- Other DocsAutomator product emails come from `emails.docsautomator.co`. These are `notifications@`, `docs@`, `errors@` and `invites@`. Team invitations come from `invites@`.
 
 <Note>
-A workspace can send signing emails from its own Gmail or Outlook mailbox. Those emails come from that mailbox, not from DocsAutomator. This page does not cover them.
+A workspace can send signing emails from its own connected mailbox. Those emails come from that mailbox, not from DocsAutomator. This page does not cover them.
 </Note>
 
 ## 1. Check quarantine
@@ -46,16 +45,17 @@ You likely have a quarantined email when both of these are true:
   </Step>
 </Steps>
 
-The quarantine reason is usually **Spam**, **Phishing** or **High confidence phishing**. The **Spam** reason includes high confidence spam. The **Phishing** reason includes spoofing and impersonation. To see the exact verdict, select **View message headers**. Find the `CAT` field in the `X-Forefront-Antispam-Report` header.
+The quarantine reason is usually **Spam**, **Phishing** or **High confidence phishing**. The **Phishing** reason includes spoofing and impersonation. To see the exact verdict, select **View message headers**. Find the `CAT` field in the `X-Forefront-Antispam-Report` header.
 
-| `CAT` value | Verdict | Steps to follow |
+| `CAT` value | Verdict | Sections to follow |
 |-------------|---------|-----------------|
-| `SPM` | Spam | 2, 3 and 4 |
-| `HSPM` | High confidence spam | 2, 3 and 4 |
-| `PHSH` | Phishing | 2, 3 and 4 |
-| `SPOOF` | Spoofing | 2, 3 and 4 |
+| `BULK` | Bulk | 2 and 3 |
+| `SPM` | Spam | 2 and 3 |
+| `HSPM` | High confidence spam | 2 and 3 |
+| `PHSH` | Phishing | 2 and 3 |
 | `HPHSH` or `HPHISH` | High confidence phishing | 2 and 3 |
-| `UIMP`, `DIMP` or `GIMP` | Impersonation | 2 and 5 |
+| `SPOOF` | Spoofing | 2 and 3 (Spoofed senders tab) |
+| `UIMP`, `DIMP` or `GIMP` | Impersonation | 2 and 4 |
 
 ## 2. Release the message and report it as clean
 
@@ -67,7 +67,7 @@ The quarantine reason is usually **Spam**, **Phishing** or **High confidence phi
     In the Defender portal, go to **Actions & submissions** > **Submissions**. Open the **Emails** tab and select **Submit to Microsoft for analysis**.
   </Step>
   <Step title="Identify the message">
-    Enter the network message ID or upload the message as an `.eml` or `.msg` file. For a quarantined message, the ID is in the `X-MS-Office365-Filtering-Correlation-Id` header. Choose the recipient who did not get the email.
+    Upload the message as an `.eml` or `.msg` file, or enter its network message ID. For a quarantined message, the ID is in the `X-MS-Office365-Filtering-Correlation-Id` header. Choose the recipient who did not get the email.
   </Step>
   <Step title="Report it as clean">
     Under **Why are you submitting this message to Microsoft?**, select **I've confirmed it's clean**. Select **Next**.
@@ -77,65 +77,43 @@ The quarantine reason is usually **Spam**, **Phishing** or **High confidence phi
   </Step>
 </Steps>
 
-This adds an allow entry for the sender to the Tenant Allow/Block List. For an impersonation verdict, the submission creates no such entry. Microsoft adds the sender to the trusted senders of the anti-phishing policy instead. [Step 5](#5-allow-the-sender-for-impersonation-verdicts) shows where to check it.
+This adds an allow entry for the sender to the Tenant Allow/Block List. Section 3 shows which tab it goes to.
+
+For an impersonation verdict, the submission creates no Tenant Allow/Block List entry. Microsoft may add the sender to the trusted senders of the anti-phishing policy. Check this in section 4.
+
+<Warning>
+An allow entry for a domain or email address expires. Microsoft removes it 45 days after it was last used. If our emails are quarantined again after that, repeat this section with the new message.
+</Warning>
 
 ## 3. Check the Tenant Allow/Block List
 
-In the Defender portal, go to **Email & collaboration** > **Policies & rules** > **Threat policies** > **Tenant Allow/Block Lists**. Open the **Domains & addresses** tab. The entry from step 2 shows here after a few moments.
+In the Defender portal, go to **Email & collaboration** > **Policies & rules** > **Threat policies**. In the **Rules** section, select **Tenant Allow/Block Lists**.
 
-You can also add an entry on this tab directly. Add the domain `esign.docsautomator.co` or the address `sign@esign.docsautomator.co`. Microsoft allows this for spam, high confidence spam and phishing verdicts. For high confidence phishing, you must use a submission as in step 2.
+The entry from section 2 shows here after a few moments. The tab depends on the verdict.
 
-<Warning>
-These allow entries expire. By default, Microsoft removes an entry 45 days after it was last used. Microsoft documents it like this: "allow entries for domains and email addresses, files, and URLs are kept for 45 days after the filtering system determines that the entity is clean, and then the allow entry is removed." The mail flow rule in step 4 does not expire. See [Allow or block email using the Tenant Allow/Block List](https://learn.microsoft.com/en-us/defender-office-365/tenant-allow-block-list-email-spoof-configure).
-</Warning>
+### Spam, bulk and phishing
 
-## 4. Add a permanent allow with a mail flow rule
+Open the **Domains & addresses** tab. The entry for `sign@esign.docsautomator.co` or `esign.docsautomator.co` is here.
 
-A mail flow rule (transport rule) does not expire. Create it in the [Exchange admin center](https://admin.exchange.microsoft.com).
+You can also add an entry on this tab directly. Select **Add** > **Allow**. Enter `esign.docsautomator.co` or `sign@esign.docsautomator.co`. Microsoft allows this for bulk, spam, high confidence spam and phishing verdicts. For high confidence phishing, you must use a submission as in section 2.
 
-<Warning>
-Tie the rule to email authentication. Never match on the sender address or sender domain alone. Anyone can fake a sender address. A rule that matches only the sender would let those fake emails skip spam filtering.
-</Warning>
+An entry you add here also expires 45 days after it was last used.
 
-<Steps>
-  <Step title="Start a new rule">
-    Go to **Mail flow** > **Rules**. Select **Add a rule** > **Create a new rule**.
-  </Step>
-  <Step title="Name the rule">
-    For example, enter `Allow DocsAutomator signing emails`.
-  </Step>
-  <Step title="Match the sender domain">
-    Under **Apply this rule if**, select **The sender** > **domain is**. Enter `esign.docsautomator.co`.
-  </Step>
-  <Step title="Require authentication">
-    Add a second condition: **The message headers** > **includes any of these words**. Enter `Authentication-Results` as the header name and `dmarc=pass` as the word.
-  </Step>
-  <Step title="Bypass spam filtering">
-    Under **Do the following**, select **Modify the message properties** > **set the spam confidence level (SCL)** > **Bypass spam filtering**.
-  </Step>
-  <Step title="Mark the message">
-    Add a second action: **Modify the message properties** > **set a message header**. Enter `X-ETR` as the name and `Bypass spam filtering for authenticated sender esign.docsautomator.co` as the value. This header shows later why the email skipped spam filtering.
-  </Step>
-  <Step title="Finish">
-    Select **Next**, review the rule settings, select **Next** again, and select **Finish**. Make sure the rule is enabled.
-  </Step>
-</Steps>
+### Spoofing
 
-`dmarc=pass` means SPF or DKIM passed for our domain. A faked sender fails this check. Microsoft recommends this setup.
+If spoof intelligence blocked the message, the submission adds the entry to the **Spoofed senders** tab. It does not go to the **Domains & addresses** tab. Entries on the **Spoofed senders** tab never expire.
 
-To check the rule, open the headers of the next DocsAutomator email. The `X-Forefront-Antispam-Report` header should contain `SFV:SKN`.
+You can also add an entry on this tab directly. Select **Add**. Enter the domain pair `sign@esign.docsautomator.co, esign.docsautomator.co`. The second value is our DKIM signing domain. Set **Spoof type** to **External** and **Action** to **Allow**. Select **Add**.
 
-<Note>
-A rule that bypasses spam filtering does not deliver email that Microsoft marks as high confidence phishing or malware. For high confidence phishing, use the submission in step 2.
-</Note>
+If no entry shows up after a submission, add one directly as described above.
 
-## 5. Allow the sender for impersonation verdicts
+## 4. Allow the sender for impersonation verdicts
 
-Impersonation verdicts come from the anti-phishing policy in Microsoft Defender for Office 365. A mail flow rule does not fix them.
+Impersonation verdicts come from the anti-phishing policy in Microsoft Defender for Office 365. The Tenant Allow/Block List entries in section 3 do not cover them.
 
 <Steps>
   <Step title="Open the anti-phishing policy">
-    In the Defender portal, go to **Email & collaboration** > **Policies & rules** > **Threat policies** > **Anti-phishing**. Select the policy named in the **Policy name** field of the quarantined message.
+    In the Defender portal, go to **Email & collaboration** > **Policies & rules** > **Threat policies**. In the **Policies** section, select **Anti-phishing**. Select the policy named in the **Policy name** field of the quarantined message.
   </Step>
   <Step title="Edit the protection settings">
     In the details, select **Edit** in the **Phishing threshold & protection** section.
@@ -145,7 +123,9 @@ Impersonation verdicts come from the anti-phishing policy in Microsoft Defender 
   </Step>
 </Steps>
 
-## 6. If it still happens
+If the policy is the Standard or Strict preset policy, you cannot edit it here. Select **View preset security policies** and change it on the **Preset security policies** page.
+
+## 5. If it still happens
 
 Email [support@docsautomator.co](mailto:support@docsautomator.co) with:
 
@@ -159,7 +139,5 @@ Email [support@docsautomator.co](mailto:support@docsautomator.co) with:
 - [Submit messages, URLs, and attachments for analysis](https://learn.microsoft.com/en-us/defender-office-365/submissions-admin)
 - [Allow or block email using the Tenant Allow/Block List](https://learn.microsoft.com/en-us/defender-office-365/tenant-allow-block-list-email-spoof-configure)
 - [Manage allows and blocks in the Tenant Allow/Block List](https://learn.microsoft.com/en-us/defender-office-365/tenant-allow-block-list-about)
-- [Create allowlists](https://learn.microsoft.com/en-us/defender-office-365/create-safe-sender-lists-in-office-365)
-- [Use mail flow rules to set the SCL in messages in Exchange Online](https://learn.microsoft.com/en-us/exchange/security-and-compliance/mail-flow-rules/use-rules-to-set-scl)
 - [Configure anti-phishing policies in Microsoft Defender for Office 365](https://learn.microsoft.com/en-us/defender-office-365/anti-phishing-policies-mdo-configure)
 - [Anti-spam message headers](https://learn.microsoft.com/en-us/defender-office-365/message-headers-eop-mdo)

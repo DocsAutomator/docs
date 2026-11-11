@@ -25,7 +25,7 @@ You have email delivery configured on your automation, but emails are not being 
     If you have email conditions configured (e.g., only send when a certain field equals a value), verify the condition is being met for the record in question.
   </Tab>
   <Tab title="Document generation failed">
-    Emails are only sent when the document is successfully generated. Choose the **Needs attention** filter on the Documents page to see if the document generation itself failed.
+    Emails are only sent when the document is successfully generated. Choose the **Needs attention** filter on the Documents page to see if the document generation itself failed. Failures older than 30 days are under **All runs**.
   </Tab>
 </Tabs>
 
@@ -64,7 +64,7 @@ The generated PDF is not attached to the email, or the attachment fails.
 
 ### Common Causes
 
-- **PDF generation failed**: If the PDF could not be generated, there is nothing to attach. Choose the **Needs attention** filter on the Documents page and click the failed run to see the error.
+- **PDF generation failed**: If the PDF could not be generated, there is nothing to attach. Choose the **Needs attention** filter on the Documents page and click the failed run to see the error. Failures older than 30 days are under **All runs**.
 - **File too large**: Very large PDFs (with many high-resolution images) may exceed email attachment limits. Optimize images in your template.
 - **Airtable attachment URLs**: If you're forwarding Airtable attachment URLs in emails, these temporary URLs may have expired by the time the email is sent. See the [Airtable Attachment URL Issue](/more/troubleshooting-guide/airtable-attachment-url-issue-when-sending-emails) guide.
 

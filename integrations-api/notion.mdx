@@ -117,6 +117,24 @@ Trigger property types supported:
 Notion delivers change events in batches, so automatic generation typically takes **1–2 minutes** after the property changes. If you need instant generation, use the Notion Button method below.
 </Warning>
 
+### Why did Auto Create not run?
+
+Open **Documents** and choose the **All runs** filter. Every change that did not start Auto Create shows as a **Skipped** row for 14 days. The row says why, for example:
+
+> The page changed, but "Status" did not.
+
+See [Skipped rows](/features/documents#skipped-rows) for every sentence and what it means.
+
+### When Notion sends no updates
+
+The health line in the Auto Create panel says when Notion last sent an update, for example "Listening. Last update from Notion 2d ago". Before the first update, it says "Listening. Waiting for the first update from Notion".
+
+When an automation has had no updates from Notion for 7 days, DocsAutomator shows this warning, with the date of the last update:
+
+> Notion has sent no updates since Oct 30. If documents should have been created, check that the DocsAutomator connection is still active in your Notion settings, or reconnect Notion.
+
+The warning shows in the Auto Create panel, in the tooltip of the amber Auto Create bolt in the automations list, and under [Needs attention](/features/documents#automations-with-no-updates) on the Documents page.
+
 ### Manual — Notion Button (per-row)
 
 Add a button on your database that generates a document for the clicked row.

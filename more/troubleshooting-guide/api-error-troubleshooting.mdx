@@ -181,7 +181,7 @@ When troubleshooting API issues, always check the response body for a detailed e
 </Tip>
 
 - **Use the API playground**: Each endpoint page in the API Reference tab includes an interactive playground where you can test requests directly.
-- **Check Run History**: Document generation attempts are logged in the Run History tab in the app, even for API-triggered generations.
+- **Check Documents**: Failed runs appear under the **Needs attention** filter on the Documents page in the app, also for runs that the API started. Click a run to see its error message.
 - **Validate your JSON**: Malformed JSON payloads return `400 Bad Request`. Use a JSON validator before sending requests.
 
 ## Related
@@ -190,7 +190,7 @@ When troubleshooting API issues, always check the response body for a detailed e
   <Card title="API Introduction" icon="code" href="/api-reference/introduction">
     API setup, authentication, and code examples
   </Card>
-  <Card title="Run History" icon="clock-rotate-left" href="/features/run-history">
+  <Card title="Documents" icon="clock-rotate-left" href="/features/documents">
     Monitor all document generation attempts
   </Card>
 </CardGroup>

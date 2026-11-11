@@ -141,10 +141,10 @@ By the end of this guide, you will have an automation that:
     The queue system handles rate limiting automatically. For batches of hundreds or thousands of certificates, the Apps Script method is recommended because it processes rows sequentially and tracks progress in the sheet.
   </Accordion>
   <Accordion title="Monitoring progress" icon="chart-bar">
-    As each certificate is generated, the PDF link is written back to the sheet. You can monitor progress by watching the PDF Link column fill in. Check the [Run History](/features/run-history) in DocsAutomator for detailed logs.
+    As each certificate is generated, the PDF link is written back to the sheet. You can monitor progress by watching the PDF Link column fill in. Every certificate also appears on the [Documents](/features/documents) page in DocsAutomator.
   </Accordion>
   <Accordion title="Handling errors" icon="triangle-exclamation">
-    If a row fails to generate, the PDF Link column will remain empty for that row. Check the Run History for error details, fix the data, and regenerate just the failed rows.
+    If a row fails to generate, the PDF Link column will remain empty for that row. Choose the **Needs attention** filter on the Documents page to read the error message, fix the data, and regenerate just the failed rows.
   </Accordion>
 </AccordionGroup>
 

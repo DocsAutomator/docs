@@ -1,0 +1,52 @@
+---
+title: "Documents"
+description: "Find every document you created, its signing status and the runs that failed"
+icon: "clock-rotate-left"
+---
+
+The **Documents** page lists every document you created, whether an automation, the API, an integration or a one-off **Send for signature** created it. It opens when you go to [app.docsautomator.co](https://app.docsautomator.co), and **Documents** in the left navigation always brings you back.
+
+## What the list shows
+
+| Column | Description |
+|--------|-------------|
+| Name | The name of the generated document. |
+| Created | When the document was created. |
+| Automation | The automation that created the document. A one-off send shows "Sent for signature". |
+| Signing & Acceptance | Where a signing or acceptance request stands, for example "1/1" for signatures or "Accepted". A document without a request shows nothing here. A failed run shows "Failed". |
+
+<Note>
+Documents created in Test Mode appear in the list too.
+</Note>
+
+## The document page
+
+Double-click a document to open its page. You can also select it and click **Open**. The page shows:
+
+- The document itself, with links to download the PDF and other files.
+- The automation that created it.
+- For a signing or acceptance request: each signer with their status. While a request is open, the three-dot menu next to a signer who has not signed yet has **Copy signing link** and, for requests sent by email, **Resend invitation**.
+- The three-dot menu of the signing card has **View audit trail** and, while the request is open, **Cancel session**. The audit trail opens in a dialog and shows when the request was sent, opened, signed or accepted.
+- For a failed run: the error message.
+
+## Needs attention
+
+Choose the **Needs attention** filter on the Documents page to see what needs your action. It lists:
+
+- Runs that failed in the last 30 days. Each one shows a red "Failed" badge.
+- Signing and acceptance requests that expired in the last 7 days.
+- Invitations that could not be delivered.
+
+The **Needs attention** card at the top of the page counts the same items. Click a failed run to open its page and read the error message. Fix the cause, then create the document again.
+
+<Tip>
+Turn on [error notifications](/features/error-notifications) to get an email when a run fails.
+</Tip>
+
+## Rename a document
+
+1. Click a document to select it. This works in list view and in grid view.
+2. Click **Rename** in the selection bar.
+3. Type the new name and press Enter. Press Escape to cancel.
+
+The new name is used in the document list, in search, in sorting, and as the file name in zip downloads. The original file in Google Drive keeps its generated name. Signature requests that are already out keep the name that the signer saw first.

@@ -315,14 +315,14 @@
             }
           },
           "400": {
-            "description": "Invalid request parameters, or a connected account must be reconnected (code `SOURCE_ACCOUNT_DISCONNECTED`). The message says which account.",
+            "description": "Invalid request parameters; a connected Google, Notion or Airtable account must be reconnected (code `SOURCE_ACCOUNT_DISCONNECTED`, for example when Airtable or Notion refuses the stored refresh token; the message says which account); or invalid e-invoice or QR-bill data (code `E_INVOICE_INVALID` or `QR_BILL_INVALID`).",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DocumentError"
                 },
                 "example": {
-                  "message": "No Google access permissions. Please add your Google account under settings in your DocsAutomator account",
+                  "message": "Error refreshing Airtable access token. Please visit https://app.docsautomator.co/settings/workspace/integrations and reconnect your Airtable integration. This will not remove any of your data mappings.",
                   "code": "SOURCE_ACCOUNT_DISCONNECTED"
                 }
               }
@@ -345,7 +345,7 @@
             }
           },
           "403": {
-            "description": "The connected Google or Airtable account has no access to the file or base, the Google Drive is full, or e-signatures are not in your plan.",
+            "description": "The connected Google or Airtable account may not open or edit the template, folder, base or field; the Google Drive is full; or the request uses something the workspace may not use, such as signing without an active subscription or approvers below the Business plan.",
             "content": {
               "application/json": {
                 "schema": {
@@ -361,7 +361,7 @@
             "$ref": "#/components/responses/NotFound"
           },
           "429": {
-            "description": "Too many requests. No document was created. Wait the number of seconds in the `Retry-After` header, then send the same request again.",
+            "description": "Too many requests: the workspace has too many document requests open at once (no document was created; Retry-After 10), or Google, Notion or SmartSuite limited the connected account after their own retries (Retry-After 60). Wait the number of seconds in the `Retry-After` header, then send the request again.",
             "headers": {
               "Retry-After": {
                 "description": "Seconds to wait before you send the request again.",
@@ -382,8 +382,8 @@
               }
             }
           },
-          "500": {
-            "description": "Server error. Try again, or contact support if it keeps happening.",
+          "5XX": {
+            "description": "Server error, or a connected service failed or did not answer. Try again later, or contact support if it keeps happening.",
             "content": {
               "application/json": {
                 "schema": {
@@ -391,32 +391,6 @@
                 },
                 "example": {
                   "message": "An unexpected error occurred"
-                }
-              }
-            }
-          },
-          "502": {
-            "description": "Google could not fetch an image for the document. Check that the image URL is public, then try again.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentError"
-                },
-                "example": {
-                  "message": "Invalid requests[0].insertInlineImage: There was a problem retrieving the image. The provided image should be publicly accessible, within size limit, and in supported formats."
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "A connected service, such as Airtable, did not answer. Try again in a few minutes.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentError"
-                },
-                "example": {
-                  "message": "Error refreshing Airtable access token. Please visit https://app.docsautomator.co/settings/workspace/integrations and reconnect your Airtable integration. This will not remove any of your data mappings."
                 }
               }
             }
@@ -1078,7 +1052,16 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "429": {
-            "description": "Rate limit exceeded (25 per hour per automation)",
+            "description": "Rate limit exceeded: 25 per hour per automation, 100 per hour per workspace, or 10 different recipients per hour per workspace. Wait the number of seconds in the `Retry-After` header, then send the request again.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until the hourly window resets.",
+                "schema": {
+                  "type": "integer",
+                  "example": 1800
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {

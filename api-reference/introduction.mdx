@@ -185,7 +185,7 @@ An open request is one that we have received and not yet answered.
 
 ### How to retry
 
-A `429` on a document request means that no document was created, so it is safe to send the same request again.
+A `429` from the document creation limit means that no document was created, so it is safe to send the same request again. A `429` from a connected service (see [Common 429 Causes](#common-429-causes)) can come after part of the work is done, for example after the PDF was attached to a SmartSuite record.
 
 1. Read the `Retry-After` header of the response. It gives the wait in seconds.
 2. Wait that long, then send the same request again.
@@ -195,26 +195,27 @@ A `429` on a document request means that no document was created, so it is safe 
 
 | Code | Description |
 |------|-------------|
-| `400` | Bad request. A parameter is missing or invalid, or a connected account must be reconnected (code `SOURCE_ACCOUNT_DISCONNECTED`, see below). |
+| `400` | Bad request. A parameter is missing or invalid, a connected account must be reconnected (code `SOURCE_ACCOUNT_DISCONNECTED`, see below), or the e-invoice or QR-bill data is invalid (code `E_INVOICE_INVALID` or `QR_BILL_INVALID`). |
 | `401` | Unauthorized. The API key is missing or incorrect. |
-| `402` | Payment required. The document limit is reached. |
-| `403` | Forbidden. The connected Google or Airtable account has no access to the file or base, the Google Drive is full, or e-signatures are not in your plan. |
+| `402` | Payment required. The workspace reached its document limit, or its subscription is paused. |
+| `403` | Forbidden. The connected Google or Airtable account may not open or edit the template, folder, base or field; the Google Drive is full; or the request uses something the workspace may not use, such as signing without an active subscription or approvers below the Business plan. |
 | `404` | Not found. The automation, template, or record does not exist. |
-| `429` | Too many requests. No document was created. Wait the number of seconds in the `Retry-After` header, then send the request again. |
-| `500` | Server error. Try again, or contact support if it keeps happening. |
-| `502` | Bad gateway. Google could not fetch an image for the document. Check that the image URL is public, then try again. |
-| `503` | Service unavailable. A connected service, such as Airtable, did not answer. Try again in a few minutes. |
+| `429` | Too many requests. Wait the number of seconds in the `Retry-After` header, then send the request again (see below). |
+| `5xx` | Server error, or a connected service failed or did not answer. Try again later, or contact support if it keeps happening. |
 
-Error responses are JSON with a `message`. Some also have a `code`.
+Errors from `/createDocument` are JSON with a `message`. Some also have a `code`. A `4xx` answer has the same status and code whether the request runs right away or waits in our queue.
 
 ### Common 400 Causes
 
 - A required parameter is missing or invalid.
-- `SOURCE_ACCOUNT_DISCONNECTED`: the Google, Notion or Airtable account connected to your workspace no longer works, for example because its access expired or was removed. The message says which account. Reconnect it in the DocsAutomator app under [Settings, Integrations](https://app.docsautomator.co/settings/workspace/integrations), then send the request again. Your API key is fine.
+- `SOURCE_ACCOUNT_DISCONNECTED`: the Google, Notion or Airtable account connected to your workspace no longer works. The message says which account. Reconnect it in the DocsAutomator app under [Settings, Integrations](https://app.docsautomator.co/settings/workspace/integrations), then send the request again. Your API key is fine. It happens when:
+  - Airtable or Notion refuses the stored refresh token, because the access expired, was revoked, or was granted again elsewhere. This is the most common case.
+  - DocsAutomator has no Google access token it can use or renew, or Google refuses the connected account ("Invalid Credentials").
+  - Airtable or Notion refuses the connection itself.
 
 ```json
 {
-  "message": "No Google access permissions. Please add your Google account under settings in your DocsAutomator account",
+  "message": "Error refreshing Airtable access token. Please visit https://app.docsautomator.co/settings/workspace/integrations and reconnect your Airtable integration. This will not remove any of your data mappings.",
   "code": "SOURCE_ACCOUNT_DISCONNECTED"
 }
 ```
@@ -232,8 +233,10 @@ Error responses are JSON with a `message`. Some also have a `code`.
 
 ### Common 429 Causes
 
-- Your workspace sent too many document requests at once (see [Rate Limits](#rate-limits)).
-- Google, Notion or SmartSuite limited the requests of your connected account.
+- Your workspace sent too many document requests at once (see [Rate Limits](#rate-limits)). No document was created. `Retry-After` is 10 seconds.
+- More than 2000 requests per 15 minutes with one API key. `Retry-After` is the time until the window resets.
+- Google, Notion or SmartSuite limited the requests of your connected account, after their own retries. `Retry-After` is 60 seconds.
+- `/sendTestEmail`: the test email limit is reached (25 per hour per automation, 100 per hour per workspace, or 10 different recipients per hour per workspace). `Retry-After` is the time until the hourly window resets. This answer has the text in `error`, not `message`.
 
 Every `429` has a `Retry-After` header with the wait in seconds.
 

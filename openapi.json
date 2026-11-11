@@ -378,7 +378,7 @@
         "operationId": "getQueueStats",
         "tags": ["Documents"],
         "summary": "Get queue statistics",
-        "description": "Returns current document generation queue statistics for your workspace.",
+        "description": "Returns the number of your workspace's document generation jobs in each state. Every count covers your workspace only. The queue keeps completed jobs for a few hours and failed jobs for 7 days, so older jobs are not counted.",
         "responses": {
           "200": {
             "description": "Queue statistics",
@@ -1535,23 +1535,23 @@
         "properties": {
           "waiting": {
             "type": "integer",
-            "description": "Jobs waiting to be processed."
+            "description": "Your jobs waiting to be processed."
           },
           "active": {
             "type": "integer",
-            "description": "Jobs currently being processed."
+            "description": "Your jobs being processed now."
           },
           "completed": {
             "type": "integer",
-            "description": "Completed jobs."
+            "description": "Your jobs completed in the last few hours."
           },
           "failed": {
             "type": "integer",
-            "description": "Failed jobs."
+            "description": "Your jobs that failed in the last 7 days."
           },
           "delayed": {
             "type": "integer",
-            "description": "Delayed jobs."
+            "description": "Your jobs scheduled to run later."
           }
         }
       },

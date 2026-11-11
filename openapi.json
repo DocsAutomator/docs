@@ -1376,7 +1376,7 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "description": "API key from your workspace settings. Pass as `Authorization: Bearer <key>` or `X-API-Key: <key>`. Find it at [app.docsautomator.co/settings/workspace/api](https://app.docsautomator.co/settings/workspace/api)."
+        "description": "Use an API key from your workspace. Pass as `Authorization: Bearer <key>` or `X-API-Key: <key>`. Create one in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api). See [API keys](https://docs.docsautomator.co/more/finding-your-api-key)."
       }
     },
     "schemas": {

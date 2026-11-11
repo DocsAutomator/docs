@@ -1,6 +1,6 @@
 ---
 title: "Start a Claude or ChatGPT Agent"
-description: "Start a Claude routine or a ChatGPT workspace agent when a document is signed, accepted or created"
+description: "Start a Claude scheduled task or a ChatGPT workspace agent when a document is signed, accepted or created"
 icon: "robot"
 ---
 
@@ -8,38 +8,38 @@ The Notify Webhook action can start an AI agent. When a client signs or accepts 
 
 Two agents are built in:
 
-- **Claude routine**: a Claude Code routine with an API trigger. Claude now calls routines scheduled tasks. They are available on the Claude Pro, Max, Ultra, Team and Enterprise plans.
+- **Claude scheduled task**: a Claude Code scheduled task with an API trigger. Scheduled tasks are available on the Claude Pro, Max, Ultra, Team and Enterprise plans.
 - **ChatGPT agent**: a ChatGPT workspace agent with an API channel. Workspace agents are available on ChatGPT Business and Enterprise.
 
 <Frame>
   <img src="/images/webhooks/add-action-picker.png" alt="Add action dialog with the Webhook or AI agent tile, showing the webhook icon and the Claude and ChatGPT logos" />
 </Frame>
 
-An automation has one webhook. **Send to** in the card decides where it goes: **Webhook**, **Claude routine** or **ChatGPT agent**. To change it, pick another option. Nothing changes until you enter the new URL (and token), so a click alone loses nothing.
+An automation has one webhook. **Send to** in the card decides where it goes: **Webhook**, **Claude scheduled task** or **ChatGPT agent**. To change it, pick another option. Nothing changes until you enter the new URL (and token), so a click alone loses nothing.
 
-## Start a Claude routine
+## Start a Claude scheduled task
 
 <Note>
-  A Claude routine runs as a Claude Code task. Open [claude.ai/code](https://claude.ai/code) once and finish its setup before you create the routine.
+  A Claude scheduled task runs as a Claude Code task. Open [claude.ai/code](https://claude.ai/code) once and finish its setup before you create the scheduled task.
 </Note>
 
 <Steps>
-  <Step title="Create the routine in Claude">
+  <Step title="Create the scheduled task in Claude">
     Open [claude.ai/code/routines](https://claude.ai/code/routines) and click **New task**, then **Set up manually**. Enter a name and the instructions for the agent. Tell it what to do with the event, for example: "The routine-fire-payload block holds a DocsAutomator event. When its event is esign.session_completed, write a short note with the signer, the date and the signed PDF link."
   </Step>
   <Step title="Add the API trigger">
     In the **Trigger** row, click **+** and select **API**. Copy the **Fire URL**. Click **Generate token** and copy the token now, because Claude shows it only once.
   </Step>
-  <Step title="Connect the routine in DocsAutomator">
-    In the automation editor, open **Actions**, click **Add action** and pick **Webhook or AI agent**. Under **Send to**, choose **Claude routine**. Paste the URL and the access token. Each field saves when you leave it.
+  <Step title="Connect the scheduled task in DocsAutomator">
+    In the automation editor, open **Actions**, click **Add action** and pick **Webhook or AI agent**. Under **Send to**, choose **Claude scheduled task**. Paste the URL and the access token. Each field saves when you leave it.
   </Step>
   <Step title="Send a test event">
-    Click **Send test**. DocsAutomator sends a sample document and shows whether the routine accepted it. "Received. The routine started." means that the routine started once. You find the run in Claude under your routines.
+    Click **Send test**. DocsAutomator sends a sample document and shows whether the scheduled task accepted it. "Received. The scheduled task started." means that the scheduled task started once. You find the run in Claude under your scheduled tasks.
   </Step>
 </Steps>
 
 <Frame>
-  <img src="/images/webhooks/claude-routine-preset.png" alt="Notify Webhook action with Send to set to Claude routine, the trigger URL, and the saved access token shown as dots ending in its last 4 characters, and the line Starts when a document is signed or accepted" />
+  <img src="/images/webhooks/claude-routine-preset.png" alt="Webhook or AI agent card with Send to set to Claude scheduled task, the URL field, the access token field and the Send test button" />
 </Frame>
 
 ## Start a ChatGPT workspace agent
@@ -84,7 +84,7 @@ The card shows which one applies, for example "Starts when a document is signed 
 
 ## What is sent to your agent
 
-DocsAutomator sends the token as the `Authorization` header (`Bearer <token>`). For a Claude routine it also sends the `anthropic-version` header. The agent receives the event as one text value: `{"text": "..."}` for a Claude routine and `{"input": "..."}` for a ChatGPT agent. The text is the event as JSON:
+DocsAutomator sends the token as the `Authorization` header (`Bearer <token>`). For a Claude scheduled task it also sends the `anthropic-version` header. The agent receives the event as one text value: `{"text": "..."}` for a Claude scheduled task and `{"input": "..."}` for a ChatGPT agent. The text is the event as JSON:
 
 | Field | Meaning |
 |-------|---------|
@@ -118,11 +118,11 @@ All fields of each event are on the [Notify Webhook](/features/actions-after-doc
 | Not accepted. The token may have expired. | Create a new access token in ChatGPT and paste it into the card. |
 | Not found. Check the URL. | Copy the Fire URL again from Claude, or build the ChatGPT URL again from the trigger ID, and paste it. |
 | The agent could not start. | In ChatGPT, turn on workspace agents, save the agent, and make sure the workspace has credits. |
-| The routine could not start. | In Claude, open the routine and resume it. |
+| The scheduled task could not start. Check that it is not paused. | In Claude, open the scheduled task and resume it. |
 | The other service had a problem. | Wait a few minutes and try again. |
-| Too many runs right now. | Wait a few minutes. A Claude routine accepts up to 30 runs an hour. |
+| Too many runs right now. | Wait a few minutes. A Claude scheduled task accepts up to 30 runs an hour. |
 
 ## Limits
 
-- A Claude routine accepts up to 30 runs an hour, and a Claude account up to 100 API runs an hour. Each run uses your Claude plan's usage.
+- A Claude scheduled task accepts up to 30 runs an hour, and a Claude account up to 100 API runs an hour. Each run uses your Claude plan's usage.
 - DocsAutomator sends the event once and does not retry. One document starts one run.

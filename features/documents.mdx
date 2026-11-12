@@ -42,13 +42,13 @@ In the **Details** card, the record's ID sits below "Automation ID". The label d
 
 | Label | Data source |
 |-------|-------------|
-| Record ID | Airtable and SmartSuite, and runs with no data source that send a record ID |
+| Record ID | Airtable and SmartSuite, and runs from other sources that send a record ID |
 | Task ID | ClickUp |
 | Page ID | Notion, including Notion Button runs |
 | Row Number | Google Sheets |
 | Response ID | Google Forms |
 
-Click the copy button to the right of the ID to copy it. The button shows a check mark for 2 seconds after the copy. Runs from Glide, Noloco, Softr, Make, Zapier and n8n show no record ID.
+Click the copy button to the right of the ID to copy it. The button shows a check mark for 2 seconds after the copy. Glide, Noloco, Softr, Make, Zapier and n8n send the data itself, so their runs show a record ID only when the request also sends one.
 
 ### Signing card
 
@@ -73,7 +73,7 @@ The three-dot menu of the signing card has:
 
 The **E-Sign Audit Trail** window has a **Document fingerprints** section. A fingerprint is a SHA-256 value, shown as `sha256:` followed by 64 characters. If a file changes in any way, its fingerprint changes too. The section lists:
 
-- **Original PDF**: the fingerprint of the PDF before signing.
+- **Original PDF**: the fingerprint of the PDF before signing. For a signing request created before 5 November 2026 whose original is the cleaned copy (the PDF with the signing tags removed), it shows "Not available for this older document." instead, because the stored fingerprint was taken before the tags were removed.
 - **Signed PDF**, or **Accepted PDF** for an acceptance request: the fingerprint of the finished PDF.
 
 Each fingerprint has a copy button.

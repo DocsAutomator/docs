@@ -1551,7 +1551,7 @@
           },
           "delayed": {
             "type": "integer",
-            "description": "Your jobs scheduled to run later."
+            "description": "Always 0. Kept so existing integrations keep their field; a delayed job counts as waiting."
           }
         }
       },

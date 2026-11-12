@@ -547,7 +547,7 @@
         "operationId": "updateAutomation",
         "tags": ["Automations"],
         "summary": "Update automation",
-        "description": "Updates an existing automation's settings. Send only the settings you want to change. Settings you leave out keep their values. A text, number, true-or-false or list setting is replaced by the value you send. An object setting is merged: keys you send change, and keys you leave out stay. Some settings inside an object are always replaced whole; their descriptions say so. `GET /automation` returns every setting with its current value. The response field `ignoredKeys` lists every key that was not saved. If you send `null` for an object setting, the request fails with a 400 error and nothing is saved. To keep an object setting, leave it out.",
+        "description": "Updates an existing automation's settings. Send only the settings you want to change. Settings you leave out keep their values. A text, number, true-or-false or list setting is replaced by the value you send. An object setting is merged: keys you send change, and keys you leave out stay. Some settings inside an object are always replaced whole; their descriptions say so. `GET /automation` returns every setting with its current value. The response field `ignoredKeys` lists every key in your request that was not saved, other than `docId`, `automationId` and `apiKey`; a key inside an object setting is listed as a dot path, such as `options.x`. If you send `null` for an object setting, the request fails with a 400 error and nothing is saved; for `approval` on a plan below Business, the plan error (403) comes first. To keep an object setting, leave it out.",
         "parameters": [
           {
             "name": "docId",
@@ -927,8 +927,8 @@
                       "items": {
                         "type": "string"
                       },
-                      "description": "The keys in your request that were not saved, because the key is misspelled or cannot be changed through the API. An empty list means every key was saved. `docId` and `automationId` in the body are never listed.",
-                      "example": ["webhookUrl"]
+                      "description": "Every key in your request that was not saved, for example a misspelled key, a key that cannot be changed through the API, or a retired setting. A key inside an object setting is listed as a dot path, for example `options.x`, `esignature.recipientCount` or `esignature.signers.0.x` for the first signer. An empty list means every key was saved. `docId`, `automationId` and `apiKey` in the body are never listed.",
+                      "example": ["update", "esignature.recipientCount"]
                     }
                   }
                 }

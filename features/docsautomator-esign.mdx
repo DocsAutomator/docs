@@ -24,7 +24,7 @@ Signature and acceptance run on the same rail. Both send the document by email o
 </Card>
 
 <Card title="Send one document for signature" icon="paper-plane" href="/features/docsautomator-esign/send-for-signature">
-  No automation needed: pick a file or template, place the fields and send.
+  No automation needed: pick a file or template, add the signing fields and send.
 </Card>
 
 The rest of this page describes the **Signature required** option: signature fields, signers, emails, reminders, delivery, and webhooks. Most settings also apply to acceptance. The acceptance page lists the differences.
@@ -117,7 +117,7 @@ By default, generating a document from an e-sign-enabled automation starts the s
 }
 ```
 
-The document is generated and delivered normally (Drive save, email, webhook), but no signing session is created and no signing invitations are sent. For Google Docs and Word templates, the `{{esign.*}}` tags remain visible in the output so reviewers can see where signature blocks will be placed; PDF templates simply leave those areas blank. Once the document is approved, run the same request again **without** `skipEsign` to send it for signing.
+The document is generated and delivered normally (Drive save, email, webhook), but no signing session is created and no signing invitations are sent. For Google Docs and Word templates, the `{{esign.*}}` tags are removed from the output. PDF templates leave those areas blank. Once the document is approved, run the same request again **without** `skipEsign` to send it for signing.
 
 This makes two-step approval flows easy to build — e.g. two Airtable buttons triggering the same automation: "Draft for Review" (with `skipEsign: true`) and "Send for Signing" (without it).
 

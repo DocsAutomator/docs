@@ -53,7 +53,8 @@ Tested with: Claude Code and Codex.
 
 - Your AI client uses your own template first: a Word or PDF file you upload, or a Google Doc you already have. Then a ready-made template from the DocsAutomator gallery. It designs a new Word template with AI only when none fits or when you ask for it.
 - Your AI client never creates or edits a Google Doc.
-- A template is reusable: the details of each case become placeholders. Your AI client does not fill in a one-off document.
+- A template is reusable: the details of each case become placeholders. Your AI client does not fill in a one-off document that needs no signing.
+- When you need one document signed and no automation fits, your AI client offers [Send for signature](/features/docsautomator-esign/send-for-signature). It shares the link to the draft.
 
 ## Sending documents
 
@@ -89,10 +90,11 @@ Ask in plain text when you need a choice.
 ```text
 DocsAutomator session guide (shown once per session):
 - Templates, in this order: the user's own (set_template takes their upload or Google Doc), then a ready-made one from our gallery (search with in: "templates", then set_template), and only when none fits or they ask for AI, generate_word_template. Never lead with an AI design. Never create or edit a Google Doc.
-- Build a reusable template: the case details become placeholders. Never fill in a one-off document.
+- Build a reusable template: the case details become placeholders. Never fill in a one-off document that needs no signing.
+- When the user needs one document signed and no automation fits, offer Send for signature: create_document with templateId (their own from search with in: "my_templates", else a gallery one), recipients, and fields placed by anchor text. Share the draft link it returns.
 - Send from the existing automation. On a record source (Airtable, Notion, Google Sheets, Google Forms, SmartSuite, ClickUp), pass the record id; the record fills the document and the signer emails come from its mapped fields. Pass recipients only when the user names a different person.
 - Never copy an automation into an API copy to send from chat, and never replace its data source.
-- These tools cannot search records. Get the record from the user, or from their own connector for that app.
+- Find a record with get_data_source search (a word of its name); it returns ids and names only. Show the user the record you found before you send.
 ```
 
 ChatGPT and Codex read the server instructions and do not receive the session guide, because OpenAI asks that tool answers carry only data.

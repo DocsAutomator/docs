@@ -5,6 +5,34 @@ rss: true
 mode: "center"
 ---
 
+<Update label="November 11, 2026">
+  ## Send for signature: language and email
+
+  - A new **Language** setting chooses the language of the signing page, the emails and the signing dates for this send. It starts with the language your workspace used last.
+  - The **Subject** and **Message** fields now start with the full default email, so you see and edit the exact text your signers get. **Preview email** shows the final look. Text you leave unchanged keeps the default email and its translation.
+  - If fields are still empty when you send, DocsAutomator asks first. **Fill in** takes you to the first empty field. **Send anyway** sends the document as it is.
+  - After you send, the document's page opens, with the signers, Resend, Cancel and the audit trail.
+
+  ## Run History is now part of Documents
+
+  Every run now has its own document page, which also shows what failed. Run History and the separate signing session page are gone.
+
+  - **Needs attention** on the Documents page lists failed runs from the last 30 days, requests that expired in the last 7 days and invitations that could not be delivered.
+  - Old links to Run History and to signing sessions still open the right page.
+  - Error emails and expiry warnings now link to the run's document page.
+
+  ## Send signing emails from a shared mailbox
+
+  When a work or school Outlook account sends your signing emails, a new **Send from** field can send them from a Microsoft 365 shared mailbox. Find it under **Signing & Acceptance**, **Settings**, **Edit Emails**, **Outlook**. When you save, DocsAutomator sends one test email to your own account to check the permission.
+
+  ## Fixes
+
+  - When signing is on but the document has no signature fields, the run now shows a warning, and the API response lists it under `warnings`. The document is still created.
+  - Google Sheets: if the column for PDF links was deleted, the next document adds it back after the last header. Before, the run failed.
+  - The signing page now also loads on Safari versions before 16.4.
+  - In Claude and ChatGPT, the reminder button on the signing status card now confirms "Reminder sent" and cannot send a second reminder by mistake.
+</Update>
+
 <Update label="November 10, 2026">
   ## Fixes
 

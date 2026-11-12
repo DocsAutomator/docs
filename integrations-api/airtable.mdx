@@ -75,9 +75,7 @@ Pick a field and a condition that should fire generation. When a record changes 
   <img src="/images/airtable/auto-creation.png" alt="Auto Creation settings: a trigger on the Status field, condition equals, value Approved" />
 </Frame>
 
-Open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value. The status line under the toggle shows when Airtable last sent an event, so you can tell at a glance that the connection is alive.
-
-Every evaluated change is visible in **Documents → Logs**: records that fired show as runs marked **Auto**, and records that did not fire show a row explaining why.
+Open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value.
 
 <Tip>
 Auto Creation works on every Airtable plan, including Free.
@@ -114,6 +112,24 @@ Auto Creation reacts to *changes*, and it deliberately avoids generating the sam
 <Warning>
 **Time alone never triggers a document.** A condition such as "Due date is before today" fires only when a record is edited, not when the date arrives. The same applies to formulas using `TODAY()` or `NOW()`: Airtable recalculates them quietly and sends no change event, so DocsAutomator has nothing to react to. For date-driven documents, use a scheduled Airtable automation and the button or script method instead.
 </Warning>
+
+### Why did Auto Create not run?
+
+Open **Documents** and choose the **All runs** filter. Every change that did not start Auto Create shows as a **Skipped** row for 14 days. The row says why, for example:
+
+> The record changed, but "Status" did not.
+
+See [Skipped rows](/features/documents#skipped-rows) for every sentence and what it means.
+
+### When Airtable sends no updates
+
+The health line in the Auto Create panel says when Airtable last sent an update, for example "Listening. Last update from Airtable 2d ago". Before the first update, it says "Listening. Waiting for the first update from Airtable".
+
+When an automation has had no updates from Airtable for 7 days, DocsAutomator shows this warning, with the date of the last update:
+
+> Airtable has sent no updates since Oct 16. If documents should have been created, check that Airtable is still connected in Settings → Integrations.
+
+The warning shows in the Auto Create panel, in the tooltip of the amber Auto Create bolt in the automations list, and under [Needs attention](/features/documents#automations-with-no-updates) on the Documents page.
 
 ### Auto Creation limits and lifecycle
 

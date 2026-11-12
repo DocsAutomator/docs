@@ -1,6 +1,6 @@
 ---
 title: "Documents"
-description: "Find every document you created, its signing status and the runs that failed"
+description: "Find every document you created, its signing status and every run"
 icon: "clock-rotate-left"
 ---
 
@@ -19,15 +19,64 @@ The **Documents** page lists every document you created, whether an automation, 
 Documents created in Test Mode appear in the list too.
 </Note>
 
+## Search
+
+The search box says "Search by name, automation or full signer email". It searches the whole Documents list.
+
+- **Document and automation names** match on any part of the name, in any case.
+- **Signers**: search finds them only by their whole email address. Type the address as it was sent, or in lowercase. An address stored with capital letters is not found by an all-lowercase search.
+
 ## The document page
 
 Double-click a document to open its page. You can also select it and click **Open**. The page shows:
 
 - The document itself, with links to download the PDF and other files.
 - The automation that created it.
-- For a signing or acceptance request: each signer with their status. While a request is open, the three-dot menu next to a signer who has not signed yet has **Copy signing link** and, for requests sent by email, **Resend invitation**.
-- The three-dot menu of the signing card has **View audit trail** and, while the request is open, **Cancel session**. The audit trail opens in a dialog and shows when the request was sent, opened, signed or accepted.
+- The **Details** card, with the automation ID and, for some data sources, the ID of the record the document came from.
+- For a signing or acceptance request: the signing card with each signer and their status. See [Signing card](#signing-card).
 - For a failed run: the error message.
+
+### Record ID
+
+In the **Details** card, the record's ID sits below "Automation ID". The label depends on the data source:
+
+| Label | Data source |
+|-------|-------------|
+| Record ID | Airtable and SmartSuite, and runs from other sources that send a record ID |
+| Task ID | ClickUp |
+| Page ID | Notion, including Notion Button runs |
+| Row Number | Google Sheets |
+| Response ID | Google Forms |
+
+Click the copy button to the right of the ID to copy it. The button shows a check mark for 2 seconds after the copy. Glide, Noloco, Softr, Make, Zapier and n8n send the data itself, so their runs show a record ID only when the request also sends one.
+
+### Signing card
+
+A signing request has an **E-Signing** card. An acceptance request has an **Acceptance** card. The card lists each signer with their status, and adds these details when they apply:
+
+- The signer's role after their name, for example "Ada Lovelace (Seller)".
+- Where the signer was, for example "Berlin, Land Berlin, Germany". A region with the same name as the city is not repeated, for example "Zurich, Switzerland". The card then ends with the credit "IP Geolocation by DB-IP".
+- How long the signer took, for example "Took 4 min 12 sec to sign", or "Took 1 day to accept" on an acceptance request.
+- For a signer who declined: "Reason for declining", with the signer's own text, in a red box.
+- "Signers sign one at a time, in this order." above the signers when 2 or more people sign one after another. Acceptance requests say "Recipients accept one at a time, in this order."
+- For an expired request: "Expired on" with the date and time, for example "Expired on Nov 6, 2026, 11:21 AM". An open request shows "Expires" with the date.
+
+While a request is open, the three-dot menu next to a signer who has not signed yet has **Copy signing link** and, for requests sent by email, **Resend invitation**.
+
+The three-dot menu of the signing card has:
+
+- **View audit trail**, which opens the **E-Sign Audit Trail** window. It shows when the request was sent, opened, signed or accepted.
+- **Download original PDF**, once the request is complete. This is the PDF before anyone signed it.
+- **Cancel session**, while the request is open.
+
+### Document fingerprints
+
+The **E-Sign Audit Trail** window has a **Document fingerprints** section. A fingerprint is a SHA-256 value, shown as `sha256:` followed by 64 characters. If a file changes in any way, its fingerprint changes too. The section lists:
+
+- **Original PDF**: the fingerprint of the PDF before signing. For a signing request created before 5 November 2026 whose original is the cleaned copy (the PDF with the signing tags removed), it shows "Not available for this older document." instead, because the stored fingerprint was taken before the tags were removed.
+- **Signed PDF**, or **Accepted PDF** for an acceptance request: the fingerprint of the finished PDF.
+
+Each fingerprint has a copy button.
 
 ## Needs attention
 
@@ -36,12 +85,51 @@ Choose the **Needs attention** filter on the Documents page to see what needs yo
 - Runs that failed in the last 30 days. Each one shows a red "Failed" badge.
 - Signing and acceptance requests that expired in the last 7 days.
 - Invitations that could not be delivered.
+- Automations with no updates from Notion or Airtable for 7 days. See [Automations with no updates](#automations-with-no-updates).
 
-The **Needs attention** card at the top of the page counts the same items. Click a failed run to open its page and read the error message. Fix the cause, then create the document again.
+The **Needs attention** card at the top of the page counts the same items. Click a failed run to open its page and read the error message. Fix the cause, then create the document again. Runs that failed more than 30 days ago are under [All runs](#all-runs).
 
 <Tip>
 Turn on [error notifications](/features/error-notifications) to get an email when a run fails.
 </Tip>
+
+### Automations with no updates
+
+An automation is listed here when it has had no updates from Notion or Airtable for 7 days. The row shows the automation's name and one of these sentences, with the date of the last update:
+
+- Notion: "Notion has sent no updates since Oct 30. If documents should have been created, check that the DocsAutomator connection is still active in your Notion settings, or reconnect Notion."
+- Airtable: "Airtable has sent no updates since Oct 16. If documents should have been created, check that Airtable is still connected in Settings → Integrations."
+
+The **Needs attention** card then says, for example, "1 automation gets no updates". When there are failed runs or expired requests too, it says "Failed, expired or no updates". The **Documents** badge in the left navigation also counts automations that stopped getting updates since you last opened Documents.
+
+## All runs
+
+Choose the **All runs** filter, next to **Needs attention**, to see every run with its status. Runs have no age limit here. The **Status** column shows Created, Failed, Queued, Pending or Interrupted. A change in Notion or Airtable that did not start Auto Create shows as **Skipped** for 14 days.
+
+A run with a warning shows a warning icon. Point to the icon to read the warning.
+
+Links to the old Run history page open **All runs**.
+
+### Skipped rows
+
+A **Skipped** row says in its Name column why Auto Create did not run. Sentences about Notion say "page" where this table says "record". "Field" is the field that starts Auto Create, and "value" is the value it changed to. When the field name is missing, the sentence says "the trigger field".
+
+| Sentence | What happened |
+|----------|---------------|
+| New record with "Field" set to "value". That does not start Auto Create. | A new record was added, and its value does not start Auto Create. |
+| New record. Auto Create starts only when "Field" changes on an existing record. | A new record was added. Auto Create waits for a change to the field on a record that already exists. |
+| The record changed, but "Field" did not. | Another field changed. Only a change to the trigger field can start Auto Create. |
+| "Field" changed to "value". That does not start Auto Create. | The field changed, but the new value does not match the condition. |
+| "Field" changed, but not to a value that starts Auto Create. | The field changed, but the new value does not match the condition. The value is not known. |
+| "Field" already had a value that starts Auto Create, so this change did not start it again. | The field already matched before this change. |
+| Auto Create made a document for this record less than 10 minutes ago. | Auto Create does not run twice for the same record within 10 minutes. |
+| "Field" is no longer on this record. Someone may have renamed or deleted it. | The trigger field is no longer in the table or database. |
+| We could not read the page from Notion. Check your Notion connection. | DocsAutomator could not read the page from Notion. |
+| Airtable reported a problem, so we reconnected. Records changed in that time may have no document. | Airtable reported a problem. Check the records changed around that time. |
+| Auto Create skipped more records in this bulk change for the same reasons. | An Airtable bulk change skipped more records for the same reasons. |
+| Auto Create skipped this change. | Auto Create skipped the change for another reason. |
+
+If the automation no longer exists, the row shows "Deleted automation".
 
 ## Rename a document
 

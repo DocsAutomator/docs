@@ -1052,10 +1052,10 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "429": {
-            "description": "Rate limit exceeded: 25 per hour per automation, 100 per hour per workspace, or 10 different recipients per hour per workspace. Wait the number of seconds in the `Retry-After` header, then send the request again.",
+            "description": "Rate limit exceeded: 25 per hour per automation, 100 per hour per workspace, or 10 different recipients per hour per workspace; or, for a workspace without an active subscription, 25 emails or 5 different recipients in 24 hours. Wait the number of seconds in the `Retry-After` header, then send the request again.",
             "headers": {
               "Retry-After": {
-                "description": "Seconds until the hourly window resets.",
+                "description": "Seconds until the hourly window resets, or, for the 24-hour limit without a subscription, until the oldest counted email leaves the window. At least 1.",
                 "schema": {
                   "type": "integer",
                   "example": 1800

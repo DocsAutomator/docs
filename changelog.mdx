@@ -5,6 +5,100 @@ rss: true
 mode: "center"
 ---
 
+<Update label="November 12, 2026">
+  ## Reminders on Send for signature
+
+  Every document you send for signature now gets reminders, the same as automations: every 3 days, up to 3 times. In the dialog, **More email settings** turns reminders off or changes the interval for this send. **Send a test to me** sends no reminders.
+
+  The message editor in the dialog now looks like the email your signer receives, with the heading, the document name and the sign button.
+
+  ## Documents
+
+  - **All runs** on the Documents page lists every run of every status, together with skipped Auto Create events and the reason they were skipped.
+  - **Needs attention** now also lists Notion and Airtable automations whose Auto Create trigger has had no update for 7 days.
+  - A document's page now shows the record it came from, for example the Airtable Record ID or the Google Sheets row number.
+  - The signing card on a document's page now shows more about each signer: location, time taken to sign, role, and the signing order for requests signed one at a time.
+
+  ## Fixes
+
+  - The "your request expires in 2 days" email now follows the request's reminder setting. With reminders off, no warning is sent. It goes to the team member who sent the request, unless you set notification recipients.
+  - A document you send for signature no longer runs the template's own outputs, such as saving to OneDrive or webhooks, before or after signing.
+  - A link to a page in the app that you open while signed out now brings you back to that page after you sign in.
+</Update>
+
+<Update label="November 11, 2026">
+  ## Send for signature: language and email
+
+  - A new **Language** setting chooses the language of the signing page, the emails and the signing dates for this send. It starts with the language your workspace used last.
+  - The **Subject** and **Message** fields now start with the full default email, so you see and edit the exact text your signers get. **Preview email** shows the final look. Text you leave unchanged keeps the default email and its translation.
+  - If fields are still empty when you send, DocsAutomator asks first. **Fill in** takes you to the first empty field. **Send anyway** sends the document as it is.
+  - After you send, the document's page opens, with the signers, Resend, Cancel and the audit trail.
+
+  ## Run History is now part of Documents
+
+  Every run now has its own document page, which also shows what failed. Run History and the separate signing session page are gone.
+
+  - **Needs attention** on the Documents page lists failed runs from the last 30 days, requests that expired in the last 7 days and invitations that could not be delivered.
+  - Old links to Run History and to signing sessions still open the right page.
+  - Error emails and expiry warnings now link to the run's document page.
+
+  ## Send signing emails from a shared mailbox
+
+  When a work or school Outlook account sends your signing emails, a new **Send from** field can send them from a Microsoft 365 shared mailbox. Find it under **Signing & Acceptance**, **Settings**, **Edit Emails**, **Outlook**. When you save, DocsAutomator sends one test email to your own account to check the permission.
+
+  ## Fixes
+
+  - When signing is on but the document has no signature fields, the run now shows a warning, and the API response lists it under `warnings`. The document is still created.
+  - Google Sheets: if the column for PDF links was deleted, the next document adds it back after the last header. Before, the run failed.
+  - The signing page now also loads on Safari versions before 16.4.
+  - In Claude and ChatGPT, the reminder button on the signing status card now confirms "Reminder sent" and cannot send a second reminder by mistake.
+</Update>
+
+<Update label="November 10, 2026">
+  ## Fixes
+
+  - With `skipEsign`, the signing tags stay visible in the document again, so reviewers see where the signature fields go. A later run without `skipEsign` sends the document for signature as before.
+  - During a trial, **Send for signature** sends a test to you only. To send to your signers, upgrade to a paid plan.
+  - Workspace names and people's names that contain characters such as `<` or `&` now show correctly in signing and team emails.
+</Update>
+
+<Update label="November 8, 2026">
+  ## Send for signature
+
+  Get one document signed without setting up an automation. Go to Documents, click **New document** and choose **Send for signature**. Upload a file, pick one from Google Drive or OneDrive, or choose a template. Fill in the values, place Signature, Initials and Date fields for each signer, and send.
+
+  - **Who signs?** asks for a name and an email for each signer. Every signer needs a Signature field.
+  - **Preview** shows what the signers see. **Send a test to me** sends a free test to you only.
+  - Your document saves as a draft from the first change. Drafts you have not sent wait on the Documents page, with Continue and Delete, for 30 days after the last change.
+  - A document you send for signature counts as one document in your plan. During a trial, it carries a watermark.
+  - After you send, **Send this often?** sets up an automation with the same template.
+
+  DocsAutomator Agent, Claude and ChatGPT can send a document for signature too. They place the fields by text in the document and give you a link to check them.
+
+  ## Fixes
+
+  - In the PDF editor, a new field no longer lands on top of a field that is already there.
+  - In an automation's signing panel, "Email is required." now shows only after you leave an empty email field.
+</Update>
+
+<Update label="November 7, 2026">
+  ## Fixes
+
+  - The signing page now shows the document on older Safari versions (16.4 to 17.3) on iPhone, iPad and Mac. Before, the document did not load there.
+  - A signing link with extra characters after it, for example from an email client, now opens the signing page. Before, the page showed an error.
+</Update>
+
+<Update label="November 6, 2026">
+  ## Sort by for every line item table
+
+  Every line item table can now set its row order. Google Sheets, ClickUp and Google Forms line items now have a Sort by setting, the same as API line items. Airtable, SmartSuite and Notion keep their own Sort by on the linked field. Claude and ChatGPT can set the order for you, too.
+
+  ## Fixes
+
+  - Signing now removes every signing tag from the signed PDF, also when a font draws "fi" or "fl" as one character, or when a filled-in value sits over a tag. Before, the tag text could stay in the PDF under a white cover.
+  - The AI assistant in the app no longer stops with an error during long template edits.
+</Update>
+
 <Update label="November 4, 2026">
   ## Disconnect Claude or ChatGPT from your workspace
 

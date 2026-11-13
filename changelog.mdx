@@ -5,6 +5,20 @@ rss: true
 mode: "center"
 ---
 
+<Update label="November 11, 2026">
+  ## Named API keys
+
+  **Settings > API keys** now lists your workspace's keys by name, with the first characters of each key, the day it was created and the day it was last used. Workspace owners and admins can create a key with **Create key** and revoke one with **Revoke**. Give each app its own key, so you can revoke one without stopping the others. Members see the list only.
+
+  - A new key is shown once. Copy it when you create it, because we cannot show it again.
+  - Regenerate is gone. To replace a key, create a new one, put it in your app, then revoke the old one.
+  - Your existing key keeps working. It shows as **Original key**.
+  - In an automation's setup guide, steps that need a key, for example Make, Zapier, n8n, the Airtable script, the Notion button and ClickUp, show `YOUR_API_KEY` and a **Create a key for this** button. It creates a key named after the app and the automation and fills it in.
+  - Google Sheets links and Airtable or SmartSuite button formulas in the setup guide need no key. They contain a link that works for that one automation only.
+
+  See [API keys](/more/finding-your-api-key).
+</Update>
+
 <Update label="November 4, 2026">
   ## Disconnect Claude or ChatGPT from your workspace
 

@@ -52,7 +52,7 @@ In about two minutes your AI agent makes a quote in your brand and sends it to y
 - make the quote from your Airtable base,
 - use your own Word template.
 
-**API key (optional):** clients that do not support sign-in can use an API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
+**API key (optional):** clients that do not support sign-in can use an API key. Create one in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api). See [API keys](/more/finding-your-api-key).
 
 ---
 
@@ -91,7 +91,7 @@ DocsAutomator is an official plugin in ChatGPT Plugins. The [ChatGPT page](/inte
    - **Authentication:** Bearer Token
    - **Token:** Your DocsAutomator API key
 
-Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
+Create a key for Cursor in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api). See [API keys](/more/finding-your-api-key).
 
 ---
 
@@ -105,7 +105,7 @@ For MCP-compatible clients other than Claude and ChatGPT, use these connection d
 | **Transport** | Streamable HTTP |
 | **Authentication** | Sign in to DocsAutomator (OAuth) |
 
-A client that does not support sign-in sends your API key in the header `Authorization: Bearer YOUR_API_KEY`. Get your API key from [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api).
+A client that does not support sign-in sends an API key in the header `Authorization: Bearer YOUR_API_KEY`. Create a key for that client in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api). See [API keys](/more/finding-your-api-key).
 
 ---
 
@@ -278,9 +278,9 @@ Would you like me to resend the invitation?"
 ## Troubleshooting
 
 ### "Authentication required" error
-- Ensure your API key is valid and active
+- Check that the API key was not revoked. A revoked key stops working at once.
 - Check that the Authorization header is formatted correctly: `Bearer YOUR_API_KEY`
-- Verify your API key at [DocsAutomator Settings](https://app.docsautomator.co/settings/workspace/api)
+- Check the key's name and first characters in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api)
 
 ### "Automation not found" error
 - Verify the automation ID is correct

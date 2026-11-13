@@ -164,7 +164,9 @@ For a review by named team members, with an email to each approver and an Approv
 
 With Gmail or Outlook selected, you can additionally enable **Send from the team member who generates the document**: invitations, reminders, and completion emails are then sent from the generating member's own connected account, with the configured account as the fallback. See [Send Email](/features/actions-after-document-generation/send-email#sending-from-the-team-member-who-generates-the-document) for how matching works.
 
-With Outlook selected, you can set **Send from** to a Microsoft 365 shared mailbox you have "Send as" on. Sent copies go to your own Sent Items folder. If your Microsoft 365 admin turns on MessageCopyForSentAsEnabled for the shared mailbox, a copy also goes to the shared mailbox's Sent Items.
+With Outlook selected, the **Send from (optional)** field under the account lets emails from that account come from a Microsoft 365 shared mailbox, like sales@yourcompany.com. Your Microsoft 365 admin must give the account "Send as" on the shared mailbox. If your admin gives "Send on behalf" instead, emails show the account "on behalf of" the shared mailbox. The field works with a work or school Microsoft account.
+
+The address is saved on the Outlook account, not on one automation. It covers signing emails and Send Email steps in every automation that uses that account. You set or change it only here, in **Signing & Acceptance > Settings > Edit Emails**. Leave it empty to send from the account itself. Sent copies go to your own Sent Items folder. If your Microsoft 365 admin turns on MessageCopyForSentAsEnabled for the shared mailbox, a copy also goes to the shared mailbox's Sent Items.
 
 If the connected Gmail or Outlook mailbox rejects a message, DocsAutomator sends it from its own address instead, and records that it did. Every e-sign email produces a delivery record with the provider, the sending mailbox and the message ID. See [Email Delivery Outcomes](/features/docsautomator-esign/email-delivery-outcomes).
 

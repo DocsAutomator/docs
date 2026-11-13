@@ -109,6 +109,24 @@
                     "description": "PDF URLs to merge or prepend to the generated document.",
                     "example": ["https://example.com/terms-and-conditions.pdf"]
                   },
+                  "existingWordDocs": {
+                    "type": "array",
+                    "description": "Word templates only (Business plan or above). Word files appended to the generated document, in order, before the PDF is made. Each entry is an https link to a .docx file, or an object with url or base64 and an optional newPage (default true). Up to 20 files of up to 25 MB each.",
+                    "items": {
+                      "oneOf": [
+                        { "type": "string", "format": "uri" },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "url": { "type": "string", "format": "uri" },
+                            "base64": { "type": "string", "format": "byte" },
+                            "newPage": { "type": "boolean", "default": true }
+                          }
+                        }
+                      ]
+                    },
+                    "example": ["https://example.com/part-scope.docx", { "url": "https://example.com/part-pricing.docx", "newPage": false }]
+                  },
                   "docTemplateLink": {
                     "type": "string",
                     "format": "uri",

@@ -72,6 +72,10 @@ POST https://api.docsautomator.co/createDocument
   Array of publicly accessible PDF URLs to merge or prepend to the generated document.
 </ParamField>
 
+<ParamField body="existingWordDocs" type="array">
+  Word templates only. Word files to append to the generated document, in order, before the PDF is made. Each entry is an https link to a .docx file, or an object with `url` or `base64` (the file itself) and an optional `newPage` (default `true`; `false` continues on the same page when the page setup allows). Up to 20 files of up to 25 MB each. Each appended file keeps its own page size, margins, headers and footers. Signing fields in appended files work in the same signing session. Requires the Business plan or above. See [Append Word Documents](/features/actions-after-document-generation/append-word-documents).
+</ParamField>
+
 <ParamField body="docTemplateLink" type="string">
   Override the automation's Google Doc template URL for this request only. Pass a full Google Docs URL or just the document ID.
 </ParamField>

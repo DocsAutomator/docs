@@ -124,6 +124,7 @@
                       "features/docsautomator-esign/is-acceptance-legally-binding",
                       "features/docsautomator-esign/docsautomator-esign-api-reference",
                       "features/docsautomator-esign/email-delivery-outcomes",
+                      "features/docsautomator-esign/allow-emails-in-microsoft-365",
                       "features/docsautomator-esign/e-signing-tutorials-from-data-sources",
                       "features/docsautomator-esign/e-sign-date-format-options"
                     ]

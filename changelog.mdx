@@ -5,6 +5,27 @@ rss: true
 mode: "center"
 ---
 
+<Update label="November 12, 2026">
+  ## Reminders on Send for signature
+
+  Every document you send for signature now gets reminders, the same as automations: every 3 days, up to 3 times. In the dialog, **More email settings** turns reminders off or changes the interval for this send. **Send a test to me** sends no reminders.
+
+  The message editor in the dialog now looks like the email your signer receives, with the heading, the document name and the sign button.
+
+  ## Documents
+
+  - **All runs** on the Documents page lists every run of every status, together with skipped Auto Create events and the reason they were skipped.
+  - **Needs attention** now also lists Notion and Airtable automations whose Auto Create trigger has had no update for 7 days.
+  - A document's page now shows the record it came from, for example the Airtable Record ID or the Google Sheets row number.
+  - The signing card on a document's page now shows more about each signer: location, time taken to sign, role, and the signing order for requests signed one at a time.
+
+  ## Fixes
+
+  - The "your request expires in 2 days" email now follows the request's reminder setting. With reminders off, no warning is sent. It goes to the team member who sent the request, unless you set notification recipients.
+  - A document you send for signature no longer runs the template's own outputs, such as saving to OneDrive or webhooks, before or after signing.
+  - A link to a page in the app that you open while signed out now brings you back to that page after you sign in.
+</Update>
+
 <Update label="November 11, 2026">
   ## Send for signature: language and email
 

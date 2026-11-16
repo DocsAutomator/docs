@@ -37,6 +37,7 @@ DocsAutomator lists every placeholder it finds, and you map each one to a field 
 - A cell that holds only one placeholder keeps the cell's own format. A number stays a number, so `#,##0.00 €` formats it and formulas can calculate with it. A date in the form `2026-11-16` becomes a date in a cell with a date format.
 - A placeholder inside text prints as text.
 - Values that start with `=` print as text. They never run as formulas.
+- The placeholder settings **Format**, **Hidden** and **Show/hide** work as in other templates. A Format setting prints the value as formatted text, so it wins over the cell's own format.
 
 ## Line items
 
@@ -70,5 +71,5 @@ With the [e-invoice add-on](/features/e-invoices), a spreadsheet template create
 
 - **Google-only functions** such as `QUERY`, `IMPORTRANGE`, `GOOGLEFINANCE`, `ARRAYFORMULA` and `IMAGE` show an error in the PDF. DocsAutomator warns you when it finds one. Replace it with a standard function or a fixed value.
 - **Images from your data** cannot be placed into a cell. A fixed logo in the sheet works.
-- **Conditional sections** are not available in spreadsheet templates.
+- **Conditional sections**, **Delete line when empty**, **Markdown** and **conditional styles** are not available in spreadsheet templates.
 - Spreadsheet templates create PDF files, not spreadsheet files.

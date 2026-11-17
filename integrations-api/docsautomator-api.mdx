@@ -79,7 +79,11 @@ Automations also carry their own `description` — what the automation is for an
 
 ## New automations start in test mode
 
-Every automation you create with `createAutomation`, and every copy made with `duplicateAutomation`, starts in test mode (`isPreview: true`). Test documents are watermarked and free. When the automation is ready, switch it to live:
+Every automation you create with `createAutomation`, and every copy made with `duplicateAutomation`, starts in test mode (`isPreview: true`). Test documents are watermarked and free. In test mode, every email, signing, acceptance and approval request goes to the workspace owner, never to your recipients. The `createDocument` response says where it went in `testRecipient`, and lists who a live run would reach in `recipients`.
+
+To send every test of an automation to one member instead, set `testRecipient` to that member's email with `updateAutomation` (`""` goes back to the default). Only workspace members can be picked; any other address is refused with `TEST_RECIPIENT_NOT_MEMBER`. `GET /automation` returns the current choice in `testRecipient`.
+
+When the automation is ready, switch it to live:
 
 ```bash
 curl -X PUT "https://api.docsautomator.co/updateAutomation?automationId=YOUR_AUTOMATION_ID" \

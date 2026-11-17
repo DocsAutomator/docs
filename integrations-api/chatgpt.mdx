@@ -50,17 +50,18 @@ ChatGPT shows a document card with the first page of the PDF and buttons for the
 
 ## Safe by default
 
-- The first document of a new automation goes out in test mode, unless you ask for live. A test mode request sends the real email to the real person and is never billed.
+- The first document of a new automation runs in test mode, unless you ask for live. Test: everything comes to you. Live: it goes to your client.
+- In test mode, every email, signing, acceptance and approval request goes to you, never to the real recipient. Test documents are watermarked, free and never billed.
 - Before anything goes out by email, DocsAutomator asks you in a confirmation dialog that names the document and every recipient, when ChatGPT shows such dialogs. Nothing is sent until you confirm. Otherwise ChatGPT confirms the recipients with you in the chat.
-- Before a send, ChatGPT shows you the document as a preview. A preview is a watermarked PDF; nothing is sent and nothing counts against your plan.
+- Before a live send, ChatGPT can make a test first. The test document and every email of it come to you, so you see exactly what your client will get.
 
 [How AI clients use DocsAutomator](/integrations-api/how-ai-clients-use-docsautomator) lists every rule and confirmation.
 
 ## Example conversation
 
-**You:** "Make a quote in the style of https://your-website.com and send it to me at you@example.com for acceptance. Use DocsAutomator and send it in test mode."
+**You:** "Make a quote in the style of https://your-website.com and send it to me at you@example.com for acceptance. Use DocsAutomator and run it as a test."
 
-**ChatGPT:** designs a quote template in your brand, creates the automation and makes a preview. DocsAutomator asks you to confirm the recipient, then sends the quote in test mode.
+**ChatGPT:** designs a quote template in your brand and creates the automation. DocsAutomator asks you to confirm, then runs the test. The acceptance email comes to you.
 
 **You:** "Has it been accepted yet?"
 

@@ -22,18 +22,18 @@ Generate an unlimited amount of previews without wasting credits. Document previ
     Set the automation's status to **Test Mode** to test the complete workflow:
     - Applies a watermark to generated PDFs
     - Consumes zero document credits
-    - If "Save Google Doc" is enabled, preserves the Google Doc with a "PREVIEW — NOT FOR DISTRIBUTION" header
+    - If "Save Google Doc" is enabled, preserves the Google Doc with a "TEST: NOT FOR DISTRIBUTION" header
     - If "Save PDF in Google Drive" is enabled, saves the watermarked PDF to your Drive folder
     - If URL writeback fields are configured, writes Google Doc URL and PDF Drive URL back to your data source
-    - Document names are prefixed with `[PREVIEW]` for easy identification
-    - Emails are still sent, if the automation has an email action enabled
+    - Document names are prefixed with `[TEST]` for easy identification
+    - Every email, signing, acceptance and approval request goes to the person testing, never to your recipients
 
-    <Warning>
-    Test Mode does not stop emails. Only the **Preview** button inside the app skips the email action. A run triggered by the API, Airtable, a webhook or polling sends the configured email, even in Test Mode. Turn the email action off, or send to a test address, while you test.
-    </Warning>
+    <Info>
+    Test: everything comes to you. Live: it goes to your client. A test you start in the app comes to you. Runs from Airtable buttons, Zapier, Make, webhooks, polling or the API come to the workspace owner. To send every test of an automation to one member instead, pick that member under **Test messages go to** in the automation settings. Only workspace members can be picked.
+    </Info>
 
     <Tip>
-    Use this mode to test your full automation pipeline end-to-end — including Drive saves and data source writebacks — before going live.
+    Use this mode to test your full automation from start to finish, including Drive saves and data source writebacks, before going live.
     </Tip>
   </Tab>
 </Tabs>
@@ -60,14 +60,14 @@ Generate an unlimited amount of previews without wasting credits. Document previ
 | Feature | Test Mode | Production Mode |
 |---------|--------------|-----------------|
 | PDF Watermark | Yes | No |
-| Google Doc Header | "PREVIEW — NOT FOR DISTRIBUTION" | None |
-| Document Name Prefix | `[PREVIEW]` | None |
+| Google Doc Header | "TEST: NOT FOR DISTRIBUTION" | None |
+| Document Name Prefix | `[TEST]` | None |
 | Credit Usage | None | 1 per document |
 | PDF Quality | Full | Full |
 | Save PDF to Google Drive | Yes (if configured) | Yes (if configured) |
 | Save Google Doc | Yes (if configured) | Yes (if configured) |
 | URL Writeback to Data Source | Yes (if configured) | Yes (if configured) |
-| Emails Sent | Yes (if configured) | Yes (if configured) |
+| Emails, signing, acceptance and approval requests | To the person testing | To your recipients |
 
 ## Best Practices
 

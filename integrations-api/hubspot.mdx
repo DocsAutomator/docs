@@ -18,18 +18,44 @@ New to DocsAutomator? Start with the [Quickstart Guide](/docsautomator-basics/qu
 
 ## Connect HubSpot
 
-1. In DocsAutomator, open **Settings**, then **Integrations**, and click **Connect HubSpot Account**.
+1. In DocsAutomator, open **Settings**, then **Integrations**, and click **Connect** on the HubSpot card.
 2. Choose your HubSpot account and approve the permissions.
 
+<Frame>
+  <img src="/images/hubspot/integrations-not-connected.png" alt="Data sources in Settings, Integrations, with HubSpot not connected and its Connect button" />
+</Frame>
+
 Connecting installs the DocsAutomator app in your HubSpot account. One HubSpot account connects to one DocsAutomator workspace. If another workspace already uses it, disconnect it there first.
+
+<Frame>
+  <img src="/images/hubspot/integrations-connected.png" alt="Data sources in Settings, Integrations, with HubSpot connected and its Manage button" />
+</Frame>
 
 ## Create an automation
 
 1. Create an automation and choose **HubSpot** as the data source.
 2. Under **Create documents from**, choose the record type: deals, tickets, contacts, companies or one of your custom objects.
+
+<Frame>
+  <img src="/images/hubspot/data-source.png" alt="Data Source section of the Data / Placeholders panel with HubSpot chosen" />
+</Frame>
+
+<Frame>
+  <img src="/images/hubspot/record-type.png" alt="Create documents from list with Deals, Tickets, Contacts, Companies and a custom object" />
+</Frame>
+
 3. Map the placeholders of your template to HubSpot properties. A placeholder whose name matches a property, such as `{{deal_dealname}}` or `{{contact_email}}`, needs no mapping.
 4. For a table, use `{{line_items_1}}`. A deal's line items fill it by themselves. You can also fill a table with associated records, such as a company's deals.
+
+<Frame>
+  <img src="/images/hubspot/field-mapping.png" alt="Data Mapping section with template placeholders mapped to HubSpot deal and contact properties" />
+</Frame>
+
 5. Pick a record in the record picker and click **Preview** to check the document.
+
+<Frame>
+  <img src="/images/hubspot/preview.png" alt="Preview dialog with a search in the record picker and a rendered quote with its line items" />
+</Frame>
 
 ## Create a document from the record
 
@@ -42,12 +68,24 @@ Add the DocsAutomator card to your records:
 
 Then open a record, choose the automation in the DocsAutomator card, and click **Create document**. When signing or acceptance is on, the button reads **Create and send**. The PDF appears on the record as a note, and the card links to it.
 
+<Frame>
+  <img src="/images/hubspot/card-create-document.png" alt="DocsAutomator card on a HubSpot deal with the Deal quote automation chosen, the Create document button, and a link to the finished document" />
+</Frame>
+
+<Frame>
+  <img src="/images/hubspot/record-note.png" alt="Note on the deal timeline, created via DocsAutomator, naming the created document" />
+</Frame>
+
 ## Create documents in a workflow
 
 1. In HubSpot, open **Automation**, then **Workflows**. Create a workflow for your record type, or open one you have.
 2. Add an action, search for **Create document with DocsAutomator**, and choose it.
 3. Leave the target record on the enrolled record. Under **Automation**, choose your automation.
 4. Save the workflow and turn it on.
+
+<Frame>
+  <img src="/images/hubspot/workflow-action.png" alt="Create document with DocsAutomator action in a HubSpot workflow, with the target record set to the enrolled deal and the automation list open" />
+</Frame>
 
 Each run puts the PDF on the record as a note. Later steps can use these outputs:
 
@@ -76,11 +114,19 @@ When a run fails, the workflow continues and its history shows the reason, for e
 
 DocsAutomator checks the HubSpot connection every day. If it stops working, the workspace owners get one email with a reconnect link, and the card shows **Reconnect DocsAutomator**. Runs fail with a reconnect message until you reconnect in **Settings**, **Integrations**.
 
+<Frame>
+  <img src="/images/hubspot/card-reconnect.png" alt="DocsAutomator card on a HubSpot record saying the connection stopped working, with the Reconnect DocsAutomator button" />
+</Frame>
+
 <Warning>
 Reconnecting HubSpot reinstalls the app and removes the card from your records. Add the card again with the steps under "Create a document from the record".
 </Warning>
 
 ## Disconnect or uninstall, and what happens to your data
+
+<Frame>
+  <img src="/images/hubspot/disconnect.png" alt="HubSpot dialog in Settings, Integrations, showing the connection as connected with a Disconnect button" />
+</Frame>
 
 - **Disconnect in DocsAutomator** (Settings, Integrations): DocsAutomator removes the app and its cards from your HubSpot account and deletes the stored HubSpot tokens immediately.
 - **Uninstall in HubSpot** (Settings, Integrations, Connected apps): the app stops working immediately. DocsAutomator marks the connection as broken and stops runs from HubSpot.

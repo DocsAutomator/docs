@@ -16,6 +16,10 @@ Build a document from modular parts. Generate each part with its own Word templa
 2. Send the request for the main document with `existingWordDocs`: the parts to append, in order.
 3. DocsAutomator generates the main document, appends the parts, and makes the PDF from the joined document.
 
+<Frame caption="The Save Word document action returns the part's Word file link as wordFileUrl.">
+  <img src="/images/append-word-documents/save-word-file-setting.png" alt="Automation editor with the Actions panel open and the Save Word document action, which returns the Word file URL as wordFileUrl in the API response" />
+</Frame>
+
 ```json
 {
   "docId": "your-automation-id",
@@ -39,6 +43,10 @@ Each entry is one of these:
 | `{ "base64": "..." }` | The .docx file itself, encoded as base64. Use this when you cannot host the file. |
 
 Add `"newPage": false` to an entry to start it on the same page as the content before it. By default each part starts on a new page. A part with a different page size or orientation always starts on a new page.
+
+<Frame caption="The main document, followed by two appended parts, each on a new page.">
+  <img src="/images/append-word-documents/appended-result.png" alt="Three PDF pages side by side: a Proposal cover page for Contoso Ltd, a Scope of work page and a Pricing page with a price table" />
+</Frame>
 
 ## What each part keeps
 

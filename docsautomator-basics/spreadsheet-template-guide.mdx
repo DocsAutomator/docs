@@ -17,6 +17,10 @@ Spreadsheet templates let you keep your document layout in Google Sheets or Exce
 
 Spreadsheet templates work with every data source, with [line items](/features/line-items), and with [e-invoices](/features/e-invoices).
 
+<Frame>
+  <img src="/images/spreadsheet-template/result-pdf-page.png" alt="The PDF created from the example invoice spreadsheet, with three item rows and the calculated net, VAT and total" />
+</Frame>
+
 ## Add a spreadsheet template
 
 <CardGroup cols={2}>
@@ -28,7 +32,21 @@ Spreadsheet templates work with every data source, with [line items](/features/l
   </Card>
 </CardGroup>
 
+<Frame>
+  <img src="/images/spreadsheet-template/upload-excel.png" alt="Empty template area of a new automation with Upload file and Pick from Google Drive, for PDF, Word, Excel, Google Docs and Google Sheets files" />
+</Frame>
+
+To use a Google Sheet, click **Pick from Google Drive** and choose the Sheet, or paste its link below the file list.
+
+<Frame>
+  <img src="/images/spreadsheet-template/link-google-sheet.png" alt="Select a template dialog with Google Sheets in the file list and a Google Sheets link in the paste field" />
+</Frame>
+
 DocsAutomator lists every placeholder it finds, and you map each one to a field in your data source.
+
+<Frame>
+  <img src="/images/spreadsheet-template/template-applied.png" alt="Automation with the Excel invoice template: the file name, the sheet preview and the list of placeholders" />
+</Frame>
 
 ## Placeholders
 
@@ -45,16 +63,26 @@ Put `{{line_items_1}}` into any cell of the row that repeats, and the item field
 
 | A | B | C | D |
 |---|---|---|---|
-| `{{line_items_1}}{{description}}` | `{{quantity}}` | `{{price}}` | `=B8*C8` |
+| `{{line_items_1}}{{description}}` | `{{quantity}}` | `{{unit_price}}` | `=B9*C9` |
+
+<Frame>
+  <img src="/images/spreadsheet-template/line-item-row.png" alt="Invoice template in a spreadsheet with the line-item row marked: the line_items_1 marker and the description, quantity and unit price placeholders" />
+</Frame>
 
 DocsAutomator adds one row for each item:
 
 - The marker `{{line_items_1}}` prints empty, so you can put it in any cell of the row.
-- Formulas in the row are copied to each new row, like copying a row in Excel (`=B8*C8` becomes `=B9*C9`).
-- Formulas below move down. A sum over the line-item row, such as `=SUM(D8:D8)` or `=SUM(D8:D9)`, grows to cover every item.
+- Formulas in the row are copied to each new row, like copying a row in Excel (`=B9*C9` becomes `=B10*C10`).
+- Formulas below move down. A sum over the line-item row, such as `=SUM(D9:D9)` or `=SUM(D9:D10)`, grows to cover every item.
 - Merged cells, borders and formats in the row repeat on every new row.
 - With no items, the row does not print, and sums over it show 0.
 - A template can have several line-item rows (`{{line_items_1}}`, `{{line_items_2}}`). Nested line items are not available in spreadsheet templates.
+
+The item fields show in the placeholder list under **Line Item Table 1**. Map them like the line items of any other template.
+
+<Frame>
+  <img src="/images/spreadsheet-template/line-item-mapping.png" alt="Placeholder list with Line Item Table 1 and its description, quantity and unit price fields" />
+</Frame>
 
 ## What prints
 

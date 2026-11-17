@@ -55,6 +55,10 @@ API requests return `401 Unauthorized` with a message indicating authentication 
 
     Check that the key is still listed in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api) and was not revoked. A revoked key stops working at once. Compare the start of the key in your app with the **Key** column there. If no key matches, the key was revoked or belongs to another workspace. Create a new key, put it in the app, and revoke any key the app no longer needs. See [API keys](/more/finding-your-api-key).
 
+    <Frame caption="Each key has a name, its first characters, the day it was created and the day it was last used.">
+      <img src="/images/api-keys/api-keys-list.png" alt="The API keys list with three keys named Original key, Make and Zapier: Invoices, with their first characters, created date, last used date and a Revoke button" />
+    </Frame>
+
     <Warning>
     API keys are scoped to a workspace. If you have multiple workspaces, make sure you're using the key from the correct one.
     </Warning>

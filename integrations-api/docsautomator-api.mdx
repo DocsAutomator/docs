@@ -12,6 +12,10 @@ DocsAutomator offers a REST API to create documents programmatically, manage aut
 <Steps>
   <Step title="Create an API key">
     Create a key in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api), or click **Create a key for this** in the automation's setup guide. Copy it when you create it, because it is shown once. See [API keys](/more/finding-your-api-key).
+
+    <Frame caption="The API setup guide sends the key in the Authorization header.">
+      <img src="/images/api-keys/setup-api.png" alt="The API setup guide with the Create a key for this button and the Authorization header Bearer YOUR_API_KEY" />
+    </Frame>
   </Step>
   <Step title="Authenticate">
     Pass your API key as a bearer token in the `Authorization` header:

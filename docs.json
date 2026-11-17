@@ -167,6 +167,7 @@
                       "features/actions-after-document-generation/save-pdfs-in-dropbox",
                       "features/actions-after-document-generation/send-email",
                       "features/actions-after-document-generation/merge-existing-pdfs",
+                      "features/actions-after-document-generation/append-word-documents",
                       "features/actions-after-document-generation/notify-webhook",
                       "features/actions-after-document-generation/start-an-ai-agent"
                     ]

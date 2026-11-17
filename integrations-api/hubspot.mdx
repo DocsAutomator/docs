@@ -24,7 +24,7 @@ New to DocsAutomator? Start with the [Quickstart Guide](/docsautomator-basics/qu
      <img src="/images/hubspot/integrations-not-connected.png" alt="Data sources in Settings, Integrations, with HubSpot not connected and its Connect button" />
    </Frame>
 
-2. Choose your HubSpot account, check the permissions and click **Connect app**. Until HubSpot finishes its review of the app, HubSpot shows a note that the app is unverified.
+2. Choose your HubSpot account, check the permissions and click **Connect app**. Until HubSpot finishes its review of the app, HubSpot shows a note that the app is unverified and asks you to type **I accept the risk** before it connects.
 
    <Frame>
      <img src="/images/hubspot/consent.png" alt="HubSpot screen Connecting DocsAutomator to HubSpot, with the permissions and the Connect app button" />
@@ -122,13 +122,23 @@ Then open a record, choose the automation in the DocsAutomator card, and click *
 
 4. Save the workflow and turn it on.
 
+   <Frame>
+     <img src="/images/hubspot/workflow-4-on.png" alt="HubSpot workflow Northwind quotes turned on, with the Create document with DocsAutomator action" />
+   </Frame>
+
 Each run puts the PDF on the record as a note. Later steps can use these outputs:
 
-| Output | What it holds |
-|---|---|
-| Document link | The link to the PDF |
-| Mode (test or live) | `test` when the automation runs in test mode, otherwise `live` |
-| Error code and Error message | Why a run failed |
+| Output | Name in the action log | What it holds |
+|---|---|---|
+| Document link | `documentUrl` | The link to the PDF |
+| Mode (test or live) | `mode` | `test` when the automation runs in test mode, otherwise `live` |
+| Error code and Error message | `errorCode`, `errorMessage` | Why a run failed |
+
+The workflow's **Action logs** show the outputs of each run under their names.
+
+<Frame>
+  <img src="/images/hubspot/workflow-outputs.png" alt="Event details of a workflow run in HubSpot's action logs, with the outputs documentUrl and mode" />
+</Frame>
 
 When a run fails, the workflow continues and its history shows the reason, for example that HubSpot needs to be reconnected.
 

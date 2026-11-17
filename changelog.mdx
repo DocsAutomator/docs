@@ -639,7 +639,7 @@ mode: "center"
   - Airtable and Notion triggers and the scheduled Google Sheets and Google Forms checks no longer start runs for automations that are switched off. Before, each such run failed with "Automation is not active".
   - When you change or remove the data source of an automation, the triggers of the old source are switched off.
   - Line item groups sort by date when the grouping field is a date. Before, they sorted as text, so "30.8." came after "1.9.".
-  - Signing completion emails now fill in `{{signerName}}` and `{{signerEmail}}` for each signer. Before, a body that started with "Hello {{signerName}}," sent "Hello ,".
+  - Signing completion emails now fill in `{{signerName}}` and `{{signerEmail}}` for each signer. Before, a body that started with `Hello {{signerName}},` sent `Hello ,`.
 </Update>
 
 <Update label="September 23, 2026">

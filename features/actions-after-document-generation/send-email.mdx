@@ -58,6 +58,10 @@ An Outlook account can send from a Microsoft 365 shared mailbox. The address is 
 - You set or change the address in one place: the **Send from (optional)** field in **Signing & Acceptance > Settings > Edit Emails**. See [e-sign email settings](/features/docsautomator-esign#email-configuration).
 - If Microsoft refuses the shared mailbox when an email goes out, the email is sent from the connected account with the shared mailbox as the reply address, and the run history says so. Later emails try the shared mailbox again.
 
+<Frame caption="The Send Email step shows the shared mailbox it sends from.">
+  <img src="/images/esign/send-email-sends-from.png" alt="Send Email step with Outlook selected, the account alex@northwind.example and the line Sends from sales@northwind.example. Change this in the signing Email Settings." />
+</Frame>
+
 ## Sending from the Team Member Who Generates the Document
 
 By default, every email an automation sends comes from the one account configured in its email settings. For teams, you can instead send each email from the person who generated the document: with Gmail or Outlook selected as the email service, enable **Send from the team member who generates the document** below the account selector.

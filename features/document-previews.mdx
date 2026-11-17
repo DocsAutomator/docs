@@ -20,6 +20,11 @@ Generate an unlimited amount of previews without wasting credits. Document previ
   </Tab>
   <Tab title="Test Mode for Entire Automation">
     Set the automation's status to **Test Mode** to test the complete workflow:
+
+    <Frame>
+      <img src="/images/test-mode/status-menu.png" alt="The status menu of an automation. Test is selected and says everything comes to you at your address, watermarked and free. Live and Off are below it." />
+    </Frame>
+
     - Applies a watermark to generated PDFs
     - Consumes zero document credits
     - If "Save Google Doc" is enabled, preserves the Google Doc with a "TEST: NOT FOR DISTRIBUTION" header
@@ -31,6 +36,30 @@ Generate an unlimited amount of previews without wasting credits. Document previ
     <Info>
     Test: everything comes to you. Live: it goes to your client. A test you start in the app comes to you. A run that names a team member in `actingUserEmail` comes to that member, if they belong to the workspace. Other runs from Airtable buttons, Zapier, Make, webhooks, polling or the API come to the workspace owner. A member picked under **Test messages go to** in the automation settings gets every test of that automation instead. Only workspace members can be picked.
     </Info>
+
+    The bar at the top of the automation names the address your tests go to.
+
+    <Frame>
+      <img src="/images/test-mode/test-bar.png" alt="The automation editor in Test. A yellow bar says everything comes to you at your address, and live it goes to your recipients. A Change link and a Go live button are on the bar." />
+    </Frame>
+
+    To send every test of this automation to one member, click **Change** on the bar and pick the member under **Test messages go to**.
+
+    <Frame>
+      <img src="/images/test-mode/test-messages-go-to.png" alt="The Test messages go to dialog. Whoever runs the test is selected. A specific member can be picked from a list of workspace members." />
+    </Frame>
+
+    If the picked member leaves the workspace, tests go to whoever runs them again, and the bar says so.
+
+    <Frame>
+      <img src="/images/test-mode/member-left.png" alt="The bar says the picked member is no longer in the workspace, so tests go to whoever runs them again, with a Pick a member link." />
+    </Frame>
+
+    The document page of a test says where the test went and who a live run would reach.
+
+    <Frame>
+      <img src="/images/test-mode/document-page-test.png" alt="The document page of a test. A note says the test went to the tester and lists the live recipients for each role." />
+    </Frame>
 
     <Tip>
     Use this mode to test your full automation from start to finish, including Drive saves and data source writebacks, before going live.

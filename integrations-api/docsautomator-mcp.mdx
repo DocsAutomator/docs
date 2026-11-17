@@ -212,6 +212,10 @@ When the assistant sets up signing or acceptance with `configure_esignature`, it
 
 **Test mode:** DocsAutomator runs the first document of a new automation in test mode when your AI client does not ask for a mode, and it refuses a live document from an automation that has not made a test document yet. In test mode, every email, signing, acceptance and approval request goes to the person testing: the person signed in to the AI client, or the workspace owner when an API key is used. A member picked under **Test messages go to** in the automation settings gets every test instead. The result names the address the test went to and who a live run would reach. Test documents are watermarked and never billed.
 
+<Frame>
+  <img src="/images/test-mode/assistant-result-test.png" alt="The document card in the AI client after a test. It shows the Test label and says the test is in your inbox at your address, and live it would go to the client." />
+</Frame>
+
 **Confirmation before a send:** before anything goes out by email, DocsAutomator can ask you in a confirmation dialog that names the document and every recipient. Nothing is sent until you confirm. The dialog names who gets this run: you for a test, your recipients for a live send. [How AI clients use DocsAutomator](/integrations-api/how-ai-clients-use-docsautomator#a-confirmation-dialog-in-your-ai-client) lists when it asks and which AI clients show the dialog.
 
 **Example prompts:**

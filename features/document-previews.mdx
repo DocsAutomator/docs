@@ -29,7 +29,7 @@ Generate an unlimited amount of previews without wasting credits. Document previ
     - Every email, signing, acceptance and approval request goes to the person testing, never to your recipients
 
     <Info>
-    Test: everything comes to you. Live: it goes to your client. A test you start in the app comes to you. Runs from Airtable buttons, Zapier, Make, webhooks, polling or the API come to the workspace owner. To send every test of an automation to one member instead, pick that member under **Test messages go to** in the automation settings. Only workspace members can be picked.
+    Test: everything comes to you. Live: it goes to your client. A test you start in the app comes to you. A run that names a team member in `actingUserEmail` comes to that member, if they belong to the workspace. Other runs from Airtable buttons, Zapier, Make, webhooks, polling or the API come to the workspace owner. A member picked under **Test messages go to** in the automation settings gets every test of that automation instead. Only workspace members can be picked.
     </Info>
 
     <Tip>
@@ -60,7 +60,7 @@ Generate an unlimited amount of previews without wasting credits. Document previ
 | Feature | Test Mode | Production Mode |
 |---------|--------------|-----------------|
 | PDF Watermark | Yes | No |
-| Google Doc Header | "TEST: NOT FOR DISTRIBUTION" | None |
+| Google Doc Header (saved Google Doc only) | "TEST: NOT FOR DISTRIBUTION" | None |
 | Document Name Prefix | `[TEST]` | None |
 | Credit Usage | None | 1 per document |
 | PDF Quality | Full | Full |

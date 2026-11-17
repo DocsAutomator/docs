@@ -11,10 +11,10 @@ mode: "center"
   Test: everything comes to you. Live: it goes to your client.
 
   - In test mode, every email, signing, acceptance and approval request goes to the person testing, never to your recipients. Before, a test sent the real email to the real person.
-  - A test you start in the app, or in Claude or ChatGPT, comes to you. Runs from Airtable buttons, Zapier, Make, webhooks, polling or the API come to the workspace owner.
+  - A test you start in the app, or in Claude or ChatGPT, comes to you. A run that names a team member in `actingUserEmail` comes to that member. Other runs from Airtable buttons, Zapier, Make, webhooks, polling or the API come to the workspace owner.
   - To send every test of an automation to one member, pick them under **Test messages go to** in the automation settings. Only workspace members can be picked.
   - Each test email and signing page names the address a live run would reach. A signing test with several roles comes to you once per role.
-  - Test documents are now named `[TEST]` and carry the header "TEST: NOT FOR DISTRIBUTION". They stay watermarked and free.
+  - Test documents are now named `[TEST]`, and a saved Google Doc of a test carries the header "TEST: NOT FOR DISTRIBUTION". Test documents stay watermarked and free.
   - API: send `"mode": "test"` to run a request as a test (`isPreview: true` still works). The `createDocument` response adds `mode`, `testRecipient` and `recipients`, and every webhook adds `mode`. See [Create document](/api-reference/documents/create-from-api).
 </Update>
 

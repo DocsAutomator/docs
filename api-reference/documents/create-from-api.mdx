@@ -44,7 +44,7 @@ POST https://api.docsautomator.co/createDocument
 </ParamField>
 
 <ParamField body="mode" type="string">
-  `"test"` runs this request as a test, even when the automation is live. A test document is watermarked and free, and every email, signing, acceptance and approval request goes to the person testing, never to your recipients. With an API key, the person testing is the workspace owner, or the member picked under **Test messages go to** in the automation settings. Without `mode`, the automation's own setting decides. A request can never force live: an automation in test mode runs every request as a test. `isPreview: true` is still accepted and means the same as `"mode": "test"`.
+  `"test"` runs this request as a test, even when the automation is live. A test document is watermarked and free, and every email, signing, acceptance and approval request goes to the person testing, never to your recipients. With an API key, the person testing is the team member named in `actingUserEmail` if they belong to the workspace, and otherwise the workspace owner. A member picked under **Test messages go to** in the automation settings gets every test instead. Without `mode`, the automation's own setting decides. A request can never force live: an automation in test mode runs every request as a test. `isPreview: true` is still accepted and means the same as `"mode": "test"`.
 </ParamField>
 
 <ParamField body="skipEsign" type="boolean" default="false">

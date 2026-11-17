@@ -1,0 +1,89 @@
+---
+title: "HubSpot"
+description: "Create documents from HubSpot deals, tickets and other records, get them signed, and file the PDF back on the record"
+icon: "/icons/hubspot.svg"
+---
+
+DocsAutomator connects to HubSpot directly. You create a document from a deal, ticket, contact, company or custom object with a button on the record or with a step in a HubSpot workflow. The PDF comes back to the record as a note. With signing or acceptance on, the signed PDF comes back as well.
+
+<Info>
+New to DocsAutomator? Start with the [Quickstart Guide](/docsautomator-basics/quickstart-guide).
+</Info>
+
+## What you need
+
+- A HubSpot user with Super Admin rights connects HubSpot for the whole team.
+- The button on the record works on every HubSpot plan.
+- Workflows need HubSpot Professional or Enterprise. Custom objects need HubSpot Enterprise.
+
+## Connect HubSpot
+
+1. In DocsAutomator, open **Settings**, then **Integrations**, and click **Connect** next to HubSpot.
+2. Choose your HubSpot account and approve the permissions.
+
+Connecting installs the DocsAutomator app in your HubSpot account. One HubSpot account connects to one DocsAutomator workspace. If another workspace already uses it, disconnect it there first.
+
+## Create an automation
+
+1. Create an automation and choose **HubSpot** as the data source.
+2. Under **Create documents from**, choose the record type: deals, tickets, contacts, companies or one of your custom objects.
+3. Map the placeholders of your template to HubSpot properties. A placeholder whose name matches a property, such as `{{deal_dealname}}` or `{{contact_email}}`, needs no mapping.
+4. For a table, use `{{line_items_1}}`. A deal's line items fill it by themselves. You can also fill a table with associated records, such as a company's deals.
+5. Pick a record in the record picker and click **Preview** to check the document.
+
+## Create a document from the record
+
+Add the DocsAutomator card to your records:
+
+1. In HubSpot, open **Settings**, **Integrations**, **Connected apps**, **DocsAutomator**, then the **Settings** tab and **App cards**.
+2. Find DocsAutomator and click **Manage locations**.
+3. On the tab of your record type, under **Record Page**, tick DocsAutomator in the **Right sidebar** column for **Default view**, then click **Save**.
+4. HubSpot adds the card at the bottom of the right sidebar. To move it up, open a record, click **Customize**, drag DocsAutomator to the top of the right column, then click **Save and exit**.
+
+Then open a record, choose the automation in the DocsAutomator card, and click **Create document**. When signing or acceptance is on, the button reads **Create and send**. The PDF appears on the record as a note, and the card links to it.
+
+## Create documents in a workflow
+
+1. In HubSpot, open **Automation**, then **Workflows**. Create a workflow for your record type, or open one you have.
+2. Add an action, search for **Create document with DocsAutomator**, and choose it.
+3. Leave the target record on the enrolled record. Under **Automation**, choose your automation.
+4. Save the workflow and turn it on.
+
+Each run puts the PDF on the record as a note. Later steps can use these outputs:
+
+| Output | What it holds |
+|---|---|
+| Document link | The link to the PDF |
+| Mode (test or live) | `test` when the automation runs in test mode, otherwise `live` |
+| Error code and Error message | Why a run failed |
+
+When a run fails, the workflow continues and its history shows the reason, for example that HubSpot needs to be reconnected.
+
+## Signing and acceptance
+
+- The signer is the record's primary contact by default. You can change it in the signing settings.
+- After signing, the signed PDF comes back to the record as a second note.
+- If a signer declines or the request expires, a note on the record says so.
+- **After signing, move the deal to**: choose a stage for each pipeline. The default is to leave the deal where it is, because a won stage changes your revenue reports.
+- A workflow step finishes when the document is sent, not when it is signed. To act on the signature, start a workflow on the new stage.
+
+## Write back to properties
+
+- **Save PDF URL to HubSpot** writes the document link into a property you choose.
+- The signing status ("Sent for signing", "Signed", "Declined", "Expired") can go into a property you choose.
+
+## When the connection stops working
+
+DocsAutomator checks the HubSpot connection every day. If it stops working, the workspace owners get one email with a reconnect link, and the card shows **Reconnect DocsAutomator**. Runs fail with a reconnect message until you reconnect in **Settings**, **Integrations**.
+
+<Warning>
+Reconnecting HubSpot reinstalls the app and removes the card from your records. Add the card again with the steps under "Create a document from the record".
+</Warning>
+
+## Disconnect or uninstall, and what happens to your data
+
+- **Disconnect in DocsAutomator** (Settings, Integrations): DocsAutomator removes the app and its cards from your HubSpot account and deletes the stored HubSpot tokens immediately.
+- **Uninstall in HubSpot** (Settings, Integrations, Connected apps): the app stops working immediately. DocsAutomator marks the connection as broken and stops runs from HubSpot.
+- **Data in HubSpot**: the notes and PDFs that DocsAutomator filed on your records stay in HubSpot. They belong to you.
+- **Data in DocsAutomator**: your automations and templates stay, so you can reconnect later. Generated documents follow the expiry you set. The run log keeps only record ids after 90 days. To delete your account and its data, contact [support](mailto:support@docsautomator.co).
+- What DocsAutomator stores and for how long is described in the [privacy policy](https://docsautomator.co/privacy-policy).

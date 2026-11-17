@@ -87,6 +87,10 @@ Approvers cost nothing. DocsAutomator charges for documents, not for people.
 
 Some approvers should not need a DocsAutomator account, for example a client who approves a quote. This is the default: **Approvers need an account** is off in the **Approvals** card of the automation. The switch shows when the automation has an approver field or takes approvers from the request. Owners and admins can change it.
 
+<Frame caption="Approvers need an account is off by default.">
+  <img src="/images/approvals/approvals-need-account-off.png" alt="The Approvals card with the approver field Account Manager Email and the switch Approvers need an account turned off" />
+</Frame>
+
 With the switch off, a person who is not on your team approves or rejects from the link in their own approval email. In API answers and webhooks, this approver shows `"linkOnly": true`. They do not sign up and do not join the workspace. The link works only for that person and only for that document. It stops working when the approval closes or expires. DocsAutomator keeps the approver's email, the time and the IP address of each decision.
 
 Team members still log in to decide. Turn the switch on when every approver must join your workspace first.

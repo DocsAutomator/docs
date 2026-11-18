@@ -510,7 +510,7 @@ output.set("holdId", result.holdId || "");
 | `signingSessionId` | E-signature is enabled |
 | `signingStatus` | E-signature is enabled (`"created"`, `"queued"`, or `"awaiting_approval"` when the automation needs [approval](/features/approvals)) |
 | `signingLinks` | E-signature is enabled (array of signer objects with `signerIndex`, `email`, `name`, `signingUrl`, `status`). Absent while the session waits for approval |
-| `approval` | The document waits for [approval](/features/approvals) (`status`, `rule` (`"all"` or `"any"`), `approvers`, each with `name`, `email` and, when set, `source` (`"fixed"`, `"field"` or `"request"`) and `invited`, `condition`, and `fieldApprovers` when the approvers came from your data or the request) |
+| `approval` | The document waits for [approval](/features/approvals) (`status`, `rule` (`"all"` or `"any"`), `approvers`, each with `name`, `email` and, when set, `source` (`"fixed"`, `"field"` or `"request"`), and `linkOnly: true` for a person outside your team who decides from the email link or `invited: true` for one who must join your workspace first; then `condition`, and `fieldApprovers` when the approvers came from your data or the request) |
 | `signingDeliveryMethod` | E-signature is enabled |
 | `esignSkipped` | E-signature is enabled but skipped for this request via `skipEsign: true` |
 | `mode` | Always: `"test"` or `"live"` |

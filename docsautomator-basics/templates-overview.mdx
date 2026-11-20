@@ -1,6 +1,6 @@
 ---
 title: 'Templates Overview'
-description: 'Choose the right template type for your document automation — Google Docs, PDF, or native Word (.docx)'
+description: 'Choose the right template type for your document automation: Google Docs, PDF, native Word (.docx), or a spreadsheet (Google Sheets or Excel)'
 icon: 'files'
 keywords:
   [
@@ -26,7 +26,7 @@ DocsAutomator supports multiple template types so you can pick the best fit for 
 
 ## Template Types
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
   <Card
     title="Google Doc"
     icon="file-lines"
@@ -54,20 +54,30 @@ DocsAutomator supports multiple template types so you can pick the best fit for 
     syntax as Google Docs. Stays a `.docx` for its whole life and renders
     straight to PDF. Best when your team designs documents in Microsoft Word.
   </Card>
+  <Card
+    title="Spreadsheet (Google Sheets or Excel)"
+    icon="table"
+    href="/docsautomator-basics/spreadsheet-template-guide"
+  >
+    Use a Google Sheet or an Excel file as your template, with placeholders in
+    any cell. Formulas calculate with your data, and line items add rows. Best
+    when your invoices or quotes already live in a spreadsheet.
+  </Card>
 </CardGroup>
 
 ## Which Should I Use?
 
-|                                                        | Google Doc | PDF | Word (.docx)       |
-| ------------------------------------------------------ | ---------- | --- | ------------------ |
-| **Dynamic content** (variable-length text, line items) | Yes        | No  | Yes                |
-| **Fixed layout** (exact positioning)                   | No         | Yes | No                 |
-| **Line items & repeating rows**                        | Yes        | No  | Yes (single level) |
-| **Nested (multi-level) line items**                    | Yes        | No  | No                 |
-| **Conditional content** (show/hide sections)           | Yes        | No  | Yes                |
-| **E-signatures**                                       | Yes        | Yes | Yes                |
-| **Pixel-perfect design**                               | No         | Yes | No                 |
-| **Edit in Microsoft Word**                             | No         | No  | Yes                |
+|                                                        | Google Doc | PDF | Word (.docx)       | Spreadsheet        |
+| ------------------------------------------------------ | ---------- | --- | ------------------ | ------------------ |
+| **Dynamic content** (variable-length text, line items) | Yes        | No  | Yes                | Yes                |
+| **Fixed layout** (exact positioning)                   | No         | Yes | No                 | No                 |
+| **Line items & repeating rows**                        | Yes        | No  | Yes (single level) | Yes (single level) |
+| **Nested (multi-level) line items**                    | Yes        | No  | No                 | No                 |
+| **Conditional content** (show/hide sections)           | Yes        | No  | Yes                | No                 |
+| **Formulas that calculate with your data**             | No         | No  | No                 | Yes                |
+| **E-signatures**                                       | Yes        | Yes | Yes                | Yes                |
+| **Pixel-perfect design**                               | No         | Yes | No                 | No                 |
+| **Edit in Microsoft Word**                             | No         | No  | Yes                | No                 |
 
 <Note>
   To get one document signed without an automation, use your file or a template

@@ -149,7 +149,7 @@ A discount on the whole invoice, for example a 10 % loyalty discount, has its ow
 </Frame>
 
 - **Empty means no discount.** A record without a discount amount or percent, or with 0, gets an e-invoice without a discount.
-- **Percent:** the number counts as written, in percent. `10` and `10 %` mean 10 %, and `0,5` and `0.5` mean 0.5 %. An Airtable percent field that shows 10 % also means 10 %. The amount is rounded to the cent.
+- **Percent:** the number counts as written, in percent. `10` and `10 %` mean 10 %, and `0,5` and `0.5` mean 0.5 %. An Airtable percent field that shows 10 % also means 10 %. A number field below 1, such as 0.5, counts as a fraction (50 %), so for half a percent use a percent field or type `0,5 %`. The amount is rounded to the cent.
 - **Amount and percent both mapped:** the amount counts, so a rounded percent on your document never stops a run.
 - **VAT rate:** with one VAT rate on the lines, the discount takes that rate. With reverse charge, intra-EU supplies and small businesses, the discount carries no VAT, like the lines.
 - **Credit notes:** a discount stored as a negative number works too; the e-invoice shows it as a positive discount.

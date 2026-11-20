@@ -70,7 +70,7 @@ The field can hold the plain names a person types, or the codes:
 | Document type | Invoice, Rechnung or 380; Credit note, Gutschrift, Rechnungskorrektur or 381 |
 | VAT treatment | Standard VAT; Reverse charge, domestic, §13b or §13b UStG; Reverse charge, EU business customer or Reverse charge EU; Intra-EU supply of goods or innergemeinschaftliche Lieferung; Small business, Kleinunternehmer or §19 UStG |
 
-Upper and lower case, spaces and punctuation do not matter. When the field is empty in a record, the choice in the select applies. Any other value stops the run with a message that names the field and lists the values above, for example `Document type "Angebot" in the field "Belegart" is not a valid choice.`
+Upper and lower case, spaces and punctuation do not matter. When the field is empty in a record, the choice in the select applies. Any other value, also a number such as `19`, stops the run with a message that names the field and lists the values above, for example `Document type "Angebot" in the field "Belegart" is not a valid choice.`
 
 ### Seller for one automation
 
@@ -149,7 +149,7 @@ A discount on the whole invoice, for example a 10 % loyalty discount, has its ow
 </Frame>
 
 - **Empty means no discount.** A record without a discount amount or percent, or with 0, gets an e-invoice without a discount.
-- **Percent:** `10`, `10 %` and an Airtable percent field (stored as 0.1) all mean 10 %. A fixed text such as `0,5` means 0.5 %. The amount is rounded to the cent.
+- **Percent:** the number counts as written, in percent. `10` and `10 %` mean 10 %, and `0,5` and `0.5` mean 0.5 %. An Airtable percent field that shows 10 % also means 10 %. The amount is rounded to the cent.
 - **Amount and percent both mapped:** the amount counts, so a rounded percent on your document never stops a run.
 - **VAT rate:** with one VAT rate on the lines, the discount takes that rate. With reverse charge, intra-EU supplies and small businesses, the discount carries no VAT, like the lines.
 - **Credit notes:** a discount stored as a negative number works too; the e-invoice shows it as a positive discount.

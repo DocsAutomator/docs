@@ -1,0 +1,33 @@
+name: Docs build
+
+# Runs the Mintlify checks on every pull request and every push to main:
+# `mint validate` (it must build without errors) and `mint broken-links`.
+# The job name "docs-build" is the name to list among the required checks.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docs-build:
+    name: docs-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # ponytail: mint pinned to the version checked by hand; bump it on purpose.
+      - name: mint validate
+        run: npx -y mint@4.3.49 validate
+      - name: mint broken-links
+        run: npx -y mint@4.3.49 broken-links

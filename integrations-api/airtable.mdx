@@ -150,6 +150,12 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
 
     Copy the provided script into Airtable's automation action. Define the Record ID parameter to pass the triggering record's identifier.
 
+    The script needs an API key. It shows `YOUR_API_KEY` until you click **Create a key for this** in the setup guide, which fills in a new key. See [API keys](/more/finding-your-api-key).
+
+    <Frame caption="The automation script shows YOUR_API_KEY in the Authorization line until you create a key.">
+      <img src="/images/api-keys/setup-airtable-script.png" alt="The Airtable automation script in the setup guide with Bearer YOUR_API_KEY in the Authorization header" />
+    </Frame>
+
     <Frame>
       <img src="/images/airtable/automation-script.png" alt="Trigger from Airtable dialog showing the automation script to copy, with the API key and document id replaced by placeholders" />
     </Frame>
@@ -159,10 +165,12 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
     </Info>
   </Tab>
   <Tab title="Button or Formula Field">
-    Add a webhook URL to a button or formula field in your table. Clicking the button triggers document generation — the PDF appears within seconds and stores in Airtable.
+    Copy the formula from the setup guide into a button or formula field in your table. Clicking the button creates the document. The PDF appears within seconds and is saved in Airtable.
 
-    <Frame>
-      <img src="/images/airtable/webhook-setup.png" alt="Trigger from Airtable dialog showing the formula to paste into a button or formula field, and the Run Test button" />
+    The formula needs no API key. It already contains a link that works for this one automation only.
+
+    <Frame caption="Copy the formula into a button or formula field. Its link needs no API key.">
+      <img src="/images/airtable/webhook-setup.png" alt="Trigger from Airtable dialog with the formula to paste into a button or formula field, a Copy button and a Run Test button. The signed link in the formula is partly hidden." />
     </Frame>
 
     <Tip>
@@ -177,7 +185,7 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
     Install the DocsAutomator Airtable Extension for a dedicated document generation UI directly inside Airtable.
 
     1. Install the DocsAutomator Extension from the Airtable Marketplace
-    2. Copy your API key from DocsAutomator account settings into the extension
+    2. Click **Create a key for this** in the setup guide, or create a key in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api). Paste the key into the extension. See [API keys](/more/finding-your-api-key).
     3. Select your automation and generate documents from any record
   </Tab>
   <Tab title="Interface Button">

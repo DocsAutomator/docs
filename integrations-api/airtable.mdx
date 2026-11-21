@@ -41,7 +41,7 @@ Generated files automatically save to specified Airtable fields.
     - **Google Doc URL field**: Stores URLs for generated Google Docs (optional)
   </Step>
   <Step title="Map Fields and Line Items">
-    Connect all applicable fields from your Airtable table. For line items, select the linked field and corresponding view to determine sort order.
+    Connect all applicable fields from your Airtable table. For line items, select the linked field. To order the rows, choose a field of the linked table under Sort by and pick ascending or descending.
 
     <Frame>
       <img src="/images/airtable/field-mapping.png" alt="Data / Placeholders panel showing the Airtable base, primary table, document name field and the mapped placeholders" />
@@ -49,6 +49,10 @@ Generated files automatically save to specified Airtable fields.
 
     <Frame>
       <img src="/images/airtable/line-item-mapping.png" alt="Line Items section showing the linked field, view, sort order, auto number toggle and the mapped level 1 fields" />
+    </Frame>
+
+    <Frame caption="Pick a field under Sort by and choose the order of the line item rows.">
+      <img src="/images/airtable/line-item-sort-by.png" alt="Line Items section of an Airtable automation with the linked field Line Items, no view, Sort by set to Position and the order menu open with 1 to 9 and 9 to 1" />
     </Frame>
   </Step>
   <Step title="Create Previews">
@@ -245,8 +249,8 @@ When the run has finished, you can download the documents in two ways:
   <Accordion title="Locale Settings" icon="globe">
     Control number/currency notation (comma vs. dot) in automation template settings under Document Generation Options.
   </Accordion>
-  <Accordion title="View Sorting" icon="sort">
-    Line item sort order follows the selected view's configuration.
+  <Accordion title="Line Item Sorting" icon="sort">
+    Line items keep the order of the linked records in Airtable. To sort them, choose a field of the linked table under Sort by in the line item settings, then choose ascending or descending. If you select a view for a line item instead, the view decides which records appear and in which order, and Sort by is turned off.
   </Accordion>
   <Accordion title="Professional Integration Service" icon="wrench">
     Professional assistance available for integrating DocsAutomator into existing workflows (service fee applies).

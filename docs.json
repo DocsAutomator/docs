@@ -23,7 +23,7 @@
     }
   },
   "banner": {
-    "content": "E-signing and acceptance are now included in every plan, at no extra cost. [Set it up](/docs/features/docsautomator-esign)",
+    "content": "New: DocsAutomator now works inside HubSpot. [See the setup guide →](https://docsautomator.co/docs/integrations-api/hubspot)",
     "dismissible": true
   },
   "appearance": {
@@ -98,6 +98,7 @@
                   "integrations-api/google-forms",
                   "integrations-api/smartsuite",
                   "integrations-api/clickup",
+                  "integrations-api/hubspot",
                   "integrations-api/glide",
                   "integrations-api/noloco",
                   "integrations-api/softr",

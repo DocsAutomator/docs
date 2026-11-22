@@ -5,6 +5,173 @@ rss: true
 mode: "center"
 ---
 
+<Update label="November 20, 2026">
+  ## HubSpot
+
+  DocsAutomator now connects to HubSpot directly. Create a document from a deal, ticket, contact, company or custom object with the DocsAutomator card on the record, or with the **Create document with DocsAutomator** step in a HubSpot workflow (HubSpot Professional or Enterprise). The PDF comes back to the record as a note.
+
+  - Deal, contact, company and line item properties fill your template. A deal's line items fill a table by themselves.
+  - With signing or acceptance on, the record's primary contact signs, and the signed PDF comes back to the record. You can move the deal to a stage you choose after signing.
+  - DocsAutomator checks the connection every day and emails the workspace owners if it needs to be reconnected.
+
+  See [HubSpot](/integrations-api/hubspot) for the setup, or [watch the demo](https://youtu.be/vNobVxFmi2M).
+</Update>
+
+<Update label="Week of November 16, 2026">
+  ## One page for one-off documents
+
+  The Send for signature page is now the one page for a single document. Fill in a template, then click **Download PDF** or send it for signature. Open it from **New document**, **One document** on the Documents page, or **Create document** on a template. The preview updates as you type, without a page reload. On a trial a download is a free, watermarked test; on a paid plan the app asks first, because a new PDF counts as one document. See [Send for signature](/features/docsautomator-esign/send-for-signature).
+
+  ## E-invoices: a discount on the whole invoice, and settings per record
+
+  - Map a discount on the whole invoice, as an amount or as a percent of the line total, with an optional reason.
+  - Map the document type and the VAT treatment from your data, so each record can set its own. The automation setting stays the fallback.
+
+  See [E-invoices](/features/e-invoices).
+
+  ## Markdown keeps your template's style
+
+  - In Word templates, lists, quotes, headings and paragraphs from a Markdown placeholder now keep the paragraph style of the template. A "No spacing" list no longer gets extra space after each line.
+  - In Google Docs templates, a label next to a Markdown placeholder, such as a bold "Label:", keeps its formatting.
+
+  See [Markdown formatting](/features/advanced-placeholder-options/enable-markdown-formatting).
+
+  ## Faster, more reliable image conversion
+
+  Images in your documents now convert on our own service. iPhone photos (HEIC) convert faster, and large images no longer stop at a size limit. A very large or damaged PNG image now renders, or fails at once with a clear message.
+
+  ## HubSpot
+
+  - The DocsAutomator card on a HubSpot record now says where a test goes, for example "Test: the request goes to you. Live, it asks the contact to sign." While your email address is not confirmed, the card says that signing requests are locked.
+  - After you connect HubSpot for the first time, **Set it up with the AI Agent** in Settings, Integrations starts the Agent on a first quote from a deal.
+  - HubSpot now comes right after Airtable in every list of data sources.
+  - The [HubSpot guide](/integrations-api/hubspot) has a new "Get help" section.
+
+  ## Approval emails reach the inbox
+
+  Approval request emails now have a subject that starts with "Approval request", and the button says **Approve or reject**. With this wording, Microsoft 365's default filters no longer mark them as phishing. See [Approvals](/features/approvals).
+
+  ## Dates that read one way
+
+  Signing emails and the signing page now write dates with the month name in the signer's language, for example "11 December 2026" or "11. Dezember 2026". Before, "12/11/2026" could be read as 12 November or 11 December.
+
+  ## Simpler lists and sign-in
+
+  - The Automations page now has two buttons, **New folder** and **New automation**, instead of a New menu. My Templates has **New folder** and **Upload template**.
+  - A new account starts from its own template: the empty Documents page asks you to drop a PDF or Word file, or pick one from Google Drive, OneDrive or the gallery.
+  - Click anywhere on a template upload area to pick a file.
+  - The email login now gives one message for a wrong address and a wrong password, and pauses password login on that account for 15 minutes after 10 failed tries.
+
+  ## Fixes
+
+  - One Word document that the PDF converter cannot finish no longer blocks other documents. It fails after about 2 minutes with a clear message, and the documents behind it convert.
+  - The banner of a test signing email names the signer the same way the greeting does.
+  - Before a run, the app warns when an acceptance recipient has no email address.
+  - Rotated pages in the signing viewer now fit and sit in the center.
+  - A signing email whose custom body is empty now sends the default email with the sign button.
+  - Email conditions in the automation editor now show each condition as a readable card.
+  - Long document names now use the free width in the page header and the Documents list.
+  - Word templates whose automation was deleted show their preview again in My Templates.
+  - A failed run now shows the name from the request in the Documents list, not "Untitled document".
+  - When your session is refreshed, you stay on the page you opened instead of landing on the home page.
+  - Sign-in, Settings tabs, PDF previews and the AI Agent panel open faster.
+  - A copy button now says "Copied" only when the copy worked.
+  - Merge PDFs: when an attached PDF link is left out, the run log and the API response now say which host and why.
+  - In the AI Agent, sample records show as readable field and value lines.
+  - Template gallery: the five quotation templates have repeating item rows and a client signature block. The Bank Statement and Statement of Account templates list every transaction.
+  - API: `PUT /updateAutomation` now returns `ignoredKeys`, the keys it did not save, and accepts the `approval` block that `GET /automation` returns, unchanged.
+  - API: a queued `createDocument` now answers with the same `4xx` status as a direct one. A disconnected data source account answers `400` with the code `SOURCE_ACCOUNT_DISCONNECTED`.
+  - API: `GET /queue/stats` and `GET /esign/queue/stats` count only your workspace's jobs.
+</Update>
+
+<Update label="November 17, 2026">
+  ## Test mode now sends everything to you
+
+  Test: everything comes to you. Live: it goes to your client.
+
+  - In test mode, every email, signing, acceptance and approval request goes to the person testing, never to your recipients. Before, a test sent the real email to the real person.
+  - A test you start in the app, or in Claude or ChatGPT, comes to you. A run that names a team member in `actingUserEmail` comes to that member. Other runs from Airtable buttons, Zapier, Make, webhooks, polling or the API come to the workspace owner.
+  - To send every test of an automation to one member, pick them under **Test messages go to** in the automation settings. Only workspace members can be picked.
+  - Each test email and signing page names the address a live run would reach. A signing test with several roles comes to you once per role.
+  - Test documents are now named `[TEST]`, and a saved Google Doc of a test carries the header "TEST: NOT FOR DISTRIBUTION". Test documents stay watermarked and free.
+  - API: send `"mode": "test"` to run a request as a test (`isPreview: true` still works). The `createDocument` response adds `mode`, `testRecipient` and `recipients`, and every webhook adds `mode`. See [Create document](/api-reference/documents/create-from-api).
+</Update>
+
+<Update label="Week of November 9, 2026">
+  ## The Documents page replaces Run History
+
+  Run History and the separate signing page are gone. Everything they showed is now on the Documents page and on each document's own page.
+
+  - The **All runs** filter lists every run of every status, and the Auto Create events that were skipped.
+  - The document page shows the record a document came from, for example the Airtable record ID or the ClickUp task ID, with a copy button.
+  - The signing card on the document page shows the signing details and the audit trail.
+  - **Needs attention** now counts Airtable and Notion Auto Create triggers that got no event for 7 days.
+  - Error emails now link to the page of the failed document.
+
+  See [Documents](/features/documents).
+
+  ## More control on Send for signature
+
+  - Edit the signing email in the send dialog. It starts with the default text, and **Preview email** shows the final look.
+  - Choose the signers' language. The signing page, the emails and the dates follow it.
+  - Reminders are on by default, every 3 days. Turn them off or change the days for each send.
+  - The app asks before it sends a document with empty fields.
+  - A PDF template starts with the signing fields you saved for it in the PDF editor.
+  - On a trial, you send a test to yourself.
+
+  See [Send for signature](/features/docsautomator-esign/send-for-signature).
+
+  ## Send from a Microsoft 365 shared mailbox
+
+  An Outlook account can now send from a Microsoft 365 shared mailbox. Set **Send from** once on the Outlook account, and both signing emails and the Send Email step use it. See [Send Email](/features/actions-after-document-generation/send-email).
+
+  ## Expiry warnings go to the sender
+
+  The "expires in 2 days" email now follows the request's reminder setting: with reminders off, no warning goes out. When the automation has no notification recipients, the warning goes to the team member who sent the request.
+
+  ## Currency format starts with your currency
+
+  When you switch a placeholder to the Currency format, it now starts with the currency of the automation's locale, for example EUR for a German automation or CHF for a Swiss one. See [Format values](/features/advanced-placeholder-options/format-values).
+
+  ## Fixes
+
+  - In Word templates, show and hide rules that compare against a record field read that field again. Before, such a rule read an empty value.
+  - Group calculations now read every common form of a negative amount, such as "$-1.00", "−1" or "12,50-", and read ambiguous number separators from the rest of the column.
+  - In Google Docs, repeating sections keep the template's text size.
+  - New signature, initials and date fields in the PDF editor land on their line, and the signing page draws PDF template fields in the right place on rotated or cropped pages.
+  - When signing is on but a document has no signature fields, the run log and the API response now say so.
+  - With `skipEsign`, the signing tags stay visible again, so you can review and edit the document before you send it for signing.
+  - ClickUp's "Call webhook" action now gets an answer at once, so a slow run no longer puts a second PDF on the task.
+  - When you delete the Google Sheets column that holds the PDF links, the next document adds it back.
+  - A Google Sheets run for an empty row now says which row is empty, and template or data errors fail at once instead of retrying.
+  - Webhooks now go only to public addresses, and the app checks the address when you save a webhook URL.
+  - When someone leaves your workspace, their Claude, ChatGPT and other AI assistant access to it ends at once.
+  - The **Send reminder** button on the signing status card in ChatGPT and Claude now shows the result and sends only one reminder.
+  - A signed-out link, for example from an email, now returns you to that page after you sign in.
+  - When the AI Agent designs a template for a US, Canadian or Philippine automation, it uses US Letter paper.
+  - The Make module no longer shows "Status Code Error: 400" before you pick an automation.
+</Update>
+
+<Update label="Week of November 2, 2026">
+  ## Send a document for signature without an automation
+
+  On the Documents page, **New document**, **Send for signature** lets you upload a file or pick a template, fill in the values, place the signing fields and send it. The signing fields work as on automations: tags in Word and Google Docs, and the PDF field editor for PDFs. See [Send for signature](/features/docsautomator-esign/send-for-signature).
+
+  ## Sort by for every line item table
+
+  Every line item table can now be sorted, including Google Sheets, Google Forms, ClickUp, Make, Softr and Claude or ChatGPT. Airtable, SmartSuite and Notion keep their own Sort by on the linked field. See [Line items](/features/line-items).
+
+  ## Fixes
+
+  - A template with signing tags no longer prints the raw tags when a run starts no signing, for example with signing off or with **Create without sending**.
+  - Signing tags are now removed from the PDF in more fonts, also where Google draws "fi" or "fl" as one character.
+  - Negative Airtable durations now print the right time.
+  - The signing page loads the PDF on older Safari versions.
+  - The automation editor shows "Saving..." and "Saved" as you edit, and a disconnected Airtable shows a **Reconnect Airtable** button instead of an endless loading state.
+  - While a document generates, the app shows the current step.
+  - **Send a test to me** goes to Signer 1 only, so you get one email.
+</Update>
+
 <Update label="November 4, 2026">
   ## Disconnect Claude or ChatGPT from your workspace
 
@@ -55,7 +222,7 @@ mode: "center"
   When your data is in Airtable, Google Sheets, Notion, SmartSuite or ClickUp, Claude and ChatGPT set up the automation on the native integration, the same way you would in the app. From then on, the integration makes the document from the record: the same document for the same data, every time, with or without the chat. If the tool is not connected yet, the assistant gives you a link, and one click connects it to the right workspace.
 
   - **Zapier, Make, n8n, Glide, Softr or Noloco:** the assistant creates the automation and gives you the steps for that tool.
-  - **A tool without a DocsAutomator integration:** your AI agent brings the data. It reads the deal from your CRM, for example, and sends it with the request. DocsAutomator fills the same template the same way.
+  - **A tool without a DocsAutomator integration:** Claude or ChatGPT sends the data, for example a deal it reads from your CRM. DocsAutomator fills the same template the same way.
 
   ## Pick the right record
 
@@ -639,7 +806,7 @@ mode: "center"
   - Airtable and Notion triggers and the scheduled Google Sheets and Google Forms checks no longer start runs for automations that are switched off. Before, each such run failed with "Automation is not active".
   - When you change or remove the data source of an automation, the triggers of the old source are switched off.
   - Line item groups sort by date when the grouping field is a date. Before, they sorted as text, so "30.8." came after "1.9.".
-  - Signing completion emails now fill in `{{signerName}}` and `{{signerEmail}}` for each signer. Before, a body that started with "Hello {{signerName}}," sent "Hello ,".
+  - Signing completion emails now fill in `{{signerName}}` and `{{signerEmail}}` for each signer. Before, a body that started with `Hello {{signerName}},` sent `Hello ,`.
 </Update>
 
 <Update label="September 23, 2026">

@@ -52,6 +52,26 @@ Open an invoice automation and find its **E-invoice** section. Switch on **Creat
 | Intra-EU supply of goods | No VAT. Both VAT IDs and the delivery date are required. |
 | Small business, no VAT (§19 UStG) | No VAT on any line. |
 
+#### Document type and VAT treatment per record
+
+When your invoices and credit notes, or your VAT treatments, come from the same automation, each record can decide them:
+
+1. Under **Document type** or **VAT treatment**, click **Read it from the record instead**.
+2. Pick the field of your data source that holds the value.
+
+<Frame>
+  <img src="/images/e-invoices/format-per-record.png" alt="Format card with Document type from the record mapped to doc_type and VAT treatment from the record mapped to treatment" />
+</Frame>
+
+The field can hold the plain names a person types, or the codes:
+
+| Setting | Values the field can hold |
+|---|---|
+| Document type | Invoice, Rechnung or 380; Credit note, Gutschrift, Rechnungskorrektur or 381 |
+| VAT treatment | Standard VAT; Reverse charge, domestic, §13b or §13b UStG; Reverse charge, EU business customer or Reverse charge EU; Intra-EU supply of goods or innergemeinschaftliche Lieferung; Small business, Kleinunternehmer or §19 UStG |
+
+Upper and lower case and spaces do not matter. When the field is empty in a record, the choice in the select applies. Any other value, also a number such as `19`, stops the run with a message that names the field and lists the values above, for example `Document type "Angebot" in the field "Belegart" is not a valid choice.`
+
 ### Seller for one automation
 
 When one workspace invoices for several companies, an automation can use a different seller. Open **Use a different seller for this automation** in the automation's **Seller** card. It lists every seller field.
@@ -114,6 +134,27 @@ DocsAutomator recalculates every total from the lines: each line is quantity × 
 <Tip>
 Spreadsheets and databases often calculate VAT per line and round each line. On many lines this can drift by more than 1 cent. Calculate VAT once per rate on the summed line totals, as the e-invoice does.
 </Tip>
+
+### Discount on the whole invoice
+
+A discount on the whole invoice, for example a 10 % loyalty discount, has its own card. A discount on one line stays a line with a negative price.
+
+1. Open **Optional fields** in the **Discount** card.
+2. Map **Discount amount** to the field with the discount in euros, or **Discount percent** to the field with the percent of the line total.
+3. Optional: map **Discount reason**, for example a field that holds "Treuerabatt". When it is empty, the e-invoice says "Rabatt".
+4. When your lines have more than one VAT rate, set **Discount VAT rate** to the rate the discount reduces, for example a fixed `19`.
+
+<Frame>
+  <img src="/images/e-invoices/discount-card.png" alt="Discount card with Discount amount, Discount percent and Discount reason mapped to request keys and a fixed Discount VAT rate of 19" />
+</Frame>
+
+- **Empty means no discount.** A record without a discount amount or percent, or with 0, gets an e-invoice without a discount.
+- **Percent:** the number counts as written, in percent. `10` and `10 %` mean 10 %, and `0,5` and `0.5` mean 0.5 %. An Airtable percent field that shows 10 % also means 10 %. A number field below 1, such as 0.5, counts as a fraction (50 %), so for half a percent use a percent field or type `0,5 %`. The amount is rounded to the cent.
+- **Discount VAT rate:** the number counts as written, in percent, like the discount percent. `19` and `19 %` mean 19 %, and `0,5` and `0.5` mean 0.5 %. An Airtable percent field that shows 19 % also means 19 %, and a number field below 1, such as 0.19, counts as a fraction (19 %).
+- **Amount and percent both mapped:** the amount counts, so a rounded percent on your document never stops a run.
+- **VAT rate:** with one VAT rate on the lines, the discount takes that rate. With reverse charge, intra-EU supplies and small businesses, the discount carries no VAT, like the lines.
+- **Credit notes:** a discount stored as a negative number works too; the e-invoice shows it as a positive discount.
+- **Totals:** map **Gross total** to the total after the discount. The e-invoice recalculates the VAT per rate after the discount and checks the gross total within 1 cent. **Net total** can be the total before or after the discount.
 
 ### Final invoices
 
@@ -179,6 +220,10 @@ With every data source, the XML is also saved next to the PDF in your Google Dri
 | Leitweg-ID or buyer reference is empty. XRechnung requires it. | Map the Leitweg-ID, or the buyer's reference. |
 | Payment terms and due date are both empty. | Map one of them, or enter fixed payment terms. |
 | Amount already paid cannot be larger than the gross total. | Map the full gross total to **Gross total**, and the paid partial invoices to **Amount already paid**. |
+| Gross total does not match the line items, on an invoice with a discount | Map **Gross total** to the total after the discount, and check that the discount reduces the right VAT rate. |
+| Discount VAT rate is empty. The line items have more than one VAT rate. | Set **Discount VAT rate** in the **Discount** card. |
+| No line item has 7 % VAT, so the discount cannot use that rate. | Set the discount's VAT rate to a rate that your lines use. |
+| Document type "…" in the field "…" is not a valid choice. | Use one of the listed values in that field, or leave it empty to use the setting. |
 | Seller name is empty in the mapped field. | Fill that field in the record, or clear the field under **Use a different seller for this automation**. |
 | Seller IBAN is empty for this automation's seller. | The automation uses another company: enter its IBAN under **Use a different seller for this automation**. |
 | Seller name has more than one value. Pick a field with one value. | Pick a field that holds one company, not a list. |

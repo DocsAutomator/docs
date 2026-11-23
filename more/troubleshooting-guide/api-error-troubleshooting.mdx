@@ -93,7 +93,7 @@ The API returns `402 Payment Required`, indicating your document generation quot
 4. If overage billing is already enabled, this error means the overage cap was also reached
 
 <Info>
-Preview mode documents do not count against your quota. Set `"isPreview": true` in your request for testing.
+Test documents do not count against your quota. Send `"mode": "test"` in your request, or keep the automation in test mode, while you test.
 </Info>
 
 ## 404 Not Found

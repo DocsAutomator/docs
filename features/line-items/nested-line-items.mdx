@@ -96,7 +96,7 @@ Nesting is defined by the placeholder names themselves: `{{line_items_1}}` start
 
 ## Best Practices
 
-- Use Airtable views or Notion / Airtable sort settings for consistent order
+- Set Sort by in the line item settings of each level for a consistent order
 - Test with small datasets before large batches
 - Design columns so nested rows align logically with parents
 - Use clear, meaningful field names for easier maintenance
@@ -106,5 +106,5 @@ Nesting is defined by the placeholder names themselves: `{{line_items_1}}` start
 | Issue | Solution |
 |-------|----------|
 | Nested rows not appearing | Verify the linked records or Relation pages contain data; check that Level 2/3 links are selected in DocsAutomator; ensure placeholders use the correct prefixes |
-| Wrong nesting order | Check Airtable view sorting or Notion relation order; configure sorting in DocsAutomator's line item settings |
+| Wrong nesting order | Set Sort by in DocsAutomator's line item settings for each level; without it, rows follow the order of the linked records |
 | Merged cells misaligned | Ensure template table has correct column count; verify each level's placeholders are in separate rows |

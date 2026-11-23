@@ -156,6 +156,8 @@ mode: "center"
   - A signed-out link, for example from an email, now returns you to that page after you sign in.
   - When the AI Agent designs a template for a US, Canadian or Philippine automation, it uses US Letter paper.
   - The Make module no longer shows "Status Code Error: 400" before you pick an automation.
+  - A document you send for signature no longer runs the template's own outputs, such as saving to OneDrive or webhooks, before or after signing.
+  - Workspace names and people's names that contain characters such as `<` or `&` now show correctly in signing and team emails.
 </Update>
 
 <Update label="Week of November 2, 2026">
@@ -176,6 +178,9 @@ mode: "center"
   - The automation editor shows "Saving..." and "Saved" as you edit, and a disconnected Airtable shows a **Reconnect Airtable** button instead of an endless loading state.
   - While a document generates, the app shows the current step.
   - **Send a test to me** goes to Signer 1 only, so you get one email.
+  - A signing link with extra characters after it, for example from an email client, now opens the signing page. Before, the page showed an error.
+  - In an automation's signing panel, "Email is required." now shows only after you leave an empty email field.
+  - The AI Agent in the app no longer stops with an error during long template edits.
 </Update>
 
 <Update label="November 4, 2026">

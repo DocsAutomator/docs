@@ -132,12 +132,24 @@ DocsAutomator's Google Sheets integration enables rapid document generation from
     Add a formula to create clickable links that trigger document generation when clicked.
     </Tip>
 
+    Copy the formula from the setup guide as it is. It needs no API key: the link in it works for this one automation only.
+
+    <Frame caption="Copy the formula into your sheet. Its link needs no API key.">
+      <img src="/images/api-keys/google-sheets-formula.png" alt="Integration Setup for Google Sheets with the HYPERLINK formula that adds a GENERATE DOC link to each row, a Copy button, Open Google Sheet and Run Test. The signed link is partly hidden." />
+    </Frame>
+
     <Info>
     When you click a generation link, DocsAutomator opens a **"Generate this document?"** confirmation page, and the document is created only after you click **Generate document**. This prevents accidental duplicates from browser link prefetching, link scanners, or double-clicks. If the same generation is re-submitted (a double-click or a page refresh), it is treated as a duplicate and not generated again, with a **Generate another copy** option for when you want a second document on purpose.
     </Info>
   </Tab>
   <Tab title="Apps Script">
     Custom menu button for batch generation. Ideal for generating multiple documents at once.
+
+    The Apps Script code needs an API key. It shows `YOUR_API_KEY` until you click **Create a key for this** in the setup guide. See [API keys](/more/finding-your-api-key).
+
+    <Frame caption="The Apps Script code shows YOUR_API_KEY in the Authorization line until you create a key.">
+      <img src="/images/api-keys/setup-google-sheets-script.png" alt="The Google Sheets Apps Script in the setup guide with Bearer YOUR_API_KEY in the Authorization header" />
+    </Frame>
   </Tab>
 </Tabs>
 

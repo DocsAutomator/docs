@@ -23,6 +23,10 @@ Signature and acceptance run on the same rail. Both send the document by email o
   Setup, what the recipient sees, the Certificate of Acceptance, and billing.
 </Card>
 
+<Card title="Send one document for signature" icon="paper-plane" href="/features/docsautomator-esign/send-for-signature">
+  No automation needed: pick a file or template, add the signing fields and send.
+</Card>
+
 The rest of this page describes the **Signature required** option: signature fields, signers, emails, reminders, delivery, and webhooks. Most settings also apply to acceptance. The acceptance page lists the differences.
 
 <Frame>
@@ -113,7 +117,7 @@ By default, generating a document from an e-sign-enabled automation starts the s
 }
 ```
 
-The document is generated and delivered normally (Drive save, email, webhook), but no signing session is created and no signing invitations are sent. For Google Docs and Word templates, the `{{esign.*}}` tags remain visible in the output so reviewers can see where signature blocks will be placed; PDF templates simply leave those areas blank. Once the document is approved, run the same request again **without** `skipEsign` to send it for signing.
+The document is generated and delivered normally (Drive save, email, webhook), but no signing session is created and no signing invitations are sent. For Google Docs and Word templates, the `{{esign.*}}` tags are removed from the output. PDF templates leave those areas blank. Once the document is approved, run the same request again **without** `skipEsign` to send it for signing.
 
 This makes two-step approval flows easy to build — e.g. two Airtable buttons triggering the same automation: "Draft for Review" (with `skipEsign: true`) and "Send for Signing" (without it).
 
@@ -159,6 +163,14 @@ For a review by named team members, with an email to each approver and an Approv
 | Your Outlook | Sent from a connected Microsoft (Outlook) account |
 
 With Gmail or Outlook selected, you can additionally enable **Send from the team member who generates the document**: invitations, reminders, and completion emails are then sent from the generating member's own connected account, with the configured account as the fallback. See [Send Email](/features/actions-after-document-generation/send-email#sending-from-the-team-member-who-generates-the-document) for how matching works.
+
+With Outlook selected, the **Send from (optional)** field under the account lets emails from that account come from a Microsoft 365 shared mailbox, like sales@yourcompany.com. Your Microsoft 365 admin must give the account "Send as" on the shared mailbox. If your admin gives "Send on behalf" instead, emails show the account "on behalf of" the shared mailbox. The field works with a work or school Microsoft account.
+
+<Frame caption="Signing & Acceptance > Settings > Edit Emails with a shared mailbox under Send from.">
+  <img src="/images/esign/send-from-field.png" alt="Email Settings dialog with Outlook selected, the account alex@northwind.example and the Send from (optional) field showing sales@northwind.example" />
+</Frame>
+
+The address is saved on the Outlook account, not on one automation. It covers signing emails and Send Email steps in every automation that uses that account. You set or change it only here, in **Signing & Acceptance > Settings > Edit Emails**. Leave it empty to send from the account itself. Sent copies go to your own Sent Items folder. If your Microsoft 365 admin turns on MessageCopyForSentAsEnabled for the shared mailbox, a copy also goes to the shared mailbox's Sent Items.
 
 If the connected Gmail or Outlook mailbox rejects a message, DocsAutomator sends it from its own address instead, and records that it did. Every e-sign email produces a delivery record with the provider, the sending mailbox and the message ID. See [Email Delivery Outcomes](/features/docsautomator-esign/email-delivery-outcomes).
 
@@ -227,6 +239,10 @@ Requests nobody has opened after 72 hours are marked as going cold. This is a hi
 
 Sessions using link delivery only ever offer **Copy link**, since DocsAutomator does not email those signers.
 
+## Signing Details on the Document Page
+
+Open a document in **Documents** to see each signer's role, location, time to sign and any reason for declining. Once a request is complete, you can also download the original PDF. The audit trail lists the document fingerprints. See [Signing card](/features/documents#signing-card).
+
 ## Branding
 
 ### Custom Logo
@@ -254,7 +270,7 @@ In some countries, only a handwritten signature is legally recognised. For these
 
 After expiration, links become invalid and sessions change to "Expired" status. When a session expires without being completed, DocsAutomator sends an **expiration email** to the workspace's notification recipients (falling back to workspace owners) and fires an **[`esign.session_expired` webhook](#session-expired)** if one is configured.
 
-Two days before a request expires, DocsAutomator sends the same recipients an **expiry warning** that lists who has not finished yet. Requests that run for two days or less get no warning.
+Two days before a request expires, DocsAutomator sends an **expiry warning** that lists who has not finished yet. The warning is sent only when the request has reminders turned on. It goes to the Notification Recipients if they are set. Otherwise it goes to the person who sent the request, and if that person is not known, to the workspace owners. Requests that run for two days or less get no warning.
 
 ## The Signing Experience
 
@@ -584,6 +600,11 @@ E-signing and acceptance are included in every paid plan.
 - E-signing and acceptance are included in every plan.
 - A signed or accepted document counts as one document in your plan, the same as any other document, however many recipients it has.
 - Test documents do not count toward your plan.
+- In test mode, every signing and acceptance email comes to the person testing, never to the real signer. Each email and signing page says which role you sign as and who a live run would reach.
+
+<Frame>
+  <img src="/images/test-mode/signing-page-test.png" alt="A signing page in test. The banner says you sign as Signer 1, Client, a live run goes to the client's address, and a test signature is not legally binding." />
+</Frame>
 
 ## FAQ
 

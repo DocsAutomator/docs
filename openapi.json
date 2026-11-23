@@ -333,7 +333,18 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/BadRequest"
+            "description": "Invalid request parameters; a connected Google, Notion or Airtable account must be reconnected (code `SOURCE_ACCOUNT_DISCONNECTED`, for example when Airtable or Notion refuses the stored refresh token; the message says which account); or invalid e-invoice or QR-bill data (code `E_INVOICE_INVALID` or `QR_BILL_INVALID`).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "Error refreshing Airtable access token. Please visit https://app.docsautomator.co/settings/workspace/integrations and reconnect your Airtable integration. This will not remove any of your data mappings.",
+                  "code": "SOURCE_ACCOUNT_DISCONNECTED"
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -351,8 +362,56 @@
               }
             }
           },
+          "403": {
+            "description": "The connected Google or Airtable account may not open or edit the template, folder, base or field; the Google Drive is full; or the request uses something the workspace may not use, such as signing without an active subscription or approvers below the Business plan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "The user's Drive storage quota has been exceeded."
+                }
+              }
+            }
+          },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "description": "Too many requests: the workspace has too many document requests open at once (no document was created; Retry-After 10), or Google, Notion or SmartSuite limited the connected account after their own retries (Retry-After 60). Wait the number of seconds in the `Retry-After` header, then send the request again.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before you send the request again.",
+                "schema": {
+                  "type": "integer",
+                  "example": 10
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "This workspace has too many document requests open at once. No document was created. Please retry after 10 seconds."
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server error, or a connected service failed or did not answer. Try again later, or contact support if it keeps happening.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentError"
+                },
+                "example": {
+                  "message": "An unexpected error occurred"
+                }
+              }
+            }
           }
         }
       }
@@ -396,7 +455,7 @@
         "operationId": "getQueueStats",
         "tags": ["Documents"],
         "summary": "Get queue statistics",
-        "description": "Returns current document generation queue statistics for your workspace.",
+        "description": "Returns the number of your workspace's document generation jobs in each state. Every count covers your workspace only. The queue keeps completed jobs for a few hours and failed jobs for 7 days, so older jobs are not counted.",
         "responses": {
           "200": {
             "description": "Queue statistics",
@@ -565,7 +624,7 @@
         "operationId": "updateAutomation",
         "tags": ["Automations"],
         "summary": "Update automation",
-        "description": "Updates an existing automation's settings. Only the fields included in the request body are updated.",
+        "description": "Updates an existing automation's settings. Send only the settings you want to change. Settings you leave out keep their values. A text, number, true-or-false or list setting is replaced by the value you send. An object setting is merged: keys you send change, and keys you leave out stay. Some settings inside an object are always replaced whole; their descriptions say so. `GET /automation` returns every setting with its current value.",
         "parameters": [
           {
             "name": "docId",
@@ -586,7 +645,12 @@
                 "properties": {
                   "title": {
                     "type": "string",
-                    "description": "Automation name."
+                    "description": "Automation name. It cannot be empty."
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 2000,
+                    "description": "What the automation is for and what data it needs, at most 2,000 characters. API clients and AI tools read it to pick the right automation."
                   },
                   "docTemplateLink": {
                     "type": "string",
@@ -595,7 +659,63 @@
                   },
                   "newDocumentNameField": {
                     "type": "string",
-                    "description": "Field name or formula for generated document names."
+                    "description": "The field in your data source whose value becomes the file name of new documents."
+                  },
+                  "attachmentField": {
+                    "type": "string",
+                    "description": "The field in your data source that receives the PDF."
+                  },
+                  "overwriteAttachment": {
+                    "type": "boolean",
+                    "description": "`true` replaces the file already in the attachment field. `false` adds the new PDF next to it."
+                  },
+                  "attachPdfToClickUpTask": {
+                    "type": "boolean",
+                    "description": "ClickUp only. Attach the PDF to the task."
+                  },
+                  "clickUpAttachmentFieldId": {
+                    "type": "string",
+                    "description": "ClickUp only. The id of a Files custom field that receives the PDF. Send an empty text (`\"\"`) to attach the PDF to the task itself."
+                  },
+                  "locale": {
+                    "type": "string",
+                    "description": "Locale for date and number formatting (for example `en-us`, `de-de`)."
+                  },
+                  "dateFormat": {
+                    "type": "object",
+                    "description": "How dates are written. Merges with the stored object.",
+                    "properties": {
+                      "day": {
+                        "type": "string",
+                        "enum": ["numeric", "2-digit"]
+                      },
+                      "month": {
+                        "type": "string",
+                        "enum": ["numeric", "2-digit", "long", "short", "narrow"]
+                      },
+                      "year": {
+                        "type": "string",
+                        "enum": ["numeric", "2-digit"]
+                      },
+                      "hour12": {
+                        "type": "string",
+                        "enum": ["true", "false", ""],
+                        "description": "As text, in quotes: `\"true\"` for a 12-hour clock, `\"false\"` for a 24-hour clock, `\"\"` for the locale's clock."
+                      }
+                    },
+                    "example": {
+                      "day": "2-digit",
+                      "month": "long",
+                      "year": "numeric"
+                    }
+                  },
+                  "formatNumbersWithLocale": {
+                    "type": "boolean",
+                    "description": "Format numbers in the automation's locale."
+                  },
+                  "fields": {
+                    "type": "string",
+                    "description": "The mapping of placeholders to data source fields, as JSON text (a string, not an object), for example `\"{\\\"client_name\\\":\\\"fldXXXX\\\"}\"` with an Airtable field id. The mapping is replaced whole. Send every placeholder mapping you want to keep."
                   },
                   "isActive": {
                     "type": "boolean",
@@ -605,23 +725,6 @@
                     "type": "boolean",
                     "description": "Test mode. `true` makes watermarked test documents, `false` makes live documents. New automations and copies start with `true`. Going live needs a confirmed account email."
                   },
-                  "saveGoogleDoc": {
-                    "type": "boolean",
-                    "description": "Save a Google Doc copy alongside the PDF."
-                  },
-                  "googleDocDestinationFolderUrl": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "Google Drive folder URL for saved documents."
-                  },
-                  "locale": {
-                    "type": "string",
-                    "description": "Locale for date and number formatting (e.g., `en-us`, `de-de`)."
-                  },
-                  "formatNumbersWithLocale": {
-                    "type": "boolean",
-                    "description": "Format numbers using the automation's locale."
-                  },
                   "pdfExpiration": {
                     "type": "string",
                     "nullable": true,
@@ -630,23 +733,253 @@
                   },
                   "imageOptions": {
                     "type": "object",
+                    "description": "Quality and largest width of every image in the document. Lower quality and a smaller width make smaller files. Merges with the stored object.",
                     "properties": {
                       "quality": {
-                        "type": "integer",
-                        "description": "Image quality (1-100)."
+                        "type": "string",
+                        "enum": ["low", "eco", "good", "best"],
+                        "description": "Image quality. The default is `good`."
                       },
                       "maxWidth": {
                         "type": "integer",
-                        "description": "Maximum image width in pixels."
+                        "description": "Largest image width in pixels. The default is 600."
                       }
+                    },
+                    "example": {
+                      "quality": "best",
+                      "maxWidth": 1000
+                    }
+                  },
+                  "saveGoogleDoc": {
+                    "type": "boolean",
+                    "description": "Save a Google Doc copy next to the PDF."
+                  },
+                  "googleDocDestinationFolderUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Google Drive folder URL for saved documents."
+                  },
+                  "googleDocUrlField": {
+                    "type": "string",
+                    "description": "The field in your data source that receives the link to the Google Doc copy."
+                  },
+                  "pdfUrlField": {
+                    "type": "string",
+                    "description": "The field in your data source that receives the link to the PDF."
+                  },
+                  "saveWordDoc": {
+                    "type": "boolean",
+                    "description": "Also save a Word (.docx) file."
+                  },
+                  "saveWordInDriveFolderId": {
+                    "type": "string",
+                    "description": "The id of the Google Drive folder for the Word file."
+                  },
+                  "saveWordSubfolderName": {
+                    "type": "string",
+                    "description": "A subfolder for the Word file inside that folder. It can contain placeholders."
+                  },
+                  "wordAttachmentField": {
+                    "type": "string",
+                    "description": "The field in your data source that receives the Word file."
+                  },
+                  "overwriteWordAttachment": {
+                    "type": "boolean",
+                    "description": "`true` replaces the Word file already in the field. `false` adds the new one next to it."
+                  },
+                  "options": {
+                    "type": "object",
+                    "description": "Settings for single placeholders. Send only the settings you want to change. Each list or map you send replaces the stored one whole. `GET /automation` returns the current values.",
+                    "properties": {
+                      "lineDeletions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Placeholders that delete their paragraph or table row when the value is empty. Use the placeholder name without curly braces. For a line item column, use the full name, for example `line_items_1_discount`. Send `[]` to switch it off for every placeholder.",
+                        "example": ["client_vat_id", "line_items_1_discount"]
+                      },
+                      "markdownPlaceholders": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Placeholders whose value is rendered as Markdown (for example bold text, lists and links). Use the placeholder name without curly braces. Send `[]` to switch it off for every placeholder.",
+                        "example": ["project_summary"]
+                      },
+                      "hiddenPlaceholders": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Placeholders that stay empty in every document, whatever the data holds. Send `[]` to show them all again.",
+                        "example": ["internal_note"]
+                      },
+                      "uniqueValuePlaceholders": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Airtable only. Placeholders that read values from linked records and list each value once, without repeats. For a line item column, use the column name without the `line_items_N_` prefix.",
+                        "example": ["project_names"]
+                      },
+                      "placeholderDescriptions": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string",
+                          "maxLength": 2000
+                        },
+                        "description": "What belongs in each placeholder, keyed by placeholder name. API clients and AI tools read these descriptions from `GET /listPlaceholdersV2`. Each description has at most 2,000 characters. The map is replaced whole: send every description you want to keep.",
+                        "example": {
+                          "fee": "Total contract fee in EUR, numeric"
+                        }
+                      },
+                      "placeholderFormats": {
+                        "type": "object",
+                        "description": "How a placeholder's value is formatted, keyed by placeholder name. `type` is `number`, `date` or `boolean`. For a number or a date, `config` takes the options of the JavaScript `Intl.NumberFormat` or `Intl.DateTimeFormat` formatter. For a true-or-false value, `config` takes `trueLabel` and `falseLabel`. The map is replaced whole: send every format you want to keep.",
+                        "additionalProperties": {
+                          "type": "object",
+                          "required": ["type"],
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": ["number", "date", "boolean"]
+                            },
+                            "config": {
+                              "type": "object"
+                            }
+                          }
+                        },
+                        "example": {
+                          "fee": {
+                            "type": "number",
+                            "config": {
+                              "style": "currency",
+                              "currency": "EUR"
+                            }
+                          },
+                          "start_date": {
+                            "type": "date",
+                            "config": {
+                              "dateStyle": "long"
+                            }
+                          },
+                          "paid": {
+                            "type": "boolean",
+                            "config": {
+                              "trueLabel": "Yes",
+                              "falseLabel": "No"
+                            }
+                          }
+                        }
+                      },
+                      "imageOptions": {
+                        "type": "object",
+                        "description": "Settings for single image placeholders, keyed by placeholder name, for example a fixed width in pixels. This is not the top-level `imageOptions`, which applies to every image. The map is replaced whole: send every entry you want to keep.",
+                        "additionalProperties": {
+                          "type": "object",
+                          "properties": {
+                            "width": {
+                              "type": "integer",
+                              "description": "Width in pixels."
+                            }
+                          }
+                        },
+                        "example": {
+                          "image_logo": {
+                            "width": 200
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "esignature": {
+                    "type": "object",
+                    "description": "The signing or acceptance step, in the shape `GET /automation` returns it. Setting up signers for the first time switches signing on, unless you also send `enabled`. Merges with the stored object. `signers` and `notificationRecipients` are replaced as whole lists. Each email template in `emailConfig` (`invitation`, `reminder`, `completion`) is replaced whole. An invalid value is refused with a 400.",
+                    "example": {
+                      "enabled": true,
+                      "signingLanguage": "de",
+                      "expirationDays": 30
+                    }
+                  },
+                  "approval": {
+                    "type": "object",
+                    "description": "Approval before a document goes out. Business plan and up; on other plans the only change allowed is `{\"enabled\": false}`. Approvers from data source fields are set in the app only. Merges with the stored object.",
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "approvers": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "User ids of team members who approve."
+                      },
+                      "rule": {
+                        "type": "string",
+                        "enum": ["all", "any"],
+                        "description": "`all`: every approver must approve. `any`: one approval is enough."
+                      },
+                      "condition": {
+                        "type": "object",
+                        "nullable": true,
+                        "description": "Only documents that match this condition need approval. `null`: every document needs approval. Shape: `{\"matchMode\": \"all\" or \"any\", \"rules\": [...]}`, the same rules as conditional sections."
+                      },
+                      "requireAccount": {
+                        "type": "boolean",
+                        "description": "`true`: approvers must sign in to DocsAutomator to decide. `false`: approvers outside the team decide from their email link."
+                      }
+                    },
+                    "example": {
+                      "enabled": true,
+                      "rule": "any"
                     }
                   }
                 }
               },
-              "example": {
-                "title": "Updated Invoice Generator",
-                "isActive": true,
-                "locale": "en-us"
+              "examples": {
+                "settings": {
+                  "summary": "Change title, status and locale",
+                  "value": {
+                    "title": "Updated Invoice Generator",
+                    "isActive": true,
+                    "locale": "en-us"
+                  }
+                },
+                "placeholderOptions": {
+                  "summary": "Set the empty-line and Markdown placeholders",
+                  "value": {
+                    "options": {
+                      "lineDeletions": ["client_vat_id", "line_items_1_discount"],
+                      "markdownPlaceholders": ["project_summary"]
+                    }
+                  }
+                },
+                "outputAndFormats": {
+                  "summary": "Change output and image settings",
+                  "value": {
+                    "saveWordDoc": true,
+                    "wordAttachmentField": "Word file",
+                    "imageOptions": {
+                      "maxWidth": 1000
+                    },
+                    "dateFormat": {
+                      "month": "long"
+                    },
+                    "options": {
+                      "placeholderFormats": {
+                        "fee": {
+                          "type": "number",
+                          "config": {
+                            "style": "currency",
+                            "currency": "EUR"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -676,6 +1009,16 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "description": "The plan does not include this setting, the setting can only be changed in the app, or going live needs a confirmed account email.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -975,7 +1318,16 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "429": {
-            "description": "Rate limit exceeded (25 per hour per automation)",
+            "description": "Rate limit exceeded: 25 per hour per automation, 100 per hour per workspace, or 10 different recipients per hour per workspace; or, for a workspace without an active subscription, 25 emails or 5 different recipients in 24 hours. Wait the number of seconds in the `Retry-After` header, then send the request again.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until the hourly window resets, or, for the 24-hour limit without a subscription, until the oldest counted email leaves the window. At least 1.",
+                "schema": {
+                  "type": "integer",
+                  "example": 1800
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -1358,10 +1710,32 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "description": "API key from your workspace settings. Pass as `Authorization: Bearer <key>` or `X-API-Key: <key>`. Find it at [app.docsautomator.co/settings/workspace/api](https://app.docsautomator.co/settings/workspace/api)."
+        "description": "Use an API key from your workspace. Pass as `Authorization: Bearer <key>` or `X-API-Key: <key>`. Create one in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api). See [API keys](https://docs.docsautomator.co/more/finding-your-api-key)."
       }
     },
     "schemas": {
+      "DocumentError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "What went wrong and what to do."
+          },
+          "code": {
+            "type": "string",
+            "description": "Set for some errors, for example `SOURCE_ACCOUNT_DISCONNECTED`: a connected Google, Notion or Airtable account must be reconnected.",
+            "example": "SOURCE_ACCOUNT_DISCONNECTED"
+          },
+          "knowledgeBaseLink": {
+            "type": "string",
+            "description": "A help article about this error, when there is one."
+          },
+          "jobId": {
+            "type": "string",
+            "description": "The job that failed, when the request ran in the queue."
+          }
+        }
+      },
       "Error": {
         "type": "object",
         "properties": {
@@ -1517,23 +1891,23 @@
         "properties": {
           "waiting": {
             "type": "integer",
-            "description": "Jobs waiting to be processed."
+            "description": "Your jobs waiting to be processed."
           },
           "active": {
             "type": "integer",
-            "description": "Jobs currently being processed."
+            "description": "Your jobs being processed now."
           },
           "completed": {
             "type": "integer",
-            "description": "Completed jobs."
+            "description": "Your jobs completed in the last few hours."
           },
           "failed": {
             "type": "integer",
-            "description": "Failed jobs."
+            "description": "Your jobs that failed in the last 7 days."
           },
           "delayed": {
             "type": "integer",
-            "description": "Delayed jobs."
+            "description": "Always 0. Kept so existing integrations keep their field; a delayed job counts as waiting."
           }
         }
       },
@@ -1594,6 +1968,78 @@
             "type": "string",
             "format": "uri"
           },
+          "options": {
+            "type": "object",
+            "description": "Settings for single placeholders. `GET /automation` returns the full object, including the rules for showing, hiding and styling placeholders that are set in the app. `GET /automations` returns only `lineDeletions`. Change these settings with `PUT /updateAutomation`.",
+            "properties": {
+              "lineDeletions": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Placeholders that delete their paragraph or table row when the value is empty. An empty list means no placeholder deletes its line.",
+                "example": ["client_vat_id", "line_items_1_discount"]
+              },
+              "markdownPlaceholders": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Placeholders whose value is rendered as Markdown.",
+                "example": ["project_summary"]
+              },
+              "hiddenPlaceholders": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Placeholders that stay empty in every document, whatever the data holds. Send `[]` to show them all again.",
+                "example": ["internal_note"]
+              },
+              "uniqueValuePlaceholders": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Airtable only. Placeholders that read values from linked records and list each value once, without repeats. For a line item column, use the column name without the `line_items_N_` prefix.",
+                "example": ["project_names"]
+              },
+              "placeholderDescriptions": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "description": "What belongs in each placeholder, keyed by placeholder name. API clients and AI tools read these descriptions from `GET /listPlaceholdersV2`. Each description has at most 2,000 characters."
+              },
+              "placeholderFormats": {
+                "type": "object",
+                "description": "How a placeholder's value is formatted, keyed by placeholder name. `type` is `number`, `date` or `boolean`. For a number or a date, `config` takes the options of the JavaScript `Intl.NumberFormat` or `Intl.DateTimeFormat` formatter. For a true-or-false value, `config` takes `trueLabel` and `falseLabel`.",
+                "additionalProperties": {
+                  "type": "object",
+                  "required": ["type"],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["number", "date", "boolean"]
+                    },
+                    "config": {
+                      "type": "object"
+                    }
+                  }
+                }
+              },
+              "imageOptions": {
+                "type": "object",
+                "description": "Settings for single image placeholders, keyed by placeholder name, for example a fixed width in pixels. This is not the top-level `imageOptions`, which applies to every image.",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "integer",
+                      "description": "Width in pixels."
+                    }
+                  }
+                }
+              }
+            }
+          },
           "esignature": {
             "type": "object",
             "description": "The automation's signing or acceptance step.",
@@ -1618,6 +2064,140 @@
                     "name": { "type": "string", "nullable": true }
                   }
                 }
+              }
+            }
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "What the automation is for and what data it needs, at most 2,000 characters. API clients and AI tools read it to pick the right automation.",
+            "nullable": true
+          },
+          "attachmentField": {
+            "type": "string",
+            "description": "The field in your data source that receives the PDF."
+          },
+          "overwriteAttachment": {
+            "type": "boolean",
+            "description": "`true` replaces the file already in the attachment field. `false` adds the new PDF next to it."
+          },
+          "attachPdfToClickUpTask": {
+            "type": "boolean",
+            "description": "ClickUp only. Attach the PDF to the task."
+          },
+          "clickUpAttachmentFieldId": {
+            "type": "string",
+            "description": "ClickUp only. The id of a Files custom field that receives the PDF. Send an empty text (`\"\"`) to attach the PDF to the task itself."
+          },
+          "dateFormat": {
+            "type": "object",
+            "description": "How dates are written.",
+            "properties": {
+              "day": {
+                "type": "string",
+                "enum": ["numeric", "2-digit"]
+              },
+              "month": {
+                "type": "string",
+                "enum": ["numeric", "2-digit", "long", "short", "narrow"]
+              },
+              "year": {
+                "type": "string",
+                "enum": ["numeric", "2-digit"]
+              },
+              "hour12": {
+                "type": "string",
+                "enum": ["true", "false", ""],
+                "description": "As text, in quotes: `\"true\"` for a 12-hour clock, `\"false\"` for a 24-hour clock, `\"\"` for the locale's clock."
+              }
+            }
+          },
+          "fields": {
+            "type": "string",
+            "description": "The mapping of placeholders to data source fields, as JSON text (a string, not an object), for example `\"{\\\"client_name\\\":\\\"fldXXXX\\\"}\"` with an Airtable field id. Returned by `GET /automation` only."
+          },
+          "imageOptions": {
+            "type": "object",
+            "description": "Quality and largest width of every image in the document. Lower quality and a smaller width make smaller files.",
+            "properties": {
+              "quality": {
+                "type": "string",
+                "enum": ["low", "eco", "good", "best"],
+                "description": "Image quality. The default is `good`."
+              },
+              "maxWidth": {
+                "type": "integer",
+                "description": "Largest image width in pixels. The default is 600."
+              }
+            }
+          },
+          "googleDocDestinationFolderUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Google Drive folder URL for saved documents."
+          },
+          "googleDocUrlField": {
+            "type": "string",
+            "description": "The field in your data source that receives the link to the Google Doc copy."
+          },
+          "pdfUrlField": {
+            "type": "string",
+            "description": "The field in your data source that receives the link to the PDF."
+          },
+          "saveWordDoc": {
+            "type": "boolean",
+            "description": "Also save a Word (.docx) file."
+          },
+          "saveWordInDriveFolderId": {
+            "type": "string",
+            "description": "The id of the Google Drive folder for the Word file."
+          },
+          "saveWordSubfolderName": {
+            "type": "string",
+            "description": "A subfolder for the Word file inside that folder. It can contain placeholders."
+          },
+          "wordAttachmentField": {
+            "type": "string",
+            "description": "The field in your data source that receives the Word file."
+          },
+          "overwriteWordAttachment": {
+            "type": "boolean",
+            "description": "`true` replaces the Word file already in the field. `false` adds the new one next to it."
+          },
+          "approval": {
+            "type": "object",
+            "description": "Approval before a document goes out. An automation without approval shows `enabled: false`.",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "approvers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "User ids of team members who approve."
+              },
+              "rule": {
+                "type": "string",
+                "enum": ["all", "any"],
+                "description": "`all`: every approver must approve. `any`: one approval is enough."
+              },
+              "condition": {
+                "type": "object",
+                "nullable": true,
+                "description": "Only documents that match this condition need approval. `null`: every document needs approval. Shape: `{\"matchMode\": \"all\" or \"any\", \"rules\": [...]}`, the same rules as conditional sections."
+              },
+              "requireAccount": {
+                "type": "boolean",
+                "description": "`true`: approvers must sign in to DocsAutomator to decide. `false`: approvers outside the team decide from their email link."
+              },
+              "approverFields": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "description": "Approvers read from data source fields. Read only. They are set in the app."
               }
             }
           }

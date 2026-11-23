@@ -10,8 +10,12 @@ DocsAutomator offers a REST API to create documents programmatically, manage aut
 ## Getting Started
 
 <Steps>
-  <Step title="Get your API key">
-    Find your API key at [Workspace Settings > API Key](https://app.docsautomator.co/settings/workspace/api).
+  <Step title="Create an API key">
+    Create a key in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api), or click **Create a key for this** in the automation's setup guide. Copy it when you create it, because it is shown once. See [API keys](/more/finding-your-api-key).
+
+    <Frame caption="The API setup guide sends the key in the Authorization header.">
+      <img src="/images/api-keys/setup-api.png" alt="The API setup guide with the Create a key for this button and the Authorization header Bearer YOUR_API_KEY" />
+    </Frame>
   </Step>
   <Step title="Authenticate">
     Pass your API key as a bearer token in the `Authorization` header:
@@ -79,7 +83,11 @@ Automations also carry their own `description` — what the automation is for an
 
 ## New automations start in test mode
 
-Every automation you create with `createAutomation`, and every copy made with `duplicateAutomation`, starts in test mode (`isPreview: true`). Test documents are watermarked and free. When the automation is ready, switch it to live:
+Every automation you create with `createAutomation`, and every copy made with `duplicateAutomation`, starts in test mode (`isPreview: true`). Test documents are watermarked and free. In test mode, every email, signing, acceptance and approval request goes to the person testing, never to your recipients. With an API key, that is the team member named in `actingUserEmail` if they belong to the workspace, and otherwise the workspace owner. The `createDocument` response says where it went in `testRecipient`, and lists who a live run would reach in `recipients`.
+
+To send every test of an automation to one member instead, set `testRecipient` to that member's email with `updateAutomation` (`""` goes back to the default). Only workspace members can be picked; any other address is refused with `TEST_RECIPIENT_NOT_MEMBER`. A picked member gets every test of the automation, whoever runs it. `GET /automation` returns the current choice as an object in `testRecipient`: `mode` is `"member"` for a picked member and `"runner"` for the default, `name` and `email` name the picked member (or, for the default, the workspace owner), and `fallback` is `true` when the picked member has left the workspace and tests use the default again.
+
+When the automation is ready, switch it to live:
 
 ```bash
 curl -X PUT "https://api.docsautomator.co/updateAutomation?automationId=YOUR_AUTOMATION_ID" \

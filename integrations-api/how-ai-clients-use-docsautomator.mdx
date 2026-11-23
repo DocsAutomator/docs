@@ -20,7 +20,7 @@ These rules protect the people who receive your documents.
 
 - Every tool that sends email or changes your setup is marked as such for your AI client (MCP tool annotations). AI clients that ask before such actions, such as ChatGPT with its Allow card, ask you first.
 - DocsAutomator refuses a live document while the automation is in test mode, and before the automation has made its first test document.
-- A preview is a watermarked PDF. Nothing is sent and nothing counts against your plan.
+- In test mode, every email, signing, acceptance and approval request goes to you, never to the real recipient. The result names the address it went to and who a live run would reach. Test documents are watermarked and never count against your plan.
 - An automation moved to the trash can be restored from the Trash in the DocsAutomator app.
 
 ### A confirmation dialog in your AI client
@@ -31,13 +31,12 @@ DocsAutomator shows the dialog in AI clients you signed in to with your DocsAuto
 
 An agent that runs on its own but signs in with your DocsAutomator account and supports confirmation dialogs, such as Claude Code in a script or an app built with the Claude Agent SDK, cannot answer the dialog, so DocsAutomator sends nothing. Let it answer the dialog automatically with a Claude Code [`Elicitation` hook](https://code.claude.com/docs/en/hooks#elicitation) or the Agent SDK's [`onElicitation` option](https://code.claude.com/docs/en/agent-sdk/typescript) (TypeScript), for example by accepting test sends and asking a person before live ones. Other agents that run on their own can connect with an API key instead.
 
-- The dialog names the document and every recipient. Nothing is sent until you confirm.
+- The dialog names the document and who gets this run: you for a test, every recipient for a live send. Nothing is sent until you confirm.
 - DocsAutomator asks before:
   - a document goes out in test or live mode, for signing, acceptance or by email (`create_document`),
   - a reminder (`send_esign_reminder`), a new invitation (`resend_esign_invite`) or a cancellation (`cancel_esign_session`),
   - an automation with email recipients goes live (`configure_automation`),
   - a change to who a live automation emails (`configure_output`).
-- A preview never asks.
 - When you decline, close the dialog or do not answer within 10 minutes, nothing is sent or changed, and your AI client is told so in plain words.
 - AI clients without confirmation dialogs confirm the recipients with you in the chat instead.
 
@@ -45,7 +44,7 @@ Tested with: Claude Code and Codex.
 
 ### Test before live
 
-- The first document of a new setup goes out in test mode. Test mode runs the full flow for free: the real signing or acceptance emails go to the real recipients, with a watermark, and nothing counts against your plan.
+- The first document of a new setup goes out in test mode. Test mode runs the full flow for free: every signing or acceptance email comes to you, with a watermark, and nothing counts against your plan.
 - Going live is the last step. It only removes the watermark and counts the documents.
 - DocsAutomator also checks this on the server: when your AI client does not ask for a mode, the first document of a new automation goes out in test mode, and a live document from an automation that has not made a test document yet is refused.
 
@@ -53,7 +52,8 @@ Tested with: Claude Code and Codex.
 
 - Your AI client uses your own template first: a Word or PDF file you upload, or a Google Doc you already have. Then a ready-made template from the DocsAutomator gallery. It designs a new Word template with AI only when none fits or when you ask for it.
 - Your AI client never creates or edits a Google Doc.
-- A template is reusable: the details of each case become placeholders. Your AI client does not fill in a one-off document.
+- A template is reusable: the details of each case become placeholders. Your AI client does not fill in a one-off document that needs no signing.
+- When you need one document signed and no automation fits, your AI client offers [Send for signature](/features/docsautomator-esign/send-for-signature). It shares the link to the draft.
 
 ## Sending documents
 
@@ -89,10 +89,11 @@ Ask in plain text when you need a choice.
 ```text
 DocsAutomator session guide (shown once per session):
 - Templates, in this order: the user's own (set_template takes their upload or Google Doc), then a ready-made one from our gallery (search with in: "templates", then set_template), and only when none fits or they ask for AI, generate_word_template. Never lead with an AI design. Never create or edit a Google Doc.
-- Build a reusable template: the case details become placeholders. Never fill in a one-off document.
+- Build a reusable template: the case details become placeholders. Never fill in a one-off document that needs no signing.
+- When the user needs one document signed and no automation fits, offer Send for signature: create_document with templateId (their own from search with in: "my_templates", else a gallery one), recipients, and fields placed by anchor text. Share the draft link it returns.
 - Send from the existing automation. On a record source (Airtable, Notion, Google Sheets, Google Forms, SmartSuite, ClickUp), pass the record id; the record fills the document and the signer emails come from its mapped fields. Pass recipients only when the user names a different person.
 - Never copy an automation into an API copy to send from chat, and never replace its data source.
-- These tools cannot search records. Get the record from the user, or from their own connector for that app.
+- Find a record with get_data_source search (a word of its name); it returns ids and names only. Show the user the record you found before you send.
 ```
 
 ChatGPT and Codex read the server instructions and do not receive the session guide, because OpenAI asks that tool answers carry only data.

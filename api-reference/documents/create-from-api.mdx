@@ -43,6 +43,10 @@ POST https://api.docsautomator.co/createDocument
   Custom parameters passed through to webhook notifications under both `webhookParams` and `additionalParams` (identical content; the latter is kept for backward compatibility).
 </ParamField>
 
+<ParamField body="mode" type="string">
+  `"test"` runs this request as a test, even when the automation is live. A test document is watermarked and free, and every email, signing, acceptance and approval request goes to the person testing, never to your recipients. With an API key, the person testing is the team member named in `actingUserEmail` if they belong to the workspace, and otherwise the workspace owner. A member picked under **Test messages go to** in the automation settings gets every test instead. Without `mode`, the automation's own setting decides. A request can never force live: an automation in test mode runs every request as a test. `isPreview: true` is still accepted and means the same as `"mode": "test"`.
+</ParamField>
+
 <ParamField body="skipEsign" type="boolean" default="false">
   When `true`, skips e-signing for this request even if the automation has e-signing enabled. The document is generated and delivered normally (Drive save, email, webhook), but no signing session is started and no signing invitations are sent. Useful for two-step approval flows: generate a draft for review first, then re-run without `skipEsign` to send the document for signing. Also accepted as a query parameter (`?skipEsign=true`) on GET requests.
 </ParamField>
@@ -510,9 +514,12 @@ output.set("holdId", result.holdId || "");
 | `signingSessionId` | E-signature is enabled |
 | `signingStatus` | E-signature is enabled (`"created"`, `"queued"`, or `"awaiting_approval"` when the automation needs [approval](/features/approvals)) |
 | `signingLinks` | E-signature is enabled (array of signer objects with `signerIndex`, `email`, `name`, `signingUrl`, `status`). Absent while the session waits for approval |
-| `approval` | The document waits for [approval](/features/approvals) (`status`, `rule` (`"all"` or `"any"`), `approvers`, each with `name`, `email` and, when set, `source` (`"fixed"`, `"field"` or `"request"`) and `invited`, `condition`, and `fieldApprovers` when the approvers came from your data or the request) |
+| `approval` | The document waits for [approval](/features/approvals) (`status`, `rule` (`"all"` or `"any"`), `approvers`, each with `name`, `email` and, when set, `source` (`"fixed"`, `"field"` or `"request"`), and `linkOnly: true` for a person outside your team who decides from the email link or `invited: true` for one who must join your workspace first; then `condition`, and `fieldApprovers` when the approvers came from your data or the request) |
 | `signingDeliveryMethod` | E-signature is enabled |
 | `esignSkipped` | E-signature is enabled but skipped for this request via `skipEsign: true` |
+| `mode` | Always: `"test"` or `"live"` |
+| `testRecipient` | Test runs: the email address the test went to |
+| `recipients` | The automation sends a message: who a live run reaches, a list of `{ role, name, email, source, status }`. `status` is `"set"` or `"not set"` (for example an empty email field on the record). In a test, these people get nothing. |
 | `eInvoice` | The automation creates an e-invoice: `{ "ok": true, "format": "zugferd" }`, or with XRechnung `{ "ok": true, "format": "xrechnung", "xmlUrl": "..." }` plus `xmlGoogleDriveUrl` when the PDF is saved to Google Drive. See [E-invoices](#e-invoices). |
 
 ### Async mode (202)
@@ -533,7 +540,7 @@ When the [e-invoice add-on](/features/e-invoices) is on for the workspace and th
 - **ZUGFeRD:** `pdfUrl` is the e-invoice (a PDF/A-3 file with the data embedded).
 - **XRechnung:** `pdfUrl` is the readable PDF, and `eInvoice.xmlUrl` is the XML file.
 - **Async mode:** the job result carries the same `eInvoice` field.
-- **Test mode:** with `isPreview: true` the e-invoice is valid but marked as a test (`TEST-` invoice number and a test note).
+- **Test mode:** in a test (`"mode": "test"`, or an automation in test mode) the e-invoice is valid but marked as a test (`TEST-` invoice number and a test note).
 
 If the data cannot make a valid e-invoice, no document is created and nothing is delivered. The request fails with a `message` that starts with "E-invoice not created" and names each problem; in async mode the job ends with status `failed` and the same text in `error`:
 

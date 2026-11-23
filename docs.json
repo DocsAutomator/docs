@@ -23,7 +23,7 @@
     }
   },
   "banner": {
-    "content": "E-signing and acceptance are now included in every plan, at no extra cost. [Set it up](/docs/features/docsautomator-esign)",
+    "content": "New: DocsAutomator now works inside HubSpot. [See the setup guide →](https://docsautomator.co/docs/integrations-api/hubspot)",
     "dismissible": true
   },
   "appearance": {
@@ -98,6 +98,7 @@
                   "integrations-api/google-forms",
                   "integrations-api/smartsuite",
                   "integrations-api/clickup",
+                  "integrations-api/hubspot",
                   "integrations-api/glide",
                   "integrations-api/noloco",
                   "integrations-api/softr",
@@ -118,6 +119,7 @@
                     "icon": "signature",
                     "pages": [
                       "features/docsautomator-esign",
+                      "features/docsautomator-esign/send-for-signature",
                       "features/docsautomator-esign/acceptance",
                       "features/docsautomator-esign/compliance-and-legal-validity",
                       "features/docsautomator-esign/is-acceptance-legally-binding",
@@ -174,7 +176,7 @@
                   "features/dynamic-images",
                   "features/sections",
                   "features/document-previews",
-                  "features/run-history",
+                  "features/documents",
                   "features/pdf-expiration-storage",
                   "features/ai-template-generator",
                   "features/ai-field-mapping",
@@ -342,6 +344,7 @@
     { "source": "/docsautomator-basics/google-doc-template-guide/google-doc-template-guide", "destination": "/docsautomator-basics/google-doc-template-guide" },
     { "source": "/docsautomator-basics/quickstart-guide/quickstart-guide", "destination": "/docsautomator-basics/quickstart-guide" },
     { "source": "/features/line-items/line-items", "destination": "/features/line-items" },
+    { "source": "/features/run-history", "destination": "/features/documents" },
     { "source": "/features/docsautomator-esign/docsautomator-esign", "destination": "/features/docsautomator-esign" },
     { "source": "/features/advanced-placeholder-options/advanced-placeholder-options", "destination": "/features/advanced-placeholder-options" },
     { "source": "/features/actions-after-document-generation/actions-after-document-generation", "destination": "/features/actions-after-document-generation" },

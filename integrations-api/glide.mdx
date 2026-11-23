@@ -48,7 +48,11 @@ DocsAutomator integrates seamlessly with Glide through a native integration, ena
     Glide pushes data to DocsAutomator, so you do not pick a data source here. Leave the automation without one and set the connection up inside Glide in the next steps.
   </Step>
   <Step title="Configure Glide Integration">
-    Add the "Generate document" action with DocsAutomator. For first-time setup, provide your DocsAutomator API key (located in account settings).
+    Add the "Generate document" action with DocsAutomator. For first-time setup, provide a DocsAutomator API key. Create one in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api). See [API keys](/more/finding-your-api-key).
+
+    <Frame caption="Click Create key and name the key after the app that will use it.">
+      <img src="/images/api-keys/create-key-dialog.png" alt="The Create API key dialog with the name Make in the Name field and the Cancel and Create key buttons" />
+    </Frame>
   </Step>
   <Step title="Set Template ID and Filename">
     - Locate your template/automation ID in the URL bar
@@ -118,7 +122,7 @@ DocsAutomator supports [e-signatures](/features/docsautomator-esign) with all da
   <Card title="Line Items" icon="list" href="/features/line-items">
     Master tables and repeating rows
   </Card>
-  <Card title="Documents" icon="clock-rotate-left" href="/features/run-history">
+  <Card title="Documents" icon="clock-rotate-left" href="/features/documents">
     Monitor document generation
   </Card>
   <Card title="API Reference" icon="code" href="/integrations-api/docsautomator-api">

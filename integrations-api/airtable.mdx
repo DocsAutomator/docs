@@ -41,7 +41,7 @@ Generated files automatically save to specified Airtable fields.
     - **Google Doc URL field**: Stores URLs for generated Google Docs (optional)
   </Step>
   <Step title="Map Fields and Line Items">
-    Connect all applicable fields from your Airtable table. For line items, select the linked field and corresponding view to determine sort order.
+    Connect all applicable fields from your Airtable table. For line items, select the linked field. To order the rows, choose a field of the linked table under Sort by and pick ascending or descending.
 
     <Frame>
       <img src="/images/airtable/field-mapping.png" alt="Data / Placeholders panel showing the Airtable base, primary table, document name field and the mapped placeholders" />
@@ -49,6 +49,10 @@ Generated files automatically save to specified Airtable fields.
 
     <Frame>
       <img src="/images/airtable/line-item-mapping.png" alt="Line Items section showing the linked field, view, sort order, auto number toggle and the mapped level 1 fields" />
+    </Frame>
+
+    <Frame caption="Pick a field under Sort by and choose the order of the line item rows.">
+      <img src="/images/airtable/line-item-sort-by.png" alt="Line Items section of an Airtable automation with the linked field Line Items, no view, Sort by set to Position and the order menu open with 1 to 9 and 9 to 1" />
     </Frame>
   </Step>
   <Step title="Create Previews">
@@ -75,9 +79,7 @@ Pick a field and a condition that should fire generation. When a record changes 
   <img src="/images/airtable/auto-creation.png" alt="Auto Creation settings: a trigger on the Status field, condition equals, value Approved" />
 </Frame>
 
-Open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value. The status line under the toggle shows when Airtable last sent an event, so you can tell at a glance that the connection is alive.
-
-Every evaluated change is visible in **Documents → Logs**: records that fired show as runs marked **Auto**, and records that did not fire show a row explaining why.
+Open **Auto Create** on the automation page, turn on **Auto creation**, then pick the field, the condition and the value.
 
 <Tip>
 Auto Creation works on every Airtable plan, including Free.
@@ -115,6 +117,24 @@ Auto Creation reacts to *changes*, and it deliberately avoids generating the sam
 **Time alone never triggers a document.** A condition such as "Due date is before today" fires only when a record is edited, not when the date arrives. The same applies to formulas using `TODAY()` or `NOW()`: Airtable recalculates them quietly and sends no change event, so DocsAutomator has nothing to react to. For date-driven documents, use a scheduled Airtable automation and the button or script method instead.
 </Warning>
 
+### Why did Auto Create not run?
+
+Open **Documents** and choose the **All runs** filter. Every change that did not start Auto Create shows as a **Skipped** row for 14 days. The row says why, for example:
+
+> The record changed, but "Status" did not.
+
+See [Skipped rows](/features/documents#skipped-rows) for every sentence and what it means.
+
+### When Airtable sends no updates
+
+The health line in the Auto Create panel says when Airtable last sent an update, for example "Listening. Last update from Airtable 2d ago". Before the first update, it says "Listening. Waiting for the first update from Airtable".
+
+When an automation has had no updates from Airtable for 7 days, DocsAutomator shows this warning, with the date of the last update:
+
+> Airtable has sent no updates since Oct 16. If documents should have been created, check that Airtable is still connected in Settings → Integrations.
+
+The warning shows in the Auto Create panel, in the tooltip of the amber Auto Create bolt in the automations list, and under [Needs attention](/features/documents#automations-with-no-updates) on the Documents page.
+
 ### Auto Creation limits and lifecycle
 
 - Auto-generated documents **count against your plan's document quota**, exactly like manual runs.
@@ -134,6 +154,12 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
 
     Copy the provided script into Airtable's automation action. Define the Record ID parameter to pass the triggering record's identifier.
 
+    The script needs an API key. It shows `YOUR_API_KEY` until you click **Create a key for this** in the setup guide, which fills in a new key. See [API keys](/more/finding-your-api-key).
+
+    <Frame caption="The automation script shows YOUR_API_KEY in the Authorization line until you create a key.">
+      <img src="/images/api-keys/setup-airtable-script.png" alt="The Airtable automation script in the setup guide with Bearer YOUR_API_KEY in the Authorization header" />
+    </Frame>
+
     <Frame>
       <img src="/images/airtable/automation-script.png" alt="Trigger from Airtable dialog showing the automation script to copy, with the API key and document id replaced by placeholders" />
     </Frame>
@@ -143,10 +169,12 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
     </Info>
   </Tab>
   <Tab title="Button or Formula Field">
-    Add a webhook URL to a button or formula field in your table. Clicking the button triggers document generation — the PDF appears within seconds and stores in Airtable.
+    Copy the formula from the setup guide into a button or formula field in your table. Clicking the button creates the document. The PDF appears within seconds and is saved in Airtable.
 
-    <Frame>
-      <img src="/images/airtable/webhook-setup.png" alt="Trigger from Airtable dialog showing the formula to paste into a button or formula field, and the Run Test button" />
+    The formula needs no API key. It already contains a link that works for this one automation only.
+
+    <Frame caption="Copy the formula into a button or formula field. Its link needs no API key.">
+      <img src="/images/airtable/webhook-setup.png" alt="Trigger from Airtable dialog with the formula to paste into a button or formula field, a Copy button and a Run Test button. The signed link in the formula is partly hidden." />
     </Frame>
 
     <Tip>
@@ -161,7 +189,7 @@ Fire generation from inside Airtable with a button, formula, script, or the exte
     Install the DocsAutomator Airtable Extension for a dedicated document generation UI directly inside Airtable.
 
     1. Install the DocsAutomator Extension from the Airtable Marketplace
-    2. Copy your API key from DocsAutomator account settings into the extension
+    2. Click **Create a key for this** in the setup guide, or create a key in [Settings > API keys](https://app.docsautomator.co/settings/workspace/api). Paste the key into the extension. See [API keys](/more/finding-your-api-key).
     3. Select your automation and generate documents from any record
   </Tab>
   <Tab title="Interface Button">
@@ -221,8 +249,8 @@ When the run has finished, you can download the documents in two ways:
   <Accordion title="Locale Settings" icon="globe">
     Control number/currency notation (comma vs. dot) in automation template settings under Document Generation Options.
   </Accordion>
-  <Accordion title="View Sorting" icon="sort">
-    Line item sort order follows the selected view's configuration.
+  <Accordion title="Line Item Sorting" icon="sort">
+    Line items keep the order of the linked records in Airtable. To sort them, choose a field of the linked table under Sort by in the line item settings, then choose ascending or descending. If you select a view for a line item instead, the view decides which records appear and in which order, and Sort by is turned off.
   </Accordion>
   <Accordion title="Professional Integration Service" icon="wrench">
     Professional assistance available for integrating DocsAutomator into existing workflows (service fee applies).

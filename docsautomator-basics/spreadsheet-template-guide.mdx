@@ -1,6 +1,6 @@
 ---
 title: "Spreadsheet Template Guide"
-description: "Use a Google Sheet or an Excel (.xlsx) file as your template: placeholders in any cell, line items that add rows, and a PDF at the end"
+description: "Use a Google Sheet or an Excel (.xlsx) file as your template: placeholders in any cell, line items that add rows, and a PDF or an Excel file at the end"
 icon: "file-spreadsheet"
 keywords:
   [
@@ -13,7 +13,7 @@ keywords:
   ]
 ---
 
-Spreadsheet templates let you keep your document layout in Google Sheets or Excel. You type `{{placeholders}}` into any cell, map them to your data source, and DocsAutomator fills them in and creates a PDF. Your formulas, number formats, merged cells, borders and logos stay as you designed them, and the formulas calculate with the new values.
+Spreadsheet templates let you keep your document layout in Google Sheets or Excel. You type `{{placeholders}}` into any cell, map them to your data source, and DocsAutomator fills them in and creates a PDF, and an Excel file if you want one. Your formulas, number formats, merged cells, borders and logos stay as you designed them, and the formulas calculate with the new values.
 
 Spreadsheet templates work with every data source, with [line items](/features/line-items), and with [e-invoices](/features/e-invoices).
 
@@ -43,7 +43,8 @@ This table covers both uploaded Excel files and linked Google Sheets. Where the 
 | Acceptance (Accept button instead of a signature) | Yes | |
 | Approvals | Yes | |
 | PDF output | Yes | Every spreadsheet template creates a PDF. |
-| Spreadsheet or Google Sheet output | No | The result is always a PDF. "Save Google Doc" and "Save Word document" are not offered. |
+| Excel (.xlsx) output | Yes | Add the "Save Excel file" action. The PDF is still created. See [Excel file output](#excel-file-output). |
+| Google Sheet output | No | DocsAutomator does not create a new Google Sheet. Use the Excel file, which Google Sheets opens. |
 | Save the PDF to Google Drive, OneDrive, Dropbox or a Documents folder | Yes | |
 | Send by email | Yes | The PDF is attached. |
 | Save the PDF to Airtable, Notion, SmartSuite, ClickUp, HubSpot or a Google Sheets row | Yes | |
@@ -155,6 +156,24 @@ In the example below, the print area ends at the total. The payment terms below 
   <img src="/images/spreadsheet-template/print-area-result.png" alt="PDF of the example invoice with three item rows: the print area ends at the total, so the rows below it do not print" />
 </Frame>
 
+## Excel file output
+
+Add the **Save Excel file** action to get the filled-in workbook as an `.xlsx` file next to the PDF.
+
+- **What you get:** the workbook with every tab as you designed it, your formulas, the line-item rows, and the images from your data. The formula results are stored in the file, so previews in email, Google Drive and Quick Look show the totals. Excel also recalculates when you open the file.
+- **Where it goes:**
+  - It always appears on the document's page in **Documents**, as an **Excel** download.
+  - The API response returns its link as `xlsxFileUrl`.
+  - It can also go to Google Drive, OneDrive or Dropbox; turn each one on in the action.
+- **Email:** in the email action, turn on **Attach the Excel file (.xlsx)**.
+- **Write-backs:** choose an attachment field in Airtable, Notion or SmartSuite to receive the Excel file.
+- **Signing, acceptance, e-invoices and Swiss QR-bills** work on the PDF only. The Excel file is not signed and holds no e-invoice data.
+- Macros and links to files outside the workbook are removed, as they are when you upload a template.
+
+<Frame>
+  <img src="/images/spreadsheet-template/save-excel-file.png" alt="The Save Excel file action in the Actions panel, with switches for Google Drive, OneDrive and Dropbox" />
+</Frame>
+
 ## E-invoices
 
 With the [e-invoice add-on](/features/e-invoices), a spreadsheet template creates a ZUGFeRD or XRechnung e-invoice. The e-invoice data comes from your mapped fields, not from the cells. Check that the totals in your sheet and the mapped totals agree, especially when your sheet rounds in its own way.
@@ -163,4 +182,3 @@ With the [e-invoice add-on](/features/e-invoices), a spreadsheet template create
 
 - **Google-only functions** such as `QUERY`, `IMPORTRANGE`, `GOOGLEFINANCE`, `ARRAYFORMULA` and `IMAGE` show an error in the PDF. DocsAutomator warns you when it finds one. Replace it with a standard function or a fixed value.
 - **Conditional sections**, **Delete line when empty**, **Markdown** and **conditional styles** are not available in spreadsheet templates.
-- Spreadsheet templates create PDF files, not spreadsheet files.

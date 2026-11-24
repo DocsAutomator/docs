@@ -86,7 +86,7 @@ The item fields show in the placeholder list under **Line Item Table 1**. Map th
 
 ## What prints
 
-- **The first visible tab prints.** Hide a tab in Google Sheets or Excel to keep it out of the PDF; its values still feed your formulas.
+- **The first visible tab with content prints.** An empty tab is skipped. Hide a tab in Google Sheets or Excel to keep it out of the PDF; its values still feed your formulas.
 - **Wide sheets shrink to fit the page width.** DocsAutomator uses the print scaling you set in Excel. Without one, it fits the sheet to one page wide.
 - **The paper size** comes from the file. A file without a paper size prints on A4, or on Letter for the United States and Canada.
 - **Numbers and dates** use the locale of the Google Sheet, or for an Excel file the locale of the automation. For example, `1.095,99 €` prints in German.

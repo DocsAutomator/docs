@@ -81,7 +81,8 @@
                       "docsautomator-basics/templates-overview",
                       "docsautomator-basics/google-doc-template-guide",
                       "docsautomator-basics/pdf-template-guide",
-                      "docsautomator-basics/word-template-guide"
+                      "docsautomator-basics/word-template-guide",
+                      "docsautomator-basics/spreadsheet-template-guide"
                     ]
                   },
                   "docsautomator-basics/placeholder-syntax-reference"

@@ -38,7 +38,7 @@ This table covers both uploaded Excel files and linked Google Sheets. Where the 
 | Number and date style | Yes | Google Sheets use the Sheet's locale. Excel files use the automation's locale. |
 | Delete line when empty, Markdown, conditional styles | No | The plain value prints. |
 | Fixed images and logos in the sheet | Yes | They stay where you placed them and move down with line items. |
-| Images from your data | No | An image field prints its link as text. |
+| Images from your data | Yes | An image field alone in its cell prints the image, fitted to the cell. Inside line items, every row gets its own image. |
 | E-signatures | Yes | Put the signature tags into the cells where each signature belongs. |
 | Acceptance (Accept button instead of a signature) | Yes | |
 | Approvals | Yes | |
@@ -120,6 +120,21 @@ The item fields show in the placeholder list under **Line Item Table 1**. Map th
   <img src="/images/spreadsheet-template/line-item-mapping.png" alt="Placeholder list with Line Item Table 1 and its description, quantity and unit price fields" />
 </Frame>
 
+## Images from your data
+
+An image field puts a picture into the cell where its placeholder sits. Name the placeholder with `image` in it, for example `{{image_photo}}` or `{{product_image}}`, and map it to a field that holds an image link or an attachment.
+
+- **One placeholder per cell.** The image prints only when the placeholder is the whole content of its cell. Inside other text, the image link prints as text, and DocsAutomator warns you when it finds one.
+- **Fitted to the cell.** The image fills the cell, or the merged cells, with its proportions kept. Make the row taller or the column wider for a bigger image.
+- **Line items:** put the image field into the line-item row, and every item gets its own image. Each row keeps the height you set.
+- **Sources:** image links, and attachments from Airtable, Notion, SmartSuite, ClickUp and HubSpot. A list of several links prints the first one.
+- **Formats:** PNG, JPG, WebP, GIF (the first frame) and SVG. One image can be up to 60 MB.
+- **When an image cannot be loaded,** for example a broken link or a link that does not answer within 10 seconds, its cell stays empty and the document is still created. The run log names the image and the reason.
+
+<Frame>
+  <img src="/images/spreadsheet-template/images-from-data.png" alt="PDF of the example invoice with a Photo column: each of the three item rows shows its own picture, fitted to the cell" />
+</Frame>
+
 ## What prints
 
 DocsAutomator prints one tab of your spreadsheet as a PDF.
@@ -147,6 +162,5 @@ With the [e-invoice add-on](/features/e-invoices), a spreadsheet template create
 ## What does not work
 
 - **Google-only functions** such as `QUERY`, `IMPORTRANGE`, `GOOGLEFINANCE`, `ARRAYFORMULA` and `IMAGE` show an error in the PDF. DocsAutomator warns you when it finds one. Replace it with a standard function or a fixed value.
-- **Images from your data** cannot be placed into a cell. A fixed logo in the sheet works.
 - **Conditional sections**, **Delete line when empty**, **Markdown** and **conditional styles** are not available in spreadsheet templates.
 - Spreadsheet templates create PDF files, not spreadsheet files.

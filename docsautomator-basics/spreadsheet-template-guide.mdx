@@ -21,6 +21,42 @@ Spreadsheet templates work with every data source, with [line items](/features/l
   <img src="/images/spreadsheet-template/result-pdf-page.png" alt="The PDF created from the example invoice spreadsheet, with three item rows and the calculated net, VAT and total" />
 </Frame>
 
+## What works with spreadsheets
+
+This table covers both uploaded Excel files and linked Google Sheets. Where the two differ, the table says so.
+
+| Feature | Works with spreadsheets? | Details |
+|---|---|---|
+| Placeholders | Yes | In any cell of any tab, alone or inside text. |
+| Line items | Yes | One repeating row per line-item table. Several tables per sheet are fine. |
+| Line item sorting | Yes | The sort order you set for your data source applies. |
+| Nested line items | No | Use one line-item row per table instead. |
+| Line item grouping | No | The grouping setting is not offered for spreadsheet templates. |
+| Conditional sections | No | To show text only in some cases, use a formula such as `=IF(B5="Yes", "Paid", "")`. |
+| Show/hide and Hidden | Yes | They work as in other templates. |
+| Format setting (dates, numbers, currency) | Yes | A Format setting prints the value as formatted text. Without one, the cell's own number or date format applies. |
+| Number and date style | Yes | Google Sheets use the Sheet's locale. Excel files use the automation's locale. |
+| Delete line when empty, Markdown, conditional styles | No | The plain value prints. |
+| Fixed images and logos in the sheet | Yes | They stay where you placed them and move down with line items. |
+| Images from your data | No | An image field prints its link as text. |
+| E-signatures | Yes | Put the signature tags into the cells where each signature belongs. |
+| Acceptance (Accept button instead of a signature) | Yes | |
+| Approvals | Yes | |
+| PDF output | Yes | Every spreadsheet template creates a PDF. |
+| Spreadsheet or Google Sheet output | No | The result is always a PDF. "Save Google Doc" and "Save Word document" are not offered. |
+| Save the PDF to Google Drive, OneDrive, Dropbox or a Documents folder | Yes | |
+| Send by email | Yes | The PDF is attached. |
+| Save the PDF to Airtable, Notion, SmartSuite, ClickUp, HubSpot or a Google Sheets row | Yes | |
+| Append or prepend other PDFs | Yes | On plans that include merging PDFs. |
+| Test mode and previews | Yes | |
+| E-invoices (ZUGFeRD, XRechnung) and Swiss QR-bills | Yes | The e-invoice data comes from your mapped fields. |
+| Document name settings | Yes | |
+| Data sources | Yes | Airtable, Google Sheets, Notion, ClickUp, SmartSuite, HubSpot, Google Forms, the API, Zapier, Make and n8n. |
+| A different template file per API request | No | The API cannot swap in another spreadsheet for one request. |
+| The AI Agent and the Claude and ChatGPT connectors | Partly | They can create documents from an automation that has a spreadsheet template. They cannot add, read or change the spreadsheet itself; upload it or link it in the app. |
+| Password-protected files | No | Remove the password in Excel or Google Sheets and upload the file again. |
+| Google-only functions (`QUERY`, `IMPORTRANGE`, `GOOGLEFINANCE`, `ARRAYFORMULA`, `IMAGE`) | No | They show an error in the PDF. DocsAutomator warns you when it finds one. |
+
 ## Add a spreadsheet template
 
 <CardGroup cols={2}>

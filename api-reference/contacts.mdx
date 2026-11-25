@@ -1,0 +1,207 @@
+---
+title: "Contacts"
+description: "Read, add, change, merge, import and export the contacts of your workspace, and make a document from one contact"
+keywords: ["contacts", "API", "contact list", "import", "export", "CSV", "contactId", "GDPR"]
+---
+
+Contacts is DocsAutomator's own list of people and companies. Use it when you keep your clients in no other tool. Each contact has a name, an email address, a company, an address and the custom fields your workspace defines. An automation with **Contacts** as its data source makes each document from one contact.
+
+Contacts is not a CRM and has no deals, pipelines or activities. When your clients live in HubSpot, Airtable or another tool, use that tool as the data source instead.
+
+## Authentication
+
+Every Contacts endpoint uses your workspace API key, the same as the rest of the API. Send it in the `Authorization` header as `Bearer YOUR_API_KEY`, or in the `X-API-Key` header. A request without a valid key fails with HTTP 401. A key only reaches the contacts of its own workspace: an id from another workspace answers HTTP 404.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Custom fields per workspace | 20 |
+| Rows per CSV import | 5,000 |
+| Contacts per workspace | 50,000 |
+| Contacts per list page | 100 (default 50) |
+| Contacts per merge | 50 |
+
+## The contact object
+
+```json
+{
+  "id": "6745b2f0c1a4e2d9f0a1b2c3",
+  "name": "Anna Weber",
+  "email": "anna@acme.com",
+  "company": "Acme GmbH",
+  "address": {
+    "line1": "Hauptstrasse 1",
+    "line2": "",
+    "city": "Berlin",
+    "postalCode": "10115",
+    "region": "",
+    "country": "Germany"
+  },
+  "custom": { "vat_number": "DE123456789" },
+  "source": "manual",
+  "createdAt": "2026-11-25T10:00:00.000Z",
+  "updatedAt": "2026-11-25T10:00:00.000Z",
+  "lastUsedAt": null
+}
+```
+
+- `email` is stored in lowercase and is unique within a workspace.
+- `custom` holds values only for the custom fields defined in the workspace (see [Custom fields](#custom-fields)). A key that is not defined is dropped.
+- `source` says how the contact was added: `manual` (by hand or through the API), `import` (CSV), `document` (saved from a document filled or sent by hand) or `form` (a contact form).
+- `lastUsedAt` is the last time a document used the contact, or `null`.
+
+## List and search contacts
+
+```
+GET https://api.docsautomator.co/contacts
+```
+
+<ParamField query="q" type="string">
+  Returns the contacts whose name, email or company contains this text, ignoring case.
+</ParamField>
+
+<ParamField query="limit" type="number" default="50">
+  Contacts per page, from 1 to 100.
+</ParamField>
+
+<ParamField query="cursor" type="string">
+  The `nextCursor` of the previous page. The list is sorted by the last change, newest first.
+</ParamField>
+
+Returns `{ "contacts": [ ... ], "nextCursor": "..." }`. `nextCursor` is `null` on the last page.
+
+## Get one contact
+
+```
+GET https://api.docsautomator.co/contacts/{id}
+```
+
+Returns `{ "contact": { ... } }`, or HTTP 404 when the workspace has no contact with this id.
+
+## Add a contact
+
+```
+POST https://api.docsautomator.co/contacts
+```
+
+Send the contact's fields as JSON: `name`, `email`, `company`, `address` and `custom`. A contact needs at least a name, an email address or a company. Returns HTTP 201 with `{ "contact": { ... } }`.
+
+When another contact of the workspace already has the email address, the request fails with HTTP 409 and `"field": "email"`. A new contact starts the automations set to make a document for each new contact.
+
+```bash
+curl -X POST https://api.docsautomator.co/contacts \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Anna Weber",
+    "email": "anna@acme.com",
+    "company": "Acme GmbH",
+    "address": { "city": "Berlin", "country": "Germany" },
+    "custom": { "vat_number": "DE123456789" }
+  }'
+```
+
+## Change a contact
+
+```
+PATCH https://api.docsautomator.co/contacts/{id}
+```
+
+Send only the fields you change. Each field you send replaces the stored value. `address` and `custom` are replaced as a whole, so send every address line and every custom value you want to keep. An empty `custom` object removes all custom values. Returns `{ "contact": { ... } }`.
+
+## Delete a contact
+
+```
+DELETE https://api.docsautomator.co/contacts/{id}
+```
+
+Deletes the contact for good. Returns `{ "ok": true }`. Use it for a request to erase a person's data. Documents made before stay as they are.
+
+## Merge contacts
+
+```
+POST https://api.docsautomator.co/contacts/merge
+```
+
+<ParamField body="keepId" type="string" required>
+  The contact that stays. Its values are kept.
+</ParamField>
+
+<ParamField body="mergeIds" type="string[]" required>
+  The contacts merged into it, up to 50. Each empty field of the kept contact takes the first value found in these contacts, in this order. Custom values are joined. The merged contacts are deleted.
+</ParamField>
+
+Returns `{ "contact": { ... } }`, the kept contact after the merge.
+
+## Export contacts
+
+```
+GET https://api.docsautomator.co/contacts/export.csv
+```
+
+Returns every contact of the workspace as a CSV file with all fields. Use it to answer a request for a copy of a person's data, or to move your list elsewhere.
+
+## Import contacts
+
+```
+POST https://api.docsautomator.co/contacts/import
+```
+
+Send the CSV file with a header row, up to 5,000 rows. Send it as the request body with `Content-Type: text/csv`, or as JSON `{ "csv": "<file text>" }`.
+
+Columns are matched by their header: `name`, `email`, `company`, `address line 1`, `address line 2`, `city`, `postal code` (or `zip`), `region` (or `state`), `country`, and the label or key of a custom field. Other columns are left out. In the JSON form, `mapping` sets the target of each column in order instead: `name`, `email`, `company`, `address.line1` to `address.country`, or `custom.<key>`.
+
+A row whose email belongs to an existing contact fills only that contact's empty fields and never overwrites a value. Every other row adds a new contact. Imported contacts do not start automations.
+
+Returns `{ "created": 12, "updated": 3, "skipped": 1, "errors": [{ "row": 7, "message": "..." }] }`. `row` counts the header as row 1. Up to 20 errors are listed.
+
+## Custom fields
+
+Custom fields are defined once per workspace, and every contact can hold a value for each of them. Each field has a `label` (what people see) and a `key` (lowercase letters, digits and underscores, made from the label). The key stays the same when the label changes, so mappings and forms keep working.
+
+| Endpoint | What it does |
+| --- | --- |
+| `GET /contacts/fields` | Returns `{ "fields": [{ "key": "vat_number", "label": "VAT number" }] }`. |
+| `POST /contacts/fields` | Adds a field from `{ "label": "VAT number" }`. Returns HTTP 201 with `{ "field", "fields" }`, or HTTP 200 when a field with the same key exists. A workspace has at most 20 fields. |
+| `PATCH /contacts/fields/{key}` | Renames the field from `{ "label": "..." }`. The key stays. |
+| `DELETE /contacts/fields/{key}` | Deletes the field and removes its value from every contact. Returns `{ "fields", "cleared" }`, where `cleared` counts the contacts that lost a value. |
+
+## Make a document from a contact
+
+An automation whose data source is **Contacts** makes each document from one contact. Pass the contact's id as `contactId` (or `recId`) to [Create Document](/api-reference/documents/create-from-api).
+
+The contact fills every placeholder that reads a contact field. A placeholder named like a field needs no mapping, for example `{{contact_name}}`, `{{contact_email}}`, `{{contact_company}}`, `{{contact_address}}` (all address lines), `{{contact_address_city}}` or `{{contact_vat_number}}` for a custom field. Placeholders that no contact field fills take their values from `data`.
+
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.docsautomator.co/createDocument \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "automationId": "YOUR_AUTOMATION_ID",
+    "contactId": "6745b2f0c1a4e2d9f0a1b2c3",
+    "data": { "start_date": "2027-01-01" }
+  }'
+```
+
+```javascript Node.js
+const response = await fetch("https://api.docsautomator.co/createDocument", {
+  method: "POST",
+  headers: {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    automationId: "YOUR_AUTOMATION_ID",
+    contactId: "6745b2f0c1a4e2d9f0a1b2c3",
+    data: { start_date: "2027-01-01" },
+  }),
+});
+
+const result = await response.json();
+console.log(result.pdfUrl);
+```
+</CodeGroup>
+
+To create an automation on Contacts through the API, send `"dataSourceName": "Contacts"` to [Create Automation](/api-reference/automations/create-automation).

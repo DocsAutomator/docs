@@ -554,8 +554,8 @@
                   },
                   "dataSourceName": {
                     "type": "string",
-                    "enum": ["Airtable", "API", "ClickUp", "Glide", "Google Sheets", "Make", "n8n", "Noloco", "SmartSuite", "Zapier"],
-                    "description": "The data source type."
+                    "enum": ["Airtable", "API", "ClickUp", "Contacts", "Glide", "Google Sheets", "Make", "n8n", "Noloco", "SmartSuite", "Zapier"],
+                    "description": "The data source type. Contacts is the workspace's own contact list (see the Contacts page)."
                   },
                   "docTemplateLink": {
                     "type": "string",

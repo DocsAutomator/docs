@@ -266,6 +266,10 @@
                 ]
               },
               {
+                "group": "Contacts",
+                "pages": ["api-reference/contacts"]
+              },
+              {
                 "group": "Templates",
                 "pages": [
                   "GET /listPlaceholdersV2",

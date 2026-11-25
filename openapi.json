@@ -606,7 +606,7 @@
         "operationId": "updateAutomation",
         "tags": ["Automations"],
         "summary": "Update automation",
-        "description": "Updates an existing automation's settings. Send only the settings you want to change. Settings you leave out keep their values. A text, number, true-or-false or list setting is replaced by the value you send. An object setting is merged: keys you send change, and keys you leave out stay. Some settings inside an object are always replaced whole; their descriptions say so. `GET /automation` returns every setting with its current value.",
+        "description": "Updates an existing automation's settings. Send only the settings you want to change. Settings you leave out keep their values. A text, number, true-or-false or list setting is replaced by the value you send. An object setting is merged: keys you send change, and keys you leave out stay. Some settings inside an object are always replaced whole; their descriptions say so. `GET /automation` returns every setting with its current value. The response field `ignoredKeys` lists every key that was not saved. If you send `null` for an object setting, the request fails with a 400 error and nothing is saved. To keep an object setting, leave it out.",
         "parameters": [
           {
             "name": "docId",
@@ -917,6 +917,92 @@
                       "enabled": true,
                       "rule": "any"
                     }
+                  },
+                  "sendEmail": {
+                    "type": "boolean",
+                    "description": "Send an email with each new document."
+                  },
+                  "emailService": {
+                    "type": "string",
+                    "enum": ["docsautomatormail", "gmail", "outlook"],
+                    "description": "Which mailbox sends the email. `docsautomatormail` (the default) sends from DocsAutomator. `gmail` and `outlook` send from a Gmail or Microsoft account connected in the app. They need the Business plan or higher. If only one account is connected, you can leave out the account."
+                  },
+                  "selectedGmailAccount": {
+                    "type": "string",
+                    "description": "The email address of the connected Gmail account that sends the email, when `emailService` is `gmail`."
+                  },
+                  "selectedOutlookAccount": {
+                    "type": "string",
+                    "description": "The email address of the connected Microsoft account that sends the email, when `emailService` is `outlook`."
+                  },
+                  "gmailSenderName": {
+                    "type": "string",
+                    "description": "The sender name that recipients see, when `emailService` is `gmail`."
+                  },
+                  "outlookSenderName": {
+                    "type": "string",
+                    "description": "The sender name that recipients see, when `emailService` is `outlook`."
+                  },
+                  "emailSendFromActingMember": {
+                    "type": "boolean",
+                    "description": "Send the email from the connected mailbox of the team member who creates the document in the app. Other documents use the sender set in `emailService`."
+                  },
+                  "emailRecipients": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Who receives the email. Each entry is an email address or a placeholder, for example `{{client_email}}`.",
+                    "example": ["{{client_email}}", "office@acme.com"]
+                  },
+                  "emailSubject": {
+                    "type": "string",
+                    "description": "Email subject. It can contain placeholders."
+                  },
+                  "emailContent": {
+                    "type": "string",
+                    "description": "The email body as HTML, for example `<p>Hello {{client_name}},</p>`. It can contain placeholders. A text that looks like phishing fails with a 400 error."
+                  },
+                  "emailReplyTo": {
+                    "type": "string",
+                    "description": "The address that receives replies. Send `\"\"` to remove it."
+                  },
+                  "emailAttachPDF": {
+                    "type": "boolean",
+                    "description": "Attach the PDF to the email. The default is `true`."
+                  },
+                  "emailAttachWord": {
+                    "type": "boolean",
+                    "description": "Attach the Word file to the email. This works only with Word templates."
+                  },
+                  "addExistingPdfs": {
+                    "type": "boolean",
+                    "description": "Merge PDF files stored in your data source into each document. Turning it on needs the Business plan or higher."
+                  },
+                  "prependExistingPdfs": {
+                    "type": "boolean",
+                    "description": "Put the merged PDFs before the document instead of after it. This works only when `addExistingPdfs` is `true`. Turning it on needs the Business plan or higher."
+                  },
+                  "existingPdfsFields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The fields in your data source that hold the PDFs to merge, in merge order. Send the identifier the source uses: the field id for Airtable, the property id for Notion, the field slug for SmartSuite, the column header for Google Sheets, and the question id for Google Forms. Other sources do not support this.",
+                    "example": ["fldTerms"]
+                  },
+                  "webhookUrl": {
+                    "type": "string",
+                    "description": "The URL that receives an event for each new document. It must start with `https://` and must not point to a private or internal address. Send `\"\"` to remove it. If the webhook has custom headers or an agent preset set in the app, change its address and body format in the app."
+                  },
+                  "notifyWebhook": {
+                    "type": "boolean",
+                    "description": "Turns events to `webhookUrl` on or off."
+                  },
+                  "webhookBodyFormat": {
+                    "type": "string",
+                    "enum": ["", "text", "input"],
+                    "description": "How the event body looks. `\"\"` (the default) sends JSON. `text` or `input` sends the event as text in a field with that name, for tools that need this."
                   }
                 }
               },
@@ -961,6 +1047,17 @@
                       }
                     }
                   }
+                },
+                "emailAndWebhook": {
+                  "summary": "Email each document and notify a webhook",
+                  "value": {
+                    "sendEmail": true,
+                    "emailRecipients": ["{{client_email}}"],
+                    "emailSubject": "Your invoice {{invoice_number}}",
+                    "emailContent": "<p>Hello {{client_name}},</p><p>Your invoice is attached.</p>",
+                    "webhookUrl": "https://hooks.example.com/docsautomator",
+                    "notifyWebhook": true
+                  }
                 }
               }
             }
@@ -980,6 +1077,14 @@
                     },
                     "updatedAutomation": {
                       "$ref": "#/components/schemas/Automation"
+                    },
+                    "ignoredKeys": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "The keys in your request that were not saved, because the key is misspelled or cannot be changed through the API. An empty list means every key was saved. `docId` and `automationId` in the body are never listed.",
+                      "example": ["webhookUrl"]
                     }
                   }
                 }
@@ -2182,6 +2287,92 @@
                 "description": "Approvers read from data source fields. Read only. They are set in the app."
               }
             }
+          },
+          "sendEmail": {
+            "type": "boolean",
+            "description": "Send an email with each new document."
+          },
+          "emailService": {
+            "type": "string",
+            "enum": ["docsautomatormail", "gmail", "outlook"],
+            "description": "Which mailbox sends the email. `docsautomatormail` (the default) sends from DocsAutomator. `gmail` and `outlook` send from a Gmail or Microsoft account connected in the app."
+          },
+          "selectedGmailAccount": {
+            "type": "string",
+            "description": "The email address of the connected Gmail account that sends the email, when `emailService` is `gmail`."
+          },
+          "selectedOutlookAccount": {
+            "type": "string",
+            "description": "The email address of the connected Microsoft account that sends the email, when `emailService` is `outlook`."
+          },
+          "gmailSenderName": {
+            "type": "string",
+            "description": "The sender name that recipients see, when `emailService` is `gmail`."
+          },
+          "outlookSenderName": {
+            "type": "string",
+            "description": "The sender name that recipients see, when `emailService` is `outlook`."
+          },
+          "emailSendFromActingMember": {
+            "type": "boolean",
+            "description": "Send the email from the connected mailbox of the team member who creates the document in the app. Other documents use the sender set in `emailService`."
+          },
+          "emailRecipients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Who receives the email. Each entry is an email address or a placeholder, for example `{{client_email}}`. Returned by `GET /automation` only.",
+            "example": ["{{client_email}}", "office@acme.com"]
+          },
+          "emailSubject": {
+            "type": "string",
+            "description": "Email subject. It can contain placeholders. Returned by `GET /automation` only."
+          },
+          "emailContent": {
+            "type": "string",
+            "description": "The email body as HTML. It can contain placeholders. Returned by `GET /automation` only."
+          },
+          "emailReplyTo": {
+            "type": "string",
+            "description": "Reply-to email address. Empty when none is set."
+          },
+          "emailAttachPDF": {
+            "type": "boolean",
+            "description": "Attach the PDF to the email. The default is `true`."
+          },
+          "emailAttachWord": {
+            "type": "boolean",
+            "description": "Attach the Word file to the email. This works only with Word templates."
+          },
+          "addExistingPdfs": {
+            "type": "boolean",
+            "description": "Merge PDF files stored in your data source into each document."
+          },
+          "prependExistingPdfs": {
+            "type": "boolean",
+            "description": "Put the merged PDFs before the document instead of after it."
+          },
+          "existingPdfsFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The fields in your data source that hold the PDFs to merge, in merge order.",
+            "example": ["fldTerms"]
+          },
+          "webhookUrl": {
+            "type": "string",
+            "description": "The URL that receives an event for each new document. Empty when none is set."
+          },
+          "notifyWebhook": {
+            "type": "boolean",
+            "description": "Turns events to `webhookUrl` on or off."
+          },
+          "webhookBodyFormat": {
+            "type": "string",
+            "enum": ["", "text", "input"],
+            "description": "How the event body looks. `\"\"` (the default) sends JSON. `text` or `input` sends the event as text in a field with that name, for tools that need this."
           }
         }
       },

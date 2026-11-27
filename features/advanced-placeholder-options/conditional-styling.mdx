@@ -24,6 +24,8 @@ The feature operates in two steps:
 | Style | Description |
 |-------|-------------|
 | Background Color | Highlight color behind text |
+| Cell Background Color | Fill color of the table cell that holds the value |
+| Row Background Color | Fill color of the whole table row (line items and repeating sections) |
 | Foreground Color | Text color |
 | Font Size | Size of the text |
 | Link | Make text a clickable link |
@@ -44,9 +46,19 @@ The feature operates in two steps:
 | "Pending" | Orange text |
 | "Overdue" | Red text, Bold |
 
+## Color a Table Cell by Value
+
+Use **Cell Background Color** to fill the table cell that holds the value, not only the text. For example, fill the status cell green for "Paid" and red for "Overdue".
+
+- It works in Google Docs and Word templates.
+- It works in normal tables, in line item rows and in repeating sections.
+- If the value is not in a table, the style has no effect.
+
+Use **Row Background Color** to fill the whole row instead. It works in Google Docs and Word templates, also inside repeating sections and on nested rows. When a cell has both, the cell color wins.
+
 ## Row Background Colors for Line Items
 
-For tabular data presentation, DocsAutomator provides a specialized feature allowing background colors to be applied to alternating rows in line items—either on even or odd rows, creating a striped table appearance commonly used in professional documents.
+For tabular data presentation, DocsAutomator provides a specialized feature allowing background colors to be applied to alternating rows in line items, on even or odd rows, creating a striped table appearance commonly used in professional documents.
 
 <Tabs>
   <Tab title="Even Rows">

@@ -5,6 +5,56 @@ rss: true
 mode: "center"
 ---
 
+<Update label="November 27, 2026">
+  ## Template version history
+
+  Every change to a Word template is now kept as a version: an upload, a replaced file, an edit in the Word editor, or a change by the AI Agent. Open **Version history** in the Word template menu.
+
+  - The list shows each version with its number, date, how it was made and who made it, and how many documents it generated and signed. The live version has a badge.
+  - **Compare** two versions. The **Visual** view shows both versions side by side and marks the changed parts on each page. The **Text** view lists the changed lines.
+  - **Download** any version, or **Restore** an earlier one. A restore adds a new version, so you lose nothing.
+  - Each generated and signed document shows the template version it used. The signing audit trail and the certificate name the version and its SHA-256 hash.
+  - Edits in the Word editor in one session, and in sessions by the same person close together, become one version, as long as no document used it.
+  - When you close the Word editor, it now waits until your last change is saved, so the template shows your latest edit.
+
+  ## Color table cells by value
+
+  Conditional styling has a new style, **Cell Background Color**. It fills the table cell that holds the value, for example green for "Paid" and red for "Overdue".
+
+  - It works in Google Docs and Word templates.
+  - It works in normal tables, in line item rows and in repeating sections.
+
+  **Row Background Color** now also works inside repeating sections and on nested rows, and Word templates now support it too. Conditional styles now apply to nested rows inside repeating sections. When a cell has both, the cell color wins. See [Conditional styling](/features/advanced-placeholder-options/conditional-styling).
+</Update>
+
+<Update label="November 26, 2026">
+  ## Fixes
+
+  - In Google Docs templates, tables inside a repeating section keep the cell borders of the template, also on nested rows.
+</Update>
+
+<Update label="November 25, 2026">
+  ## Signers read first, then sign in one step
+
+  Signers now open the document and read it right away. Consent comes at the end: **Complete Signing** opens a short step with one sentence and one checkbox. The signer ticks the box and clicks **Sign**. Cancel closes the step, and nothing is recorded.
+
+  The audit trail records the consent first, then each field and the signature, with the signer's IP address, browser and time. See [Compliance and legal validity](/features/docsautomator-esign/compliance-and-legal-validity).
+</Update>
+
+<Update label="November 24, 2026">
+  ## Excel and Google Sheets as templates
+
+  Your template can now be an Excel file or a Google Sheet.
+
+  - Add placeholders in any cell. Line items add a row for each item.
+  - Each document comes out as a PDF, or as an Excel file with **Save Excel file**.
+  - Choose what prints: the tab, the cells and the page setup.
+  - Images from your data go into the cells.
+  - Upload your Excel file, then edit it in DocsAutomator.
+
+  See the [spreadsheet template guide](/docsautomator-basics/spreadsheet-template-guide).
+</Update>
+
 <Update label="November 23, 2026">
   ## Fixes
 

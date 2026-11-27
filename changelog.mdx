@@ -17,6 +17,12 @@ mode: "center"
   - Edits in the Word editor in one session, and in sessions by the same person close together, become one version, as long as no document used it.
   - When you close the Word editor, it now waits until your last change is saved, so the template shows your latest edit.
 
+  <Frame>
+    <img src="https://files.docsautomator.co/f/assets/newsletter/2026-11-27/nl-u-version-compare.png" alt="Visual compare of two versions of a service agreement, side by side, with the changed parts marked" />
+  </Frame>
+
+  See [Template versions](/docsautomator-basics/template-versions).
+
   ## Color table cells by value
 
   Conditional styling has a new style, **Cell Background Color**. It fills the table cell that holds the value, for example green for "Paid" and red for "Overdue".
@@ -24,7 +30,9 @@ mode: "center"
   - It works in Google Docs and Word templates.
   - It works in normal tables, in line item rows and in repeating sections.
 
-  **Row Background Color** now also works inside repeating sections and on nested rows, and Word templates now support it too. Conditional styles now apply to nested rows inside repeating sections. When a cell has both, the cell color wins. See [Conditional styling](/features/advanced-placeholder-options/conditional-styling).
+  **Row Background Color** now also works inside repeating sections and on nested rows, and Word templates now support it too. Conditional styles now apply to nested rows inside repeating sections. When a cell has both, the cell color wins.
+
+  To use it, click the settings icon next to a placeholder, choose **Style Conditionally**, add a condition and pick **Cell Background Color**. See [Conditional styling](/features/advanced-placeholder-options/conditional-styling).
 </Update>
 
 <Update label="November 26, 2026">
@@ -39,6 +47,12 @@ mode: "center"
   Signers now open the document and read it right away. Consent comes at the end: **Complete Signing** opens a short step with one sentence and one checkbox. The signer ticks the box and clicks **Sign**. Cancel closes the step, and nothing is recorded.
 
   The audit trail records the consent first, then each field and the signature, with the signer's IP address, browser and time. See [Compliance and legal validity](/features/docsautomator-esign/compliance-and-legal-validity).
+
+  <Frame>
+    <img src="https://files.docsautomator.co/f/assets/newsletter/2026-11-27/nl-u-consent-flow-2.gif" alt="A signer reads the document, adds a signature, ticks one box and clicks Sign" />
+  </Frame>
+
+  There is nothing to set up: every signing request uses the new flow. See [DocsAutomator eSign](/features/docsautomator-esign).
 </Update>
 
 <Update label="November 24, 2026">
@@ -52,7 +66,11 @@ mode: "center"
   - Images from your data go into the cells.
   - Upload your Excel file, then edit it in DocsAutomator.
 
-  See the [spreadsheet template guide](/docsautomator-basics/spreadsheet-template-guide).
+  <Frame>
+    <img src="https://files.docsautomator.co/f/assets/newsletter/2026-11-27/nl-u-excel-3.png" alt="An Excel quote template with placeholders next to the finished quote made from it" />
+  </Frame>
+
+  To start, choose an Excel file or a Google Sheet as the template of an automation. See the [spreadsheet template guide](/docsautomator-basics/spreadsheet-template-guide).
 </Update>
 
 <Update label="November 23, 2026">
@@ -78,7 +96,13 @@ mode: "center"
 
   Changes save on their own. If a change cannot be saved, the panel says so and offers **Try again**.
 
-  The built-in email option, called "DocsAutomator Mail" until now, is now just "DocsAutomator". Your automations keep working as before. See [Send email](/features/actions-after-document-generation/send-email).
+  The built-in email option, called "DocsAutomator Mail" until now, is now just "DocsAutomator". Your automations keep working as before.
+
+  <Frame>
+    <img src="https://files.docsautomator.co/f/assets/newsletter/2026-11-27/nl-u-email-panel.png" alt="The Send Email panel with the sender, the recipients and the message" />
+  </Frame>
+
+  Open it from the **Actions** card of an automation. See [Send email](/features/actions-after-document-generation/send-email).
 </Update>
 
 <Update label="November 23, 2026">
@@ -92,6 +116,10 @@ mode: "center"
   - Your existing key keeps working. It shows as "Original key" until you revoke it.
 
   Setup guides no longer show your key. A Google Sheets link or an Airtable or SmartSuite button now uses a signed link that works as shown. For steps that need a key, such as Make, Zapier, n8n or the API, click **Create a key for this** in the guide. See [API keys](/more/finding-your-api-key).
+
+  <Frame>
+    <img src="https://files.docsautomator.co/f/assets/newsletter/2026-11-27/nl-u-api-keys.png" alt="The API keys settings with two named keys, their creation date and a Revoke button" />
+  </Frame>
 </Update>
 
 <Update label="November 21, 2026">
@@ -110,6 +138,10 @@ mode: "center"
   - DocsAutomator checks the connection every day and emails the workspace owners if it needs to be reconnected.
 
   See [HubSpot](/integrations-api/hubspot) for the setup, or [watch the demo](https://youtu.be/vNobVxFmi2M).
+
+  <Frame>
+    <a href="https://youtu.be/vNobVxFmi2M"><img src="https://files.docsautomator.co/f/newsletter/2026-11-20-hubspot-video.jpg" alt="Video: sign and close HubSpot deals automatically with DocsAutomator" /></a>
+  </Frame>
 </Update>
 
 <Update label="Week of November 16, 2026">

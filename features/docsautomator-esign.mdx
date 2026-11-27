@@ -79,6 +79,28 @@ Signature, date, and text fields in the finished document scale with the font si
 
 Tags at the standard body text size (11pt) or smaller render at the default size, and each tag is sized independently, so different signature spots in the same document can use different sizes. Checkbox size is fixed.
 
+### Prefill Fields from Your Data
+
+A text, date or checkbox field can start with a value from your record, for example the company name or the agreed start date. The signer sees the value and confirms it or changes it.
+
+To set it up:
+
+1. Open the **Signing & Acceptance** card of your automation.
+2. Click **Configure fields** on the signer.
+3. On the field, choose a placeholder or a field of your data source under **Prefill from**.
+
+How prefilled fields work:
+
+- **The signer can always change the value.** A value the signer must not change belongs in the document as a normal placeholder.
+- **The value is taken once**, when the signing request is created. A later change to the record does not change an open request.
+- **An empty value leaves the field empty**, as before.
+- **Dates** need a full date with a year, for example `2026-12-01` or `01.12.2026`. A value that is not a date leaves the field empty. The signer sees the date in the date format of the automation.
+- **Checkboxes** start checked for `true`, `yes`, `y`, `1`, `x`, `checked` and `on`. Any other value leaves the box unchecked.
+- **A required checkbox is never prefilled.** It is the signer's own agreement, so it always starts empty. Set the checkbox to optional to prefill it.
+- **The audit trail records each prefilled field.** It shows the prefilled value, the final value and whether the signer changed it. The certificate shows one line per signer: "Prefilled by the sender: 2, changed by the signer: 1".
+
+Through the API or MCP, set `prefillFrom` on the field in `esignature.fieldConfigs`, for example `"text_1_company": { "prefillFrom": "{{company_name}}" }`. An empty string removes it. An API run reads the value from the data you send with the request.
+
 ## Choosing How it Completes
 
 Open the **Signing & Acceptance** card of your automation. Under **How it completes**, pick **Signature required** or **Acceptance**. Pick **No closing step** to turn the closing step off. While no closing step is set, the card shows only the choice, and generated documents are delivered without a signing or acceptance request.
